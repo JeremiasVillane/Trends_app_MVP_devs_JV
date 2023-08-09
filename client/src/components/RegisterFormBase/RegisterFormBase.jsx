@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import style from "./RegisterFormBase.module.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { validationRegister } from "../../utils/ValidationRegister";
+import { validationRegister } from "../../utils/validationRegister";
 import { Link } from "react-router-dom";
 import axios from "axios";
 const {VITE_URL} = import.meta.env;
