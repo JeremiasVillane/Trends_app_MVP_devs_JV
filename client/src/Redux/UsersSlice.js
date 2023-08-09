@@ -79,11 +79,13 @@ const usersSlice = createSlice({
             .addCase(getMatchedUsers.pending, () => {
                 //console.log("cargando");
             })
-            .addCase(getMatchedUsers.fulfilled, (state, action) => {
-                state.totalPages = action.payload
-                const users = [...state.allUsers, ...action.payload.data];
-                state.allUsers = users.flat();
-            })
+           .addCase(getMatchedUsers.fulfilled, (state, action) => {
+    state.totalPages = action.payload.totalPages;
+    const newUsers = action.payload.data.filter(newUser => (
+        !state.allUsers.some(existingUser => existingUser.id === newUser.id)
+    ));
+    state.allUsers = state.allUsers.concat(newUsers);
+}) 
             .addCase(getMatchedUsers.rejected, (state, action) => {
                 console.log(action.payload);
             })

@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMatchedUsers, selectAllUsers, selectTotalPages } from "../../Redux/UsersSlice";
 import NavBarBase from "../NavBarBase/NavBarBase";
-
 //import { matcher } from "../../utils/matchingAlgorithm/matcher";
 
 
@@ -16,21 +15,36 @@ const Feed = () => {
     const dispatch = useDispatch();
     const totalPages = useSelector(selectTotalPages) 
     const [currentPage, setCurrentPage] = useState(1);
+    const [showMore, setShowMore] = useState(false);
+
     const handleOnpage = () => {
-        if(currentPage < totalPages) {
+        if(currentPage <= totalPages) {
             setCurrentPage(currentPage + 1)
-            dispatch(getMatchedUsers(currentPage))     
         }
-    }
+    };
+    const handleScroll = () => {
+        console.log("Height:", document.documentElement.scrollHeight);
+        console.log("Top:", document.documentElement.scrollTop);
+        console.log("Window:", window.innerHeight);
+
+        if(window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight ) {
+                setCurrentPage(currentPage + 1);
+        };
+    };
 
     useEffect(() => {
-        dispatch(getMatchedUsers());
-        console.log(users)
-    }, []);    
+        dispatch(getMatchedUsers(currentPage))
+    }, [currentPage])
+
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [currentPage])
+
     
     return (
         <section className={style.BGContainer}>
-            {/* Resto del contenido */}
             <div>
                 <header>
                     <h1>Trends</h1>
@@ -43,13 +57,6 @@ const Feed = () => {
                                 <div key={userIndex}>
                                     <FeedCard user={user} />
                                     {userIndex < users.length - 1 && <hr />}
-                                    {userIndex >= users.length - 1 && (
-                                        <div>
-                                            <button onClick={handleOnpage}>
-                                                More?
-                                            </button>
-                                        </div>
-                                    )}
                                 </div>
                             ))
                         ) : (
