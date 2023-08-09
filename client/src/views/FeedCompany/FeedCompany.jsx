@@ -3,7 +3,7 @@ import style from "./FeedCompany.module.css";
 import { Profile, ProfileCompany } from "../index";
 import { CompanyJobs, JobFormCompany } from "../../components/index";
 import {AiFillHome} from 'react-icons/ai';
-import {HiUser,HiChat,HiLogout} from 'react-icons/hi';
+import {HiUser,HiChat,HiLogout,HiMoon} from 'react-icons/hi';
 import { Title } from "@tremor/react";
 import CandidatesCompany from "../../components/CandidatesCompany/candidatesCompany";
 import { matcherCandidatesJob } from "../../utils/matcherCandidatesJob";
@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { addCompany } from "../../Redux/UsersSlice";
 import { useNavigate } from "react-router-dom";
+import ProfileCandidate from "../../components/ProfileCandidate/ProfileCandidate";
 const {VITE_URL} = import.meta.env;
+
 
 
 const feedCompany = () =>{
@@ -154,36 +156,42 @@ useEffect(()=>{
                     onClick={()=>handlePage("companyJobs")} 
                     className={style.button}
                     title="Inicio"
-                ><AiFillHome  size={35} color="#9AC2EF" /></button>
+                ><AiFillHome  size={35}  className={style.icon} /></button>
                 <p>Inicio</p>
  
                 <button 
                     onClick={()=>handlePage("profileCompany")}
                     className={style.button}
                     title="Mi Perfil"
-                ><HiUser size={35} color="#9AC2EF"  /></button>
+                ><HiUser size={35} className={style.icon}  /></button>
                 <p>Mi Perfil</p>
 
                 <button 
                     onClick={()=>handlePage("Chats")}
                     className={style.button}
                     title="Chats"
-                ><HiChat size={35} color="#9AC2EF" /></button>
+                ><HiChat size={35} className={style.icon} /></button>
                 <p>Mis Chats</p>
 
                 <button 
                     onClick={()=>handleClose()}
                     className={style.button}
                     title="Salir"
-                ><HiLogout size={35} color="#9AC2EF" /></button>
+                ><HiLogout size={35} className={style.icon} /></button>
                 <p>Salir</p>
 
                 {/* Modo Oscuro */}
                 <div className="dark-mode-button">
+                    {/* <button 
+                      className={style.button}
+                      onClick={toggleDarkMode}
+                      color="white"
+                    ><i className="fas fa-moon" /></button> */}
                     <button 
                       className={style.button}
                       onClick={toggleDarkMode}
-                    ><i className="fas fa-moon"/></button>
+                      color="white"
+                    ><HiMoon size={35} className={style.icon} /></button>
                 </div>
             </div>
             <div className={style.right}>
@@ -196,7 +204,7 @@ useEffect(()=>{
                 {/* PAGINA DEL PERFIL DE EMPRESA */}
                 {page === "profileCompany" && <ProfileCompany/>}
                 {/* PAGINA DEL PERFIL DE CANDIDATO */}
-                {page === "profileCandidate" && <Profile/>}
+                {page === "profileCandidate" && <ProfileCandidate candidateId={profileCandidate} />}
                 {page === "Chats"}
             </div>
         </div>

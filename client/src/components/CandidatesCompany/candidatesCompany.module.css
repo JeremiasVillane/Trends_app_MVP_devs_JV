@@ -55,12 +55,13 @@
     height: 90vh;
 }
 .card{
-    border-radius: 10px;
+    /* border-radius: 10px; */
     display: flex;
     flex-direction: row;
     /* border: 1px solid blue; */
     margin: 10px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+    border-bottom: 2px solid #a3a3a3;
 }
 .cardImage{
     height: 100%;
@@ -80,10 +81,17 @@
     flex-direction: row;
     align-items: center;
     gap: 1vw;
+    margin-top: 0.5rem;
     /* border: 1px solid red; */
 }
 .nameIcon p{
     font-weight: bold;
+}
+.nameIcon h1{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+
 }
 .cardProfile{
     width: 85%;
@@ -97,16 +105,27 @@
 .subtitle{
     font-weight: bold;
 }
+
 .buttons{
-    background-color: #FAB180;
-    color: black;
+    background-color: #F1F1F1;
+    /* background-color: none; */
+    
     border-radius: 25px;
-    margin: 10px;
+    height: 2rem;
+    /* margin: 10px; */
     padding-top: 0;
     padding-bottom: 0;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding-left: 1vw;
     padding-right: 1vw;    
+}
+.cardButtons{
+    margin-left: auto;
+    padding-left: 2rem;
+}
+.icon{
+    size: 60px;
+    color:#232323;
 }
 :global(.dark-mode) .head h1{
     color: #CCB5A5;
@@ -140,5 +159,12 @@
     .selectContainer{
         padding: 0px;
         text-align: center;
+    }
+    .nameIcon h1{
+        font-size: 1.2rem;
+    }
+    .cardProfile h3{
+        margin-top: 0;
+        margin-bottom: 0;
     }
 }

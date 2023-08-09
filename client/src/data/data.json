@@ -63,6 +63,27 @@
     "availabilitys":[
         {"value":"Full-Time"},
         {"value":"Part-Time"}
+    ],
+    "IndustrySector":[
+        {"value":"Informática / Telecomunicaciones"},
+        {"value":"Medicina / Salud"},
+        {"value":"Ingeniería Civil"},
+        {"value":"Educación / Docencia"},
+        {"value":"Marketing / Publicidad"},
+        {"value":"Arquitectura"},
+        {"value":"Finanzas / Contabilidad"},
+        {"value":"Diseño Gráfico / Multimedia"},
+        {"value":"Psicología / Terapia"},
+        {"value":"Derecho / Legal"},
+        {"value":"Recursos Humanos"},
+        {"value":"Arte / Bellas Artes"},
+        {"value":"Ciencias Ambientales"},
+        {"value":"Gestión de Proyectos"},
+        {"value":"Periodismo / Comunicación"},
+        {"value":"Turismo / Hospitalidad"},
+        {"value":"Música / Artes Escénicas"},
+        {"value":"Agricultura / Agronomía"},
+        {"value":"Logística / Cadena de Suministro"}
     ]
 
 }

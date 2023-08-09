@@ -109,13 +109,25 @@ const dataJobCompany = ({formJob,handleChangeForm,handleChangeSelect})=>{
                     )} */}
                     <br />
 
-                    <h3>Area/Industria: </h3>
-                    <input
+                    <h3>Industria/Sector: </h3>
+                    <select
+                        name="industry"
+                        value={formJob.industry ?formJob.industry :null}
+                        onChange={handleChangeSelect}
+                    >
+                        <option selected disabled value="predefinido">--Seleccione opcion--</option>
+                        {data?.IndustrySector.map((industry, index) => (
+                        <option key={index} value={industry.value}>
+                            {industry.value}
+                        </option>
+                        ))}
+                    </select>                    
+                    {/* <input
                         name="industry"
                         type="text"
                         value={formJob.industry}
                         onChange={handleChangeForm}
-                    ></input>                    
+                    ></input>                     */}
 
                     <br />    
 
