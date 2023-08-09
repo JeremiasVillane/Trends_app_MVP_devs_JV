@@ -15,7 +15,6 @@ const Feed = () => {
     const dispatch = useDispatch();
     const totalPages = useSelector(selectTotalPages) 
     const [currentPage, setCurrentPage] = useState(1);
-    const [showMore, setShowMore] = useState(false);
 
     const handleOnpage = () => {
         if(currentPage <= totalPages) {
@@ -27,7 +26,7 @@ const Feed = () => {
         console.log("Top:", document.documentElement.scrollTop);
         console.log("Window:", window.innerHeight);
 
-        if(window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight ) {
+        if(window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight ) {
                 setCurrentPage(currentPage + 1);
         };
     };
