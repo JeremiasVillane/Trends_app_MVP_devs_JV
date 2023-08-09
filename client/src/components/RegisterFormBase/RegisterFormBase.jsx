@@ -14,12 +14,35 @@ const RegisterFormBase = ({type})  => {
 
   const [inputs, setInputs] = useState({
     profile_support: false,
+    info_interests: [],
     type,
     email: "",
     password: "",
     name: "",
     username: ""
   });
+  const interests = [
+    "Informática / Telecomunicaciones",
+    "Medicina / Salud",
+    "Ingeniería Civil",
+    "Educación / Docencia",
+    "Marketing / Publicidad",
+    "Arquitectura",
+    "Finanzas / Contabilidad",
+    "Diseño Gráfico / Multimedia",
+    "Psicología / Terapia",
+    "Derecho / Legal",
+    "Recursos Humanos",
+    "Arte / Bellas Artes",
+    "Ciencias Ambientales",
+    "Gestión de Proyectos",
+    "Periodismo / Comunicación",
+    "Turismo / Hospitalidad",
+    "Música / Artes Escénicas",
+    "Agricultura / Agronomía",
+    "Logística / Cadena de Suministro"
+];
+
 
   useEffect(() => {
     if(window.location.href.indexOf("studentRegister") > -1) {
@@ -47,6 +70,16 @@ const RegisterFormBase = ({type})  => {
       profile_support: !inputs.profile_support
     }))
   }
+
+ const handleInterestsChange = (event) => {
+    event.preventDefault()
+    const selectedValues = Array.from(event.target.selectedOptions, (option) => option.value);
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      info_interests: [...prevInputs.info_interests, ...selectedValues]
+    }));
+    event.target.blur();
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -89,6 +122,15 @@ const RegisterFormBase = ({type})  => {
             <div className={style.Input}>
               <input name="password" onChange={handleInputs} type="password" placeholder="Password" />
             </div>
+            <div className={style.Input}>
+                <select multiple value={inputs.info_interests} onChange={handleInterestsChange}>
+                    {interests.map((categoria, index) => (
+                    <option key={index} value={categoria}>
+                        {categoria}
+                    </option>
+                    ))}
+                </select>
+            </div>
             <div className={style.Options}>
               <div>
                 <input id="remember" type="checkbox" checked={inputs.support} onChange={handleIsCheck}/>
@@ -110,4 +152,4 @@ const RegisterFormBase = ({type})  => {
     )
 }
 
-export default RegisterFormBase;
+export default RegisterFormBase
