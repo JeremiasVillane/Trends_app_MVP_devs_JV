@@ -71,16 +71,23 @@ const RegisterFormBase = ({type})  => {
     }))
   }
 
- const handleInterestsChange = (event) => {
-    event.preventDefault()
-    const selectedValues = Array.from(event.target.selectedOptions, (option) => option.value);
-    setInputs((prevInputs) => ({
-      ...prevInputs,
-      info_interests: [...prevInputs.info_interests, ...selectedValues]
-    }));
-    event.target.blur();
-  };
+const handleInterestsChange = (event) => {
+  event.preventDefault();
+  const selectedValues = Array.from(event.target.selectedOptions, (option) => option.value);
 
+  // Filtrar los valores seleccionados que ya existen y eliminarlos del array
+  const newInterests = inputs.info_interests.filter(interest => !selectedValues.includes(interest));
+
+  // Verificar si algún elemento seleccionado ya existe en info_interests, si existe, eliminarlo
+  const updatedInterests = selectedValues.filter(value => !inputs.info_interests.includes(value));
+
+  setInputs((prevInputs) => ({
+    ...prevInputs,
+    info_interests: [...newInterests, ...updatedInterests],
+  }));
+  
+  event.target.blur();
+};
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (inputs.email && inputs.password && inputs.username && inputs.name && type) {
