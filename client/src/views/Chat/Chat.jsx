@@ -32,7 +32,7 @@ const Chat = () => {
   useEffect(() => {
     socket?.emit("newUser", user.username);
   },[socket, user]);
-  
+
   useEffect(() => {
     dispatch(getUserInfo())
     dispatch(getMatchedUsers())

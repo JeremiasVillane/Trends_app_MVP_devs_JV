@@ -4,12 +4,12 @@ import {VscSmiley} from "react-icons/vsc"
 import {AiOutlinePaperClip} from "react-icons/ai"
 import {TbSend} from "react-icons/tb"
 import { useDispatch, useSelector } from "react-redux"
-import {selectListGroups, selectListMessages, selectSelectedUser, setIsMinimized, setListMessages} from "../../Redux/chatSlice"
+import {getMessages, postMessage, selectListMessages, selectNewChat, selectListGroups, selectSelectedUser, setIsMinimized, setListMessages, setNewChat} from "../../Redux/chatSlice"
 import { useEffect, useState } from "react"
-import { ChatMessageContainer } from ".."
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
-const { VITE_URL } = import.meta.env;
+import { ChatMessageContainer } from ".."
+import { selectUserProfile } from "../../Redux/UsersSlice"
+const { VITE_URL } = import.meta.env
 
 const ChatMessages = ({socket}) => {
   const navigate = useNavigate();
@@ -21,6 +21,8 @@ const ChatMessages = ({socket}) => {
   const listGroups = useSelector(selectListGroups);
   const [menu, setMenu] = useState(false)
   const [menuGroups, setMenuGroups] = useState(false)
+  const newChat = useSelector(selectNewChat)
+  const dispatch = useDispatch();
 
   const arrayTemporal = [
     {
@@ -54,71 +56,61 @@ const ChatMessages = ({socket}) => {
     }
   }
 
-  function getUniqueQueryString(){
-    return `?_=${Date.now()}`
-  }
-
-  const sendMessage = (event) => {
+  const sendMessage = async (event) => {
     event.preventDefault();
     if(message !== '' ){
+
       const sender_id = user.id;
-      console.log("sender_id: ", sender_id);
-      const receiver_id=listMessages.UserReceived.id === user.id
-        ? listMessages.UserSent.id : listMessages.UserReceived.id;
-        console.log("receiver_id: ", receiver_id);
-      const userNameEmisor = listMessages.UserSent.id !== user.id
-        ? listMessages.UserReceived.username : listMessages.UserSent.username;
-        console.log("userNameEmisor: ", userNameEmisor)
-      const userNameReceptor = listMessages.UserReceived.id !== user.id
-        ? listMessages.UserReceived.username : listMessages.UserSent.username;
-        console.log("userNameReceptor: ", userNameReceptor)
+        //console.log("sender_id: ", sender_id);
+
+      const receiver_id = typeof selectedUser.id !== "number"
+      ? selectedUser.id : listMessages?.UserReceived?.id === user?.id
+      ? listMessages?.UserSent?.id : listMessages?.UserSent?.id === user.id && listMessages?.UserReceived?.id;
+        //console.log("receiver_id: ", receiver_id);
+
+      const userNameEmisor = user.username
+        //console.log("userNameEmisor: ", userNameEmisor)
+
+      const userNameReceptor = selectedUser
+        ? selectedUser.username : listMessages?.UserReceived?.id === user?.id
+        ? listMessages?.UserSent?.username : listMessages?.UserSent?.id === user.id && listMessages?.UserReceived?.username;
+        //console.log("userNameReceptor: ", userNameReceptor)
+
       const content = message;
-      console.log("content: ", content)
+        //console.log("content: ", content)
 
-      axios.post(`${VITE_URL}/api/v1/chatroom/message`,
-        {content, receiver_id, sender_id },
-        {withCredentials: "include"})
-          .then(({data}) => {
-            console.log("NEW MESSAGE: ",  data)
-
-            // socket?.emit("private-message", {
-            //   data,
-            //   userNameEmisor,
-            //   userNameReceptor
-            // })
-
-            axios.get(`${VITE_URL}/api/v1/chatroom/chat/${selectedUser[0].id}/messages`+
-            getUniqueQueryString(),
-            {withCredentials:"include"})
-              .then(({data}) =>{
-                console.log("data-sockek-send", data)
-                socket?.emit("private-message", {
-                  listMessages,
-                  userNameEmisor,
-                  userNameReceptor
-                })
-              }).catch(error => {
-                console.log("ERROR-get: ", error);
-              })
-          }).catch(error => console.log("ERROR-post: ", error))
-
+      try {
+        const messageData ={
+          content:message,
+          receiver_id,
+          sender_id
+        }
+        const result = await dispatch(postMessage(messageData))
+        console.log(result.payload)
+        dispatch(getMessages(result.payload.chat_id)).then(
+          response => {
+            console.log(response.payload)
+            socket?.emit("private-message", {
+              flag:"desde creacion de mensajes",
+              data: response.payload,
+              userNameEmisor,
+              userNameReceptor
+            })
+          }
+        )
+      } catch (error) {
+        console.log(error)
+      }
       setMessage("");
-      //setPreview(false);
+      dispatch(setNewChat(false))
     }
-
   }
-
-  useEffect(() => {
-    
-    console.log("sender_id: ",user)
-    console.log("receiver_id: ",selectedUser)
-  }, [user, selectedUser])
 
   return (
     <div className={style.mainContainer}>
       <div className={style.chatHeader}>
         <div className={style.infoDiv}>
-            <img src={selectedUser?.image} className={style.profileImage}/>
+            <img src={selectedUser.image ? selectedUser.image : selectedUser.profile_image} className={style.profileImage}/>
             <div>
                 <p className={style.name}>{selectedUser?.username}</p>
                 <p className={style.status}> online/offline</p>
@@ -156,7 +148,7 @@ const ChatMessages = ({socket}) => {
             <VscSmiley className={style.messageBarIcon}/>
             <AiOutlinePaperClip className={style.messageBarIcon}/>
         </div>
-        
+
         <form onSubmit={sendMessage} className={style.messageBarInputDiv}>
             <input className={style.messageBarInput} type="text" value={message} onChange={handleChange} onKeyDown={handleKeyDown}/>
             <button className={style.messageBarInputButton} type="submit">

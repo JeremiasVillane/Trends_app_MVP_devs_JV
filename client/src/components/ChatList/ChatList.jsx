@@ -6,21 +6,27 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserProfile } from "../../Redux/UsersSlice";
 import { setListChats } from "../../Redux/chatSlice";
+import { selectNewChat, setNewChat } from "../../Redux/chatSlice";
 
 
 const ChatList = () => {
-  const dispatch = useDispatch();
-  const user = useSelector(selectUserProfile)
 
+  //const [newChat, setNewChat] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("")
+  
+  const user = useSelector(selectUserProfile)
+  const newChat = useSelector(selectNewChat)
+  const dispatch = useDispatch();
+  
   useEffect(()=> {
-    dispatch(setListChats({ user_id: user?.id, query_name: "" }))
+    if(Object.keys(user).length > 0){
+      dispatch(setListChats({ user_id: user?.id, query_name: "" }))
+    }
   }, [user])
 
-  const [newChat, setNewChat] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("")
-
   const handleNewChat = () =>{
-    setNewChat(!newChat);
+    //setNewChat(!newChat);
+    dispatch(setNewChat(!newChat))
   }
 
   const handleChange = (event) =>{
@@ -28,7 +34,6 @@ const ChatList = () => {
     dispatch(setListChats({user_id: user.id, query_name: event.target.value}));
   }
 
-  
   return (
     <div className={style.mainContainer}>
       <div className={style.chatListHeader}>
