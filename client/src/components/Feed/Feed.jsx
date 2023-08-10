@@ -26,9 +26,9 @@ const Feed = () => {
         console.log("Top:", document.documentElement.scrollTop);
         console.log("Window:", window.innerHeight);
 
-        if(window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight  && currentPage < totalPages) {
+        if(window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight && currentPage !== totalPages) {
                 setCurrentPage(currentPage + 1);
-        };
+        }
     };
 
     useEffect(() => {
