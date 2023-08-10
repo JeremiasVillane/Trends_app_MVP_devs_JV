@@ -7,27 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo, selectUserProfile } from "../../Redux/UsersSlice";
 import NavBar from "../../components/NavBar/NavBar";
 import NavBarBase from "../../components/NavBarBase/NavBarBase";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-
 
 
 const Profile = () => {
     const dispatch = useDispatch();
-    let userData = userId ? fetchParams() :useSelector(selectUserProfile);
-    const {userId} = useParams();
-    const URL = ""
+    const userData = useSelector(selectUserProfile);
 
-    const fetchParams = () => {
-      const fetch = axios.get()
-    }
     useEffect(() => {
-      if(!userData) {
         dispatch(getUserInfo())
-      }
-      if(userId) {
-      
-    }
     }, [])
 
 
