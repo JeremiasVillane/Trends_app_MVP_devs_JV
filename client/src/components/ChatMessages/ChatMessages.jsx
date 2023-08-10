@@ -4,7 +4,7 @@ import {VscSmiley} from "react-icons/vsc"
 import {AiOutlinePaperClip} from "react-icons/ai"
 import {TbSend} from "react-icons/tb"
 import { useDispatch, useSelector } from "react-redux"
-import {getMessages, postMessage, selectListMessages, selectNewChat, selectListGroups, selectSelectedUser, setIsMinimized, setListMessages, setNewChat} from "../../Redux/chatSlice"
+import {getMessages, postMessage, selectListMessages, selectNewChat, selectListGroups, selectSelectedUser, setIsMinimized, setListMessages, setNewChat, getGroupList, createGroupMember} from "../../Redux/chatSlice"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ChatMessageContainer } from ".."
@@ -24,25 +24,13 @@ const ChatMessages = ({socket}) => {
   const newChat = useSelector(selectNewChat)
   const dispatch = useDispatch();
 
-  const arrayTemporal = [
-    {
-      "groupId": 1,
-      "groupName": "Grupo 1"
-    },
-  
-    {
-      "groupId": 2,
-      "groupName": "Grupo 2"
-    }
-  ]
-
   const handleChange = (event) =>{
     event.preventDefault()
     setMessage(event.target.value)
   }
 
-  const handleGroupClick = (id) =>{
-    //logica de invitación de usuario al grupo
+  const handleGroupClick = (group_id) =>{
+    dispatch(createGroupMember({user_id: user.id, group_id: group_id}));
   }
 
   const handleMenu = () =>{
@@ -106,6 +94,10 @@ const ChatMessages = ({socket}) => {
     }
   }
 
+  useEffect(()=>{
+    dispatch(getGroupList());
+  }, [])
+
   return (
     <div className={style.mainContainer}>
       <div className={style.chatHeader}>
@@ -129,7 +121,7 @@ const ChatMessages = ({socket}) => {
         <div className={menuGroups ? style.menuGroups : style.hidden}  onMouseEnter={()=>setMenuGroups(true)} onMouseLeave={()=>setMenuGroups(false)}>
           <ul>
             {
-              arrayTemporal.map(group => {
+              listGroups?.map(group => {
                 return(
                   <li className={style.menuGroupsItem} onClick={handleGroupClick(group.id)}>
                     {group.groupName}
