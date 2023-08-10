@@ -27,6 +27,7 @@ export default function LoginPage() {
     }));
   };
 
+      console.log(inputs)
     //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
     //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
     function getUniqueQueryString() {

@@ -3,9 +3,9 @@ import style from "./NavBarBase.module.css";
 import {AiFillHome} from 'react-icons/ai';
 import {HiUser,HiChat,HiLogout} from 'react-icons/hi';
 import { Title } from "@tremor/react";
-import { logout } from "../../Redux/UsersSlice";
+import { logout, selectDarkMode, setDarkMode } from "../../Redux/UsersSlice";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 const {VITE_URL} = import.meta.env;
 
@@ -13,6 +13,9 @@ const NavBarBase = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const darkMode = useSelector(selectDarkMode);
+    const lightColor = "#9AC2EF";
+    const darkColor = "#FAB180";
 
     const handleProfile = () => {
         navigate("/Trends_app_MVP/profile");
@@ -38,6 +41,7 @@ const NavBarBase = () => {
     const toggleDarkMode = () => {
         const body = document.body;
         body.classList.toggle("dark-mode");
+        dispatch(setDarkMode()); 
     }
   return (
     <div className={style.left}>
@@ -46,7 +50,7 @@ const NavBarBase = () => {
         onClick={handleHome} 
         className={style.button}
         title="Inicio">
-        <AiFillHome  size={"3rem"} color="#9AC2EF" />
+        <AiFillHome  size={"3rem"} color={darkMode ? darkColor : lightColor} />
       </button>
       <p>Inicio</p>
 
@@ -54,7 +58,7 @@ const NavBarBase = () => {
         onClick={handleProfile}
         className={style.button}
         title="Mi Perfil">
-        <HiUser size={"3rem"}color="#9AC2EF"  />
+        <HiUser size={"3rem"} color={darkMode ? darkColor : lightColor}  />
       </button>
       <p>Mi Perfil</p>
 
@@ -62,7 +66,7 @@ const NavBarBase = () => {
         onClick={handleChats}
         className={style.button}
         title="Chats">
-        <HiChat size={"3rem"} color="#9AC2EF" />
+        <HiChat size={"3rem"} color={darkMode ? darkColor : lightColor} />
       </button>
       <p>Mis Chats</p>
 
@@ -70,7 +74,7 @@ const NavBarBase = () => {
         onClick={handleLogout}
         className={style.button}
         title="Salir">
-        <HiLogout size={"3rem"} color="#9AC2EF" />
+        <HiLogout size={"3rem"} color={darkMode ? darkColor : lightColor} />
       </button>
       <p>Salir</p>
 
@@ -78,7 +82,7 @@ const NavBarBase = () => {
         <button 
           className={style.button}
           onClick={toggleDarkMode}>
-          <i className="fas fa-moon text-3xl"/>
+          <i className="fas fa-moon text-3xl" style={{ color: darkMode ? darkColor : lightColor}}/>
         </button>
       <p>Modo oscuro</p>
     </div>

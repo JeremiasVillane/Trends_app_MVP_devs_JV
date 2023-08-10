@@ -1,10 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import style from "./FeedCard.module.css";
 import {HiUser,HiChat,HiLogout,HiMoon, HiMenuAlt1} from 'react-icons/hi';
+import { useDispatch, useSelector } from "react-redux";
+import { selectDarkMode } from "../../Redux/UsersSlice";
 
 const FeedCard = ({user}) => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const darkMode = useSelector(selectDarkMode);
+    const lightColor = "#9AC2EF";
+    const darkColor = "#FAB180";
 
     const handleProfile = () => {
         navigate(`/Trends_app_MVP/profile/${user.user.id}`);
@@ -33,10 +39,10 @@ const FeedCard = ({user}) => {
         </div>
         <div className={style.IconsContainer}>
           <button onClick={handleChats}>
-            <HiChat size={"2.6rem"}/>
+            <HiChat size={"2.6rem"} color={darkMode ? darkColor : lightColor}/>
           </button>
           <button onClick={handleProfile}>
-            <HiUser size={"2.6rem"}/>
+            <HiUser size={"2.6rem"} color={darkMode ? darkColor : lightColor}/>
           </button>
         </div>
       </div>

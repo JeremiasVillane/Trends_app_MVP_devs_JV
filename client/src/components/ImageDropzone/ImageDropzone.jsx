@@ -47,16 +47,20 @@ const ImageDropzone = ({type, handleCancelButton}) => {
           console.log(error);
         }
     }
-
+    
     const handleOnChange = (event) => {
         const {name, value} = event.target;
-        console.log(userData)
-        setEditData( prevState => ({
+        if(name === "info_skills") {
+          setEditData( prevState => ({
           ...prevState,
-          [name]: value
-        }));
-        console.log(userData)
-    }
+          [name]: value.split(", ")
+          }));
+        }
+        setEditData(prevState => ({
+        ...prevState,
+        [name]: value
+        }))
+      }
 
     
 
@@ -126,9 +130,19 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                             </div>
 
                             <div className={style.Option}>
+                                <label htmlFor="email"> Email*</label>
+                                <input 
+                                defaultValue={userData.name} 
+                                name="email" 
+                                id="email" 
+                                onChange={handleOnChange}
+                                type="text"
+                                />
+                            </div>
+                            <div className={style.Option}>
                                 <label htmlFor="skills"> Skills*</label>
                                 <input 
-                                defaultValue={userData.info_skills} 
+                                defaultValue={userData.info_skills  ? userData.info_skills.join(", "): null} 
                                 name="info_skills" 
                                 onChange={handleOnChange}
                                 id="skills" 
@@ -144,6 +158,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                                 id="country" 
                                 type="text" />
                             </div>
+
                             <div className={style.Option}>
                                 <label htmlFor="city"> City*</label>
                                 <input 
@@ -153,6 +168,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                                 id="city" 
                                 type="text" />
                             </div>
+
                             <div className={style.Option}>
                                 <label htmlFor="biography">Biography</label>
                                 <textarea
@@ -163,17 +179,19 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                                 id="biography" 
                                 type="text" />
                             </div>
+
                             <h4 className={style.SubTitle}>Academic</h4>
                             <div className={style.Option}>
-                                <label htmlFor="type">Type</label>
+                                <label htmlFor="formation">Formation</label>
                                 <input 
                                 defaultValue={userData.academic_formation} 
                                 name="academic_formation" 
-                                id="type" 
+                                id="formation" 
                                 type="text" />
                             </div>
+
                             <div className={style.Option}>
-                                <label htmlFor="institution">institution</label>
+                                <label htmlFor="institution">Institution</label>
                                 <input 
                                 defaultValue={userData.academic_institution} 
                                 name="academic_institution" 
@@ -181,6 +199,8 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                                 id="institution" 
                                 type="text" />
                             </div>
+
+
                             <div className={style.Option}>
                                 <label htmlFor="level">Level</label>
                                 <input 
@@ -190,6 +210,17 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                                 id="level" 
                                 type="text" />
                             </div>
+
+                            <div className={style.Option}>
+                              <label htmlFor="graduation">Graduation Year</label>
+                              <input 
+                              defaultValue={userData.academic_institution} 
+                              name="academic_institution" 
+                              onChange={handleOnChange}
+                              id="graduation" 
+                              type="text" />
+                          </div>
+                          <h4>Information</h4>
                     </div>
                     <div className={style.buttonDiv}>
                         <button className={style.saveButton} type="submit">SUBIR</button>

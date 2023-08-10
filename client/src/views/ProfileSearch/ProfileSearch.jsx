@@ -82,7 +82,7 @@ const ProfileSearch = () => {
                             <div className={style.Extra}></div>
                         </div>
 
-                        <h1>Student</h1>
+                        <h1>{userData.type}</h1>
 
                         <button className={style.EditButton}>
                             <HiChat size="2rem" color="#344C5A"/>

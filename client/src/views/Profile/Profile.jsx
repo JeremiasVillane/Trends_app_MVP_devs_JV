@@ -31,7 +31,6 @@ const Profile = () => {
     }]
     //*----------------------------------------------------------------
 
-    const [isProfileOwner, setIsProfileOwner] = useState(true);
     const [isEditing, setIsEditing] = useState({
         image: false,
         general: false
@@ -87,7 +86,7 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        <h1>Student</h1>
+                        <h1>userData.type</h1>
 
                         <button onClick={handleGeneralEdit} className={style.EditButton}>
                             <AiFillEdit size="2rem" color="#344C5A"/>

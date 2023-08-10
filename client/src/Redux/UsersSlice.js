@@ -10,6 +10,7 @@ const initialState = {
   companies: [],
   currentPage: 1,
   status: true,
+  darkMode: false,
   user: {},
   totalPages: 0,
 };
@@ -80,6 +81,9 @@ const usersSlice = createSlice({
     setStatus: (state) => {
       state.status = !state.status
     },
+    setDarkMode: (state) => {
+      state.darkMode = !state.darkMode
+    },
     logout: (state) => {
       state.allUsers = [];
       state.searchedUsers = [];
@@ -141,7 +145,7 @@ export default usersSlice.reducer;
 
 // export of the selectors of the global state
 export {getSearchedUsers, getUserInfo, getProfessionals, getStudents, getMatchedUsers};
-export const {addCompany, matchUsers, currentpage, setStatus, logout} = usersSlice.actions;
+export const {addCompany, matchUsers, currentpage, setStatus, logout, setDarkMode} = usersSlice.actions;
 export const selectAllUsers = (state) => state.users.allUsers;
 export const selectSearchedUsers = (state) => state.users.searchedUsers;
 export const selectStudents = (state) => state.users.students;
@@ -151,3 +155,4 @@ export const selectUserProfile = (state) => state.users.user;
 export const selectTotalPages = (state) => state.users.totalPages;
 export const selectCurrentPage = (state) => state.users.currentpage;
 export const selectStatus = (state) => state.users.status;
+export const selectDarkMode = (state) => state.users.darkMode;
