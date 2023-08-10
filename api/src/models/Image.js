@@ -17,6 +17,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      isProfileImage: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      }
     }
   );
 

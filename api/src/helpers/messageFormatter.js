@@ -5,11 +5,12 @@ const messageFormatter = (messages) => {
 
   for (const message of inputMessages) {
     const plainMessage = message.toJSON();
+    
     const outputMessage = {
       userId: plainMessage.user?.id,
       username: plainMessage.user?.username,
       profile_image: plainMessage.user?.profile_image,
-      messageId: plainMessage.id,
+      messageId: plainMessage.message_id,
       createdAt: plainMessage.createdAt,
       content: plainMessage.content,
       messageStatus: plainMessage.messageStatus,
@@ -21,4 +22,3 @@ const messageFormatter = (messages) => {
 };
 
 module.exports = messageFormatter;
-

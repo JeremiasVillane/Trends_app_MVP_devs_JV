@@ -4,12 +4,14 @@ const {
   getUsers,
   getGroups,
   getMessages,
+  getChats,
 } = require("../handlers/admin.handlers");
 const adminRoutes = Router();
 
 adminRoutes.post("/create", createAdmin);
 adminRoutes.get("/users", getUsers);
 adminRoutes.get("/users/groups", getGroups);
-adminRoutes.get("/users/messages", getMessages);
+adminRoutes.get("/users/chats/:userType", getChats)
+adminRoutes.get("/users/messages/:userType", getMessages);
 
 module.exports = adminRoutes;

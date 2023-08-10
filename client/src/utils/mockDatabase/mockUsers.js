@@ -7,9 +7,9 @@ const student1 = {
   email: "juan.perez@example.com",
   password: "contraseña123",
   profile_bio:
-    "Estudiante apasionado de ingeniería informática y desarrollo de software. Buscando especialización y oportunidades laborales.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2003-05-21",
-  profile_image: "https://randomuser.me/api/portraits/men/8.jpg",
+  profile_image: "",
   profile_city: "Buenos Aires",
   profile_country: "Argentina",
   profile_support: true,
@@ -41,9 +41,9 @@ const student2 = {
   email: "maria.sanchez@example.com",
   password: "password456",
   profile_bio:
-    "Estudiante de Recursos Humanos en busca de especialización y desarrollo profesional. Apasionada por la gestión del talento.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2003-05-12",
-  profile_image: "https://randomuser.me/api/portraits/women/13.jpg",
+  profile_image: "",
   profile_city: "Madrid",
   profile_country: "España",
   profile_support: false,
@@ -75,7 +75,7 @@ const student3 = {
   profile_bio:
     "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2003-05-12",
-  profile_image: "https://randomuser.me/api/portraits/men/9.jpg",
+  profile_image: "",
   profile_city: "New York",
   profile_country: "United States",
   profile_support: true,
@@ -111,9 +111,9 @@ const student4 = {
   email: "laura.johnson@example.com",
   password: "qwerty123",
   profile_bio:
-    "Estudiante de Psicología en New York University, interesado en investigar neurociencia y tratar trastornos de ansiedad. Busco definir mi camino profesional.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2007-01-12",
-  profile_image: "https://randomuser.me/api/portraits/women/14.jpg",
+  profile_image: "",
   profile_city: "London",
   profile_country: "United Kingdom",
   profile_support: false,
@@ -139,9 +139,9 @@ const student5 = {
   email: "carlos.fernandez@example.com",
   password: "contraseña456",
   profile_bio:
-    "Estudiante de Derecho en la UNAM, interesado en derecho internacional y propiedad intelectual. Busco pasantía o trabajo y conocer el mercado laboral.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2000-02-12",
-  profile_image: "https://randomuser.me/api/portraits/men/10.jpg",
+  profile_image: "",
   profile_city: "Mexico City",
   profile_country: "Mexico",
   profile_support: true,
@@ -174,9 +174,9 @@ const student6 = {
   email: "juan@email.com",
   password: "1234",
   profile_bio:
-    "Estudiante de Finanzas y Marketing en busca de pasantía o trabajo. Interesado en marketing internacional y conocer el mercado laboral de mi profesión.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2000-02-02",
-  profile_image: "https://randomuser.me/api/portraits/men/11.jpg",
+  profile_image: "",
   profile_city: "Cartagena",
   profile_country: "Colombia",
   profile_support: true,
@@ -205,9 +205,9 @@ const student7 = {
   email: "jona@example.com",
   password: "qwerty",
   profile_bio:
-    "Estudiante de Finanzas en University of California, Berkeley, interesado en análisis de inversiones y mercado de valores. Busco profundizar mis estudios y elegir una especialización.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2000-02-02",
-  profile_image: "https://randomuser.me/api/portraits/men/12.jpg",
+  profile_image: "",
   profile_city: "San Francisco",
   profile_country: "United States",
   profile_support: true,
@@ -242,7 +242,7 @@ const student8 = {
   profile_bio:
     "Soy una estudiante apasionada por el diseño gráfico y la creatividad. Siempre busco aprender nuevas técnicas y enfoques para mejorar mis habilidades.",
   profile_birth: "2000-11-12",
-  profile_image: "https://randomuser.me/api/portraits/women/15.jpg",
+  profile_image: "",
   profile_city: "Bogotá",
   profile_country: "Colombia",
   profile_support: false,
@@ -278,7 +278,7 @@ const student9 = {
   profile_bio:
     "Estudiante de ciencias ambientales y amante de la naturaleza. Mi objetivo es trabajar en proyectos que ayuden a preservar y proteger el medio ambiente para las generaciones futuras.",
   profile_birth: "2002-09-03",
-  profile_image: "https://randomuser.me/api/portraits/men/12.jpg",
+  profile_image: "",
   profile_city: "Sydney",
   profile_country: "Australia",
   profile_support: true,
@@ -313,7 +313,7 @@ const student10 = {
   profile_bio:
     "Estudiante de medicina con pasión por la investigación y el servicio a los demás. Sueño con convertirme en una médica que marque la diferencia en la vida de las personas.",
   profile_birth: "2001-07-19",
-  profile_image: "https://randomuser.me/api/portraits/women/16.jpg",
+  profile_image: "",
   profile_city: "Paris",
   profile_country: "France",
   profile_support: false,
@@ -344,7 +344,7 @@ const student11 = {
   profile_bio:
     "Apasionada por las artes escénicas y el teatro. Siempre en busca de oportunidades para expresar mi creatividad y conectar con el público a través de las actuaciones.",
   profile_birth: "2000-04-25",
-  profile_image: "https://randomuser.me/api/portraits/women/17.jpg",
+  profile_image: "",
   profile_city: "New York City",
   profile_country: "United States",
   profile_support: true,
@@ -378,7 +378,7 @@ const student12 = {
   profile_bio:
     "Estudiante de ingeniería civil con pasión por el diseño de infraestructuras sostenibles. Busco contribuir al desarrollo urbano de manera responsable con el medio ambiente.",
   profile_birth: "2001-09-15",
-  profile_image: "https://randomuser.me/api/portraits/men/13.jpg",
+  profile_image: "",
   profile_city: "Mexico City",
   profile_country: "Mexico",
   profile_support: true,
@@ -412,7 +412,7 @@ const student13 = {
   profile_bio:
     "Estudiante de psicología interesada en el bienestar emocional y mental. Aspiro a ayudar a las personas a superar sus desafíos emocionales y desarrollar una mentalidad positiva.",
   profile_birth: "2002-03-07",
-  profile_image: "https://randomuser.me/api/portraits/women/18.jpg",
+  profile_image: "",
   profile_city: "Los Angeles",
   profile_country: "United States",
   profile_support: true,
@@ -450,7 +450,7 @@ const student14 = {
   profile_bio:
     "Estudiante de biología con interés en la investigación de la biodiversidad y la conservación de especies. Me apasiona el estudio de los ecosistemas y su relación con el cambio climático.",
   profile_birth: "2000-12-28",
-  profile_image: "https://randomuser.me/api/portraits/women/19.jpg",
+  profile_image: "",
   profile_city: "São Paulo",
   profile_country: "Brazil",
   profile_support: false,
@@ -482,7 +482,7 @@ const student15 = {
   profile_bio:
     "Estudiante de arquitectura apasionado por el diseño sostenible y la construcción ecológica. Mi objetivo es crear espacios armoniosos que respeten el entorno y promuevan un estilo de vida más sustentable.",
   profile_birth: "2002-06-15",
-  profile_image: "https://randomuser.me/api/portraits/men/13.jpg",
+  profile_image: "",
   profile_city: "Santiago",
   profile_country: "Chile",
   profile_support: true,
@@ -513,7 +513,7 @@ const student16 = {
   profile_bio:
     "Estudiante de ingeniería civil enfocada en proyectos de infraestructura vial. Mi objetivo es contribuir al diseño y construcción de carreteras seguras y eficientes para mejorar la movilidad urbana.",
   profile_birth: "2001-08-10",
-  profile_image: "https://randomuser.me/api/portraits/women/20.jpg",
+  profile_image: "",
   profile_city: "Lima",
   profile_country: "Peru",
   profile_support: true,
@@ -554,7 +554,7 @@ const student17 = {
   profile_bio:
     "Estudiante de arquitectura con pasión por el diseño urbano y la regeneración de espacios públicos. Aspiro a crear ciudades más habitables y amigables con el entorno.",
   profile_birth: "2001-11-28",
-  profile_image: "https://randomuser.me/api/portraits/women/21.jpg",
+  profile_image: "",
   profile_city: "Bogotá",
   profile_country: "Colombia",
   profile_support: true,
@@ -589,7 +589,7 @@ const student18 = {
   profile_bio:
     "Estudiante apasionado por la programación y el desarrollo de software. Busco adquirir conocimientos en nuevas tecnologías y contribuir a la creación de soluciones innovadoras.",
   profile_birth: "2000-09-12",
-  profile_image: "https://randomuser.me/api/portraits/men/14.jpg",
+  profile_image: "",
   profile_city: "San Francisco",
   profile_country: "United States",
   profile_support: true,
@@ -624,7 +624,7 @@ const student19 = {
   profile_bio:
     "Estudiante de ingeniería informática con interés en la ciberseguridad. Me apasiona la protección de datos y la prevención de ataques informáticos.",
   profile_birth: "2001-05-18",
-  profile_image: "https://randomuser.me/api/portraits/women/22.jpg",
+  profile_image: "",
   profile_city: "Madrid",
   profile_country: "Spain",
   profile_support: false,
@@ -659,7 +659,7 @@ const student20 = {
   profile_bio:
     "Estudiante de diseño gráfico enfocada en la creación de identidades visuales impactantes. Mi objetivo es combinar la creatividad con la estrategia para transmitir mensajes poderosos a través del diseño.",
   profile_birth: "2002-02-05",
-  profile_image: "https://randomuser.me/api/portraits/women/15.jpg",
+  profile_image: "",
   profile_city: "Buenos Aires",
   profile_country: "Argentina",
   profile_support: true,
@@ -690,9 +690,9 @@ const professional1 = {
   email: "ana.rodriguez@example.com",
   password: "password123",
   profile_bio:
-    "Gerente de Marketing en ABC Marketing Agency. Especializada en marketing digital y planificación estratégica. Interesada en conocer más sobre el mercado laboral y conectar con colegas.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "1997-03-01",
-  profile_image: "https://randomuser.me/api/portraits/women/1.jpg",
+  profile_image: "",
   profile_city: "Madrid",
   profile_country: "España",
   profile_support: true,
@@ -730,9 +730,9 @@ const professional2 = {
   email: "michael.brown@example.com",
   password: "password456",
   profile_bio:
-    "Ingeniero de Software en XYZ Tech Solutions. Especializado en desarrollo web y móvil, con interés en Inteligencia Artificial y aplicaciones híbridas. Busco especialización y emprender.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "1997-06-07",
-  profile_image: "https://randomuser.me/api/portraits/men/1.jpg",
+  profile_image: "",
   profile_city: "New York",
   profile_country: "United States",
   profile_support: false,
@@ -770,9 +770,9 @@ const professional3 = {
   email: "marie.martin@example.com",
   password: "qwerty123",
   profile_bio:
-    "Consultora de Recursos Humanos en ABC Consulting, especializada en evaluación de personal y desarrollo de talento. Interesada en psicología organizacional y liderazgo.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "1997-03-01",
-  profile_image: "https://randomuser.me/api/portraits/women/2.jpg",
+  profile_image: "",
   profile_city: "Paris",
   profile_country: "France",
   profile_support: true,
@@ -808,9 +808,9 @@ const professional4 = {
   email: "david.lee@example.com",
   password: "password789",
   profile_bio:
-    "Estudiante de Finanzas en University of California, Berkeley, interesado en análisis de inversiones y mercado de valores. Buscando adquirir experiencia en el campo financiero.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2005-10-20",
-  profile_image: "https://randomuser.me/api/portraits/men/2.jpg",
+  profile_image: "",
   profile_city: "San Francisco",
   profile_country: "United States",
   profile_support: true,
@@ -851,9 +851,9 @@ const professional5 = {
   email: "maria.garcia@example.com",
   password: "contraseña456",
   profile_bio:
-    "Consultora de Estrategia en ABC Consulting, especializada en análisis de mercado y desarrollo empresarial. Interesada en transformación digital e innovación empresarial.",
+    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam ipsam officia alias sapiente blanditiis ipsa nisi odio nam maiores corporis doloremque culpa itaque aspernatur inventore hic, sint quisquam voluptatibus iusto!",
   profile_birth: "2007-01-12",
-  profile_image: "https://randomuser.me/api/portraits/women/3.jpg",
+  profile_image: "",
   profile_city: "Madrid",
   profile_country: "España",
   profile_support: false,
@@ -893,7 +893,7 @@ const professional6 = {
   profile_bio:
     "Experienced software engineer with a passion for developing scalable and efficient applications. Seeking opportunities to work on challenging projects and collaborate with talented teams.",
   profile_birth: "1985-10-12",
-  profile_image: "https://randomuser.me/api/portraits/men/3.jpg",
+  profile_image: "",
   profile_city: "San Francisco",
   profile_country: "United States",
   profile_support: false,
@@ -932,7 +932,7 @@ const professional7 = {
   profile_bio:
     "Marketing professional with a focus on digital advertising and brand management. Committed to driving brand awareness and customer engagement through innovative marketing strategies.",
   profile_birth: "1990-06-25",
-  profile_image: "https://randomuser.me/api/portraits/women/4.jpg",
+  profile_image: "",
   profile_city: "Mexico City",
   profile_country: "Mexico",
   profile_support: true,
@@ -968,7 +968,7 @@ const professional8 = {
   profile_bio:
     "Experienced business analyst with a strong background in data analysis and project management. Dedicated to driving business growth and process optimization through data-driven insights.",
   profile_birth: "1988-02-18",
-  profile_image: "https://randomuser.me/api/portraits/men/4.jpg",
+  profile_image: "",
   profile_city: "Singapore",
   profile_country: "Singapore",
   profile_support: false,
@@ -1004,7 +1004,7 @@ const professional9 = {
   profile_bio:
     "Profesional en administración de empresas con experiencia en gestión financiera y estratégica. Comprometida con el crecimiento y el éxito empresarial a través de la eficiencia y la toma de decisiones informadas.",
   profile_birth: "1992-09-08",
-  profile_image: "https://randomuser.me/api/portraits/women/5.jpg",
+  profile_image: "",
   profile_city: "Bogotá",
   profile_country: "Colombia",
   profile_support: true,
@@ -1040,7 +1040,7 @@ const professional10 = {
   profile_bio:
     "Psicóloga clínica con experiencia en terapia cognitivo-conductual. Comprometida con ayudar a las personas a superar desafíos emocionales y mejorar su bienestar mental.",
   profile_birth: "1987-12-15",
-  profile_image: "https://randomuser.me/api/portraits/women/6.jpg",
+  profile_image: "",
   profile_city: "Santiago",
   profile_country: "Chile",
   profile_support: true,
@@ -1077,7 +1077,7 @@ const professional11 = {
   profile_bio:
     "Psicóloga organizacional apasionada por el desarrollo del talento y la promoción del bienestar en el trabajo. Busco colaborar con organizaciones para potenciar el crecimiento personal y profesional de sus empleados.",
   profile_birth: "1990-08-22",
-  profile_image: "https://randomuser.me/api/portraits/women/7.jpg",
+  profile_image: "",
   profile_city: "Buenos Aires",
   profile_country: "Argentina",
   profile_support: false,
@@ -1114,7 +1114,7 @@ const professional12 = {
   profile_bio:
     "Abogado especializado en derecho laboral y derecho de negocios. En búsqueda de oportunidades para asesorar a empresas y particulares en cuestiones legales complejas.",
   profile_birth: "1983-06-10",
-  profile_image: "https://randomuser.me/api/portraits/men/5.jpg",
+  profile_image: "",
   profile_city: "Mexico City",
   profile_country: "Mexico",
   profile_support: true,
@@ -1147,7 +1147,7 @@ const professional13 = {
   profile_bio:
     "Environmental scientist with a focus on sustainable resource management and conservation. Passionate about finding innovative solutions to environmental challenges.",
   profile_birth: "1991-11-28",
-  profile_image: "https://randomuser.me/api/portraits/women/8.jpg",
+  profile_image: "",
   profile_city: "Vancouver",
   profile_country: "Canada",
   profile_support: false,
@@ -1183,7 +1183,7 @@ const professional14 = {
   profile_bio:
     "Software engineer with a focus on mobile app development. Passionate about creating user-friendly and efficient applications that improve people's lives.",
   profile_birth: "1995-04-17",
-  profile_image: "https://randomuser.me/api/portraits/women/9.jpg",
+  profile_image: "",
   profile_city: "New York",
   profile_country: "United States",
   profile_support: true,
@@ -1217,7 +1217,7 @@ const professional15 = {
   profile_bio:
     "Front-end web developer with a passion for creating interactive and visually appealing websites. Committed to delivering exceptional user experiences through responsive design.",
   profile_birth: "1989-11-02",
-  profile_image: "https://randomuser.me/api/portraits/men/6.jpg",
+  profile_image: "",
   profile_city: "Berlin",
   profile_country: "Germany",
   profile_support: false,
@@ -1253,7 +1253,7 @@ const professional16 = {
   profile_bio:
     "Data scientist with a background in machine learning and statistical analysis. Passionate about leveraging data to solve complex problems and drive business growth.",
   profile_birth: "1992-08-12",
-  profile_image: "https://randomuser.me/api/portraits/women/10.jpg",
+  profile_image: "",
   profile_city: "San Francisco",
   profile_country: "United States",
   profile_support: true,
@@ -1288,7 +1288,7 @@ const professional17 = {
   profile_bio:
     "Computer scientist specializing in artificial intelligence and machine learning. Dedicated to developing cutting-edge technologies that drive innovation and solve complex problems.",
   profile_birth: "1990-07-25",
-  profile_image: "https://randomuser.me/api/portraits/men/7.jpg",
+  profile_image: "",
   profile_city: "San Francisco",
   profile_country: "United States",
   profile_support: true,
@@ -1323,7 +1323,7 @@ const professional18 = {
   profile_bio:
     "Software engineer with a focus on web development and user experience design. Committed to building intuitive and user-friendly applications that deliver seamless experiences.",
   profile_birth: "1988-09-16",
-  profile_image: "https://randomuser.me/api/portraits/women/11.jpg",
+  profile_image: "",
   profile_city: "London",
   profile_country: "United Kingdom",
   profile_support: false,
@@ -1359,7 +1359,7 @@ const professional19 = {
   profile_bio:
     "Ingeniero civil especializado en diseño y gestión de proyectos de infraestructuras. Comprometido con el desarrollo de soluciones innovadoras que mejoren la calidad de vida de las personas.",
   profile_birth: "1985-12-03",
-  profile_image: "https://randomuser.me/api/portraits/men/8.jpg",
+  profile_image: "",
   profile_city: "Lima",
   profile_country: "Perú",
   profile_support: true,
@@ -1395,7 +1395,7 @@ const professional20 = {
   profile_bio:
     "Arquitecta apasionada por el diseño de espacios funcionales y estéticamente atractivos. Comprometida con la creación de ambientes que mejoren la experiencia de quienes los habitan.",
   profile_birth: "1992-06-20",
-  profile_image: "https://randomuser.me/api/portraits/women/12.jpg",
+  profile_image: "",
   profile_city: "Barcelona",
   profile_country: "Spain",
   profile_support: false,

@@ -5,7 +5,10 @@ const chatListFilter = (array, searchString) => {
     const name = obj.name.toLowerCase();
     const username = obj.username ? obj.username.toLowerCase() : "";
 
-    return (name.includes(searchString) || (obj.username && username.includes(searchString)));
+    const words = searchString.toLowerCase().split(" ");
+    return words.every(
+      (word) => name.includes(word) || (obj.username && username.includes(word))
+    );
   });
 };
 

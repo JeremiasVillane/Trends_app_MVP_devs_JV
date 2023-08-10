@@ -4,6 +4,10 @@ const REGEX_NUMBERS = /^\d+$/;
 const REGEX_SENTENCE = /^[\w\s.,'"-]+$/;
 
 module.exports = (z) => {
+  const isImageUrlOrLocalPath = (value) => {
+    return z.string().url().check(value) || (typeof value === 'string' && value.startsWith('src\\uploads\\'));
+  };
+
   const userProfileSchema = z.object({
     type: z.enum(["student", "professional", "company"], {
       required_error: "prop: 'type' is required.",
@@ -50,9 +54,7 @@ module.exports = (z) => {
       .optional(),
     //^^^^^^^^^^^^^^^^^^no terminado^^^^^^^^^^^^^^^^^^
 
-    profile_image: z.string().url({
-      message: "Invalid image url format.",
-    }).optional(),
+    profile_image: z.custom(isImageUrlOrLocalPath).optional(),
     profile_city: z
       .string()
       .trim()

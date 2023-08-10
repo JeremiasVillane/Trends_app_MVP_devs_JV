@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ProfessionalRegisterForm, StudentRegisterForm, CompanyRegisterForm } from "../../components";
 import { useNavigate } from "react-router-dom";
 
-import './register.css';
 
 export default function RegisterPage() {
   const navigate = useNavigate();

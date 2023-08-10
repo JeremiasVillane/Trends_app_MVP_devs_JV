@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 import DataJobCompany from "./dataJobCompany/dataJobCompany";
 import InfoJobCompany from "./infoJobCompany/infoJobCompany";
 import style from "./index.module.css";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+const {VITE_URL} = import.meta.env;
 
 
-const JobFormCompany = ({jobEdit,companyId})=>{
+const JobFormCompany = ({jobEdit,companyId,handlePage})=>{
     console.log("que ingresa por jobEdit <jobFormCompany>: ", jobEdit)
     console.log("que ingresa por companyId <jobFormCompany>: ", companyId)
+const navigate = useNavigate()
     
 const[isFormComplete, setIsFormComplete] = useState(false);
 
@@ -68,9 +72,19 @@ const handlePageForm = (event) =>{
     };
 };
 
-    const handleChangeSelect = (prop,value)=>{
-        setFormJob({...formJob,[prop]:value})
-    }
+    // const handleChangeSelect = (prop,value)=>{
+    //     setFormJob({...formJob,[prop]:value})
+    // }
+    const handleChangeSelect = (event) =>{
+        console.log("que trae event de handleChangeSelect: ", event)
+        const{name, value} = event.target;
+        console.log("qeu tiene name: ", name)
+        console.log("que tiene value: ", value)
+        setFormJob({
+            ...formJob,
+            [name]:value
+        })
+    };
 
     const handleChangeForm = (event)=>{
         console.log("que trae event: ", event);
@@ -115,34 +129,71 @@ const handlePageForm = (event) =>{
     //Asi formatea al enviar la carga/modificacion de una oferta laboral
     const formatJob = (data) =>{
         console.log("que tiene data: ", data)
+        
+        if(!data.closingDate) delete data.closingDate;
+        // if(data.closingDate === undefined) delete data.closingDate;
+        if(!data.closingDate) console.log("NOO TIENE DATOS CLOSINGDATE")
+        else console.log("TIENE DATOS CLOSINGDATE")
+
         const format = {
-            companyId:companyId,
             jobName:data.jobName,
             creationDate:data.creationDate,
             closingDate:data.closingDate,
             active:data.active, //true / false
-            level_required:data.level_required,
-            study_area:data.study_area.split(','),//[],
-            experience_required:data.experience_required,
+            levelRequired:data.level_required,
+            studyArea:data.study_area.split(','),//[],
+            experienceRequired:data.experience_required,
             industry:data.industry.split(','),//[],    
             benefits:data.benefits.split(','),//[],
-            skills_required:data.skills_required.split(','),//[],
-            job_description:data.job_description.split(','),//[],
-            job_goal:data.job_goal.split(','),//[],
-            languages_required:data.languages_required.split(','),//[],
+            skillsRequired:data.skills_required.split(','),//[],
+            jobDescription:data.job_description.split(','),//[],
+            jobGoal:data.job_goal.split(','),//[],
+            languagesRequired:data.languages_required.split(','),//[],
             availability:data.availability,
-            contract_offered:data.contract_offered
+            contractOffered:data.contract_offered
         };
-    
+
+        if(!format.closingDate) delete format.closingDate;
+     
         return format;
     }
 
-    const submitHandler = (event) =>{
+    //?AL PRESIONAR BOTON SUBMIT (NUEVO O MODIFICAR)
+    const submitHandler = async(event) =>{
         event.preventDefault();
-        const envioData = formatJob(formJob);
+        const envioData = await formatJob(formJob);
         console.log("como envia datos job: ", envioData)
-        //!PIDE DE NUEVO A BACK JOBS Y RENDERIZA DE NUEVO.
-        const URL="http://localhost:3001"
+        
+        if(jobEdit){
+            //?MODIFICA OFERTA LABORAL
+            const ID = jobEdit.id;
+            const URL=`${VITE_URL}/api/v1/job/${ID}`
+            try{
+                console.log("MODIFICO JOB", envioData)
+                console.log("como envia a PUT: ", URL)
+                await axios.put(URL,envioData,{withCredentials: "include"});
+                await new Promise (res => setTimeout(res,100));
+                handlePage("companyJobs")
+                
+            }catch(error){
+                console.log("error post job: ", error.message)
+            }            
+        }else{
+            //?NUEVA OFERTA LABORAL
+            const ID = companyId;
+            const URL=`${VITE_URL}/api/v1/job/${ID}`
+            try{
+                console.log("AGREGO NUEVO JOB", envioData)
+                console.log("como envia a POST: ", URL)
+                await axios.post(URL,envioData,{withCredentials: "include"});
+                await new Promise (res => setTimeout(res,100));
+                handlePage("companyJobs")
+            }catch(error){
+                console.log("error post job: ", error.message)
+            }
+        };
+
+        
 
     };
 
@@ -168,7 +219,7 @@ const handlePageForm = (event) =>{
             setFormJob({
                 jobName:jobEdit.jobName,
                 creationDate:jobEdit.creationDate,
-                closingDate:jobEdit.closingDate,
+                closingDate:jobEdit.closingDate ?jobEdit.closingDate :"",
                 active:jobEdit.active,
                 level_required:jobEdit.levelRequired,
                 study_area:jobEdit.studyArea.join(','),
@@ -229,7 +280,7 @@ const handlePageForm = (event) =>{
                 </div>
             </form>
             {/* BOTONES NAVEGACION */}
-            <div>
+            <div className={style.contentButton}>
                 <button
                     name="Anterior"
                     hidden={pageForm.button1_hide}

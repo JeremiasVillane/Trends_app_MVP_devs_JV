@@ -14,16 +14,19 @@
     /* border: 1px solid blue; */
     border-top: 1px solid #232323;
     padding-top: 2vh;
-    color: #232323;
 }
 .body h3{
     font-family: "Rubik-Regular";
+    font-size: 1rem;
     text-align: left;
     padding: 0 1rem 0 1rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
     color: #232323;
 }
 .postJob{
     border: 1px solid black;
+    border-radius: 10px;
     margin: 10px;
     padding-top: 1rem;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -32,7 +35,7 @@
 
 .button{
     background-color: #FAB180;
-    color: white;
+    color: black;
     border-radius: 25px;
     margin: 10px;
     padding-left: 1vw;
@@ -48,7 +51,13 @@
 :global(.dark-mode) .head {
     background-color: #383636;
 }
-:global(.dark-mode) .head h1, .body h1, .body h3{
+:global(.dark-mode) .head h1{
+    color: #CCB5A5;
+}
+:global(.dark-mode) .body h1{
+    color: #CCB5A5;
+}
+:global(.dark-mode) .body h3{
     color: #CCB5A5;
 }
 :global(.dark-mode) .button{
@@ -59,4 +68,12 @@
     margin: 10px;
     padding-top: 1rem;
     box-shadow: 2px 2px 4px rgba(196, 196, 196, 0.5);
+}
+@media screen and (max-width: 758px){
+    .head{
+        text-align: center;
+    }
+    .head h1{
+        text-align: left;
+    }
 }

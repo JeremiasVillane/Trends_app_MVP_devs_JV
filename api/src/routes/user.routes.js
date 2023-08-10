@@ -5,8 +5,7 @@ const {
   editProfile,
   removeProfile,
 } = require("../handlers/user.handlers");
-const validateId = require("../middlewares/validateId");
-const validateProfileOwner = require("../middlewares/validateProfileOwner");
+const { validateId, validateProfileOwner } = require("../middlewares");
 
 const userRoutes = Router();
 

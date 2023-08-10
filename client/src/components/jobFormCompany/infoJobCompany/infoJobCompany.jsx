@@ -2,7 +2,7 @@ import { Select, SelectItem, Subtitle, TextInput, Title } from "@tremor/react";
 import { useEffect, useState } from "react";
 import style from './infoJobCompany.module.css';
 
-
+ 
 const infoJobCompany = ({formJob,handleChangeForm,handleChangeSelect})=>{
 
     const [data, setData] = useState(null);
@@ -27,13 +27,13 @@ const infoJobCompany = ({formJob,handleChangeForm,handleChangeSelect})=>{
                 <hr/><br></br>
                 <h1>Informacion Adicional de la Oferta</h1>
                     <h3>Beneficios otorgados: </h3>
-                    <TextInput
+                    <input
                         name="benefits"
                         type="text"
                         value={formJob.benefits}
                         onChange={handleChangeForm}
                         placeholder="ingrese beneficios separados por comas"
-                    ></TextInput>
+                    ></input>
 
                     {/* {error.benefits && (
                         <label style={{ color: "red" }}>{error.benefits}</label>
@@ -41,88 +41,88 @@ const infoJobCompany = ({formJob,handleChangeForm,handleChangeSelect})=>{
                     <br />
 
                     <h3>Habilidades requeridas: </h3>
-                    <TextInput
+                    <input
                         name="skills_required"
                         type="text"
                         value={formJob.skills_required}
                         onChange={handleChangeForm}
                         placeholder="ingrese habilidades separadas por comas"
-                    ></TextInput>
+                    ></input>
                     {/* {error.skills_required && (
                         <label style={{ color: "red" }}>{error.skills_required}</label>
                     )} */}
                     <br />
 
                     <h3>Descripcion y Responsabilidades del puesto: </h3>
-                    <TextInput
+                    <input
                         name="job_description"
                         type="text"
                         value={formJob.job_description}
                         onChange={handleChangeForm}
                         placeholder="ingrese descripcion separados por comas"
-                    ></TextInput>
+                    ></input>
                     {/* {error.job_description && (
                         <label style={{ color: "red" }}>{error.job_description}</label>
                     )} */}
                     <br />
 
                     <h3>Objetivos y metas del trabajo propuesto: </h3>
-                    <TextInput
+                    <input
                         name="job_goal"
                         type="text"
                         value={formJob.job_goal}
                         onChange={handleChangeForm}
                         placeholder="ingrese objetivos separados por comas"
-                    ></TextInput>
+                    ></input>
                     {/* {error.job_goal && (
                         <label style={{ color: "red" }}>{error.job_goal}</label>
                     )} */}
                     <br />
 
                     <h3>Idiomas Requeridos: </h3>
-                    <TextInput
+                    <input
                         name="languages_required"
                         type="text"
                         value={formJob.languages_required}
                         onChange={handleChangeForm}
                         placeholder="ingrese idiomas separados por comas"
-                    ></TextInput>
+                    ></input>
                     {/* {error.languages_required && (
                         <label style={{ color: "red" }}>{error.languages_required}</label>
                     )} */}
                     <br />
 
                     <h3>Disponibilidad: </h3>
-                    <Select
+                    <select
                         name="availability"
-                        value={formJob.availability}
-                        onValueChange={(value) => handleChangeSelect("availability", value)}
-                        placeholder="--seleccione una opcion---"
+                        value={formJob.availability ?formJob.availability :null}
+                        onChange={handleChangeSelect}
                     >
+                        <option selected disabled value="predefinido">--Seleccione opcion--</option>
                         {data?.availabilitys.map((availability, index) => (
-                        <SelectItem key={index} value={availability.value}>
+                        <option key={index} value={availability.value}>
                             {availability.value}
-                        </SelectItem>
+                        </option>
                         ))}
-                    </Select>
+                    </select>
                     {/* {error.availability && (
                         <label style={{ color: "red" }}>{error.availability}</label>
-                    )} */}
+                    )} */} 
                     <br />
 
                     <h3>Tipo de Contratacion Ofrecida: </h3>
-                    <Select
+                    <select
                         name="contract_offered"
-                        value={formJob.contract_offered}
-                        onValueChange={(value) => handleChangeSelect("contract_offered", value)}
-                        placeholder="--seleccione opcion---"
+                        value={formJob.contract_offered ?formJob.contract_offered :null}
+                        onChange={handleChangeSelect}
                     >
+                        <option selected disabled value="predefinido">--Seleccione opcion--</option>
                         {data?.contracts.map((contract, index) => (
-                        <SelectItem key={index} value={contract.value}>
+                        <option key={index} value={contract.value}>
                             {contract.value}
-                        </SelectItem>
+                        </option>
                         ))}
-                    </Select>
+                    </select>
                     {/* {error.contract_offered && (
                         <label style={{ color: "red" }}>{error.contract_offered}</label>
                     )} */}

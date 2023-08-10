@@ -2,12 +2,13 @@ import { Select, SelectItem, Subtitle, TextInput, Title } from "@tremor/react";
 import style from './candidatesCompany.module.css';
 import { useEffect, useState } from "react";
 import {HiAcademicCap,HiBriefcase} from 'react-icons/hi';
+import { useNavigate } from "react-router-dom";
 
- 
-const candidatesCompany = ({jobName,arraycandidates}) => {
+  
+const candidatesCompany = ({jobName,arraycandidates,handlePageProfileCandidate}) => {
     console.log("que recibe jobName <candidatesCompany>: ", jobName)
     console.log("que recibe arraycandidates <candidatesCompany>: ", arraycandidates);
-    const[candidates, setCandidates] = useState();
+    const[candidates, setCandidates] = useState([]);
 
     const calcularEdad=(fechaNacimiento)=>{
         const fechaNacObj = new Date(fechaNacimiento);
@@ -26,11 +27,19 @@ const candidatesCompany = ({jobName,arraycandidates}) => {
         }
 
         return edad;
-    }
+    };
+
+    const navigate = useNavigate();
+
+    // const handlePageProfileCandidate=()=>{
+    //     navigate('/Trends_app_MVP/profile');
+    // }
 
     const [value, setValue] = useState('all');
-    const [filterCandidates, setFilterCandidates] = useState();
+    const [filterCandidates, setFilterCandidates] = useState([]);
+
     useEffect(()=>{
+        console.log("que tiene value: ", value)
         if(value==='all'){
             setFilterCandidates(candidates);
         }
@@ -44,24 +53,29 @@ const candidatesCompany = ({jobName,arraycandidates}) => {
         }
     },[value])
 
+    const handleChange = (event)=>{
+        const {value} = event.target;
+        setValue(value);
+    };
+
     useEffect(()=>{
         //al montarse
-        setCandidates(arraycandidates);
-        setFilterCandidates(arraycandidates);
+        arraycandidates ?setCandidates(arraycandidates) :setCandidates([]);
+        arraycandidates ?setFilterCandidates(arraycandidates) :setFilterCandidates([]);
     },[]);
 
     return(
-        <div>
+        <div className={style.container}>
             <div className={style.head}>
-                <Title>Cantidatos para oferta laboral: {jobName}</Title>
+                <h1>Candidatos para oferta laboral: {jobName}</h1>
                 <div className={style.selectContainer}>
-                    <Select 
-                        value={value} onValueChange={setValue}
+                    <select 
+                        value={value} onChange={handleChange}
                     >
-                        <SelectItem value="all">todos</SelectItem>
-                        <SelectItem value="student">estudiantes</SelectItem>
-                        <SelectItem value="professional">profesionales</SelectItem>
-                    </Select>
+                        <option value="all">todos</option>
+                        <option value="student">estudiantes</option>
+                        <option value="professional">profesionales</option>
+                    </select>
                 </div>
             </div>
             <div className={style.cardContainer}>
@@ -73,14 +87,15 @@ const candidatesCompany = ({jobName,arraycandidates}) => {
                             </div>
                             <div className={style.cardProfile}>
                                 <div className={style.nameIcon}>
-                                    <Title>{candidate.name}</Title>{candidate.type==="student" ?<HiAcademicCap/> :<HiBriefcase/>}
+                                    <h1>{candidate.name}</h1>{candidate.type==="student" ?<HiAcademicCap/> :<HiBriefcase/>}
                                 </div>
-                                <p className={style.subtitle}>{calcularEdad(candidate.profile_birth)} Años - {candidate.info_career.join(',')}</p>
-                                <p>{candidate.profile_bio}</p>
+                                <h3 className={style.subtitle}>{calcularEdad(candidate.profile_birth)} Años - {candidate.info_career.join(',')}</h3>
+                                <h3 className={style.textContainer}>{candidate.profile_bio}</h3>
                                 <div className={style.cardButtons}>
                                     <button
                                         name="btn-perfil"
                                         className={style.buttons}
+                                        onClick={()=>handlePageProfileCandidate("profileCandidate",candidate.id)}
                                     >Perfil</button>
                                     <button
                                         className={style.buttons}
@@ -95,5 +110,7 @@ const candidatesCompany = ({jobName,arraycandidates}) => {
         </div>
     )
 };
-
+ 
 export default candidatesCompany;
+
+

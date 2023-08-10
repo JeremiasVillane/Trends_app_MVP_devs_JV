@@ -3,12 +3,17 @@ import style from "./profileCompany.module.css"
 import ImageDropzone from "../../components/ImageDropzone/ImageDropzone"
 import {FaGraduationCap, FaLocationDot, FaBriefcase, FaCameraRotate, FaPenToSquare, FaFloppyDisk , FaRectangleXmark} from "react-icons/fa6";
 import { Select, SelectItem, Subtitle, TextInput, Title } from "@tremor/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { addCompany } from "../../Redux/UsersSlice";
+import { useNavigate } from "react-router-dom";
 const {VITE_URL} = import.meta.env;
 
 
 export default function profileCompany() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const companyDataSG = useSelector((state)=>state.users.companies);
     const [companyData, setCompanyData] = useState(companyDataSG);
@@ -18,13 +23,15 @@ export default function profileCompany() {
     const [isProfileOwner, setIsProfileOwner] = useState(true);
     const [isEditing, setIsEditing] = useState({
         profile: false,
-        search: false,
-        info: false,
-
+        image:false,
     })
 
 
     //! HANDLERS DE LOS BOTONES
+
+    const handleImageChangeButton = () =>{
+        setIsEditing((prevState) => ({...prevState, image: false}))
+    }
 
     const handleProfileEditButton = () => {
         setIsEditing({
@@ -35,20 +42,43 @@ export default function profileCompany() {
 
     const formatData = () => {
         const data={
-            name: companyData.name,
-            cuit: companyData.cuit,
-            website: companyData.website,
-            bio: companyData.bio,
-            image: companyData.image,
-            username: companyData.username,
-            email: companyData.email,
-            password: "123",
-            city: companyData.city,
-            country: companyData.country            
+            type: "company",
+            name: companyData.name ?companyData.name :"",
+            cuit: companyData.cuit ?companyData.cuit: "",
+            website: companyData.website ?companyData.website :"",
+            bio: companyData.bio ?companyData.bio :"",
+            image: companyData.image ?companyData.image :"",
+            username: companyData.username ?companyData.username :"",
+            email: companyData.email ?companyData.email :"",
+            city: companyData.city ?companyData.city :"",
+            country: companyData.country ?companyData.country :""
         };
-
+ 
         return data;
     }
+
+  //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
+    //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
+    function getUniqueQueryString() {
+        return `?_=${Date.now()}`;
+      };
+
+    const fetchCompany = async () =>{
+        const URL = `${VITE_URL}/api/v1/user/profile`;
+        //const ID = userLogin.id;
+
+        try{
+            //const {data} = await axios.get(`${URL}/${ID}`);
+            const {data} = await axios.get(URL+getUniqueQueryString(),{withCredentials: "include"});
+            console.log("que trae data <profileCompany>: ", data)
+            dispatch(addCompany(data));
+            //setJobs(data.jobs);
+        }catch(error){
+            console.log("error al cargar datos a SG <FeedCompany>: ",error.message);
+        }
+
+    };
+
 
     //?AL PRESIONAR GUARDAR ENVIO DATOS A BACK PARA ACTUALIZAR
     const handleSaveButton = async(buttonName) =>{
@@ -61,13 +91,16 @@ export default function profileCompany() {
         try{
             console.log("ACTUALIZO DATOS EMPRESA", data)
             console.log("como envia a put: ", URL)
-            await axios.put(URL,data)
-            .then(async res=>{
-               alert(res.data) 
-            })
+            await axios.put(URL,data,{withCredentials: "include"});
+
+            await fetchCompany();
+            navigate('/Trends_app_MVP/FeedCompany');
+
+            // console.log("que tiene el SG company:", companyDataSG);
+            // console.log("que tiene companyData:", companyData);
             
         }catch(error){
-            console.log(error.message);
+            console.log("error en put: ",error.message);
         }
 
         //cambio a false edicion de perfil
@@ -81,27 +114,28 @@ export default function profileCompany() {
 
     const handleInputChange = (event) =>{
         const {name, value} = event.target;
+            setCompanyData({
+                ...companyData,
+                [name]:value
+            });
+    };
+
+    const handleSelectChange = (event) =>{
+        const{name,value} = event.target;
         setCompanyData({
             ...companyData,
             [name]:value
-        });
-    };
-
-    const handleSelectChange = (prop,value) =>{
-        setCompanyData({
-            ...companyData,
-            [prop]:value
         })
-    }
+    };
 
     //! -----------------------
 
     const [countrys, setCountrys] = useState(null);
 
     //?AL MODIFICAR ALGUN INPUT
-    useEffect(()=>{
-        console.log("que modifico companyData", companyData)
-    },[companyData])
+    // useEffect(()=>{
+    //     console.log("que modifico companyData", companyData)
+    // },[companyData])
 
 
     const deletePropJobsSL = ()=>{
@@ -109,6 +143,11 @@ export default function profileCompany() {
         delete newState.jobs;
         setCompanyData(newState);
     }
+
+    //?AL ACTUALIZAR STORE GLOBAL companyDataSG
+    useEffect(()=>{
+        setCompanyData(companyDataSG)
+    },[companyDataSG])
 
     //?AL MONTARSE COMPONENTE
     useEffect(() => {
@@ -131,11 +170,36 @@ export default function profileCompany() {
       console.log("que tiene companyData:", companyData);
 
     }, []);    
-  
+
+    const[image, setImage]=useState(null);
+
+    const subirImagen = (e) =>{
+        setImage(e)
+        console.log("que tiene e: ", e)
+    };
+
+    const postImage = async ()=>{
+        const f = new FormData();
+        f.append("image",image);
+        const URL = `${VITE_URL}/api/v1/images/upload`
+
+        console.log("que tiene f: ", f)
+
+        try{
+            const response = await axios.post(URL,f,{withCredentials: "include"});
+            console.log("que trae response: ", response.data);
+            setCompanyData({
+                ...companyData,
+                image:response.data.imagePath
+            })
+        }catch(error){
+            console.log("error al subir imagen: ", error.message)
+        }
+    }
+    
+   
     return(
         <div className={style.mainDiv}>
-
-            {/* {profileImageDropzone && <ImageDropzone className={style.dropzone} handleCancelButton={handleImageChangeButton} handleImageChange={handleImageChange}/>} */}
 
             <div className={style.profilePictureBasicInfoContainer}>
                 {/* ENCABEZADO */}
@@ -143,12 +207,35 @@ export default function profileCompany() {
                     <h1>Company</h1>
                 </div>
                 {/* IMAGEN */}
-                <div className={style.imageContainer}>
+                {/* {
+                    isEditing.image &&
+                    <div className={style.EditPhoto}>
+                        <ImageDropzone type={"photo"} handleCancelButton={handleImageChangeButton}/>
+                    </div>
+                } */}
+                <div className={style.imageContainer}
+                    // onClick={() => setIsEditing(prevState => ({...prevState, image: !prevState.image}))}
+                    >
                     <img 
-                        src={companyData.image ?companyData.image :null} 
+                        src={image ?image :companyData.image} 
                         alt="gatito" 
                         className={style.profilePicture}/>
-                    {/* {isProfileOwner && <button className={style.imageChangeButton} onClick={() => handleImageChangeButton()}><FaCameraRotate className={style.buttonIcon}/></button>} */}
+                    {isProfileOwner && 
+                        <div>
+                            {/* <input 
+                                type="file"
+                                name="image"
+                                onChange={(e)=>subirImagen(e.target.files[0])}
+                                />
+                            <button
+                                onClick={()=>postImage()}
+                            >Subir Imagen</button> */}
+                            {/* <button 
+                                className={style.imageChangeButton} 
+                                onClick={() => handleImageChangeButton()}
+                            ><FaCameraRotate className={style.buttonIcon}/></button> */}
+                        </div>
+                    }
                 </div>
                 {/* PERFIL */}
                 <div className={style.userBasicInfoContainer}>
@@ -162,60 +249,60 @@ export default function profileCompany() {
                                 value={companyData.name} 
                             onChange={handleInputChange}/> */}
                             <h3>Nombre de empresa: </h3>
-                                <TextInput 
+                                <input 
                                     className={style.input}
                                     type="text" name="name" 
                                     value={companyData.name} 
                                     onChange={handleInputChange}/>
                             <h3>Nombre de usuario: </h3>
-                                <TextInput 
+                                <input 
                                     className={style.input}
                                     type="text" name="username" 
                                     value={companyData.username} 
                                     onChange={handleInputChange}/>
                             <h3>Ciudad: </h3>
-                                <TextInput 
+                                <input 
                                     className={style.input}
                                     type="text" name="city" 
                                     value={companyData.city} 
                                     onChange={handleInputChange}/>
                             <h3>Pais: </h3>
-                                <Select
+                                <select
                                     className={style.input}
                                     name="country"
                                     value={companyData.country}
-                                    onValueChange={(value)=>handleSelectChange("country",value)}
+                                    onChange={handleSelectChange}
                                     placeholder="--seleccione opcion--"
                                 >
                                     {
                                     countrys?.map((country, index) => (
-                                        <SelectItem key={index} value={country.name}>
+                                        <option key={index} value={country.name}>
                                         {country.name}
-                                        </SelectItem>
+                                        </option>
                                     ))
                                     }
-                                </Select>                                    
+                                </select>                                    
                             <h3>Sitio Web: </h3>
-                                <TextInput 
+                                <input 
                                     className={style.input}
-                                    type="text" name="profile.website" 
-                                    //value={userData.profile.website} 
-                                    //onChange={handleInputChange}
+                                    type="text" name="website" 
+                                    value={companyData.website} 
+                                    onChange={handleInputChange}
                                     />
                             <h3>Cuit: </h3>
-                                <TextInput 
+                                <input 
                                     className={style.input}
                                     type="text" name="cuit" 
                                     value={companyData.cuit} 
                                     onChange={handleInputChange}/>
                             <h3>Email: </h3>
-                                <TextInput 
+                                <input 
                                     className={style.input}
                                     type="text" name="email" 
                                     value={companyData.email} 
                                     onChange={handleInputChange}/>
                             <h3>Url Imagen: </h3>
-                                <TextInput 
+                                <input 
                                     className={style.input}
                                     type="text" name="image" 
                                     value={companyData.image} 
@@ -233,7 +320,7 @@ export default function profileCompany() {
                         <div className={style.infoContainer}>
                             <h1>{companyData.name}</h1>
                             <h3>{companyData.city}, {companyData.country}</h3>
-                            {/* <p>{companyDataSG.website}</p> */}
+                            <h3>website: {companyData.website}</h3>
                             <h3>cuit: {companyData.cuit}</h3>
                             <h3>email : {companyData.email}</h3>
                             <hr></hr>

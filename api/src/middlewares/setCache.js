@@ -10,12 +10,12 @@ const setCache = function (req, res, next) {
     //    sin una validación del servidor.
     //  immutable: el front no va a intentar revalidar recursos no caducados
     //    aunque se actualice la página.
-    //  stale-while-revalidate: acepta una respuesta antigua por n segundos, 
+    //  stale-while-revalidate: acepta una respuesta antigua por n segundos,
     //    mientras se comprueba asíncronamente en segundo plano si hay una nueva.
     //  stale-if-error: acepta una respuesta antigua si falla la comprobación de una nueva.
     res.set(
       "Cache-control",
-      `public, max-age=${period}, must-revalidate, immutable, stale-while-revalidate=33, stale-if-error=60`
+      `public, max-age=${period}, stale-while-revalidate=33, stale-if-error=60`
     );
   } else {
     // Si no es una petición GET, no se almacena nada

@@ -9,6 +9,7 @@
 .chatHeader{
     padding: 0 25px;
     height: 80px;
+    min-height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,7 +34,7 @@
     margin-right: 15px;
 }
 
-.userName{
+.name{
     font-size: 1.25rem;
     color: #232323
 }

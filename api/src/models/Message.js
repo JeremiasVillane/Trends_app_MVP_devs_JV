@@ -19,22 +19,22 @@ module.exports = (sequelize) => {
           key: "chat_id",
         },
       },
-      sender_id: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        reference: {
-          model: User,
-          key: "id",
-        },
-      },
-      receiver_id: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        reference: {
-          model: User,
-          key: "id",
-        },
-      },
+      // sender_id: {
+      //   type: DataTypes.UUID,
+      //   allowNull: false,
+      //   reference: {
+      //     model: User,
+      //     key: "id",
+      //   },
+      // },
+      // receiver_id: {
+      //   type: DataTypes.UUID,
+      //   allowNull: false,
+      //   reference: {
+      //     model: User,
+      //     key: "id",
+      //   },
+      // },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,

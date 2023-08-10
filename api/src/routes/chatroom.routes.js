@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const {
   createMessage,
+  removeMessage,
   getListChatsByUser,
   messagesByChat,
   createGroup,
@@ -8,6 +9,7 @@ const {
   removeGroup,
   allGroups,
   addUserToGroup,
+  editMessage,
   editUserRole,
   removeUserFromGroup,
   newGroupMessage,
@@ -16,16 +18,15 @@ const {
   editGroupMessage,
   userConversations,
 } = require("../handlers/chatroom.handlers");
-const validateGroupOwner = require("../middlewares/validateGroupOwner");
-const validateId = require("../middlewares/validateId");
-const validateProfileOwner = require("../middlewares/validateProfileOwner");
+const {validateGroupOwner, validateId, validateProfileOwner} = require("../middlewares");
 
 const chatroomRoutes = Router();
 
-chatroomRoutes.get("/chat");
 chatroomRoutes.get("/chat/:id", validateId, getListChatsByUser);
 chatroomRoutes.get("/chat/:chatId/messages", messagesByChat);
 chatroomRoutes.post("/message", createMessage);
+chatroomRoutes.put("/chat/:chatId/message/:messageId", editMessage);
+chatroomRoutes.delete("/chat/:chatId/message/:messageId", removeMessage);
 
 chatroomRoutes.get("/groups", allGroups);
 chatroomRoutes.post("/groups", createGroup);

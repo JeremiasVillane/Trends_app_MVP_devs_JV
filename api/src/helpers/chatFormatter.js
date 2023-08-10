@@ -1,7 +1,7 @@
 const messageFormatter = require("./messageFormatter");
 
 const chatFormatter = (chat) => {
-  const plainMessages = messageFormatter(chat.messages)
+  const plainMessages = messageFormatter(chat.messages);
 
   const plainChat = chat.toJSON();
 

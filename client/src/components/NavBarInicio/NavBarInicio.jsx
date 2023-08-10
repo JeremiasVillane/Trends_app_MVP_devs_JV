@@ -1,74 +1,87 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/imagenes/1 (3) (2).png";
-import "./NavBarInicio.css";
+import styles from "./NavBarInicio.module.css";
+import { FaMoon, FaSun } from "react-icons/fa";
+
 function NavBarInicio() {
   const [showMenu, setShowMenu] = useState(false);
-  const menuTimerRef = useRef(null);
+  const [darkMode, setDarkMode] = useState(false);
 
-  // Función para cambiar el modo entre claro y oscuro
+  useEffect(() => {
+    function closeMenuOnClickOutside(event) {
+      if (showMenu && !event.target.classList.contains("toggle-button")) {
+        setShowMenu(false);
+      }
+    }
+
+    document.addEventListener("click", closeMenuOnClickOutside);
+    return () => {
+      document.removeEventListener("click", closeMenuOnClickOutside);
+    };
+  }, [showMenu]);
+
   function toggleDarkMode() {
     const body = document.body;
     body.classList.toggle("dark-mode");
+
+    setDarkMode((prevDarkMode) => !prevDarkMode);
   }
 
-  // Función para mostrar/ocultar el menú desplegable al hacer clic en "Sign up"
   function toggleMenu() {
     setShowMenu((prevState) => !prevState);
   }
 
-  // Función para desactivar el menú desplegable después de 2 segundos si no se selecciona ninguna opción
-  useEffect(() => {
-    if (showMenu) {
-      menuTimerRef.current = setTimeout(() => {
-        setShowMenu(false);
-      }, 2000);
-    } else {
-      clearTimeout(menuTimerRef.current);
-    }
-
-    return () => clearTimeout(menuTimerRef.current);
-  }, [showMenu]);
-
-  // Función para manejar la selección de una opción del menú
-  function handleMenuOptionClick() {
-    setShowMenu(false);
-    clearTimeout(menuTimerRef.current);
-  }
-
   return (
-    <nav className="navigation">
+    <nav className={`${styles.navigation} ${darkMode ? "dark-mode" : ""}`}>
       {/* Logo */}
-      <div className="logo">
+      <div className={styles.logo}>
         <img src={Logo} alt="Logo" />
-        {/*<span>Logo</span>*/}
       </div>
 
       {/* Login y Sign Up (Registro) */}
-      <div
-        className={`auth-buttons ${showMenu ? "show-menu" : ""}`}
-        onClick={toggleMenu}
-      >
-        <Link to="/Trends_app_MVP/login">Login</Link>
-        <button>Sign up</button>
-        <div className="register-options">
-          <Link to="/Trends_app_MVP/studentRegister" onClick={handleMenuOptionClick}>
-            Student
+      <div className={`${styles["auth-buttons"]} ${showMenu ? styles["show-menu"] : ""}`}>
+      <Link to="/Trends_app_MVP/login" className="custom-link" onClick={() => setShowMenu(false)}>
+          Iniciar sesión
+        </Link>
+        <button className="toggle-button" onClick={toggleMenu}>
+          Crea tu cuenta
+        </button>
+        <div className={styles["register-options"]}>
+          <Link
+            to="/Trends_app_MVP/studentRegister"
+            onClick={() => {
+              toggleMenu();
+              setShowMenu(false);
+            }}
+          >
+            Estudiante
           </Link>
-          <Link to="/Trends_app_MVP/professionalRegister" onClick={handleMenuOptionClick}>
-            Professional
+          <Link
+            to="/Trends_app_MVP/professionalRegister"
+            onClick={() => {
+              toggleMenu();
+              setShowMenu(false);
+            }}
+          >
+            Profesional
           </Link>
-          <Link to="/Trends_app_MVP/companyRegister" onClick={handleMenuOptionClick}>
-            Company
+          <Link
+            to="/Trends_app_MVP/companyRegister"
+            onClick={() => {
+              toggleMenu();
+              setShowMenu(false);
+            }}
+          >
+            Empresa
           </Link>
         </div>
       </div>
 
-
       {/* Botón de Modo Oscuro */}
-      <div className="dark-mode-button">
+      <div className={styles["dark-mode-button"]}>
         <button onClick={toggleDarkMode}>
-          <i className="fas fa-moon"></i>
+          {darkMode ? <i className="fas fa-sun"></i> : <i className="fas fa-moon"></i>}
         </button>
       </div>
     </nav>

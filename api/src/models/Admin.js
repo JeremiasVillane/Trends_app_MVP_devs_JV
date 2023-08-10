@@ -4,6 +4,7 @@ const {
   encryptPassword,
   decryptPassword,
 } = require("../helpers/encryptPassword");
+const isImageUrlOrLocalPath = require("../helpers/isImageUrlOrLocalPath");
 
 module.exports = (sequelize) => {
   const Admin = sequelize.define(
@@ -34,9 +35,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: DEFAULT_IMG,
-        validate: { isUrl: true },
+        validate: {
+          isImageUrlOrLocalPath: (value) => {
+            if (!isImageUrlOrLocalPath(value)) {
+              throw new Error("Invalid image URL or local path format.");
+            }
+          },
+        },
         set(value) {
-          // Si el valor es un string vacío, lo convierte a null
           this.setDataValue("image", value || DEFAULT_IMG);
         },
       },

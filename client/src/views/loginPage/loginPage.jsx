@@ -27,13 +27,27 @@ export default function LoginPage() {
     }));
   };
 
+    //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
+    //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
+    function getUniqueQueryString() {
+      return `?_=${Date.now()}`;
+    };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (inputs.user && inputs.password) {
+      console.log(inputs)
       try {
-        await axios.post(URL, inputs, { withCredentials: "include" });
+        await axios.post(URL+getUniqueQueryString(), inputs, { withCredentials: "include" });
+        //console.log("que trae resp <loginPage>: ", resp)
         dispatch(getUserInfo());
-        navigate("/Trends_app_MVP/feed");
+        const {data} = await axios.get(`${VITE_URL}/api/v1/user/profile`+getUniqueQueryString(), { withCredentials: "include" });
+        //console.log("Que tiene respPerfil <loginPage>: ", data);
+        
+        data.type==="company"
+          ?navigate("/Trends_app_MVP/FeedCompany")
+          :navigate("/Trends_app_MVP/Feed")
+
       } catch (error) {
         console.log(error);
         // console.log(error.response.data.error);

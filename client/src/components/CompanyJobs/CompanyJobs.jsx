@@ -1,7 +1,7 @@
 import { Title } from "@tremor/react";
 import style from "./CompanyJobs.module.css"
 
- 
+   
 const CompanyJobs = ({jobs, handlePageEditJob,handlePageCandidates})=>{
     console.log("que trae jobs <CompanyJobs>: ", jobs)
 

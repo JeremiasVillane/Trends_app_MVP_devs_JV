@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { register, login, logout } = require("../handlers/auth.handlers");
-const validateSchema = require("../middlewares/validateInfo");
+const { validateSchema } = require("../middlewares");
+
 const {
   registerUserSchema,
   loginUserSchema,

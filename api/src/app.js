@@ -12,9 +12,11 @@ const passport = require("./auth/passport-config");
 //<----------------------------------------------------------------------------->//
 
 //<-----------------------------Custom Middlewares----------------------------->//
-const authenticateAdmin = require("./middlewares/authenticateAdmin");
-const authenticateUser = require("./middlewares/authenticateUser");
-const setCache = require("./middlewares/setCache");
+const {
+  authenticateAdmin,
+  authenticateUser,
+  setCache,
+} = require("./middlewares");
 //<---------------------------------------------------------------------------->//
 
 //<-----------------------------------Routes----------------------------------->//
@@ -30,12 +32,12 @@ const chatroomRoutes = require("./routes/chatroom.routes");
 
 const app = express();
 app.use(morgan("dev"));
-app.use(setCache);
+// app.use(setCache);
 app.use(
-	cors({
-		origin: "http://localhost:5173",
-		credentials: true,
-	})
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
 );
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
@@ -43,11 +45,11 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-	session({
-		secret: JWT_KEY,
-		resave: false,
-		saveUninitialized: false,
-	})
+  session({
+    secret: JWT_KEY,
+    resave: false,
+    saveUninitialized: false,
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());

@@ -1,9 +1,6 @@
 import "./App.css";
-import StudentRegister from "./components/registerFormStudent";
-import { Route, Routes ,Link} from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import CompanyRegister from "./components/registerFormCompany";
-import ProfessionalRegisterForm from "./components/registerFormProfesional";
 import "./App.css";
 import {
   LandingPage,
@@ -11,14 +8,11 @@ import {
   NotFoundPage,
   Profile,
   FeedCompany,
-  Chat,
+  Chat
 } from "./views/";
-import Chatx from "./views/Chat/Chat";
 import {Feed, NavBar} from "./components"
 // Para pruebas del chat despues las podemos remover
 // --------------------------------------------------
-import Register from "./views/Chat/Register/Register";
-import Login from "./views/Chat/Login";
 import NavBarInicio from "../src/components/NavBarInicio/NavBarInicio";
 import RegisterFormBase from "./components/RegisterFormBase/RegisterFormBase";
 import LoginPage from "./views/loginPage/loginPage";
@@ -44,11 +38,7 @@ function App() {
         <Route path="/Trends_app_MVP/admin" element ={<AdminPage/>}/>
 
         {/* RUTAS HIJAS PARA PRUEBAS DEL CHAT DESPUES LAS PODEMOS REMOVER */}
-        <Route path="/Trends_app_MVP/chot" element={<Chatx/>}/>
-        <Route path="/Trends_app_MVP/chat" element={<Chat />}>
-          <Route path='register-chat' element={ <Register />} />
-          <Route path='login-chat' element={ <Login />} />
-        </Route>
+        <Route path="/Trends_app_MVP/chat" element={<Chat/>}/>
 
         {/*RUTA PRUEBA DE NAVBAR Y SEARCHBAR*/}
         <Route path="/Trends_app_MVP/navbar" element={<NavBar/>}/>

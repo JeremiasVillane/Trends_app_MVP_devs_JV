@@ -17,9 +17,9 @@ const validateId = (req, res, next) => {
     return res.status(400).json({ error: "Invalid ID" });
   }
 
-  // Si el ID es válido, continuar con la ejecución 
+  // Si el ID es válido, continuar con la ejecución
   // del siguiente middleware o ruta.
   next();
-}
+};
 
 module.exports = validateId;

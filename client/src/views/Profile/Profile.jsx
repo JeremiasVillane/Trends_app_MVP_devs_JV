@@ -57,7 +57,7 @@ const Profile = () => {
             ...isEditing,
             general: true
         })
-    }
+    } 
 
     return(
 

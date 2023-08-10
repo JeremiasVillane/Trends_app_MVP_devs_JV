@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { searchUserById, searchUsers, searchJobs, searchJobById } = require("../handlers/search.handlers");
-const validateId = require("../middlewares/validateId");
+const { validateId } = require("../middlewares");
+
 const searchRoutes = Router();
 
 searchRoutes.get("/user/:id", validateId, searchUserById);

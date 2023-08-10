@@ -1,14 +1,31 @@
-import { selectSelectedUser, setSelectedUser } from "../../Redux/chatSlice";
+import { selectSelectedUser, setListMessages, setSelectedUser } from "../../Redux/chatSlice";
 import style from "./ChatListContact.module.css"
 import { useDispatch, useSelector } from "react-redux"
+import axios from "axios"
+const { VITE_URL } = import.meta.env;
 
 const ChatListContact = ({id, isGroup, name, image, last_message, last_message_date, no_read_counter, bio, show_last_message=false}) => {
   const dispatch = useDispatch();
 
   const selectedUser = useSelector(selectSelectedUser);
 
+  const bioShortener = (string) =>{
+    return string.slice(0, 40)+"...";
+  }
+
   const clickHandler = () =>{
-    dispatch(setSelectedUser({id, isGroup}))
+    dispatch(setSelectedUser({
+      id,
+      isGroup
+    }))
+    axios.get(`${VITE_URL}/api/v1/chatroom/chat/${id}/messages`,
+      {withCredentials:"include"})
+        .then(({data}) => {
+          data.messages.reverse()
+          dispatch(setListMessages(data))
+        }).catch(error => {
+          console.log("ERROR: ", error)
+        })
   }
 
   const formatDate = (date) => {
@@ -46,20 +63,20 @@ const ChatListContact = ({id, isGroup, name, image, last_message, last_message_d
       const unaSemanaEnMilisegundos = 7 * 24 * 60 * 60 * 1000;
       return diff < unaSemanaEnMilisegundos;
   };
-      
+
   return (
     <div className={selectedUser?.id === id ? style.mainContainerActive : style.mainContainer} onClick={clickHandler}>
       <img src={image} className={style.image}/>
       <div className={style.textDiv}>
         <div className={style.header}>
           <p className={style.name}>{name}</p>
-          <p className={style.time}>{formatDate(new Date(last_message_date))}</p>
+          <p className={style.time}>{last_message && formatDate(new Date(last_message_date))}</p>
         </div>
         <div className={style.body}>
           {show_last_message ? (
             <p className={style.description}>{last_message}</p>
           ) : (
-            <p className={style.description}>{bio}</p>
+            <p className={style.description}>{bioShortener(bio)}</p>
           )}
           {(no_read_counter > 0) &&
             <p className={style.unread}>{no_read_counter}</p>

@@ -2,6 +2,7 @@
     background: none;
     display: flex;
     height: 80px;
+    min-height: 80px;
     width: 100%;
     overflow: hidden;
     border-bottom: 1px solid #9AC2EF;

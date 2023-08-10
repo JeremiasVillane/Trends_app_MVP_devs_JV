@@ -7,26 +7,36 @@
     font-size: 2rem;
     margin-bottom: 1rem;
     padding: 0 1rem;
+    text-align: center;
 }
 
 .button{
     background-color: #FAB180;
-    color: white;
+    color: black;
     border-radius: 25px;
     margin: 10px;
     padding-left: 1vw;
     padding-right: 1vw;
+    
 }
+.buttonForm{
+    text-align: center;
+}
+
 .buttonForm button{
     background-color: #FAB180;
-    color: white;
+    color: black;
     border-radius: 25px;
     margin: 10px;
     padding-left: 1vw;
-    padding-right: 1vw;    
+    padding-right: 1vw; 
+    
 }
 .textButtonForm{
     white-space: nowrap;
+}
+.contentButton{
+    text-align: center;
 }
 :global(.dark-mode) .button{
     color: #383636;

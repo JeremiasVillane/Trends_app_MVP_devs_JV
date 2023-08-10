@@ -5,28 +5,18 @@ import {AiOutlinePaperClip} from "react-icons/ai"
 import {TbSend} from "react-icons/tb"
 import {FaWindowMinimize} from "react-icons/fa"
 import { useDispatch, useSelector } from "react-redux"
-import {setIsMinimized} from "../../Redux/chatSlice"
-import { selectAllUsersChat, selectShownUser } from "../../Redux/usersChatSlice"
+import {selectListMessages, selectSelectedUser, setIsMinimized, setListMessages} from "../../Redux/chatSlice"
 import { useEffect, useState } from "react"
-import { selectAllUsers } from "../../Redux/UsersSlice"
 import { ChatMessageContainer } from ".."
+import axios from "axios"
+const { VITE_URL } = import.meta.env;
 
 const ChatMessages = ({socket}) => {
-  
   const [message, setMessage] = useState("");
-
-  
-  const shownUser = useSelector(selectShownUser);
-  const allUsers = useSelector(selectAllUsers)
-  
+  const listMessages = useSelector(selectListMessages)
   const user = useSelector(state => state.users.user);
-  const selectedUser = useSelector(state => state.usersChat.selectedUser)
-  
+  const selectedUser = useSelector(selectSelectedUser)
   const dispatch = useDispatch();
-
-  const handleMinimize = () =>{
-    dispatch(setIsMinimized(true))
-  }
 
   const handleChange = (event) =>{
     event.preventDefault()
@@ -40,71 +30,88 @@ const ChatMessages = ({socket}) => {
     }
   }
 
+  function getUniqueQueryString(){
+    return `?_=${Date.now()}`
+  }
+
   const sendMessage = (event) => {
     event.preventDefault();
     if(message !== '' ){
       const sender_id = user.id;
-      const receiver_id = selectedUser?.UserReceived?.user_id === user.id
-        ? selectedUser.UserSent?.user_id : selectedUser?.UserSent?.user_id === user.id
-        ? selectedUser?.UserReceived?.user_id : selectedUser?.id !== user.id && selectedUser?.id;
+      console.log("sender_id: ", sender_id);
+      const receiver_id=listMessages.UserReceived.id === user.id
+        ? listMessages.UserSent.id : listMessages.UserReceived.id;
+        console.log("receiver_id: ", receiver_id);
+      const userNameEmisor = listMessages.UserSent.id !== user.id
+        ? listMessages.UserReceived.username : listMessages.UserSent.username;
+        console.log("userNameEmisor: ", userNameEmisor)
+      const userNameReceptor = listMessages.UserReceived.id !== user.id
+        ? listMessages.UserReceived.username : listMessages.UserSent.username;
+        console.log("userNameReceptor: ", userNameReceptor)
       const content = message;
-      const userNameReceptor =
-        selectedUser?.UserReceived?.userName === user.userName
-        ? selectedUser?.UserSent?.userName : selectedUser?.UserSent?.userName === user.userName
-        ? selectedUser?.UserReceived?.userName : selectedUser?.userName !== user.userName
-        && selectedUser?.username;
-      //const imageReceptor = selectedUser?.image;
-      const userNameEmisor = user.username;
-      //const imageEmisor = image;
-      // dispatch(setMessages([...messages,
-      //   {
-      //     emisor, receptor, message, userNameEmisor, userNameReceptor, imageEmisor, imageReceptor, fecha
-      //   }
-      // ]));
-      socket?.emit("private-message",
-        {
-          sender_id, receiver_id, content, userNameReceptor, userNameEmisor
-        });
+      console.log("content: ", content)
+
+      axios.post(`${VITE_URL}/api/v1/chatroom/message`,
+        {content, receiver_id, sender_id },
+        {withCredentials: "include"})
+          .then(({data}) => {
+            console.log("NEW MESSAGE: ",  data)
+
+            // socket?.emit("private-message", {
+            //   data,
+            //   userNameEmisor,
+            //   userNameReceptor
+            // })
+
+            axios.get(`${VITE_URL}/api/v1/chatroom/chat/${selectedUser[0].id}/messages`+
+            getUniqueQueryString(),
+            {withCredentials:"include"})
+              .then(({data}) =>{
+                console.log("data-sockek-send", data)
+                socket?.emit("private-message", {
+                  listMessages,
+                  userNameEmisor,
+                  userNameReceptor
+                })
+              }).catch(error => {
+                console.log("ERROR-get: ", error);
+              })
+          }).catch(error => console.log("ERROR-post: ", error))
+
       setMessage("");
       //setPreview(false);
     }
-    
+
   }
 
   useEffect(() => {
     console.log("sender_id: ",user)
-    console.log("receiver_id: ",selectedUser?.username)
+    console.log("receiver_id: ",selectedUser)
   }, [user, selectedUser])
-
-  const handleSend = () =>{
-    alert("enviado el mensaje: '" + message + "' a " + selectedUser.name);
-    setMessage("");
-  }
 
   return (
     <div className={style.mainContainer}>
       <div className={style.chatHeader}>
         <div className={style.infoDiv}>
-            <img src={selectedUser?.profile_image} className={style.profileImage}/>
+            <img src={selectedUser?.image} className={style.profileImage}/>
             <div>
-                <p className={style.userName}>{selectedUser?.username}</p>
+                <p className={style.name}>{selectedUser?.username}</p>
                 <p className={style.status}> online/offline</p>
             </div>
         </div>
-        <div className="flex gap-2">
+        <div class="flex gap-2">
             <button className={style.headerIcon}><BiDotsVerticalRounded/></button>
-            <button className={style.headerIcon} onClick={handleMinimize}><FaWindowMinimize className="text-base"/></button>
         </div>
       </div>
 
-      <ChatMessageContainer className={style.chatContainer} />
+      <ChatMessageContainer className={style.chatContainer} socket={socket} />
 
       <div className={style.messageBar}>
         <div className={style.messageBarIconDiv}>
             <VscSmiley className={style.messageBarIcon}/>
             <AiOutlinePaperClip className={style.messageBarIcon}/>
         </div>
-        {/* INPUT MENSAJE TEXTO */}
+        
         <form onSubmit={sendMessage} className={style.messageBarInputDiv}>
             <input className={style.messageBarInput} type="text" value={message} onChange={handleChange} onKeyDown={handleKeyDown}/>
             <button className={style.messageBarInputButton} type="submit">

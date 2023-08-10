@@ -9,5 +9,4 @@ const decryptPassword = async (passwordToComparate, correctPassword) => {
   return await bcrypt.compare(passwordToComparate, correctPassword);
 };
 
-
-module.exports = {encryptPassword, decryptPassword}
+module.exports = { encryptPassword, decryptPassword };

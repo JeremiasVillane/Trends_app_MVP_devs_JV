@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import style from "./ChatNewChat.module.css"
-import { selectFilteredUsersChat } from "../../Redux/usersChatSlice";
 import{ ChatListContact, ChatNewGroup } from "../index"
+import { selectAllUsers } from "../../Redux/UsersSlice";
 
 const ChatNewChat = () =>{
 
-    const users = useSelector(selectFilteredUsersChat);
+    const users = useSelector(selectAllUsers);
     const [tab, setTab] = useState("chat")
 
     return(
@@ -21,13 +21,14 @@ const ChatNewChat = () =>{
             </div>
 
             {(tab==="chat") ? (
-                users?.map(user => {
+                users.data?.map((user, index) => {
                     return(
                         <ChatListContact
-                            id={user.user_id}
+                            key={index}
+                            id={user.id}
                             name={user.name}
-                            profile_bio={user.profile_bio}
-                            profile_image={user.profile_image}
+                            bio={user.profile_bio}
+                            image={user.profile_image}
                         />
                     )
                 })

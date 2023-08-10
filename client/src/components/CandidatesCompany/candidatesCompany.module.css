@@ -1,11 +1,53 @@
 .head{
-    height: 10vh;
-    padding: 2px;
+    height: 7rem;
+    padding: 1rem;
     border-bottom: 3px solid black;
+}
+.head h1{
+    font-family: "Rubik-Medium";
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+    color: #232323;
+}
+.cardProfile h1{
+    font-family: "Rubik-Medium";
+    font-size: 1.5rem;
+    text-align: left;
+    padding: 0 1rem 0 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #9AC2EF;
+}
+.cardProfile h3{
+    font-family: "Rubik-Regular";
+    text-align: left;
+    font-size: 1rem;
+    padding: 0 1rem 0 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #232323;
+}
+.textContainer{
+    max-height: 2.58em;
+    line-height: 1.2em;
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
+    /* white-space: pre-line; */
 }
 .selectContainer{
     padding-left: 30vw;
     padding-right: 30vw;
+}
+.selectContainer Select{
+    width: 10rem;
+    height: 1.6rem;
+    border-radius: 10px;
+    border: 0.5px solid;
+    font-size: 1rem;
+}
+.selectContainer option{
+    font-size: 1rem;
 }
 .cardContainer{
     overflow: auto;
@@ -13,6 +55,7 @@
     height: 90vh;
 }
 .card{
+    border-radius: 10px;
     display: flex;
     flex-direction: row;
     /* border: 1px solid blue; */
@@ -64,4 +107,38 @@
     border: 1px solid black;
     padding-left: 1vw;
     padding-right: 1vw;    
+}
+:global(.dark-mode) .head h1{
+    color: #CCB5A5;
+}
+:global(.dark-mode) .cardProfile h1{
+    color: #CCB5A5;
+}
+:global(.dark-mode) .cardProfile h3{
+    color: #CCB5A5;
+}
+:global(.dark-mode) .card{
+    box-shadow: 2px 2px 4px rgba(196, 196, 196, 0.5);
+}
+:global(.dark-mode) .head{
+    border-bottom: 1px solid #CCB5A5;
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 768px) {
+    .container{
+        /* position: relative; */
+        /* border: 1px solid red; */
+        /* min-width: fit-content; */
+        width: 100%;
+    }
+    .head{
+        /* border: 1px solid greenyellow; */
+        /* min-width: fit-content; */
+        height: auto;
+    }
+    .selectContainer{
+        padding: 0px;
+        text-align: center;
+    }
 }
