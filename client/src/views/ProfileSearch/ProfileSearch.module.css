@@ -117,6 +117,16 @@
     visibility: hidden;
 }
 
+
+
+.ImageContainer:hover .Extra {
+    opacity: 0.5;
+    background-color: #344C5A;
+    border-radius: 90%;
+}
+
+
+
 .FirstInfo h1, .FirstInfo h3 {
     
     width: fit-content;

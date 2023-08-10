@@ -11,3 +11,7 @@
 .hidden{
     display: none;
 }
+
+.NavBar {
+    z-index: 10000;
+}

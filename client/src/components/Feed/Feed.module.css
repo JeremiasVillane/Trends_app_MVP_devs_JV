@@ -1,5 +1,14 @@
 .BGContainer {
     position: relative;
+
+  
+
+.Container {
+  margin-left: 4.3rem;
+  width: 100%;
+  border-radius: .3rem;
+  padding: 0rem 1.1rem 0rem 0rem;
+
     justify-content: center;
     gap: 1rem;
     width: 100vw;
@@ -9,6 +18,7 @@
 .Container {
   width: 80%;
   border-radius: .3rem;
+
 }
 
 .BGContainer header {

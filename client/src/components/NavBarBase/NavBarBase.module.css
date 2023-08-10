@@ -1,3 +1,5 @@
+
+
 body {
     font-family: 'Poppins Medium', sans-serif;
     margin: 0;
@@ -26,6 +28,8 @@ body {
     font-size: medium;
 
 }
+
+
 .button{
     border-radius: .3rem;
     margin-top: 20px;
@@ -35,13 +39,31 @@ body {
     width: 60%;
     min-width: 43px;
     padding: 4px;
-    background-color: white;
+
+  background-color: white;
+
+  
     border: 0px;
 }
 
 .button svg, .button i{
   display: block;
   margin: 0 auto;
+
+  
+  color: rgb(255, 255, 255);
+}
+
+
+.icon-light {
+  color: white;
+}
+
+
+.icon-dark {
+  color: black;
+
+  
 }
 
 /* Estilos responsivos */
@@ -57,9 +79,14 @@ body {
         padding: 0;
         background-color:#F1F1F1 ;
         border: 1px solid grey;
+
+      
+
     }    
     .left{
-        /* border: 0.1px solid greenyellow;     */
+        /* border: 0.1px solid greenyellow;*/
+
+      
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -98,7 +125,11 @@ body {
     background-color: #383636;
 }
 :global(.dark-mode) .button{
+
+
     border: solid white 1px;
+
+  
     background-color: #383636;
 }
 :global(.dark-mode) .left p{

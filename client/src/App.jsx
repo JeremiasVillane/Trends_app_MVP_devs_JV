@@ -3,6 +3,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
 
+
 import { useLocation } from "react-router-dom";
 import "./App.css";
 import {
@@ -20,6 +21,7 @@ import NavBarInicio from "../src/components/NavBarInicio/NavBarInicio";
 import RegisterFormBase from "./components/RegisterFormBase/RegisterFormBase";
 import LoginPage from "./views/loginPage/loginPage";
 import AdminPage from "./views/admin";
+import ProfileSearch from "./views/ProfileSearch/ProfileSearch";
 
 // import ProfileSearch from "./views/ProfileSearch/ProfileSearch";
 
