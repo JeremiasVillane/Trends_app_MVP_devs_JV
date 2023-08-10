@@ -1,5 +1,4 @@
 .Card {
-    display: flex;
     align-items: center;
     cursor: pointer;
     padding-left: 1rem;
@@ -7,10 +6,30 @@
     width: 100%;
 }
 
+.MainContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ConfigContainer {
+  display: flex;
+}
+
+.MainContainer button {
+  display: block;
+  margin: auto auto;
+}
+
 .PhotoContainer {
     height: 6.5rem;
     width: 6.5rem;
     box-shadow: 0.3px 0.3px 1px #8f9395;
+}
+.IconsContainer {
+  display: flex;
+  gap: 10%;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .PhotoContainer img {
@@ -77,6 +96,10 @@
 }
 
 :global(.dark-mode) .AttributesContainer h1 {
+    color:#ddaf8f
+}
+
+:global(.dark-mode) .AttributesContainer h2, :global(.dark-mode) .AttributesContainer h3  {
     color:#ddaf8f
 }
 

@@ -26,6 +26,14 @@ export default function LoginPage() {
     }));
   };
 
+
+      console.log(inputs)
+    //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
+    //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
+    function getUniqueQueryString() {
+      return `?_=${Date.now()}`;
+    };
+
   //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
   //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
   function getUniqueQueryString() {
@@ -36,6 +44,7 @@ export default function LoginPage() {
     event.preventDefault();
     if (inputs.user && inputs.password) {
       // console.log(inputs)
+
       try {
         await axios.post(`${VITE_URL}/auth/login` + getUniqueQueryString(), inputs, {
           withCredentials: "include",
