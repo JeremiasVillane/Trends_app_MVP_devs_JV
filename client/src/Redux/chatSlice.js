@@ -66,16 +66,25 @@ const setListChats = createAsyncThunk("chat/setListChats", async ({ user_id, que
 
 const createNewGroup = createAsyncThunk("chat/createNewGroup", async({name}) => {
   try {
-    const response = await (axios.post(`${VITE_URL}/api/v1/chatroom/groups` , {name}, { withCredentials:"include"}))
+    const response = (await axios.post(`${VITE_URL}/api/v1/chatroom/groups` , {name}, { withCredentials:"include"})).data
     return response;
   } catch (error) {
     console.log(error)
   }
 })
 
-const getGroupList = createAsyncThunk("chat/getGroupList", async(user_id) => {
+const getGroupList = createAsyncThunk("chat/getGroupList", async() => {
   try {
-    const response = (await axios.post(`${VITE_URL}/api/v1/chatroom/groups?list=true`, { withCredentials:"include"})).data
+    const response = (await axios.get(`${VITE_URL}/api/v1/chatroom/groups?list=true`, { withCredentials:"include"})).data
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+})
+
+const createGroupMember = createAsyncThunk("chat/createGroupMember", async({user_id, group_id}) => {
+  try {
+    const response = (await axios.post(`${VITE_URL}/api/v1/chatroom/groups/${group_id}/users`, {userId: user_id, role: "member"}, {withCredentials: "include"})).data
     return response;
   } catch (error) {
     throw new Error(error);
@@ -141,7 +150,7 @@ export const chatSlice = createSlice({
   }
 })
 
-export {setListChats, deleteMessage, createNewGroup, getGroupList};
+export {setListChats, deleteMessage, createNewGroup, getGroupList, createGroupMember};
 export const { setIsMinimized, setError, setMessage, setSelectedUser, setListMessages, setNewChat } = chatSlice.actions;
 export default chatSlice.reducer;
 export const selectSelectedUser = (state) => state.chat.selectedUser;
