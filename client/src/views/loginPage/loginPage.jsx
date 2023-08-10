@@ -10,7 +10,6 @@ const { VITE_URL } = import.meta.env;
 export default function LoginPage() {
   const [validateLogin, setValidateLogin] = useState(null);
   const navigate = useNavigate();
-  const URL = `${VITE_URL}/api/v1/auth/login`;
   const dispatch = useDispatch();
 
   const [inputs, setInputs] = useState({
@@ -38,13 +37,13 @@ export default function LoginPage() {
     if (inputs.user && inputs.password) {
       // console.log(inputs)
       try {
-        await axios.post(URL + getUniqueQueryString(), inputs, {
+        await axios.post(`${VITE_URL}/auth/login` + getUniqueQueryString(), inputs, {
           withCredentials: "include",
         });
         //console.log("que trae resp <loginPage>: ", resp)
         dispatch(getUserInfo());
         const { data } = await axios.get(
-          `${VITE_URL}/api/v1/user/profile` + getUniqueQueryString(),
+          `${VITE_URL}/user/profile` + getUniqueQueryString(),
           { withCredentials: "include" }
         );
         //console.log("Que tiene respPerfil <loginPage>: ", data);
