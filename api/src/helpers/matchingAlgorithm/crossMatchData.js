@@ -9,6 +9,7 @@ function countCommonElementsForJob(regularUser, job) {
     info_availability,
     academic_level,
     info_contract,
+    info_interests,
   } = regularUser;
 
   const {
@@ -18,6 +19,7 @@ function countCommonElementsForJob(regularUser, job) {
     availability,
     levelRequired,
     contractOffered,
+    industry,
   } = job;
 
   let commonElements = 0;
@@ -27,6 +29,7 @@ function countCommonElementsForJob(regularUser, job) {
   commonElements += countCommonElements(info_availability, availability);
   commonElements += countCommonElements(academic_level, levelRequired);
   commonElements += countCommonElements(info_contract, contractOffered);
+  commonElements += countCommonElements(info_interests, industry);
 
   return commonElements;
 }

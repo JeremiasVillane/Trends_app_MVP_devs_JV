@@ -1,4 +1,4 @@
-const { getUserById } = require("../controllers/search.controllers");
+const { getUserById, getJobById } = require("../controllers/search.controllers");
 
 // Middleware que valida si el usuario autenticado
 // es el dueño del perfil que se desea editar o un administrador.
@@ -17,7 +17,12 @@ const validateProfileOwner = async (req, res, next) => {
     const { type: userType } = req.user;
 
     // Buscamos el perfil que se desea editar en la base de datos.
-    const profileToEdit = await getUserById(profileId);
+    let profileToEdit = await getUserById(profileId);
+
+    // Si no es un usuario, comprobamos si se trata de un trabajo
+    if (!profileToEdit) {
+      profileToEdit = await getJobById(profileId);
+    }
 
     // Si no se encuentra el perfil, respondemos con un error 404
     // indicando que el usuario no fue encontrado.
@@ -34,9 +39,15 @@ const validateProfileOwner = async (req, res, next) => {
     if (userType === "admin") {
       next();
     } else if (profileToEdit.id !== userId) {
-      // Si el usuario no es un administrador y no es el dueño del perfil
-      // que desea editar, responde con un error.
-      return res.status(403).json({ error: "Not authorized" });
+      // Si es un trabajo y el usuario actual es la empresa que lo creó
+      // le permitimos continuar con la acción
+      if (profileToEdit.jobName && profileToEdit.companyId === userId) {
+        next();
+      } else {
+        // Si el usuario no es un administrador y no es el dueño del perfil
+        // que desea editar, responde con un error.
+        return res.status(403).json({ error: "Not authorized" });
+      }
     } else {
       // Si no se cumple ninguna de las condiciones anteriores,
       // significa que el usuario autenticado es el dueño del perfil

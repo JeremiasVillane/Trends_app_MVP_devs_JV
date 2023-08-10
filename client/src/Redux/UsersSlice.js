@@ -11,10 +11,10 @@ const initialState = {
     user: {},
     test: false
 };
-
+//console.log(state.allUsers)
 const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async () => {
     try {
-        const URL = `${VITE_URL}/api/v1/search/users?type=student`;
+        const URL = `${VITE_URL}/search/users?type=student`;
         const fetch = await axios.get(URL, {withCredentials: "include"});
         const data = fetch.data;
         return data;
@@ -24,7 +24,7 @@ const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async () => {
 })
 const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
     try {
-        const URL = `${VITE_URL}/api/v1/user/profile`;
+        const URL = `${VITE_URL}/user/profile`;
         const fetch = await axios.get(URL, {withCredentials: "include"});
         const data = fetch.data;
         return data;
@@ -36,7 +36,8 @@ const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
 const getSearchedUsers = createAsyncThunk("users/getSearchedUsers", async({name, academic_formation, academic_institution}) =>{
     try {
     console.log("ACTION OK")
-    let query = `http://localhost:3001/api/v1/search/users?name=${name}`
+    let query = `${VITE_URL}/search/users?name=${name}`
+
     if (academic_formation) query += `&academic_formation=${academic_formation}`
     if (academic_institution) query += `&academic_institution=${academic_institution}`
     console.log("Query: " + query)
@@ -92,7 +93,7 @@ export default usersSlice.reducer;
 // export of the selectors of the global state
 export {getSearchedUsers, getUserInfo, getMatchedUsers};
 export const {test, addCompany} = usersSlice.actions;
-export const selectAllUsers = (state) => state.users.allUsers;
+export const selectAllUsers = (state) => state.users?.allUsers;
 export const selectSearchedUsers = (state) => state.users.searchedUsers;
 export const selectStudents = (state) => state.users.students;
 export const selectProfessionals = (state) => state.users.professionals;

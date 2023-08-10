@@ -10,7 +10,6 @@ const { VITE_URL } = import.meta.env;
 export default function LoginPage() {
   const [validateLogin, setValidateLogin] = useState(null);
   const navigate = useNavigate();
-  const URL = `${VITE_URL}/api/v1/auth/login`;
   const dispatch = useDispatch();
 
   const [inputs, setInputs] = useState({
@@ -19,7 +18,7 @@ export default function LoginPage() {
   });
 
   const handleInputs = (event) => {
-    console.log(inputs);
+    // console.log(inputs);
     const { value, name } = event.target;
     setInputs((prevState) => ({
       ...prevState,
@@ -27,39 +26,39 @@ export default function LoginPage() {
     }));
   };
 
-    //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
-    //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
-    function getUniqueQueryString() {
-      return `?_=${Date.now()}`;
-    };
+  //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
+  //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
+  function getUniqueQueryString() {
+    return `?_=${Date.now()}`;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (inputs.user && inputs.password) {
-      console.log(inputs)
+      // console.log(inputs)
       try {
-        await axios.post(URL+getUniqueQueryString(), inputs, { withCredentials: "include" });
+        await axios.post(`${VITE_URL}/auth/login` + getUniqueQueryString(), inputs, {
+          withCredentials: "include",
+        });
         //console.log("que trae resp <loginPage>: ", resp)
         dispatch(getUserInfo());
-        const {data} = await axios.get(`${VITE_URL}/api/v1/user/profile`+getUniqueQueryString(), { withCredentials: "include" });
+        const { data } = await axios.get(
+          `${VITE_URL}/user/profile` + getUniqueQueryString(),
+          { withCredentials: "include" }
+        );
         //console.log("Que tiene respPerfil <loginPage>: ", data);
-        
-        data.type==="company"
-          ?navigate("/Trends_app_MVP/FeedCompany")
-          :navigate("/Trends_app_MVP/Feed")
 
+        if (data.type === "company") navigate("/Trends_app_MVP/FeedCompany");
+        else if (data.type === "admin") navigate("/Trends_app_MVP/admin");
+        else navigate("/Trends_app_MVP/Feed");
       } catch (error) {
         console.log(error);
         // console.log(error.response.data.error);
       }
+    } else {
+      setValidateLogin(false);
     }
   };
-
-  // useEffect(() => {
-  //   if(validateLogin) {
-  //     navigate("/home")
-  //   }
-  // }, [validateLogin])
 
   return (
     <div className={style.BGContainer}>
@@ -132,34 +131,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-
-    // <main>
-    //   <div className={style.BGContainer}>
-    //     <div>
-
-    //     </div>
-    //   <form onSubmit={handleSubmit}>
-    //     <input
-    //       placeholder={"example@mail.com"}
-    //       label={"Email: "}
-    //       name={"email"}
-    //       type={"email"}
-    //       value={inputs.email}
-    //     />
-    //     <input type="text" placeholder="Enter your password" />
-    //     <div>
-    //       <button disabled={!(inputs.email && inputs.password)} type="submit">Log In</button>
-    //     </div>
-    //   </form>
-    //   </div>
-    //       <button onClick={() => navigate("/Trends_app_MVP/")}>Back</button>
-    //   {validateLogin === true &&
-    //     <p>Login successful!</p>
-    //   }
-    //   {
-    //     validateLogin === false &&
-    //     <p>wrong email or password</p>
-    //   }
-    // </main>
   );
 }

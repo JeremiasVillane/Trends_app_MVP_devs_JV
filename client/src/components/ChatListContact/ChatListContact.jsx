@@ -1,13 +1,19 @@
-import { selectSelectedUser, setListMessages, setSelectedUser } from "../../Redux/chatSlice";
+import {
+  getMessagesByChat, selectListChats, selectNewChat, selectSelectedUser, setListMessages, setNewChat, setSelectedUser
+} from "../../Redux/chatSlice";
 import style from "./ChatListContact.module.css"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
+import { selectAllUsers } from "../../Redux/UsersSlice";
 const { VITE_URL } = import.meta.env;
 
 const ChatListContact = ({id, isGroup, name, image, last_message, last_message_date, no_read_counter, bio, show_last_message=false}) => {
   const dispatch = useDispatch();
 
   const selectedUser = useSelector(selectSelectedUser);
+  const allUsers = useSelector(selectAllUsers);
+  const listChats = useSelector(selectListChats)
+  const newChat = useSelector(selectNewChat);
 
   const bioShortener = (string) =>{
     return string.slice(0, 40)+"...";
@@ -16,16 +22,35 @@ const ChatListContact = ({id, isGroup, name, image, last_message, last_message_d
   const clickHandler = () =>{
     dispatch(setSelectedUser({
       id,
-      isGroup
+      isGroup,
+      allUsers,
     }))
-    axios.get(`${VITE_URL}/api/v1/chatroom/chat/${id}/messages`,
-      {withCredentials:"include"})
-        .then(({data}) => {
-          data.messages.reverse()
-          dispatch(setListMessages(data))
-        }).catch(error => {
-          console.log("ERROR: ", error)
-        })
+    if(typeof id === "number"){
+      try {
+        dispatch(getMessagesByChat(id)).then(
+          response => {
+            dispatch(setListMessages(response.payload))
+          }
+        )
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      const findUser = (listChats?.length > 0 && typeof listChats !== "string") && listChats?.find(chat => chat.name === name);
+      if(findUser){
+        try {
+          dispatch(getMessagesByChat(findUser.id)).then(
+            response => {
+              dispatch(setListMessages(response.payload))
+              dispatch(setNewChat(!newChat))
+            }
+          )
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      dispatch(setListMessages([]))
+    }
   }
 
   const formatDate = (date) => {
@@ -76,7 +101,7 @@ const ChatListContact = ({id, isGroup, name, image, last_message, last_message_d
           {show_last_message ? (
             <p className={style.description}>{last_message}</p>
           ) : (
-            <p className={style.description}>{bioShortener(bio)}</p>
+            <p className={style.description}>{bio && bioShortener(bio)}</p>
           )}
           {(no_read_counter > 0) &&
             <p className={style.unread}>{no_read_counter}</p>
