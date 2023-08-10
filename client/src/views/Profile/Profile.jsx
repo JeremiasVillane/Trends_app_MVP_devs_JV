@@ -14,7 +14,7 @@ const Profile = () => {
     const userData = useSelector(selectUserProfile);
 
     useEffect(() => {
-        dispatch(getUserInfo())
+        dispatch(getUserInfo());
     }, [])
 
 
