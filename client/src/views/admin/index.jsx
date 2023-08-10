@@ -164,7 +164,7 @@ export default function AdminPage() {
       [name]: value,
     }));
     if (value) {
-      setCreateAdmin(null)
+      setCreateAdmin(null);
     }
   };
 
@@ -196,7 +196,9 @@ export default function AdminPage() {
     >
       <Card>
         <header>
-          <h1 className="uppercase">Panel de Administrador</h1>
+          <h1 className="uppercase text-5xl text-gray-400 mb-8 mt-4 text-center">
+            Panel de Administrador
+          </h1>
         </header>
         <TabGroup>
           <TabList>
