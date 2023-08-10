@@ -60,6 +60,9 @@ const Feed = () => {
   return (
     <section className={style.BGContainer}>
       <div>
+        <NavBarBase/>
+      </div>
+      <div className={style.Container}>
         <header>
           <h1>Trends</h1>
         </header>

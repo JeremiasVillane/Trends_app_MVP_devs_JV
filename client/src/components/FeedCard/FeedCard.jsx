@@ -1,7 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import style from "./FeedCard.module.css";
 import {HiUser,HiChat,HiLogout,HiMoon, HiMenuAlt1} from 'react-icons/hi';
 
 const FeedCard = ({user}) => {
+
+    const navigate = useNavigate();
+
+    const handleProfile = () => {
+        navigate(`/Trends_app_MVP/profile/${user.user.id}`);
+    }
+    const handleChats = () => {
+        navigate("/Trends_app_MVP/chat");
+    }
   return (
     <div className={style.Card}>
       <div className={style.MainContainer}>
@@ -21,12 +31,12 @@ const FeedCard = ({user}) => {
           </div>
 
         </div>
-        <div className={style.iconsContainer}>
-          <button>
-            <HiChat/>
+        <div className={style.IconsContainer}>
+          <button onClick={handleChats}>
+            <HiChat size={"2.6rem"}/>
           </button>
-          <button>
-            <HiUser/>
+          <button onClick={handleProfile}>
+            <HiUser size={"2.6rem"}/>
           </button>
         </div>
       </div>
