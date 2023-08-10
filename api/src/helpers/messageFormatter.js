@@ -7,16 +7,32 @@ const messageFormatter = (messages) => {
 
   for (const message of inputMessages) {
     const plainMessage = message.toJSON();
-
+    console.log(plainMessage);
     const outputMessage = {
-      userId: plainMessage.user?.id,
-      username: plainMessage.user?.username,
-      profile_image: plainMessage.user?.profile_image,
+      userId:
+        plainMessage.user?.id ||
+        plainMessage?.sender_id ||
+        plainMessage?.company_sender_id,
+      username:
+        plainMessage.user?.username ||
+        plainMessage.UserSender?.username ||
+        plainMessage.CompanySender?.username,
+      profile_image:
+        plainMessage.user?.profile_image ||
+        plainMessage.UserSender?.profile_image ||
+        plainMessage.CompanySender?.image,
       messageId: plainMessage.message_id,
       createdAt: plainMessage.createdAt,
       content: decryptMessage(plainMessage.content),
       messageStatus: plainMessage.messageStatus,
     };
+
+    for (const key in outputMessage) {
+      if (outputMessage[key] === null || outputMessage[key] === undefined) {
+        delete outputMessage[key];
+      }
+    }
+
     outputMessages.push(outputMessage);
   }
 
