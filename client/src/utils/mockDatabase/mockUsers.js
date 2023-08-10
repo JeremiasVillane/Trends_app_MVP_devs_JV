@@ -19,18 +19,15 @@ const student1 = {
   academic_area: ["Ingeniería Informática"],
   academic_graduation: "2023",
   info_career: ["Desarrollo de Software"],
-  info_skills: ["Programación en Python", "Desarrollo web", "Bases de datos"],
+  info_skills: ["Python"],
   info_goals: ["Elegir una carrera", "Encontrar una pasantía o trabajo"], // Elegir una carrera - Encontrar una pasantía o trabajo - Conocer más sobre el mercado laboral de mi profesión - Profundizar en mis estudios - Elegir una especialización - Conocer nuevos colegas y oportunidades
-  info_interests: [
-    "Inteligencia Artificial",
-    "Desarrollo de aplicaciones móviles",
-  ],
+  info_interests: ["Informática / Telecomunicaciones"],
   info_problematic: [
     "Falta de información del mercado laboral",
     "Falta de guía profesional",
   ], // No sé que es lo que me gusta - Falta de información del mercado laboral - Falta de guía profesional - Dificultad para conseguir trabajo
   info_languages: ["Español", "Inglés"],
-  info_availability: "Full-time", // Full-time - part-time
+  info_availability: "Full-Time", // Full-time - part-time
   info_contract: "Remoto", // Presencial - Remoto - Híbrido
 };
 
@@ -59,7 +56,7 @@ const student2 = {
     "Administración de personal",
   ],
   info_goals: ["Profundizar en mis estudios", "Elegir una especialización"],
-  info_interests: ["Desarrollo profesional", "Coaching"],
+  info_interests: ["Informática / Telecomunicaciones"],
   info_problematic: ["Falta de guía profesional"],
   info_languages: ["Español", "Inglés"],
   info_availability: "Full-time",
@@ -92,8 +89,7 @@ const student3 = {
   ],
   info_goals: ["Profundizar en mis estudios", "Elegir una especialización"],
   info_interests: [
-    "Investigación en neurociencia",
-    "Tratamiento de trastornos de ansiedad",
+    "Informática / Telecomunicaciones"
   ],
   info_problematic: [
     "No sé que es lo que me gusta",
@@ -712,7 +708,7 @@ const professional1 = {
     "Planificación estratégica",
     "Análisis de datos",
   ],
-  info_interests: ["Marketing de contenidos", "Inteligencia de mercado"],
+  info_interests: ["Informática / Telecomunicaciones"],
   info_goals: [
     "Conocer más sobre el mercado laboral de mi profesión",
     "Conocer nuevos colegas y oportunidades",
@@ -753,8 +749,7 @@ const professional2 = {
     "Pruebas automatizadas",
   ],
   info_interests: [
-    "Inteligencia Artificial",
-    "Desarrollo de aplicaciones híbridas",
+    "Informática / Telecomunicaciones"
   ],
   info_goals: ["Hacer una especialización", "Emprender"],
   info_problematic: ["Dificultad para conseguir trabajo"],
@@ -793,7 +788,7 @@ const professional3 = {
     "Gestión del talento",
     "Capacitación y desarrollo",
   ],
-  info_interests: ["Psicología organizacional", "Desarrollo de liderazgo"],
+  info_interests: ["Informática / Telecomunicaciones"],
   info_goals: ["Conocer nuevos colegas y oportunidades"],
   info_problematic: ["Falta de información del mercado laboral"],
   info_languages: ["Francés", "Inglés"],

@@ -1,7 +1,7 @@
 import { Select, SelectItem, Subtitle, TextInput, Title } from "@tremor/react";
 import style from './candidatesCompany.module.css';
 import { useEffect, useState } from "react";
-import {HiAcademicCap,HiBriefcase} from 'react-icons/hi';
+import {HiAcademicCap,HiBriefcase,HiUser,HiChat} from 'react-icons/hi';
 import { useNavigate } from "react-router-dom";
 
   
@@ -77,7 +77,7 @@ const candidatesCompany = ({jobName,arraycandidates,handlePageProfileCandidate})
                         <option value="professional">profesionales</option>
                     </select>
                 </div>
-            </div>
+            </div> 
             <div className={style.cardContainer}>
                 {
                     filterCandidates?.map((candidate,index)=>(
@@ -87,11 +87,23 @@ const candidatesCompany = ({jobName,arraycandidates,handlePageProfileCandidate})
                             </div>
                             <div className={style.cardProfile}>
                                 <div className={style.nameIcon}>
-                                    <h1>{candidate.name}</h1>{candidate.type==="student" ?<HiAcademicCap/> :<HiBriefcase/>}
+                                    <h1>{candidate.name}</h1>
+                                    {candidate.type==="student" ?<HiAcademicCap/> :<HiBriefcase/>}
+                                    <div className={style.cardButtons}>
+                                        <button
+                                            name="btn-perfil"
+                                            className={style.buttons}
+                                            onClick={()=>handlePageProfileCandidate("profileCandidate",candidate.id)}
+                                        ><HiUser size={20} className={style.icon}/></button>
+                                        <button
+                                            className={style.buttons}
+                                            name="btn-chat"
+                                        ><HiChat size={20} className={style.icon}/></button>
+                                    </div>
                                 </div>
                                 <h3 className={style.subtitle}>{calcularEdad(candidate.profile_birth)} Años - {candidate.info_career.join(',')}</h3>
                                 <h3 className={style.textContainer}>{candidate.profile_bio}</h3>
-                                <div className={style.cardButtons}>
+                                {/* <div className={style.cardButtons}>
                                     <button
                                         name="btn-perfil"
                                         className={style.buttons}
@@ -101,7 +113,7 @@ const candidatesCompany = ({jobName,arraycandidates,handlePageProfileCandidate})
                                         className={style.buttons}
                                         name="btn-chat"
                                     >Chat</button>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     ))
@@ -112,5 +124,3 @@ const candidatesCompany = ({jobName,arraycandidates,handlePageProfileCandidate})
 };
  
 export default candidatesCompany;
-
-
