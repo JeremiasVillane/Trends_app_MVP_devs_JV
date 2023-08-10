@@ -17,7 +17,7 @@ import NavBarInicio from "../src/components/NavBarInicio/NavBarInicio";
 import RegisterFormBase from "./components/RegisterFormBase/RegisterFormBase";
 import LoginPage from "./views/loginPage/loginPage";
 import AdminPage from "./views/admin";
-import ProfileSearch from "./views/ProfileSearch/ProfileSeatch";
+import ProfileSearch from "./views/ProfileSearch/ProfileSearch";
 
 
 function App() {
