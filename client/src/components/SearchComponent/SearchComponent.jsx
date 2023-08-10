@@ -2,7 +2,7 @@ import style from "./SearchComponent.module.css"
 import { useState } from "react";
 import {FaMagnifyingGlass} from "react-icons/fa6"
 import { useNavigate } from "react-router-dom";
-import { getSearchedUsers, test } from "../../Redux/UsersSlice";
+import { getSearchedUsers } from "../../Redux/UsersSlice";
 import {useDispatch} from "react-redux";
 
 
@@ -31,7 +31,6 @@ const SearchComponent = () =>{
     }
 
     const handleSearchButton = () => {
-        dispatch(test());
         dispatch(getSearchedUsers({
             name: searchTerm.name, 
             academic_formation: searchTerm.formation,

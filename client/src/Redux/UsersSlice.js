@@ -4,15 +4,14 @@ const {VITE_URL} = import.meta.env;
 
 const initialState = {
   allUsers: [],
-  searchedUsers: {},
+  searchedUsers: [],
   students: {},
-  professionals: [],
+  professionals: {},
   companies: [],
   currentPage: 1,
   status: true,
   user: {},
   totalPages: 0,
-  test: false,
 };
 
 const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async (page) => {
@@ -75,14 +74,22 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    test:(state) => {
-      state.test = !state.test;
-    },
     currentpage: (state) => {
       state.currentPage++;
     },
     setStatus: (state) => {
       state.status = !state.status
+    },
+    logout: (state) => {
+      state.allUsers = [];
+      state.searchedUsers = [];
+      state.students = {};
+      state.professionals = {};
+      state.companies = [];
+      state.currentPage = 0;
+      state.status = false;
+      state.user = {};
+      state.totalPages = 0;
     },
     matchUsers: (state) => {
       const studentUsers = state.students.data || []; 
@@ -134,7 +141,7 @@ export default usersSlice.reducer;
 
 // export of the selectors of the global state
 export {getSearchedUsers, getUserInfo, getProfessionals, getStudents, getMatchedUsers};
-export const {test, addCompany, matchUsers, currentpage, setStatus} = usersSlice.actions;
+export const {addCompany, matchUsers, currentpage, setStatus, logout} = usersSlice.actions;
 export const selectAllUsers = (state) => state.users.allUsers;
 export const selectSearchedUsers = (state) => state.users.searchedUsers;
 export const selectStudents = (state) => state.users.students;

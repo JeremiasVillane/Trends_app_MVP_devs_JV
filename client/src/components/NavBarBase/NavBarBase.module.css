@@ -98,6 +98,7 @@ body {
     background-color: #383636;
 }
 :global(.dark-mode) .button{
+    border: solid white 1px;
     background-color: #383636;
 }
 :global(.dark-mode) .left p{

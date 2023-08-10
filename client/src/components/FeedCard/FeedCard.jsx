@@ -15,7 +15,7 @@ const FeedCard = ({user}) => {
   return (
     <div className={style.Card}>
       <div className={style.MainContainer}>
-        <div className={style.ConfigContainer}>
+        <div onClick={handleProfile} className={style.ConfigContainer}>
           <div className={style.PhotoContainer}>
             <img src={user.user.profile_image} alt="" />   
           </div>
