@@ -5,67 +5,81 @@ import { useEffect } from "react";
 import {students, professionals} from "../../utils/users";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMatchedUsers, selectAllUsers, selectTotalPages } from "../../Redux/UsersSlice";
+import { getProfessionals, getStudents, getUserInfo, matchUsers, selectAllUsers, selectProfessionals, selectStatus, selectStudents, selectTotalPages, selectUserProfile, setStatus } from "../../Redux/UsersSlice";
 import NavBarBase from "../NavBarBase/NavBarBase";
 //import { matcher } from "../../utils/matchingAlgorithm/matcher";
 
-
 const Feed = () => {
-    const users = useSelector(selectAllUsers);
-    const dispatch = useDispatch();
-    const totalPages = useSelector(selectTotalPages) 
-    const [currentPage, setCurrentPage] = useState(1);
+  const users = useSelector(selectAllUsers);
+  const dispatch = useDispatch();
+  const status = useSelector(selectStatus);
+  const totalPages = useSelector(selectTotalPages); 
+  const profile = useSelector(selectUserProfile);
+  const students = useSelector(selectStudents);
+  const professionals = useSelector(selectProfessionals);
+  const [page, setPage] = useState(1);
 
-    const handleOnpage = () => {
-        if(currentPage <= totalPages) {
-            setCurrentPage(currentPage + 1)
-        }
-    };
-    const handleScroll = () => {
-        console.log("Height:", document.documentElement.scrollHeight);
-        console.log("Top:", document.documentElement.scrollTop);
-        console.log("Window:", window.innerHeight);
+  const fetchMoreUsers = () => {
+    if (profile.id) {
+      dispatch(getStudents({id: profile.id, page}));
+      dispatch(getProfessionals({id: profile.id, page}));
+    }
+  };
 
-        if(window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight  && currentPage < totalPages) {
-                setCurrentPage(currentPage + 1);
-        };
-    };
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
+      setPage(page + 1);
+    }
+  };
 
-    useEffect(() => {
-        dispatch(getMatchedUsers(currentPage))
-    }, [currentPage])
+  //validate if profile exists
+  useEffect(() => {
+    if (!profile || Object.keys(profile).length === 0) {
+      dispatch(getUserInfo());
+    }
+  }, []);
 
+  // fetch users if profile exists 
+  useEffect(() => {
+    if (profile.id) {
+      fetchMoreUsers();
+    }
+  }, [profile.id, page]);
 
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [currentPage])
+  useEffect(() => {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    
-    return (
-        <section className={style.BGContainer}>
-            <div>
-                <header>
-                    <h1>Trends</h1>
-                </header>
+  useEffect(() => {
+    if (students && professionals) {
+      dispatch(matchUsers());
+    }
+  }, [students, professionals]);
 
-                <div className={style.FeedContainer}>
-                    <div className={style.Feed}>
-                        {users && users.length > 0 ? (
-                            users.map((user, userIndex) => (
-                                <div key={userIndex}>
-                                    <FeedCard user={user} />
-                                    {userIndex < users.length - 1 && <hr />}
-                                </div>
-                            ))
-                        ) : (
-                            <p>Cargando usuarios...</p>
-                        )}
-                    </div>
+  return (
+    <section className={style.BGContainer}>
+      <div>
+        <header>
+          <h1>Trends</h1>
+        </header>
+        <div className={style.FeedContainer}>
+          <div className={style.Feed}>
+            {users && users.length > 0 ? (
+              users.map((user, userIndex) => (
+                <div key={userIndex}>
+                  <FeedCard user={user} />
+                  {userIndex < users.length - 1 && <hr />}
                 </div>
-            </div>
-        </section>
-    )
+              ))
+            ) : (
+                <p>Cargando usuarios...</p>
+              )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 
