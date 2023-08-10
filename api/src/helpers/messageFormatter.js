@@ -7,7 +7,6 @@ const messageFormatter = (messages) => {
 
   for (const message of inputMessages) {
     const plainMessage = message.toJSON();
-    console.log(plainMessage);
     const outputMessage = {
       userId:
         plainMessage.user?.id ||
