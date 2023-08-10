@@ -1,5 +1,9 @@
 import "./App.css";
-import { Route, Routes} from "react-router-dom";
+
+import { Route, Routes } from "react-router-dom";
+
+
+
 import { useLocation } from "react-router-dom";
 import "./App.css";
 import {
@@ -19,6 +23,11 @@ import LoginPage from "./views/loginPage/loginPage";
 import AdminPage from "./views/admin";
 import ProfileSearch from "./views/ProfileSearch/ProfileSearch";
 
+// import ProfileSearch from "./views/ProfileSearch/ProfileSearch";
+
+import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin";
+
+
 
 function App() {
   const location = useLocation();
@@ -37,7 +46,9 @@ function App() {
         <Route path="/Trends_app_MVP/profile/:id" element={<ProfileSearch />} />
         <Route path="/Trends_app_MVP/feedCompany" element={<FeedCompany />} />
         <Route path="/Trends_app_MVP/feed" element={<Feed/>} />
-        <Route path="/Trends_app_MVP/admin" element ={<AdminPage/>}/>
+        <Route element={<ProtectedRouteAdmin/>}>
+          <Route path="/Trends_app_MVP/admin" element ={<AdminPage/>}/>
+        </Route>
 
         {/* RUTAS HIJAS PARA PRUEBAS DEL CHAT DESPUES LAS PODEMOS REMOVER */}
         <Route path="/Trends_app_MVP/chat" element={<Chat/>}/>

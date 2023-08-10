@@ -75,5 +75,12 @@
     }
     .head h1{
         text-align: left;
+        font-size: 1.2rem;
+    }
+    .body h1{
+        font-size: 1.2rem;
+    }
+    .postJob h3{
+        margin: 0px;
     }
 }

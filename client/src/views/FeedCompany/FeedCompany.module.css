@@ -51,8 +51,12 @@ body {
     width: 3vw;
     min-width: 43px;
     padding: 4px;
-    background-color: white;
+    /* background-color: white; */
+    background-color: #9AC2EF;
     border: 0px;
+}
+.icon{
+    color: white;
 }
 
 /* Estilos responsivos */
@@ -71,6 +75,7 @@ body {
     }    
     .left{
         /* border: 0.1px solid greenyellow;     */
+        /* position: fixed; */
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -111,11 +116,15 @@ body {
 :global(.dark-mode) .button{
     background-color: #383636;
 }
+:global(.dark-mode) .icon{
+    color: #9AC2EF;
+}
+
 :global(.dark-mode) .left p{
     color: #9AC2EF;
 }
 :global(.dark-mode) .left{
-    border-right: 1px solid #CCB5A5;
+    border: 1px solid #CCB5A5;
 }
 
 

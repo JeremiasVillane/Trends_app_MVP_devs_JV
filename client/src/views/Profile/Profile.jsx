@@ -14,7 +14,7 @@ const Profile = () => {
     const userData = useSelector(selectUserProfile);
 
     useEffect(() => {
-        dispatch(getUserInfo())
+        dispatch(getUserInfo());
     }, [])
 
 
@@ -31,7 +31,6 @@ const Profile = () => {
     }]
     //*----------------------------------------------------------------
 
-    const [isProfileOwner, setIsProfileOwner] = useState(true);
     const [isEditing, setIsEditing] = useState({
         image: false,
         general: false
@@ -87,7 +86,11 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        <h1>Estudiante</h1>
+
+
+                        <h1>userData.type</h1>
+
+
 
                         <button onClick={handleGeneralEdit} className={style.EditButton}>
                             <AiFillEdit size="2rem" color="#344C5A"/>
@@ -115,14 +118,22 @@ const Profile = () => {
                         </section>
                         <hr />
                         <section>
+
+
                             <h2>Biografia:</h2>
+
+
                             <div className={style.Bio}>
                                 <h3>{userData.profile_bio}</h3>
                             </div>
                         </section>
                         <hr />
                         <section>
+
+
                             <h2>Estudios:</h2>
+
+
                             <div className={style.Studies}>
                                 <h3>{userData.academic_institution}</h3>
                             </div>

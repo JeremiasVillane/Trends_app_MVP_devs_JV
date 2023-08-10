@@ -1,6 +1,7 @@
 const { ChatGroup, User, MessageChatGroup } = require("../../db");
+const messageFormatter = require("../../helpers/messageFormatter");
 
-module.exports = async (userId, userType) => {
+module.exports = async (userId, userType, list) => {
   const groups = await ChatGroup.findAll({
     include: [
       {
@@ -34,7 +35,10 @@ module.exports = async (userId, userType) => {
       createdAt: group.createdAt,
       updatedAt: group.updatedAt,
       users: group.users,
-      messages: group.messageChatGroups,
+      messages:
+        userType === "admin"
+          ? group.messageChatGroups
+          : messageFormatter(group.messageChatGroups),
     };
     outputGroups.push(outputGroup);
   }
@@ -46,6 +50,34 @@ module.exports = async (userId, userType) => {
   const filteredGroups = outputGroups.filter((group) => {
     return group.users.some((user) => user.id === userId);
   });
+
+  if (list) {
+    let groupsList = [];
+
+    filteredGroups.forEach((group) => {
+      const groupToAdd = {
+        groupId: group.id,
+        groupName: group.name,
+      };
+
+      const userIsOwner = group.ownerId === userId;
+      const userIsModerator = group.users.some(
+        (user) => user.id === userId && user.userChatGroup.role === "moderator"
+      );
+
+      if (userIsOwner || userIsModerator) {
+        if (
+          !groupsList.some(
+            (listedGroup) => listedGroup.groupId === groupToAdd.groupId
+          )
+        ) {
+          groupsList.push(groupToAdd);
+        }
+      }
+    });
+
+    return groupsList;
+  }
 
   return filteredGroups;
 };

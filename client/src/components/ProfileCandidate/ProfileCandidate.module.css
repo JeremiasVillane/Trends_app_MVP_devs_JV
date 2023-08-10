@@ -1,0 +1,121 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 79vw;
+}
+.header{
+    position: relative;
+    height: 25vh;
+    width: 100%;
+    background-color: #9AC2EF;
+    -webkit-box-shadow: 0px 0px 46px -22px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 46px -22px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 46px -22px rgba(0,0,0,0.75);
+}
+.header h1{
+    font-family: "Rubik-Regular";
+    font-size: 2.6rem;
+    text-align: center;
+    width: fit-content;
+    margin-left: 20rem;
+    padding-top: 2rem;
+    color: black;
+    /* margin: 8vh 0 0 15vw; */
+}
+.imageProfile{
+    border-radius: 90%;
+    width: 14rem;
+    height: 14rem;    
+    position: absolute;
+    z-index: 2;
+    margin-top: 3rem;
+    margin-left: 5vh;
+    cursor: pointer;
+    /* border: 1px solid greenyellow; */
+}
+.imageProfile img{
+    border: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 90%; 
+}
+.body{
+    font-family: "Rubik-Regular";
+    text-align: left;
+    padding-top: 13vh;
+    padding-left: 3.8vw;
+    padding-right: 2vw;
+    /* border: 1px solid red; */
+    height: 75vh;
+    /* overflow: auto; */
+}
+.body h1{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1rem;
+    width: fit-content;
+    border-radius: .4rem;
+    color: #9AC2EF;
+}
+.body h3{
+    color: black;
+    margin-bottom: 0.5rem;
+}
+.body hr{
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+.subtitulo{
+    font-size: 2rem;
+}
+
+@media screen and (max-width: 768px){
+    .headerTitle2{
+        display: none;
+    }
+    .header h1{
+        font-size: 1.3rem;
+        position: relative;
+        margin-left: 4rem;
+        width: 15rem;
+        padding-top: 0;
+    }
+    .imageProfile{
+        justify-content: center;
+        width: fit-content;
+        cursor: pointer;
+        margin-top: 2rem;
+        margin-left: 4.5rem;
+    }
+    .body h1, .body h3{
+        text-align: center;
+        margin: 0 auto;
+        margin-bottom: 1rem;
+    }
+    .body h1{
+        font-size: 2rem;
+        font-family: "Rubik-Medium";
+    }
+    }
+    .body .subtitulo{
+        font-family: "Rubik-Medium";
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+    .body h3{
+        margin-bottom: 0.1rem;
+}
+
+:global(.dark-mode) .header{
+    background-color: #FAB180;
+}
+:global(.dark-mode) .header h1{
+    color: #344C5A ;
+}
+:global(.dark-mode) .body h1{
+    color: #CCB5A5;
+}
+:global(.dark-mode) .body h3{
+    color: #CCB5A5;
+}

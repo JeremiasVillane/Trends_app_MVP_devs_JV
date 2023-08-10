@@ -2,7 +2,7 @@ const { totalMessages } = require("../../controllers/admin.controllers");
 
 module.exports = async (req, res) => {
   const { userType } = req.params;
-  console.log(userType);
+  
   try {
     if (
       userType.toLowerCase() !== "student" &&

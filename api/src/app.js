@@ -32,7 +32,7 @@ const chatroomRoutes = require("./routes/chatroom.routes");
 
 const app = express();
 app.use(morgan("dev"));
-// app.use(setCache);
+//app.use(setCache);
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -53,6 +53,10 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/uploads/profiles', express.static('src/uploads/profiles'));
+app.use('/uploads/groups', express.static('src/uploads/groups'));
+app.use('/uploads', express.static('src/uploads'));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", authenticateAdmin, adminRoutes);

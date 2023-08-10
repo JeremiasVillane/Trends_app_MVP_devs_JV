@@ -10,7 +10,7 @@ const ChatNewChat = () =>{
     const [tab, setTab] = useState("chat")
 
     return(
-        <div className={style.mainContainer}>
+        <div className={`${style.mainContainer } h-full bg-white`}>
             <div className={style.tabContainer}>
                 <div className={(tab==="chat") ? style.tabActive : style.tabInactive} onClick={()=>setTab("chat")}>
                     <p className={style.tabText}>Nuevo Chat</p>
