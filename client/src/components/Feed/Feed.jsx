@@ -5,46 +5,69 @@ import { useEffect } from "react";
 import {students, professionals} from "../../utils/users";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMatchedUsers, selectAllUsers } from "../../Redux/UsersSlice";
-
+import { getMatchedUsers, selectAllUsers, selectTotalPages } from "../../Redux/UsersSlice";
+import NavBarBase from "../NavBarBase/NavBarBase";
 //import { matcher } from "../../utils/matchingAlgorithm/matcher";
 
 
-
 const Feed = () => {
+    const users = useSelector(selectAllUsers);
+    const dispatch = useDispatch();
+    const totalPages = useSelector(selectTotalPages) 
+    const [currentPage, setCurrentPage] = useState(1);
 
-    const allUsers = useSelector(selectAllUsers);
-    const dispatch = useDispatch()
+    const handleOnpage = () => {
+        if(currentPage <= totalPages) {
+            setCurrentPage(currentPage + 1)
+        }
+    };
+    const handleScroll = () => {
+        console.log("Height:", document.documentElement.scrollHeight);
+        console.log("Top:", document.documentElement.scrollTop);
+        console.log("Window:", window.innerHeight);
+
+        if(window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight  && currentPage < totalPages) {
+                setCurrentPage(currentPage + 1);
+        };
+    };
+
     useEffect(() => {
-       dispatch(getMatchedUsers())
-    }, []);
+        dispatch(getMatchedUsers(currentPage))
+    }, [currentPage])
 
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [currentPage])
+
+    
     return (
         <section className={style.BGContainer}>
-            {/* <aside className={style.Filters}>
-                <div className={style.Title}>
-                    <img src={filterIcon} alt="" />
-                    <h2>Filtros</h2>
-                </div>
-                <hr />
-            </aside> */}
+            <div>
+                <header>
+                    <h1>Trends</h1>
+                </header>
 
-            <header>
-                <h1>Trends</h1>
-            </header>
-
-            <div className={style.FeedContainer}>
+                <div className={style.FeedContainer}>
                     <div className={style.Feed}>
-                    {allUsers?.data?.map((user, userIndex) => (
-                        <div key={userIndex}>
-                            <FeedCard user ={user} />
-                            {userIndex < allUsers.length - 1 && <hr />}
-                        </div>
-                    ))}
+                        {users && users.length > 0 ? (
+                            users.map((user, userIndex) => (
+                                <div key={userIndex}>
+                                    <FeedCard user={user} />
+                                    {userIndex < users.length - 1 && <hr />}
+                                </div>
+                            ))
+                        ) : (
+                            <p>Cargando usuarios...</p>
+                        )}
                     </div>
+                </div>
             </div>
         </section>
     )
 }
 
+
 export default Feed;
+

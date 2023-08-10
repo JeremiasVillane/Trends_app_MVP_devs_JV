@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import style from "./RegisterFormBase.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { validationRegister } from "../../utils/validationRegister";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -14,12 +14,35 @@ const RegisterFormBase = ({type})  => {
 
   const [inputs, setInputs] = useState({
     profile_support: false,
+    info_interests: [],
     type,
     email: "",
     password: "",
     name: "",
     username: ""
   });
+  const interests = [
+    "Informática / Telecomunicaciones",
+    "Medicina / Salud",
+    "Ingeniería Civil",
+    "Educación / Docencia",
+    "Marketing / Publicidad",
+    "Arquitectura",
+    "Finanzas / Contabilidad",
+    "Diseño Gráfico / Multimedia",
+    "Psicología / Terapia",
+    "Derecho / Legal",
+    "Recursos Humanos",
+    "Arte / Bellas Artes",
+    "Ciencias Ambientales",
+    "Gestión de Proyectos",
+    "Periodismo / Comunicación",
+    "Turismo / Hospitalidad",
+    "Música / Artes Escénicas",
+    "Agricultura / Agronomía",
+    "Logística / Cadena de Suministro"
+];
+
 
   useEffect(() => {
     if(window.location.href.indexOf("studentRegister") > -1) {
@@ -48,6 +71,23 @@ const RegisterFormBase = ({type})  => {
     }))
   }
 
+const handleInterestsChange = (event) => {
+  event.preventDefault();
+  const selectedValues = Array.from(event.target.selectedOptions, (option) => option.value);
+
+  // Filtrar los valores seleccionados que ya existen y eliminarlos del array
+  const newInterests = inputs.info_interests.filter(interest => !selectedValues.includes(interest));
+
+  // Verificar si algún elemento seleccionado ya existe en info_interests, si existe, eliminarlo
+  const updatedInterests = selectedValues.filter(value => !inputs.info_interests.includes(value));
+
+  setInputs((prevInputs) => ({
+    ...prevInputs,
+    info_interests: [...newInterests, ...updatedInterests],
+  }));
+  
+  event.target.blur();
+};
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (inputs.email && inputs.password && inputs.username && inputs.name && type) {
@@ -89,6 +129,15 @@ const RegisterFormBase = ({type})  => {
             <div className={style.Input}>
               <input name="password" onChange={handleInputs} type="password" placeholder="Password" />
             </div>
+            <div className={style.Input}>
+                <select multiple value={inputs.info_interests} onChange={handleInterestsChange}>
+                    {interests.map((categoria, index) => (
+                    <option key={index} value={categoria}>
+                        {categoria}
+                    </option>
+                    ))}
+                </select>
+            </div>
             <div className={style.Options}>
               <div>
                 <input id="remember" type="checkbox" checked={inputs.support} onChange={handleIsCheck}/>
@@ -110,4 +159,4 @@ const RegisterFormBase = ({type})  => {
     )
 }
 
-export default RegisterFormBase;
+export default RegisterFormBase

@@ -9,12 +9,13 @@ const initialState = {
     professionals: [],
     companies: [],
     user: {},
-    test: false
+    totalPages: 0,
+    test: false,
 };
 
-const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async () => {
+const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async (page) => {
     try {
-        const URL = `${VITE_URL}/api/v1/search/users?type=student`;
+        const URL = `${VITE_URL}/api/v1/search/users?type=student&page=${page}`;
         const fetch = await axios.get(URL, {withCredentials: "include"});
         const data = fetch.data;
         return data;
@@ -78,9 +79,13 @@ const usersSlice = createSlice({
             .addCase(getMatchedUsers.pending, () => {
                 //console.log("cargando");
             })
-            .addCase(getMatchedUsers.fulfilled, (state, action) => {
-                state.allUsers = action.payload;
-            })
+           .addCase(getMatchedUsers.fulfilled, (state, action) => {
+                state.totalPages = action.payload.totalPages;
+                const newUsers = action.payload.data.filter(newUser => (
+                !state.allUsers.some(existingUser => existingUser.id === newUser.id)
+            ));
+                state.allUsers = state.allUsers.concat(newUsers);
+            }) 
             .addCase(getMatchedUsers.rejected, (state, action) => {
                 console.log(action.payload);
             })
@@ -98,3 +103,4 @@ export const selectStudents = (state) => state.users.students;
 export const selectProfessionals = (state) => state.users.professionals;
 export const selectCompanies = (state) => state.users.companies;
 export const selectUserProfile = (state) => state.users.user;
+export const selectTotalPages = (state) => state.users.totalPages;
