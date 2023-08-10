@@ -63,7 +63,7 @@ const Profile = () => {
 
         <div className={style.MajorContainer}>
             <div className={style.NavBar}>
-                <NavBarBase/>
+               //<NavBarBase/>
             </div>
 
             <div className={style.BGContainer}>
