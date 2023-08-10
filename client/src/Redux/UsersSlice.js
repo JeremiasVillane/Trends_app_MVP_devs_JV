@@ -89,8 +89,10 @@ const usersSlice = createSlice({
       const professionalUsers = state.professionals.data || []; 
       const combinedUsers = [...studentUsers, ...professionalUsers];
       const sortedUsers = combinedUsers.sort((userA, userB) => userB.matchscore - userA.matchscore);
-
-      state.allUsers = sortedUsers;
+      const newUsers = sortedUsers.filter(newuser => (
+        !state.allUsers.some(existingUser => existingUser.user.id === newuser.user.id )
+      ));
+      state.allUsers = state.allUsers.concat(newUsers);
     },
     //?SE AGREGA ACCION PARA CARGAR LA COMPAÑIA Y SUS TRABAJOS EN EL STORE GLOBAL
     addCompany:(state,action)=>{
