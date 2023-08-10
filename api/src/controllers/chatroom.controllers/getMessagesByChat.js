@@ -1,10 +1,20 @@
-const { Chat, Message, User } = require("../../db");
+const { Chat, Message, User, Company } = require("../../db");
 const chatFormatter = require("../../helpers/chatFormatter");
 
 module.exports = async (chatId, userId, userType) => {
   const chat = await Chat.findByPk(chatId, {
     attributes: {
       exclude: ["user1_id", "user2_id", "created_at", "updated_at"],
+    },
+    attributes: {
+      exclude: [
+        "user1_id",
+        "user2_id",
+        "company1_id",
+        "company2_id",
+        "created_at",
+        "updated_at",
+      ],
     },
     include: [
       {
@@ -13,16 +23,43 @@ module.exports = async (chatId, userId, userType) => {
         attributes: ["name", "username", "id", "profile_image"],
       },
       {
+        model: Company,
+        as: "CompanySent",
+        attributes: ["name", "username", "id", "image"],
+      },
+      {
         model: User,
         as: "UserReceived",
         attributes: ["name", "username", "id", "profile_image"],
       },
       {
+        model: Company,
+        as: "CompanyReceived",
+        attributes: ["name", "username", "id", "image"],
+      },
+      {
         model: Message,
+        attributes: { exclude: ["chat_id"] },
         include: [
           {
             model: User,
             attributes: ["name", "username", "id", "profile_image"],
+            as: "UserSender",
+          },
+          {
+            model: User,
+            attributes: ["name", "username", "id", "profile_image"],
+            as: "UserReceiver",
+          },
+          {
+            model: Company,
+            attributes: ["name", "username", "id", "image"],
+            as: "CompanySender",
+          },
+          {
+            model: Company,
+            attributes: ["name", "username", "id", "image"],
+            as: "CompanyReceiver",
           },
         ],
       },
@@ -33,7 +70,14 @@ module.exports = async (chatId, userId, userType) => {
     return { error: "Chat not found" };
   }
 
-  if ([chat.UserSent.id, chat.UserReceived.id].includes(userId)) {
+  if (
+    [
+      chat.UserSent?.id,
+      chat.UserReceived?.id,
+      chat.CompanySent?.id,
+      chat.CompanyReceived?.id,
+    ].includes(userId)
+  ) {
     return chatFormatter(chat)[0];
   } else {
     if (userType === "admin") {

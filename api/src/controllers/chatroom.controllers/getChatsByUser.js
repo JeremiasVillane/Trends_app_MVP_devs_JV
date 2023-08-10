@@ -7,13 +7,29 @@ module.exports = async (id, userId, userType) => {
 
   // Solo el propio usuario puede acceder a sus chats
   // o usuarios de tipo admin
-  if ((id === userId && ["student", "professional", "company"].includes(userType)) || userType === "admin") {
+  if (
+    (id === userId &&
+      ["student", "professional", "company"].includes(userType)) ||
+    userType === "admin"
+  ) {
     chats = await Chat.findAll({
       where: {
-        [Op.or]: [{ user1_id: id }, { user2_id: id }, { company1_id: id }, { company2_id: id }],
+        [Op.or]: [
+          { user1_id: id },
+          { user2_id: id },
+          { company1_id: id },
+          { company2_id: id },
+        ],
       },
       attributes: {
-        exclude: ["user1_id", "user2_id", "company1_id", "company2_id", "created_at", "updated_at"],
+        exclude: [
+          "user1_id",
+          "user2_id",
+          "company1_id",
+          "company2_id",
+          "created_at",
+          "updated_at",
+        ],
       },
       include: [
         {
@@ -43,34 +59,34 @@ module.exports = async (id, userId, userType) => {
             {
               model: User,
               attributes: ["name", "username", "id", "profile_image"],
-              as: "UserSender"
+              as: "UserSender",
             },
             {
               model: User,
               attributes: ["name", "username", "id", "profile_image"],
-              as: "UserReceiver"
+              as: "UserReceiver",
             },
             {
               model: Company,
               attributes: ["name", "username", "id", "image"],
-              as: "CompanySender"
+              as: "CompanySender",
             },
             {
               model: Company,
               attributes: ["name", "username", "id", "image"],
-              as: "CompanyReceiver"
+              as: "CompanyReceiver",
             },
           ],
         },
       ],
     });
   } else {
-    return { error: "Invalid credentials or user type" }
+    return { error: "Invalid credentials or user type" };
   }
 
-    if (!chats || !chats.length) {
-      return { error: "No chats found" };
-    }
+  if (!chats || !chats.length) {
+    return { error: "No chats found" };
+  }
 
-    return userType === "admin" ? chats : chatFormatter(chats);
+  return userType === "admin" ? chats : chatFormatter(chats);
 };
