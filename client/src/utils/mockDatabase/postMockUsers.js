@@ -3,13 +3,13 @@ import { students, professionals, companies, jobs } from "./mockUsers.js";
 const users = [...students, ...professionals];
 
 
-// Función para extraer el token de la cookie del usuario
-function extractTokenFromSetCookie(setCookie) {
-  const tokenStartIndex = setCookie.indexOf("token=") + "token=".length;
-  const tokenEndIndex = setCookie.indexOf(";");
-  const token = setCookie.slice(tokenStartIndex, tokenEndIndex);
-  return token;
-}
+// // Función para extraer el token de la cookie del usuario
+// function extractTokenFromSetCookie(setCookie) {
+//   const tokenStartIndex = setCookie.indexOf("token=") + "token=".length;
+//   const tokenEndIndex = setCookie.indexOf(";");
+//   const token = setCookie.slice(tokenStartIndex, tokenEndIndex);
+//   return token;
+// }
 
 
 (async () => {
