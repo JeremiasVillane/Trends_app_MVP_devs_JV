@@ -18,14 +18,14 @@ const {
   editGroupMessage,
   userConversations,
 } = require("../handlers/chatroom.handlers");
-const {validateGroupOwner, validateId, validateProfileOwner} = require("../middlewares");
+const {validateGroupOwner, validateId, validateProfileOwner, encryptMessage} = require("../middlewares");
 
 const chatroomRoutes = Router();
 
 chatroomRoutes.get("/chat/:id", validateId, getListChatsByUser);
 chatroomRoutes.get("/chat/:chatId/messages", messagesByChat);
-chatroomRoutes.post("/message", createMessage);
-chatroomRoutes.put("/chat/:chatId/message/:messageId", editMessage);
+chatroomRoutes.post("/message", encryptMessage, createMessage);
+chatroomRoutes.put("/chat/:chatId/message/:messageId", encryptMessage, editMessage);
 chatroomRoutes.delete("/chat/:chatId/message/:messageId", removeMessage);
 
 chatroomRoutes.get("/groups", allGroups);
@@ -38,8 +38,8 @@ chatroomRoutes.patch("/groups/:groupId/users/:userId", validateGroupOwner, editU
 chatroomRoutes.delete("/groups/:groupId/users/:userId", validateGroupOwner, removeUserFromGroup);
 
 chatroomRoutes.get("/groups/:groupId/messages", allGroupMessages);
-chatroomRoutes.post("/groups/:groupId/messages", newGroupMessage);
-chatroomRoutes.put("/groups/:groupId/messages/:messageId", editGroupMessage);
+chatroomRoutes.post("/groups/:groupId/messages", encryptMessage, newGroupMessage);
+chatroomRoutes.put("/groups/:groupId/messages/:messageId", encryptMessage, editGroupMessage);
 chatroomRoutes.delete("/groups/:groupId/messages/:messageId", removeGroupMessage);
 
 chatroomRoutes.get("/conversations/:id", validateId, validateProfileOwner, userConversations);

@@ -1,7 +1,10 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import style from "./ChatNewGroup.module.css";
+import {useDispatch} from "react-redux";
+import { createNewGroup } from "../../Redux/chatSlice";
 
 const ChatNewGroup = () => {
+  const dispatch = useDispatch();
 
   const [groupImage, setGroupImage] = useState(
     "https://archive.org/download/placeholder-image/placeholder-image.jpg"
@@ -23,6 +26,11 @@ const ChatNewGroup = () => {
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
+
+  const handleCreate = () => {
+    dispatch(createNewGroup({name:groupName}));
+    //! HACER DISPATCH PARA CAMBIAR LA IMAGEN
+  }
 
   return (
     <form className={style.mainContainer}>
@@ -48,7 +56,7 @@ const ChatNewGroup = () => {
         accept="image/*"
         onChange={handleImageChange}
       />
-      <button className={style.createButton}>Crear grupo</button>
+      <button className={style.createButton} onClick={handleCreate}>Crear grupo</button>
     </form>
   );
 };

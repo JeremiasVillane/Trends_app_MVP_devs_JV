@@ -3,7 +3,8 @@ const { getAllGroups } = require("../../controllers/chatroom.controllers");
 module.exports = async (req, res) => {
   try {
     const { id: userId, type: userType } = req.user;
-    const foundGroups = await getAllGroups(userId, userType);
+    const list = req.query.list === "true" ? true : false;
+    const foundGroups = await getAllGroups(userId, userType, list);
 
     if (foundGroups?.error) {
       return res.status(400).json({ error: foundGroups.error });

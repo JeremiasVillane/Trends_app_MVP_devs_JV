@@ -15,7 +15,7 @@ function extractTokenFromSetCookie(setCookie) {
 (async () => {
   // Se crean los usuarios
   for (const user of users) {
-    await axios.post(`http://localhost:3001/userTest`, user);
+    await axios.post(`http://localhost:3004/userTest`, user);
   }
 
   // Se crean las empresas y se les asocian trabajos al azar
@@ -26,7 +26,7 @@ function extractTokenFromSetCookie(setCookie) {
   for (let i = 0; i < companyCount; i++) {
     const company = companies[i];
     const createdCompany = await axios.post(
-      `http://localhost:3001/userTest`,
+      `http://localhost:3004/userTest`,
       company
     ).then((data) => companyId = data.data.id)
 
@@ -48,7 +48,7 @@ function extractTokenFromSetCookie(setCookie) {
     if (randomCompanyJobs) {
       for (const job of randomCompanyJobs) {
         job.companyId = companyId;
-        await axios.post(`http://localhost:3001/userTest`, job);
+        await axios.post(`http://localhost:3004/userTest`, job);
       }
     }
   }

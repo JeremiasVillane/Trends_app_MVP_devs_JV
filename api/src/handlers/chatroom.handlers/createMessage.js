@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     }
     return res.status(200).json(newMessage);
   } catch (error) {
-    console.log(error.message);
+    console.error(error);
     return res.status(500).json({ message: "Error creating new message" });
   }
 };

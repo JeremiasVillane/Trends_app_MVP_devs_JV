@@ -1,5 +1,6 @@
 const authenticateAdmin = require("./authenticateAdmin");
 const authenticateUser = require("./authenticateUser");
+const encryptMessage = require("./encryptMessage");
 const setCache = require("./setCache");
 const validateCompany = require("./validateCompany");
 const validateGroupOwner = require("./validateGroupOwner");
@@ -11,6 +12,7 @@ const validateSchema = require("./validateSchema");
 module.exports = {
   authenticateAdmin,
   authenticateUser,
+  encryptMessage,
   setCache,
   validateCompany,
   validateGroupOwner,
