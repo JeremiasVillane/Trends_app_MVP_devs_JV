@@ -5,6 +5,13 @@
     border-right: 1px grey solid;
 }
 
+.headerIzqDiv{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
 .chatListHeader{
     padding: 0 15px;
     height: 80px;
@@ -15,10 +22,9 @@
     align-items: center;
 }
 
-
 .headerImage{
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     min-width: 40px;
     border-radius: 50%;
     border: 2px solid white;
@@ -27,25 +33,42 @@
 
 .headerUsername{
     color: black;
-    font-size: 1rem;
-}
-
-.headerContainerIcons{
-    display: flex;
-    gap: 2px;
-
-}
-
-.headerIcon{
     font-size: 1.2rem;
-    padding: 0 15px;
-    color: #232323;
-    border-radius: 50%;
 }
 
+.headerContainerIcon{
+    position: relative;
+    top: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 64px;
+    width: 70px;
+    border-radius: 10px 10px 0 0;
+    font-size: 2rem;
+}
 
-.headerIcon:hover{
-    background-color: #b9d1ec;
+.headerContainerIcon:hover{
+    background-color: #c3d8f0;
+    cursor: pointer;
+}
+
+.headerContainerIconActive{
+    position: relative;
+    top: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 64px;
+    width: 70px;
+    border-radius: 10px 10px 0 0;
+    font-size: 2rem;
+    background-color: #FAB180;
+}
+
+.headerContainerIconActive{
     cursor: pointer;
 }
 

@@ -15,9 +15,15 @@ const initialState = {
   totalPages: 0,
 };
 
-const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async (page) => {
+// const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async (page) => {
+    
+   //     const URL = `${VITE_URL}/api/v1/search/users?type=student&page=${page}`;
+
+//console.log(state.allUsers)
+const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async () => {
     try {
-        const URL = `${VITE_URL}/api/v1/search/users?type=student&page=${page}`;
+        const URL = `${VITE_URL}/search/users?type=student`;
+
         const fetch = await axios.get(URL, {withCredentials: "include"});
         const data = fetch.data;
         return data;
@@ -49,22 +55,28 @@ const getProfessionals = createAsyncThunk("users/getProfessionals", async ({id, 
   }
 })
 const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
-  try {
-    const URL = `${VITE_URL}/api/v1/user/profile`;
-    const fetch = await axios.get(URL, {withCredentials: "include"});
-    const data = fetch.data;
-    return data;
-  } catch (error) {
-    return error.response.data.error;
-  }
+
+    try {
+        const URL = `${VITE_URL}/user/profile`;
+        const fetch = await axios.get(URL, {withCredentials: "include"});
+        const data = fetch.data;
+        return data;
+    } catch (error) {
+        return error.response.data.error;
+    }
 } )
 
 const getSearchedUsers = createAsyncThunk("users/getSearchedUsers", async({name, academic_formation, academic_institution}) =>{
-  try {
-    let query = `http://localhost:3001/api/v1/search/users?name=${name}`;
-    if (academic_formation) query += `&academic_formation=${academic_formation}`;
-    if (academic_institution) query += `&academic_institution=${academic_institution}`;
-    const searchedUsers = (await axios.get(query)).data;
+    try {
+    // console.log("ACTION OK")
+    let query = `${VITE_URL}/search/users?name=${name}`
+
+    if (academic_formation) query += `&academic_formation=${academic_formation}`
+    if (academic_institution) query += `&academic_institution=${academic_institution}`
+    // console.log("Query: " + query)
+    const searchedUsers = (await axios.get(query)).data
+    // console.log(searchedUsers);
+
     return searchedUsers;
   } catch (error) {
     throw new Error(error.message);
@@ -144,9 +156,15 @@ const usersSlice = createSlice({
 export default usersSlice.reducer;
 
 // export of the selectors of the global state
-export {getSearchedUsers, getUserInfo, getProfessionals, getStudents, getMatchedUsers};
-export const {addCompany, matchUsers, currentpage, setStatus, logout, setDarkMode} = usersSlice.actions;
-export const selectAllUsers = (state) => state.users.allUsers;
+
+// export {getSearchedUsers, getUserInfo, getProfessionals, getStudents, getMatchedUsers};
+//export const {addCompany, matchUsers, currentpage, setStatus, logout, setDarkMode} = usersSlice.actions;
+// export const selectAllUsers = (state) => state.users.allUsers;
+
+export {getSearchedUsers, getUserInfo, getMatchedUsers};
+export const {test, addCompany} = usersSlice.actions;
+export const selectAllUsers = (state) => state.users?.allUsers;
+
 export const selectSearchedUsers = (state) => state.users.searchedUsers;
 export const selectStudents = (state) => state.users.students;
 export const selectProfessionals = (state) => state.users.professionals;

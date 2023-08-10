@@ -103,21 +103,36 @@ User.hasMany(Message, {foreignKey: "receiver_id"})
 Message.belongsTo(User, {foreignKey: "sender_id", as: "UserSender"})
 Message.belongsTo(User, {foreignKey: "receiver_id", as: "UserReceiver"})
 
+// Definicion de la relacion entre Company y Message
+Company.hasMany(Message, {foreignKey: "company_sender_id"})
+Company.hasMany(Message, {foreignKey: "company_receiver_id"})
+Message.belongsTo(Company, {foreignKey: "company_sender_id", as: "CompanySender"})
+Message.belongsTo(Company, {foreignKey: "company_receiver_id", as: "CompanyReceiver"})
+
 // Definición de la relación entre User y Chat
 User.hasMany(Chat, { foreignKey: 'user1_id', as: 'ChatsSent', onDelete: 'CASCADE' });
 User.hasMany(Chat, { foreignKey: 'user2_id', as: 'ChatsReceived', onDelete: 'CASCADE' });
 Chat.belongsTo(User, { foreignKey: 'user1_id', as: 'UserSent' });
 Chat.belongsTo(User, { foreignKey: 'user2_id', as: 'UserReceived' });
 
+// Definición de la relación entre Company y Chat
+Company.hasMany(Chat, { foreignKey: 'company1_id', as: 'ChatsCompanySent', onDelete: 'CASCADE' });
+Company.hasMany(Chat, { foreignKey: 'company2_id', as: 'ChatsCompanyReceived', onDelete: 'CASCADE' });
+Chat.belongsTo(Company, { foreignKey: 'company1_id', as: 'CompanySent' });
+Chat.belongsTo(Company, { foreignKey: 'company2_id', as: 'CompanyReceived' });
+
 // Definición de la relación entre Chat y Message
 Chat.hasMany(Message, { foreignKey: 'chat_id', onDelete: 'CASCADE' });
 Message.belongsTo(Chat, { foreignKey: 'chat_id', onDelete: 'CASCADE' });
-Message.belongsTo(User, { foreignKey: 'sender_id', onDelete: 'CASCADE' });
 
 // ------ Relaciones para los grupos de chat ------ //
 // Definiciones de la relación entre User y ChatGroup
 User.belongsToMany(ChatGroup, { through: UserChatGroup });
 ChatGroup.belongsToMany(User, { through: UserChatGroup });
+
+// Definicion de relacion entre Owner User y chatGroup
+User.hasMany(ChatGroup, {foreignKey: 'owner_id'})
+ChatGroup.belongsTo(User, {foreignKey: 'owner_id', as : 'UserOwner'})
 
 // Relación entre Usuario y Mensaje de grupo (un usuario puede enviar varios mensajes)
 User.hasMany(MessageChatGroup);

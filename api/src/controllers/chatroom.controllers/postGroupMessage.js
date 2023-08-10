@@ -1,4 +1,5 @@
 const { UserChatGroup, MessageChatGroup } = require("../../db");
+const decryptMessage = require("../../helpers/decryptMessage");
 
 module.exports = async (groupId, content, userId, userType) => {
   const userGroup = await UserChatGroup.findOne({
@@ -9,6 +10,8 @@ module.exports = async (groupId, content, userId, userType) => {
     const message = await MessageChatGroup.create({ content });
     await message.setUser(userId);
     await message.setChatGroup(groupId);
+
+    message.content = decryptMessage(content);
 
     return message;
   }
