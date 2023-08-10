@@ -1,15 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 import {ChatListContact} from "../index";
-import { selectListChats, setListChats } from "../../Redux/chatSlice";
+import { selectUserProfile } from "../../Redux/UsersSlice";
+import { setListChats, selectListChats } from "../../Redux/chatSlice";
 
 const ChatListContactContainer = () => {
   const listChats = useSelector(selectListChats);
+  const user = useSelector(selectUserProfile);
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+      if(Object.keys(user).length > 0){
+        dispatch(setListChats({ user_id: user?.id, query_name: "" }))
+      }
+    },[user])
 
   return (
     <div className="flex flex-col w-full h-auto">
-      { listChats.length ? (
-        listChats?.map((conversation, index)=>{
+      {
+        listChats?.length > 0 && typeof listChats !== "string" ? listChats?.map((conversation, index)=>{
             return(
                 <ChatListContact
                   key={index}
@@ -24,8 +34,8 @@ const ChatListContactContainer = () => {
                   show_last_message={true}
                 />
             )
-        })) : (
-          <p class="text-xs m-3">No tienes ningun chat. Inicia una conversación!</p>
+        }) : (
+          <p className="text-xs m-3">No tienes ningun chat. Inicia una conversación!</p>
         )
       }
     </div>
