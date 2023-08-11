@@ -11,7 +11,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
     const [image, setImage] = useState(null);
     const userData = useSelector(selectUserProfile);
     const [editData, setEditData] = useState({});
-    const URL = `${VITE_URL}/api/v1/user/${userData.id}`;
+    const URL = `${VITE_URL}/user/${userData.id}`;
 
     const onDrop = useCallback(acceptedFiles => {
         const selectedImage = acceptedFiles[0]; // Get the first image from the accepted files array
@@ -70,7 +70,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
             {type === "photo" ?  (
             <div className={style.whiteContainer}>
                 <div className={style.TopContainer}>
-                    <h2 className={style.Title}>Add or edit photo</h2>
+                    <h2 className={style.Title}>Agregar o editar foto</h2>
                     <button onClick={handleCancelButton}>X</button>
                 </div>
 
@@ -103,13 +103,13 @@ const ImageDropzone = ({type, handleCancelButton}) => {
             ): (
                 <div className={`${style.whiteContainer} ${style.GeneralContainer}`}>
                 <div className={style.TopContainer}>
-                    <h2 className={style.Title}>Add or edit photo</h2>
+                    <h2 className={style.Title}>Agregar o editar foto</h2>
                     <button onClick={handleCancelButton}>X</button>
                 </div>
                 <form onSubmit={saveChanges}>
                     <div className={`${style.ImageContainer} ${style.InfoContainer}`}>
                             <div className={style.Option}>
-                                <label htmlFor="userName"> Username*</label>
+                                <label htmlFor="userName"> Nombre de usuario*</label>
                                 <input
                                 defaultValue={userData.username} 
                                 name="username" 
@@ -119,7 +119,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                                 />
                             </div>
                             <div className={style.Option}>
-                                <label htmlFor="Name"> Name*</label>
+                                <label htmlFor="Name"> Nombre*</label>
                                 <input 
                                 defaultValue={userData.name} 
                                 name="name" 
@@ -130,7 +130,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                             </div>
 
                             <div className={style.Option}>
-                                <label htmlFor="email"> Email*</label>
+                                <label htmlFor="email"> Mail*</label>
                                 <input 
                                 defaultValue={userData.name} 
                                 name="email" 
@@ -140,7 +140,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                                 />
                             </div>
                             <div className={style.Option}>
-                                <label htmlFor="skills"> Skills*</label>
+                                <label htmlFor="skills"> Habilidades*</label>
                                 <input 
                                 defaultValue={userData.info_skills  ? userData.info_skills.join(", "): null} 
                                 name="info_skills" 
@@ -150,7 +150,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                             </div> 
 
                             <div className={style.Option}>
-                                <label htmlFor="country"> Country*</label>
+                                <label htmlFor="country"> Pais*</label>
                                 <input 
                                 defaultValue={userData.profile_country} 
                                 name="profile_country" 
@@ -160,7 +160,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                             </div>
 
                             <div className={style.Option}>
-                                <label htmlFor="city"> City*</label>
+                                <label htmlFor="city"> Ciudad*</label>
                                 <input 
                                 defaultValue={userData.profile_city} 
                                 name="profile_city" 
@@ -170,7 +170,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                             </div>
 
                             <div className={style.Option}>
-                                <label htmlFor="biography">Biography</label>
+                                <label htmlFor="biography">Biografia</label>
                                 <textarea
                                 className={style.BioInput} 
                                 defaultValue={userData.profile_bio} 
@@ -180,9 +180,9 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                                 type="text" />
                             </div>
 
-                            <h4 className={style.SubTitle}>Academic</h4>
+                            <h4 className={style.SubTitle}>Estudios</h4>
                             <div className={style.Option}>
-                                <label htmlFor="formation">Formation</label>
+                                <label htmlFor="formation">Formacion Academica</label>
                                 <input 
                                 defaultValue={userData.academic_formation} 
                                 name="academic_formation" 
@@ -202,7 +202,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
 
 
                             <div className={style.Option}>
-                                <label htmlFor="level">Level</label>
+                                <label htmlFor="level">Nivel Academico</label>
                                 <input 
                                 defaultValue={userData.academic_level} 
                                 name="academic_level" 
@@ -212,7 +212,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                             </div>
 
                             <div className={style.Option}>
-                              <label htmlFor="graduation">Graduation Year</label>
+                              <label htmlFor="graduation">Año de graduación</label>
                               <input 
                               defaultValue={userData.academic_institution} 
                               name="academic_institution" 
@@ -220,7 +220,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
                               id="graduation" 
                               type="text" />
                           </div>
-                          <h4>Information</h4>
+                          {/*<h4>Informacion</h4>*/}
                     </div>
                     <div className={style.buttonDiv}>
                         <button className={style.saveButton} type="submit">SUBIR</button>

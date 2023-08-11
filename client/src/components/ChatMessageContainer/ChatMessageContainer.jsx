@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectListMessages, setListMessages } from "../../Redux/chatSlice";
 import ChatMessage from "../ChatMessage/ChatMessage";
 import { useEffect, useRef } from "react";
-import scrollbart from './scrollbar.css';
+//import scrollbart from './scrollbar.css';
 
 const ChatMessageContainer = ({isGroup, socket}) => {
 
