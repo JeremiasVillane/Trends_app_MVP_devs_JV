@@ -42,7 +42,7 @@ const feedCompany = () =>{
     };
 
     const handleClose = async() =>{
-        const URL = `${VITE_URL}/api/v1/auth/logout`;
+        const URL = `${VITE_URL}/auth/logout`;
         try{
             await axios.post(URL+getUniqueQueryString(),{withCredentials: "include"});
             navigate('/Trends_app_MVP')
@@ -102,7 +102,7 @@ const feedCompany = () =>{
     //!ESTE GET SE DEBE CAMBIAR HACIA EL LOGIN
     //!SE CREA ACA A MODO DE PRUEBA DE COMPONENTE INDIVIDUAL
     const fetchCompany = async () =>{
-        const URL = `${VITE_URL}/api/v1/user/profile`;
+        const URL = `${VITE_URL}/user/profile`;
         try{
             //const {data} = await axios.get(`${URL}/${ID}`);
             const {data} = await axios.get(URL+getUniqueQueryString(),{withCredentials: "include"});
@@ -118,7 +118,7 @@ const feedCompany = () =>{
  
     //!TRAIGO LAS OFERTAS LABORALES
     const fetchJobs = async () =>{
-        const URL = `${VITE_URL}/api/v1/job`
+        const URL = `${VITE_URL}/job`
         console.log("<<Como envia url a get JOBS: ",URL)
         try{
             const dataJob = await axios.get(URL+getUniqueQueryString(), {withCredentials: "include"});

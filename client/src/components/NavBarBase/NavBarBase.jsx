@@ -48,7 +48,7 @@ const NavBarBase = () => {
     const handleLogout = async () => {
         dispatch(logout()) 
         try {
-          const URL = `${VITE_URL}/api/v1/auth/logout`;
+          const URL = `${VITE_URL}/auth/logout`;
           console.log("logout")
           const fetch = await axios.post(URL, {withCredentials: "include"})
           navigate("/Trends_app_MVP")

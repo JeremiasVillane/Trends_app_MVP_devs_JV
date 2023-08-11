@@ -9,7 +9,7 @@ const {VITE_URL} = import.meta.env;
 const RegisterFormBase = ({type})  => {
     const [validateLogin, setValidateLogin] = useState(null);
     const navigate = useNavigate();
-    const URL = `${VITE_URL}/api/v1/auth/register`;
+    const URL = `${VITE_URL}/auth/register`;
     
 
   const [inputs, setInputs] = useState({

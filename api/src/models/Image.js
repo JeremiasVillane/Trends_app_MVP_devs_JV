@@ -15,6 +15,10 @@ module.exports = (sequelize) => {
       },
       filepath: {
         type: DataTypes.STRING,
+        allowNull: true,
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       isProfileImage: {

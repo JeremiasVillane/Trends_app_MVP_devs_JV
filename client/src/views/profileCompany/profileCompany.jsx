@@ -64,7 +64,7 @@ export default function profileCompany() {
       };
 
     const fetchCompany = async () =>{
-        const URL = `${VITE_URL}/api/v1/user/profile`;
+        const URL = `${VITE_URL}/user/profile`;
         //const ID = userLogin.id;
 
         try{
@@ -82,9 +82,9 @@ export default function profileCompany() {
 
     //?AL PRESIONAR GUARDAR ENVIO DATOS A BACK PARA ACTUALIZAR
     const handleSaveButton = async(buttonName) =>{
-        //const URL = `${VITE_URL}/api/v1/search/user`;
+        //const URL = `${VITE_URL}/search/user`;
         const ID = companyData.id;
-        const URL = `${VITE_URL}/api/v1/user/${ID}`;
+        const URL = `${VITE_URL}/user/${ID}`;
         //formateo los datos a enviar
         const data = formatData();
         //envio datos
@@ -181,7 +181,7 @@ export default function profileCompany() {
     const postImage = async ()=>{
         const f = new FormData();
         f.append("image",image);
-        const URL = `${VITE_URL}/api/v1/images/upload`
+        const URL = `${VITE_URL}/images/upload`
 
         console.log("que tiene f: ", f)
 
