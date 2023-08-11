@@ -41,10 +41,11 @@ const ImageDropzone = ({type, handleCancelButton}) => {
       f.append("image", image.file)
       try {
         const response = await axios.post(URLImage,f, {withCredentials: "include"}) 
-        console.log(response)
       } catch (error) {
        console.log(error) 
       }
+      handleCancelButton()
+      window.location.reload()
     }
 
     const saveChanges = async (event) => {
