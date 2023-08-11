@@ -1,6 +1,7 @@
 const { User, UserChatGroup, MessageChatGroup } = require("../../db");
 const messageFormatter = require("../../helpers/messageFormatter");
-const deleteGroupMessage = require("./deleteGroupMessage");
+const CryptoJS = require("crypto-js");
+const { CRYPTO_KEY } = require("../../../config");
 
 module.exports = async (
   groupId,
@@ -46,7 +47,9 @@ module.exports = async (
     }
 
     if (messageStatus === "deleted") {
-      message.content = "Este mensaje fue eliminado"
+      responseContent = "Este mensaje fue eliminado"
+      content = CryptoJS.AES.encrypt(responseContent, CRYPTO_KEY).toString();
+      message.content = content;
     }
 
     await message.save();

@@ -22,7 +22,7 @@ module.exports = async (groupId, userId, userType) => {
       return { error: "No messages found" };
     }
 
-    return messageFormatter(messages);
+    return userType === "admin" ? messages : messageFormatter(messages);
   }
   return {
     error: "You don't have authorization to see messages from this group",

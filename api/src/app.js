@@ -32,7 +32,7 @@ const chatroomRoutes = require("./routes/chatroom.routes");
 
 const app = express();
 app.use(morgan("dev"));
-// app.use(setCache);
+//app.use(setCache);    // Desactivado durante la fase de desarrollo
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -62,10 +62,10 @@ app.use("/api/v1/search", authenticateUser, searchRoutes);
 app.use("/api/v1/images", authenticateUser, imageRoutes);
 app.use("/api/v1/chatroom", authenticateUser, chatroomRoutes);
 
-// --- solo para pruebas ---
+// --- solo para pruebas --- //
 app.use("/userTest", userTestRoutes);
 
-// -------- Servidor Socket.io-------------------
+//<---------------------------Servidor Socket.io------------------------------->//
 const { createServer } = require("http");
 appSocket = createServer(app);
 const serverSocket = require("./sockets/serverSokect");

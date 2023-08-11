@@ -1,6 +1,8 @@
 const { Op } = require("sequelize");
 const { Chat, Message } = require("../../db");
-const deleteMessage = require("./deleteMessage");
+const CryptoJS = require("crypto-js");
+const { CRYPTO_KEY } = require("../../../config");
+const decryptMessage = require("../../helpers/decryptMessage");
 
 module.exports = async (
   chatId,
@@ -46,17 +48,14 @@ module.exports = async (
     }
 
     if (messageStatus === "deleted") {
-      message.content = "Este mensaje fue eliminado"
-      // const deleted = await deleteMessage(
-      //   chatId,
-      //   messageId,
-      //   userId,
-      //   userType
-      // );
-      // return deleted;
+      responseContent = "Este mensaje fue eliminado"
+      content = CryptoJS.AES.encrypt(responseContent, CRYPTO_KEY).toString();
+      message.content = content;
     }
 
     await message.save();
+
+    message.content = decryptMessage(content);
 
     return message;
   }

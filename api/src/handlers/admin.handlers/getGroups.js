@@ -1,10 +1,15 @@
-const { getAllGroups } = require("../../controllers/chatroom.controllers");
+const totalGroups = require("../../controllers/admin.controllers/totalGroups");
 
 module.exports = async (req, res) => {
+  const { userType } = req.params;
   try {
-    const allGroups = await getAllGroups(null, "admin");
-
-    res.status(200).json(allGroups);
+    if (
+      userType.toLowerCase() !== "student" &&
+      userType.toLowerCase() !== "professional"
+    )
+      throw new Error("Invalid params.");
+    const result = await totalGroups(userType);
+    res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

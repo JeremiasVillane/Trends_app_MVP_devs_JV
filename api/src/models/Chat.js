@@ -10,22 +10,22 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      user1_id: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        reference: {
-          model: User,
-          key: "id",
-        },
-      },
-      user2_id: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        reference: {
-          model: User,
-          key: "id",
-        },
-      },
+      // user1_id: {
+      //   type: DataTypes.UUID,
+      //   allowNull: false,
+      //   reference: {
+      //     model: User,
+      //     key: "id",
+      //   },
+      // },
+      // user2_id: {
+      //   type: DataTypes.UUID,
+      //   allowNull: false,
+      //   reference: {
+      //     model: User,
+      //     key: "id",
+      //   },
+      // },
       created_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,

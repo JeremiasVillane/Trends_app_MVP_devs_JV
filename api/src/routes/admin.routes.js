@@ -10,7 +10,7 @@ const adminRoutes = Router();
 
 adminRoutes.post("/create", createAdmin);
 adminRoutes.get("/users", getUsers);
-adminRoutes.get("/users/groups", getGroups);
+adminRoutes.get("/users/groups/:userType", getGroups);
 adminRoutes.get("/users/chats/:userType", getChats)
 adminRoutes.get("/users/messages/:userType", getMessages);
 
