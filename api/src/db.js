@@ -96,14 +96,14 @@ Image.belongsTo(Company);
 Admin.hasMany(Image);
 Image.belongsTo(Admin);
 
-// ------- Relaciones para el chat --------------
-// Definicion de la relacion entre User y Message
+// ------- Relaciones para el chat 1:1  -------------- //
+// Definición de la relación entre User y Message
 User.hasMany(Message, {foreignKey: "sender_id"})
 User.hasMany(Message, {foreignKey: "receiver_id"})
 Message.belongsTo(User, {foreignKey: "sender_id", as: "UserSender"})
 Message.belongsTo(User, {foreignKey: "receiver_id", as: "UserReceiver"})
 
-// Definicion de la relacion entre Company y Message
+// Definición de la relación entre Company y Message
 Company.hasMany(Message, {foreignKey: "company_sender_id"})
 Company.hasMany(Message, {foreignKey: "company_receiver_id"})
 Message.belongsTo(Company, {foreignKey: "company_sender_id", as: "CompanySender"})
@@ -130,7 +130,7 @@ Message.belongsTo(Chat, { foreignKey: 'chat_id', onDelete: 'CASCADE' });
 User.belongsToMany(ChatGroup, { through: UserChatGroup });
 ChatGroup.belongsToMany(User, { through: UserChatGroup });
 
-// Definicion de relacion entre Owner User y chatGroup
+// Definición de relación entre Owner User y chatGroup
 User.hasMany(ChatGroup, {foreignKey: 'owner_id'})
 ChatGroup.belongsTo(User, {foreignKey: 'owner_id', as : 'UserOwner'})
 

@@ -32,7 +32,7 @@ const chatroomRoutes = require("./routes/chatroom.routes");
 
 const app = express();
 app.use(morgan("dev"));
-//app.use(setCache);
+//app.use(setCache);    // Desactivado durante la fase de desarrollo
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -54,9 +54,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/uploads/profiles', express.static('src/uploads/profiles'));
-app.use('/uploads/groups', express.static('src/uploads/groups'));
-app.use('/uploads', express.static('src/uploads'));
+app.use("/uploads/profiles", express.static("src/uploads/profiles"));
+app.use("/uploads/groups", express.static("src/uploads/groups"));
+app.use("/uploads", express.static("src/uploads"));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", authenticateAdmin, adminRoutes);
@@ -66,10 +66,10 @@ app.use("/api/v1/search", authenticateUser, searchRoutes);
 app.use("/api/v1/images", authenticateUser, imageRoutes);
 app.use("/api/v1/chatroom", authenticateUser, chatroomRoutes);
 
-// --- solo para pruebas ---
+// --- solo para pruebas --- //
 app.use("/userTest", userTestRoutes);
 
-// -------- Servidor Socket.io-------------------
+//<---------------------------Servidor Socket.io------------------------------->//
 const { createServer } = require("http");
 appSocket = createServer(app);
 const serverSocket = require("./sockets/serverSokect");
