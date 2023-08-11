@@ -183,14 +183,14 @@ useEffect(()=>{
                     className={style.button}
                     title="Mi Perfil"
                 ><HiUser size={35} className={style.icon}  /></button>
-                <p>Mi Perfil</p>
+                <p>Perfil</p>
 
                 <button 
                     onClick={()=>handlePage("Chats")}
                     className={style.button}
                     title="Chats"
                 ><HiChat size={35} className={style.icon} /></button>
-                <p>Mis Chats</p>
+                <p>Chats</p>
 
                 <button 
                     onClick={()=>handleClose()}
