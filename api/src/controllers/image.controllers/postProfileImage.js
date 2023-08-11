@@ -11,10 +11,13 @@ module.exports = async (userId, userType, filename, path) => {
     typeOfId = "companyId";
   } else typeOfId = "adminId";
 
+  const imageUrl = `/images/files/${filename}`;
+
   const savedImage = await Image.create({
     [typeOfId]: userId,
     filename,
     filepath: path,
+    imageUrl,
     isProfileImage: true,
   });
 
@@ -48,5 +51,5 @@ module.exports = async (userId, userType, filename, path) => {
     return { error: error.message };
   }
 
-  return { imageId: savedImage.id, profileId: userId, imagePath: path };
+  return { imageId: savedImage.id, profileId: userId, imageUrl };
 };

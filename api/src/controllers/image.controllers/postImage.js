@@ -9,15 +9,18 @@ module.exports = async (id, type, filename, path) => {
     typeOfId = "companyId";
   } else typeOfId = "adminId";
 
+  const imageUrl = `/images/files/${filename}`;
+
   const savedImage = await Image.create({
     [typeOfId]: id,
     filename,
     filepath: path,
+    imageUrl,
   });
 
   if (!savedImage) {
     return { error: "Failed to upload image" };
   }
 
-  return { imageId: savedImage.id, imagePath: path };
+  return { imageId: savedImage.id, imageUrl };
 };
