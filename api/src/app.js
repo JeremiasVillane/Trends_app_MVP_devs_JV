@@ -54,10 +54,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/uploads/profiles", express.static("src/uploads/profiles"));
-app.use("/uploads/groups", express.static("src/uploads/groups"));
-app.use("/uploads", express.static("src/uploads"));
-
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/admin", authenticateAdmin, adminRoutes);
 app.use("/api/v1/user", authenticateUser, userRoutes);
