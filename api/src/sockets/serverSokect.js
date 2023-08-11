@@ -25,7 +25,7 @@ module.exports = serverSocket => {
 
     socket.on("newUser", (username) => {
       addNewUser(username, socket.id);
-      console.log("onLineUsers: ", onLineUsers);
+      // console.log("onLineUsers: ", onLineUsers);
     });
 
     // =============== Chat Individual v2 ================================
@@ -34,11 +34,11 @@ module.exports = serverSocket => {
       flag, data, userNameReceptor, userNameEmisor
     }) => {
 
-      console.log("LISTMESSAGES: ", data?.messages, "FLAG: ", flag);
+      // console.log("LISTMESSAGES: ", data?.messages, "FLAG: ", flag);
 
       const receiver = getUser(userNameReceptor);
       const sender = getUser(userNameEmisor);
-      console.log("receiver: ", receiver, "sender: ", sender)
+      // console.log("receiver: ", receiver, "sender: ", sender)
       io.to(receiver?.socketId).emit("mensaje-recibido", data);
       io.to(sender?.socketId).emit("mensaje-recibido", data);
 

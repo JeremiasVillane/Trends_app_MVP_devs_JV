@@ -1,5 +1,4 @@
 const totalGroups = require("../../controllers/admin.controllers/totalGroups");
-const { getAllGroups } = require("../../controllers/chatroom.controllers");
 
 module.exports = async (req, res) => {
   const { userType } = req.params;
