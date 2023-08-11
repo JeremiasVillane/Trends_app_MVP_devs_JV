@@ -65,7 +65,16 @@
     height: 100%;
     border-radius: 90%;    
 }
+.buttonsImage{
+    display: flex;
+    flex-direction: row;
+    width: 25rem;
+}
 
+.buttonsImage button{
+    width: 15rem;
+    border-radius: 10px;
+}
 .imageChangeButton{
     position: absolute;
     top: 16vh;
@@ -98,25 +107,28 @@
 
 .userBasicInfoContainer h3{
     color: black;
-    margin-bottom: 1rem;
+    margin-top: 0.5rem;
 }
 
 .userBasicInfoContainer input{
     font-family: "Rubik-Regular";
     width: 100%;
-    height: 1.6rem;
+    height: 2rem;
     font-size: 1rem;
-    border-radius: 10px;
-    border: 0.1rem solid grey
+    border-radius: 5px;
+    border: 0.1rem solid grey;
+    padding-left: 1rem;
+
 }
 
 .userBasicInfoContainer select{
     font-family: "Rubik-Regular";
     width: 100%;
-    height: 1.6rem;
-    border-radius: 10px;
+    height: 2rem;
+    border-radius: 5px;
     border: 0.1rem solid grey;
     font-size: 1rem;
+    padding-left: 1rem;
 }
 
 .userBasicInfoContainer textarea{

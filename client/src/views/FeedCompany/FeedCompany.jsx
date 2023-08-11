@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import style from "./FeedCompany.module.css";
-import { Profile, ProfileCompany } from "../index";
+import { Chat, Profile, ProfileCompany } from "../index";
 import { CompanyJobs, JobFormCompany } from "../../components/index";
 import {AiFillHome} from 'react-icons/ai';
 import {HiUser,HiChat,HiLogout,HiMoon} from 'react-icons/hi';
@@ -36,13 +36,15 @@ const feedCompany = () =>{
     const[page, setPage] = useState("companyJobs");
     const[jobEdit, setJobEdit] = useState();
 
+    //Cambio de pagina en navbar o entre componentes
     const handlePage = (namepage) => {
-        if(namepage==="companyJobs") fetchCompany();
+        //if(namepage==="companyJobs") fetchCompany();
         setPage(namepage)
     };
 
+    //Presiono boton salir de navbar
     const handleClose = async() =>{
-        const URL = `${VITE_URL}/api/v1/auth/logout`;
+        const URL = `${VITE_URL}/auth/logout`;
         try{
             await axios.post(URL+getUniqueQueryString(),{withCredentials: "include"});
             navigate('/Trends_app_MVP')
@@ -52,7 +54,7 @@ const feedCompany = () =>{
         }
     };
 
-    
+    //Cambio de pagina para editar una oferta laboral
     const handlePageEditJob = (namepage,data) =>{
         console.log("que recibe data: ", data);
         console.log("que recibe namepage: ", namepage);
@@ -63,16 +65,21 @@ const feedCompany = () =>{
 
     const[arraycandidates, setArrayCandidates] = useState();
     const[jobName,setJobName] = useState();
+    const[jobId,setJobId] = useState();
 
+    //cambio a pagina de Candidatos
     const handlePageCandidates = async(namepage,data) =>{
         console.log("que recibe data <handlePageCandidates>: ", data)
         
         //!EJECUTO ALGORITMO MATCHEO Y ENVIO RESULTADOS A COMPONENTE
-        setArrayCandidates(await matcherCandidatesJob(data));
+        //setArrayCandidates(await matcherCandidatesJob(data));
+
+
         const nameJob='#'+data.jobName;
         setJobName(nameJob);
-
-        console.log("que tiene arraycandidates <feedCompany>: ",arraycandidates)
+        setJobId(data.id)
+        //await new Promise((resolve) => setTimeout(resolve, 100));
+        //console.log("que tiene arraycandidates <feedCompany>: ",arraycandidates)
         handlePage(namepage);
     };
 
@@ -102,7 +109,7 @@ const feedCompany = () =>{
     //!ESTE GET SE DEBE CAMBIAR HACIA EL LOGIN
     //!SE CREA ACA A MODO DE PRUEBA DE COMPONENTE INDIVIDUAL
     const fetchCompany = async () =>{
-        const URL = `${VITE_URL}/api/v1/user/profile`;
+        const URL = `${VITE_URL}/user/profile`;
         try{
             //const {data} = await axios.get(`${URL}/${ID}`);
             const {data} = await axios.get(URL+getUniqueQueryString(),{withCredentials: "include"});
@@ -110,6 +117,7 @@ const feedCompany = () =>{
             console.log("que trae data <FeedCompany>: ", data)
             dispatch(addCompany(data));
             //setJobs(data.jobs)
+            await new Promise((resolve) => setTimeout(resolve, 100));
     
         }catch(error){
             console.log("error al cargar datos a SG <FeedCompany>: ",error.message);
@@ -118,25 +126,36 @@ const feedCompany = () =>{
  
     //!TRAIGO LAS OFERTAS LABORALES
     const fetchJobs = async () =>{
-        const URL = `${VITE_URL}/api/v1/job`
+        const URL = `${VITE_URL}/job`
         console.log("<<Como envia url a get JOBS: ",URL)
         try{
             const dataJob = await axios.get(URL+getUniqueQueryString(), {withCredentials: "include"});
             console.log("que trae dataJob de fetchJobs: ",dataJob.data)
             setJobs(dataJob.data);
+            await new Promise((resolve) => setTimeout(resolve, 100));
         }catch(error){
             console.log("Error al traer los JOBS <FeedCompany>: ", error.message)
         }
     };
 
 useEffect(()=>{
-    console.log(">>>CAMBIO PAGINA<<<")
-    fetchCompany();
-    fetchJobs();
+    console.log(">>>CAMBIO A PAGINA<<<", page)
+    if(page==="jobForm") fetchJobs();
+    if(page==="profileCompany") fetchCompany();
+    if(page==="companyJobs"){
+        fetchCompany(); 
+        fetchJobs();
+    };
+    
+    if(page==="Chats"){
+        //dispatch()
+    }
+    
 },[page])
 
 //?AL MONTAR COMPONENTE
 useEffect(()=>{
+    console.log("<<<SE MONTA FeedCompany>>>")
     console.log("que trae userLogin: ", userLogin);
       
     fetchCompany();
@@ -200,12 +219,13 @@ useEffect(()=>{
                 {/* PAGINA QUE CREA O MODIFICA UNA OFERTA LABORAL */}
                 {page === "jobForm" && <JobFormCompany jobEdit={jobEdit} companyId={companyDataSG.id} handlePage={handlePage}/>}
                 {/* PAGINA DE CANDIDATOS QUE APLICAN A UN PUESTO LABORAL */}
-                {page === "Candidates" && <CandidatesCompany jobName={jobName} arraycandidates={arraycandidates} handlePageProfileCandidate={handlePageProfileCandidate}/>}
+                {page === "Candidates" && <CandidatesCompany jobId ={jobId} jobName={jobName}  handlePageProfileCandidate={handlePageProfileCandidate}/>}
                 {/* PAGINA DEL PERFIL DE EMPRESA */}
                 {page === "profileCompany" && <ProfileCompany/>}
                 {/* PAGINA DEL PERFIL DE CANDIDATO */}
                 {page === "profileCandidate" && <ProfileCandidate candidateId={profileCandidate} />}
-                {page === "Chats"}
+                {/* PAGINA DE CHAT */}
+                {page === "Chats" && <Chat/>}
             </div>
         </div>
         </>

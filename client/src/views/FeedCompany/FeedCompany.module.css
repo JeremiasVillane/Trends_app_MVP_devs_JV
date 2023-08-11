@@ -1,13 +1,14 @@
-body {
+/* body {
     font-family: 'Poppins Medium', sans-serif;
     margin: 0;
     padding: 0;
     color: #232323;
     
-  }
+  } */
 
 .container{
-    display: inline-flex;
+    /* display: inline-flex; */
+    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     width: 100%;
@@ -15,6 +16,7 @@ body {
     padding: 0;
     background-color:#F1F1F1 ;
     border: 1px solid grey;
+    position: relative;
 }
 .left{
     /* border: 0.1px solid black; */    

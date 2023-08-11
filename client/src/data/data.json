@@ -64,7 +64,7 @@
         {"value":"Full-Time"},
         {"value":"Part-Time"}
     ],
-    "IndustrySector":[
+    "industrySector":[
         {"value":"Informática / Telecomunicaciones"},
         {"value":"Medicina / Salud"},
         {"value":"Ingeniería Civil"},

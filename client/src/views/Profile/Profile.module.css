@@ -1,7 +1,6 @@
 .MajorContainer {
     display: flex;
     width: 100vw;
-
 }
 
 .Container {
@@ -10,14 +9,9 @@
     border-radius: .3rem;
   }
 
-
-
 .BGContainer {
     display: block;
-    width: 80%;
-    height: fit-content;
-
-  
+    width: 100%;
     background-color: white;
     text-align: left;
     font-family: "Poppins-Medium";
@@ -25,12 +19,6 @@
     margin-left: 4.8rem;
     width: 94%;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-  
-    border-radius: .6rem;
-    margin: auto auto; 
-
-  
 }
 
 .BGContainer h2 {
@@ -59,17 +47,10 @@
     background-color: #9AC2EF ;
     position: relative;
     margin-bottom: 5rem;
-
-  
-.BGContainer header h1{
-    color: rgb(23, 23, 23);
-
-  
-    border-radius: .4rem .4rem 0 0;
 }
 
-
-  
+.BGContainer header h1{
+    color: rgb(23, 23, 23);
 }
 .EditButton {
     cursor: pointer;
