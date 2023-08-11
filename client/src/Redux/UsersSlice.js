@@ -17,7 +17,7 @@ const initialState = {
 
 const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async (page) => {
     try {
-        const URL = `${VITE_URL}/api/v1/search/users?type=student&page=${page}`;
+        const URL = `${VITE_URL}/search/users?type=student&page=${page}`;
         const fetch = await axios.get(URL, {withCredentials: "include"});
         const data = fetch.data;
         return data;
@@ -29,7 +29,7 @@ const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async (page) =
 const getStudents = createAsyncThunk("users/getStudents", async ({id, page}) => {
   console.log(page)
   try {
-    const URL = `${VITE_URL}/api/v1/user/feed/${id}/student?page=${page}`;
+    const URL = `${VITE_URL}/user/feed/${id}/student?page=${page}`;
     const fetch = await axios.get(URL, {withCredentials: "include"});
     const data = fetch.data;
     return data;
@@ -40,7 +40,7 @@ const getStudents = createAsyncThunk("users/getStudents", async ({id, page}) => 
 
 const getProfessionals = createAsyncThunk("users/getProfessionals", async ({id, page}) => {
   try {
-    const URL = `${VITE_URL}/api/v1/user/feed/${id}/professional?page=${page}`;
+    const URL = `${VITE_URL}/user/feed/${id}/professional?page=${page}`;
     const fetch = await axios.get(URL, {withCredentials: "include"});
     const data = fetch.data;
     return data;
@@ -50,7 +50,7 @@ const getProfessionals = createAsyncThunk("users/getProfessionals", async ({id, 
 })
 const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
   try {
-    const URL = `${VITE_URL}/api/v1/user/profile`;
+    const URL = `${VITE_URL}/user/profile`;
     const fetch = await axios.get(URL, {withCredentials: "include"});
     const data = fetch.data;
     return data;

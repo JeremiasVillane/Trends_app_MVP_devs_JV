@@ -167,7 +167,7 @@ const handlePageForm = (event) =>{
         if(jobEdit){
             //?MODIFICA OFERTA LABORAL
             const ID = jobEdit.id;
-            const URL=`${VITE_URL}/api/v1/job/${ID}`
+            const URL=`${VITE_URL}/job/${ID}`
             try{
                 console.log("MODIFICO JOB", envioData)
                 console.log("como envia a PUT: ", URL)
@@ -181,7 +181,7 @@ const handlePageForm = (event) =>{
         }else{
             //?NUEVA OFERTA LABORAL
             const ID = companyId;
-            const URL=`${VITE_URL}/api/v1/job/${ID}`
+            const URL=`${VITE_URL}/job/${ID}`
             try{
                 console.log("AGREGO NUEVO JOB", envioData)
                 console.log("como envia a POST: ", URL)

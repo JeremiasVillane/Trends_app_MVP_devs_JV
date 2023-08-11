@@ -28,7 +28,7 @@ const Profile = () => {
     }, [userData])
 
     const  loadImage = async () => {
-      const URLImage =`${VITE_URL}/api/v1${userData.profile_image}`
+      const URLImage =`${VITE_URL}${userData.profile_image}`
       console.log(URLImage)
       await axios.get(URLImage, {responseType: "blob", withCredentials: "include"})
       .then(response => {  

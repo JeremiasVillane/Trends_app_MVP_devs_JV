@@ -16,7 +16,7 @@ const {VITE_URL} = import.meta.env;
 const ProfileSearch = () => {
     const {id} = useParams()
     const [userData, setUserData] = useState({});
-    const URL = `${VITE_URL}/api/v1/search/user/${id}`;
+    const URL = `${VITE_URL}/search/user/${id}`;
     useEffect(() => {
       const fetchData = async () => {
         try {

@@ -18,7 +18,7 @@ const ChatListContact = ({id, isGroup, name, image, last_message, last_message_d
       id,
       isGroup
     }))
-    axios.get(`${VITE_URL}/api/v1/chatroom/chat/${id}/messages`,
+    axios.get(`${VITE_URL}/chatroom/chat/${id}/messages`,
       {withCredentials:"include"})
         .then(({data}) => {
           data.messages.reverse()

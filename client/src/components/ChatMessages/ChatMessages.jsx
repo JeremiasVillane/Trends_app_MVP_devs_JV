@@ -51,7 +51,7 @@ const ChatMessages = ({socket}) => {
       const content = message;
       console.log("content: ", content)
 
-      axios.post(`${VITE_URL}/api/v1/chatroom/message`,
+      axios.post(`${VITE_URL}/chatroom/message`,
         {content, receiver_id, sender_id },
         {withCredentials: "include"})
           .then(({data}) => {
@@ -63,7 +63,7 @@ const ChatMessages = ({socket}) => {
             //   userNameReceptor
             // })
 
-            axios.get(`${VITE_URL}/api/v1/chatroom/chat/${selectedUser[0].id}/messages`+
+            axios.get(`${VITE_URL}/chatroom/chat/${selectedUser[0].id}/messages`+
             getUniqueQueryString(),
             {withCredentials:"include"})
               .then(({data}) =>{

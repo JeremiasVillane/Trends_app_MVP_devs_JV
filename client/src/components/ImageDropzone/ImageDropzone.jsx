@@ -11,8 +11,8 @@ const ImageDropzone = ({type, handleCancelButton}) => {
     const [image, setImage] = useState(null);
     const userData = useSelector(selectUserProfile);
     const [editData, setEditData] = useState({});
-    const URLData = `${VITE_URL}/api/v1/user/${userData.id}`;
-    const URLImage = `${VITE_URL}/api/v1/images/profile`
+    const URLData = `${VITE_URL}/user/${userData.id}`;
+    const URLImage = `${VITE_URL}/images/profile`
 
     const onDrop = useCallback(acceptedFiles => {
         const selectedImage = acceptedFiles[0]; // Get the first image from the accepted files array

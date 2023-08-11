@@ -10,7 +10,7 @@ const { VITE_URL } = import.meta.env;
 export default function LoginPage() {
   const [validateLogin, setValidateLogin] = useState(null);
   const navigate = useNavigate();
-  const URL = `${VITE_URL}/api/v1/auth/login`;
+  const URL = `${VITE_URL}/auth/login`;
   const dispatch = useDispatch();
 
   const [inputs, setInputs] = useState({
@@ -41,7 +41,7 @@ export default function LoginPage() {
         await axios.post(URL+getUniqueQueryString(), inputs, { withCredentials: "include" });
         //console.log("que trae resp <loginPage>: ", resp)
         dispatch(getUserInfo());
-        const {data} = await axios.get(`${VITE_URL}/api/v1/user/profile`+getUniqueQueryString(), { withCredentials: "include" });
+        const {data} = await axios.get(`${VITE_URL}/user/profile`+getUniqueQueryString(), { withCredentials: "include" });
         //console.log("Que tiene respPerfil <loginPage>: ", data);
         
         data.type==="company"

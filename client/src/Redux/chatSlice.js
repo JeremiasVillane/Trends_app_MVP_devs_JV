@@ -13,7 +13,7 @@ const initialState = {
 
 const setListChats = createAsyncThunk("chat/setListChats", async ({ user_id, query_name }) => {
   try {
-    const promise = (await axios.get(`${VITE_URL}/api/v1/chatroom/conversations/${user_id}?query_name=${query_name}`, { withCredentials:"include"})).data
+    const promise = (await axios.get(`${VITE_URL}/chatroom/conversations/${user_id}?query_name=${query_name}`, { withCredentials:"include"})).data
     return promise;
   } catch (error) {
     console.log(error);
@@ -24,8 +24,8 @@ const setListChats = createAsyncThunk("chat/setListChats", async ({ user_id, que
 const deleteMessage = createAsyncThunk("chat/deleteMessage", async({message_id, isGroup, conversation_id}) =>{
   try {
     const response = isGroup ?
-      await (axios.put(`${VITE_URL}/api/v1/chatroom/groups/${conversation_id}/message/${message_id}`, {messageStatus:"deleted"}, { withCredentials:"include"})).data :
-      await (axios.put(`${VITE_URL}/api/v1/chatroom/chat/${conversation_id}/message/${message_id}`, {messageStatus:"deleted"}, { withCredentials:"include"})).data
+      await (axios.put(`${VITE_URL}/chatroom/groups/${conversation_id}/message/${message_id}`, {messageStatus:"deleted"}, { withCredentials:"include"})).data :
+      await (axios.put(`${VITE_URL}/chatroom/chat/${conversation_id}/message/${message_id}`, {messageStatus:"deleted"}, { withCredentials:"include"})).data
       return response;
   } catch (error) {
     console.log(error)
@@ -34,7 +34,7 @@ const deleteMessage = createAsyncThunk("chat/deleteMessage", async({message_id, 
 
 // const setListMessages = createAsyncThunk("chat/setListMessages", async(id) =>{
 //   try {
-//     const {data} = await axios.get(`${VITE_URL}/api/v1/chatroom/chat/${id}/messages`, { withCredentials:"include"})
+//     const {data} = await axios.get(`${VITE_URL}/chatroom/chat/${id}/messages`, { withCredentials:"include"})
 //     data.messages.reverse();
 //     console.log("DATA: ", data)
 //     return data;
