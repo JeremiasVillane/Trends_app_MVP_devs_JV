@@ -13,7 +13,7 @@
 const isImageUrlOrLocalPath = (value) => {
   return (
     typeof value === "string" &&
-    (value.startsWith("http") || value.startsWith("src\\uploads\\"))
+    (value.startsWith("http") || value.includes("/") || value.startsWith("src\\uploads\\"))
   );
 };
 

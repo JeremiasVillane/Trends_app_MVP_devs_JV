@@ -24,7 +24,7 @@ module.exports = async (userId, userType, group, filename, path) => {
   }
 
   try {
-    await putGroup(group, null, path)
+    await putGroup(group, null, imageUrl)
     
   } catch (error) {
     return { error: error.message };

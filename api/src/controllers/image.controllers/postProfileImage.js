@@ -46,7 +46,7 @@ module.exports = async (userId, userType, filename, path) => {
       imageProp = "image";
     } else imageProp = "profile_image";
 
-    await putUserProfile(currentProfile, { [imageProp]: path });
+    await putUserProfile(currentProfile, { [imageProp]: imageUrl });
   } catch (error) {
     return { error: error.message };
   }

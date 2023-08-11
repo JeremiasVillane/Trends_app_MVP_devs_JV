@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
     const foundImages = await getImages();
 
     if (foundImages?.error) {
-      return { error: foundImages.error };
+      return res.status(400).json({ error: foundImages.error });
     }
 
     res.status(200).json(foundImages);
