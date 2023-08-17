@@ -25,6 +25,7 @@ const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async () => {
 //        const URL = `${VITE_URL}/search/users?type=student`;
         const URL = `${VITE_URL}/search/users?type=student&page=${page}`;
 
+
       
         const fetch = await axios.get(URL, {withCredentials: "include"});
         const data = fetch.data;
@@ -61,6 +62,7 @@ const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
 
   
   
+  
   try {
     const URL = `${VITE_URL}/user/profile`;
     const fetch = await axios.get(URL, {withCredentials: "include"});
@@ -79,7 +81,6 @@ const getSearchedUsers = createAsyncThunk("users/getSearchedUsers", async({name,
     const searchedUsers = (await axios.get(query)).data;
 
   /*
-
 
 
     try {

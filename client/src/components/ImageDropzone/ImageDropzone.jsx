@@ -13,6 +13,7 @@ const ImageDropzone = ({type, handleCancelButton}) => {
     const [editData, setEditData] = useState({});
 
   
+    const URL = `${VITE_URL}/user/${userData.id}`; 
     // const URL = `${VITE_URL}/user/${userData.id}`;
 
   
