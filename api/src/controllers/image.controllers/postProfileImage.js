@@ -11,10 +11,13 @@ module.exports = async (userId, userType, filename, path) => {
     typeOfId = "companyId";
   } else typeOfId = "adminId";
 
+  const imageUrl = `/images/files/${filename}`;
+
   const savedImage = await Image.create({
     [typeOfId]: userId,
     filename,
     filepath: path,
+    imageUrl,
     isProfileImage: true,
   });
 
@@ -43,10 +46,10 @@ module.exports = async (userId, userType, filename, path) => {
       imageProp = "image";
     } else imageProp = "profile_image";
 
-    await putUserProfile(currentProfile, { [imageProp]: path });
+    await putUserProfile(currentProfile, { [imageProp]: imageUrl });
   } catch (error) {
     return { error: error.message };
   }
 
-  return { imageId: savedImage.id, profileId: userId, imagePath: path };
+  return { imageId: savedImage.id, profileId: userId, imageUrl };
 };

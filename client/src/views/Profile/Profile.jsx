@@ -7,31 +7,41 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo, selectUserProfile } from "../../Redux/UsersSlice";
 import NavBar from "../../components/NavBar/NavBar";
 import NavBarBase from "../../components/NavBarBase/NavBarBase";
+import axios from "axios";
+const {VITE_URL} = import.meta.env;
 
 
 const Profile = () => {
     const dispatch = useDispatch();
     const userData = useSelector(selectUserProfile);
+    const [image, setImage] = useState(null);
 
     useEffect(() => {
-        dispatch(getUserInfo());
+      dispatch(getUserInfo());
+      console.log(userData)
     }, [])
+    
+    useEffect(() => {
+      if(userData.profile_image) {
+      loadImage() 
+      }
+    }, [userData])
+
+    const  loadImage = async () => {
+      const URLImage =`${VITE_URL}${userData.profile_image}`
+      console.log(URLImage)
+      await axios.get(URLImage, {responseType: "blob", withCredentials: "include"})
+      .then(response => {  
+        const blob = new Blob([response.data], { type: response.headers["content-type"] });
+        setImage(blob);
+      }).catch(error => {
+        console.log(error)
+      })
+    }
+        
 
 
-    //*No se qué tanta info vamos a tener de la info academica o laboral
-    const contactInfo = [{
-        contactType: "Número de telefono",
-        contactInfo: "03385-123456"
-    },{
-        contactType: "LinkedIn",
-        contactInfo: "https://www.linkedin.com/in/luciano-gianoglio/"
-    },{
-        contactType: "Email",
-        contactInfo: "luchogianoglio@gmail.com"
-    }]
-    //*----------------------------------------------------------------
-
-    const [isEditing, setIsEditing] = useState({
+      const [isEditing, setIsEditing] = useState({
         image: false,
         general: false
     })
@@ -79,7 +89,7 @@ const Profile = () => {
                 }
                 <header>
                         <div className={style.ImageContainer} onClick={() => setIsEditing(prevState => ({...prevState, image: !prevState.image}))}>
-                            <img src={userData.profile_image} alt="" />
+                            <img src={image? URL.createObjectURL(image): ""} alt="" />
                             <div className={style.Extra}></div>
                             <div className={style.IconContainer}>
                                 <AiFillEdit size="6rem" color="white"/>
@@ -88,9 +98,7 @@ const Profile = () => {
 
 
 
-                        <h1>userData.type</h1>
-
-
+                      <h1>{userData.type}</h1>
 
                         <button onClick={handleGeneralEdit} className={style.EditButton}>
                             <AiFillEdit size="2rem" color="#344C5A"/>
@@ -117,6 +125,7 @@ const Profile = () => {
                             </div>
                         </section>
                         <hr />
+                      { userData.profile_bio ? (
                         <section>
 
 
@@ -127,18 +136,20 @@ const Profile = () => {
                                 <h3>{userData.profile_bio}</h3>
                             </div>
                         </section>
+                      ): null
+                      }
                         <hr />
+                      {userData.academic_institution || userData.academic_formation || userData.academic_level || userData.academic_area || userData.academic_graduation ? (
                         <section>
-
-
-                            <h2>Estudios:</h2>
-
-
-                            <div className={style.Studies}>
-                                <h3>{userData.academic_institution}</h3>
-                            </div>
-
+                          <h2>Studies</h2>
+                          <div className={style.Studies}>
+                            <h3>{userData.academic_institution}</h3>
+                          </div>
+                          <div>
+                            <h3>{userData.academic_formation}</h3>   
+                          </div>
                         </section>
+                      ): null}
                     </div>
 
                     <div className={style.Relations}>
@@ -151,89 +162,6 @@ const Profile = () => {
             </div>
         </div>
 
-
-        // <div className={style.mainDiv}>
-
-        //     {profileImageDropzone && <ImageDropzone className={style.dropzone} handleCancelButton={handleImageChangeButton} handleImageChange={handleImageChange}/>}
-
-        //     <div className={style.header}>
-        //         <p>Estudiante</p>
-        //     </div>
-
-        //     <div className={style.profilePictureBasicInfoContainer}>
-        //         <div className={style.profilePictureContainer}>
-        //             <img src={userData.profile.image} alt="gatito" className={style.profilePicture}/>
-        //             {isProfileOwner && <button className={style.imageChangeButton} onClick={() => handleImageChangeButton()}><FaCameraRotate className={style.buttonIcon}/></button>}
-        //         </div>
-
-        //         <div className={style.userBasicInfoContainer}>
-        //             {isEditing.basic ? (
-        //                 <div className={style.headerEditionContainer}>
-        //                     <input className={style.headerEditionInput} type="text" name="profile.name" value={userData.profile.name} onChange={handleInputChange}/>
-        //                     <div>
-        //                         <input className={style.headerEditionInput} type="text" name="academic.type" value={userData.academic.type} onChange={handleInputChange}/>
-        //                         <input className={style.headerEditionInput} type="text" name="academic.institution" value={userData.academic.institution} onChange={handleInputChange}/>
-        //                     </div>
-        //                     <div>
-        //                     </div>
-        //                 </div>
-        //             ):(
-        //                 <div>
-        //                     <p className={style.userInfoName}>{userData.profile.name}</p>
-        //                     <p className={style.userInfoAcademic}>{userData.academic.type} de {userData.academic.area} en {userData.academic.institution}.</p>
-        //                     <p className={style.userInfoBio}>"Este es un ejemplo de bio: {userData.profile.bio}"</p>
-        //                 </div>
-        //             )}
-
-        //             {isProfileOwner && 
-        //                 <div className={style.headerButtonContainer}>
-        //                     {isEditing.basic ? (
-        //                         <button className={style.saveButton} onClick={() => handleSaveButton("basic")}><FaFloppyDisk/></button>
-        //                         ):(
-        //                         <button className={style.editionButton} onClick={() => handleBasicInfoEditButton()}><FaPenToSquare className={style.buttonIcon}/></button>
-        //                     )}
-        //                 </div>
-        //             }
-        //         </div>
-        //     </div>
-
-        //     <div className={style.body}>
-        //         <div className={style.generalInfoContainer}>
-        //             {isEditing.general ? (
-        //                 <div>
-        //                     <input type="text" name="profile.bio" value={userData.profile.bio} onChange={handleInputChange}/>
-        //                     <button className={style.saveButton} onClick={() => handleSaveButton("general")}><FaFloppyDisk/></button>
-        //                 </div>
-        //             ) : (
-        //                 <div>
-        //                     <p>Información relevante:</p>
-        //                     {isProfileOwner && <button className={style.editionButton} onClick={handleBioInfoEditButton}><FaPenToSquare className={style.buttonIcon}/></button>}
-        //                     {userData.profile.city && <p className={style.informationText}><FaLocationDot className={style.informationIcon}/> Vive en: {userData.profile.city}, {userData.profile.country}</p>}
-        //                     {userData.academic.area && <p className={style.informationText}><FaGraduationCap className={style.informationIcon}/> {userData.academic.type} de {userData.academic.area} en {userData.academic.institution}</p>}
-        //                     {userData.info.career && <p className={style.informationText}><FaBriefcase className={style.informationIcon}/> Buscando oportunidades laborales en el área {userData.info.career}</p>}
-        //                     {userData.info.goals && (
-        //                         <ul>
-        //                             {userData.info.goals.map((goal, index) => (
-        //                                 <li key={index}>{goal}</li>
-        //                             ))}
-        //                         </ul>
-        //                     )}
-        //                     <p>Habilidades en:</p>
-        //                     {userData.info.skills && (
-        //                         <ul>
-        //                             {userData.info.skills.map((skill, index) => (
-        //                                 <li key={index}>{skill}</li>
-        //                             ))}
-        //                         </ul>
-        //                     )}
-        //                 </div>
-        //             )}
-        //         </div>
-
-
-        //     </div>
-        // </div> 
-            
     )
 }
 

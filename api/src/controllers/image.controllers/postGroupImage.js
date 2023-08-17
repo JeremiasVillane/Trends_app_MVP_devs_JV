@@ -1,6 +1,5 @@
 const { Image, Admin, ChatGroup } = require("../../db");
 const { putGroup } = require("../chatroom.controllers");
-const { getUserById } = require("../search.controllers");
 
 module.exports = async (userId, userType, group, filename, path) => {
   let typeOfId;
@@ -11,10 +10,13 @@ module.exports = async (userId, userType, group, filename, path) => {
     typeOfId = "companyId";
   } else typeOfId = "adminId";
 
+  const imageUrl = `/images/files/${filename}`;
+
   const savedImage = await Image.create({
     [typeOfId]: userId,
     filename,
     filepath: path,
+    imageUrl,
   });
 
   if (!savedImage) {
@@ -22,11 +24,11 @@ module.exports = async (userId, userType, group, filename, path) => {
   }
 
   try {
-    await putGroup(group, null, path)
+    await putGroup(group, null, imageUrl)
     
   } catch (error) {
     return { error: error.message };
   }
 
-  return { imageId: savedImage.id, groupId: group.id, imagePath: path };
+  return { imageId: savedImage.id, groupId: group.id, imageUrl };
 };

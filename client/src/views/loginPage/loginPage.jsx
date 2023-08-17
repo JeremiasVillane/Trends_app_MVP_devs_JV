@@ -10,6 +10,7 @@ const { VITE_URL } = import.meta.env;
 export default function LoginPage() {
   const [validateLogin, setValidateLogin] = useState(null);
   const navigate = useNavigate();
+  const URL = `${VITE_URL}/auth/login`;
   const dispatch = useDispatch();
 
   const [inputs, setInputs] = useState({
