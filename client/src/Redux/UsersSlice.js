@@ -22,8 +22,11 @@ const initialState = {
 //console.log(state.allUsers)
 const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async () => {
     try {
-        const URL = `${VITE_URL}/search/users?type=student`;
+//        const URL = `${VITE_URL}/search/users?type=student`;
+        const URL = `${VITE_URL}/search/users?type=student&page=${page}`;
 
+
+      
         const fetch = await axios.get(URL, {withCredentials: "include"});
         const data = fetch.data;
         return data;
@@ -55,6 +58,30 @@ const getProfessionals = createAsyncThunk("users/getProfessionals", async ({id, 
   }
 })
 const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
+
+
+  
+  
+  
+  try {
+    const URL = `${VITE_URL}/user/profile`;
+    const fetch = await axios.get(URL, {withCredentials: "include"});
+    const data = fetch.data;
+    return data;
+  } catch (error) {
+    return error.response.data.error;
+  }
+} )
+
+const getSearchedUsers = createAsyncThunk("users/getSearchedUsers", async({name, academic_formation, academic_institution}) =>{
+  try {
+    let query = `http://localhost:3001/api/v1/search/users?name=${name}`;
+    if (academic_formation) query += `&academic_formation=${academic_formation}`;
+    if (academic_institution) query += `&academic_institution=${academic_institution}`;
+    const searchedUsers = (await axios.get(query)).data;
+
+  /*
+
 
     try {
         const URL = `${VITE_URL}/user/profile`;

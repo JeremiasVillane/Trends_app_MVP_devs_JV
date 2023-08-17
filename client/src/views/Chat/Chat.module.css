@@ -1,6 +1,7 @@
 .mainContainer{
     background-color: white;
-    width: calc(100vw - 100px);
+    /* width: calc(100vw - 100px); */
+    width: 80vw;
     height: 100vh;
     position: absolute;
     right: 0;

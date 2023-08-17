@@ -89,6 +89,33 @@ const ChatMessages = ({socket}) => {
       } catch (error) {
         console.log(error)
       }
+      axios.post(`${VITE_URL}/chatroom/message`,
+        {content, receiver_id, sender_id },
+        {withCredentials: "include"})
+          .then(({data}) => {
+            console.log("NEW MESSAGE: ",  data)
+
+            // socket?.emit("private-message", {
+            //   data,
+            //   userNameEmisor,
+            //   userNameReceptor
+            // })
+
+            axios.get(`${VITE_URL}/chatroom/chat/${selectedUser[0].id}/messages`+
+            getUniqueQueryString(),
+            {withCredentials:"include"})
+              .then(({data}) =>{
+                console.log("data-sockek-send", data)
+                socket?.emit("private-message", {
+                  listMessages,
+                  userNameEmisor,
+                  userNameReceptor
+                })
+              }).catch(error => {
+                console.log("ERROR-get: ", error);
+              })
+          }).catch(error => console.log("ERROR-post: ", error))
+
       setMessage("");
       dispatch(setNewChat(false))
     }

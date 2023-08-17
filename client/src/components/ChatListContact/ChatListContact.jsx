@@ -25,32 +25,14 @@ const ChatListContact = ({id, isGroup, name, image, last_message, last_message_d
       isGroup,
       allUsers,
     }))
-    if(typeof id === "number"){
-      try {
-        dispatch(getMessagesByChat(id)).then(
-          response => {
-            dispatch(setListMessages(response.payload))
-          }
-        )
-      } catch (error) {
-        console.log(error)
-      }
-    } else {
-      const findUser = (listChats?.length > 0 && typeof listChats !== "string") && listChats?.find(chat => chat.name === name);
-      if(findUser){
-        try {
-          dispatch(getMessagesByChat(findUser.id)).then(
-            response => {
-              dispatch(setListMessages(response.payload))
-              dispatch(setNewChat(!newChat))
-            }
-          )
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      dispatch(setListMessages([]))
-    }
+    axios.get(`${VITE_URL}/api/v1/chatroom/chat/${id}/messages`,
+      {withCredentials:"include"})
+        .then(({data}) => {
+          data.messages.reverse()
+          dispatch(setListMessages(data))
+        }).catch(error => {
+          console.log("ERROR: ", error)
+        })
   }
 
   const formatDate = (date) => {

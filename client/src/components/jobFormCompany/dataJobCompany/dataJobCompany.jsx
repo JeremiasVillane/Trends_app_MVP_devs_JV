@@ -116,7 +116,7 @@ const dataJobCompany = ({formJob,handleChangeForm,handleChangeSelect})=>{
                         onChange={handleChangeSelect}
                     >
                         <option selected disabled value="predefinido">--Seleccione opcion--</option>
-                        {data?.IndustrySector.map((industry, index) => (
+                        {data?.industrySector.map((industry, index) => (
                         <option key={index} value={industry.value}>
                             {industry.value}
                         </option>

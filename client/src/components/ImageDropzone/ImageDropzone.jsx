@@ -11,12 +11,28 @@ const ImageDropzone = ({type, handleCancelButton}) => {
     const [image, setImage] = useState(null);
     const userData = useSelector(selectUserProfile);
     const [editData, setEditData] = useState({});
-    const URL = `${VITE_URL}/user/${userData.id}`;
 
+  
+    const URL = `${VITE_URL}/user/${userData.id}`; 
+    // const URL = `${VITE_URL}/user/${userData.id}`;
+
+  
+    const URLData = `${VITE_URL}/user/${userData.id}`;
+    const URLImage = `${VITE_URL}/images/profile`
+
+    
     const onDrop = useCallback(acceptedFiles => {
         const selectedImage = acceptedFiles[0]; // Get the first image from the accepted files array
+        const imageWithoutPath = new File(
+          [selectedImage],
+          selectedImage.name,
+          {
+            type: selectedImage.type,
+            lastModified:selectedImage.lastModified
+          }
+        )
         setImage({
-            file: selectedImage,
+            file: imageWithoutPath,
             preview: URL.createObjectURL(selectedImage)
         });
     }, []);
@@ -27,20 +43,22 @@ const ImageDropzone = ({type, handleCancelButton}) => {
         setImage(null);
     }
 
-    const handleUploadButton = () => {
-        setEditData((prevState) => ({
-            ...prevState, 
-            profile: { 
-                ...prevState.profile, 
-                image: image.preview} 
-            }))
-        
+    const handleUploadButton = async() => {
+      const f = new FormData();
+      f.append("image", image.file)
+      try {
+        const response = await axios.post(URLImage,f, {withCredentials: "include"}) 
+      } catch (error) {
+       console.log(error) 
+      }
+      handleCancelButton()
+      window.location.reload()
     }
 
     const saveChanges = async (event) => {
         event.preventDefault();
         try {
-          const fetch = await axios.put(URL, editData, {withCredentials: "include"});
+          const fetch = await axios.put(URLData, editData, {withCredentials: "include"});
           handleCancelButton();
           window.location.reload();
         } catch (error) {
