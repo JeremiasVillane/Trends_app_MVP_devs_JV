@@ -63,7 +63,9 @@ const FeedCard = ({user}) => {
         </div>
       </div>
     </div>
+    </div>
   )
-}
+  };
+
 
 export default FeedCard;

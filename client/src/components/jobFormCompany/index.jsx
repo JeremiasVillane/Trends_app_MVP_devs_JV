@@ -24,7 +24,7 @@ const[formJob, setFormJob] = useState({
     level_required:"",
     study_area:[],
     experience_required:"",
-    industry:[],    
+    industry:"",    
     benefits:[],
     skills_required:[],
     job_description:[],
@@ -156,7 +156,8 @@ const handlePageForm = (event) =>{
         if(!format.closingDate) delete format.closingDate;
      
         return format;
-    }
+    };
+
 
     //?AL PRESIONAR BOTON SUBMIT (NUEVO O MODIFICAR)
     const submitHandler = async(event) =>{
@@ -192,8 +193,6 @@ const handlePageForm = (event) =>{
                 console.log("error post job: ", error.message)
             }
         };
-
-        
 
     };
 

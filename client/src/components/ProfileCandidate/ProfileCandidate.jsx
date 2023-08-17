@@ -15,7 +15,7 @@ export default function ProfileCandidate(candidateId) {
       };
 
     const fetchCandidate = async () =>{
-        const URL = `${VITE_URL}/api/v1/search/user/${candidateId.candidateId}`;
+        const URL = `${VITE_URL}/search/user/${candidateId.candidateId}`;
         console.log("como envia a get URL", URL)
         try{
             const {data} = await axios.get(URL+getUniqueQueryString(),{withCredentials: "include"});

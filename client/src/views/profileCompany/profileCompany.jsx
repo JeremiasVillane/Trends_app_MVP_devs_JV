@@ -132,10 +132,7 @@ export default function profileCompany() {
 
     const [countrys, setCountrys] = useState(null);
 
-    //?AL MODIFICAR ALGUN INPUT
-    // useEffect(()=>{
-    //     console.log("que modifico companyData", companyData)
-    // },[companyData])
+
 
 
     const deletePropJobsSL = ()=>{
@@ -171,6 +168,32 @@ export default function profileCompany() {
 
     }, []);    
 
+    //?PARA CARGAR LA IMAGEN AL INICIO
+    const[imageLoad, setImageload]= useState();
+
+    const loadImage=async()=>{
+        const URL_IMAGEN = `${VITE_URL}${companyData.image}`
+
+        await axios.get(URL_IMAGEN,{responseType: "blob", withCredentials: "include"})
+        .then(response=>{
+            //console.log("que tienen response: ", response);
+            setImageload(response.data);
+            
+
+        })
+        .catch(error=>{
+            console.log("error al cargar imagen: ", error)
+        })
+    }
+
+    //?AL MODIFICAR ALGUN INPUT
+    useEffect(()=>{
+        console.log("que modifico companyData?>>", companyData)
+        loadImage();
+    },[companyData])
+    
+    
+    //?PARA SUBIR UNA IMAGEN
     const[image, setImage]=useState(null);
 
     const subirImagen = (e) =>{
@@ -181,21 +204,25 @@ export default function profileCompany() {
     const postImage = async ()=>{
         const f = new FormData();
         f.append("image",image);
+
+      
+      //  const URL_IMG = `${VITE_URL}/images/profile`
+
         const URL = `${VITE_URL}/images/upload`
 
+        
         console.log("que tiene f: ", f)
 
         try{
-            const response = await axios.post(URL,f,{withCredentials: "include"});
-            console.log("que trae response: ", response.data);
-            setCompanyData({
-                ...companyData,
-                image:response.data.imagePath
-            })
+            const response = await axios.post(URL_IMG,f,{withCredentials: "include"});
+            console.log("que trae response: ", response);
+            await fetchCompany();
+
         }catch(error){
             console.log("error al subir imagen: ", error.message)
         }
-    }
+    };
+
     
    
     return(
@@ -214,22 +241,27 @@ export default function profileCompany() {
                     </div>
                 } */}
                 <div className={style.imageContainer}
-                    // onClick={() => setIsEditing(prevState => ({...prevState, image: !prevState.image}))}
+                     onClick={() => setIsEditing(prevState => ({...prevState, image: !prevState.image}))}
                     >
-                    <img 
-                        src={image ?image :companyData.image} 
-                        alt="gatito" 
-                        className={style.profilePicture}/>
-                    {isProfileOwner && 
-                        <div>
-                            {/* <input 
+                     {
+                     imageLoad && 
+                     <img 
+                        src={URL.createObjectURL(imageLoad)} 
+                        alt="Imagen" 
+                        className={style.profilePicture}
+                    />
+                     }
+
+                    {isEditing.profile && 
+                        <div className={style.buttonsImage}>
+                            <input 
                                 type="file"
                                 name="image"
                                 onChange={(e)=>subirImagen(e.target.files[0])}
                                 />
                             <button
                                 onClick={()=>postImage()}
-                            >Subir Imagen</button> */}
+                            >Guardar Imagen</button>
                             {/* <button 
                                 className={style.imageChangeButton} 
                                 onClick={() => handleImageChangeButton()}
@@ -245,7 +277,7 @@ export default function profileCompany() {
                             {/* <label>Contraseña: </label><br/>
                                 <TextInput 
                                 //className={style.headerEditionInput} 
-                                type="text" name="profile.company_name" 
+                                type="text" name="profile.company_name"  
                                 value={companyData.name} 
                             onChange={handleInputChange}/> */}
                             <h3>Nombre de empresa: </h3>
@@ -301,12 +333,12 @@ export default function profileCompany() {
                                     type="text" name="email" 
                                     value={companyData.email} 
                                     onChange={handleInputChange}/>
-                            <h3>Url Imagen: </h3>
+                            {/* <h3>Url Imagen: </h3>
                                 <input 
                                     className={style.input}
                                     type="text" name="image" 
                                     value={companyData.image} 
-                                    onChange={handleInputChange}/>
+                                    onChange={handleInputChange}/> */}
                             <h3>Bio de la empresa: </h3>
                                 <textarea
                                 className={style.headerEditionTextarea} 
