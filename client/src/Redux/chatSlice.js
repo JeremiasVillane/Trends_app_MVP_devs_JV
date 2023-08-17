@@ -35,10 +35,8 @@ export const getMessages = createAsyncThunk("chat/getMessages", async (chatId) =
 
 export const getMessagesByChat = createAsyncThunk("chat/getMessagesByChat", async(id) => {
   try {
-    const {data} = await axios.get(`${VITE_URL}/api/v1/chatroom/chat/${id}/messages`,
-    {withCredentials:"include"})
-    data.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-    return data;
+    const promise = (await axios.get(`${VITE_URL}/chatroom/conversations/${user_id}?query_name=${query_name}`, { withCredentials:"include"})).data
+    return promise;
   } catch (error) {
     return error.response.data.error;
   }
@@ -47,9 +45,9 @@ export const getMessagesByChat = createAsyncThunk("chat/getMessagesByChat", asyn
 const deleteMessage = createAsyncThunk("chat/deleteMessage", async({message_id, isGroup, conversation_id}) =>{
   try {
     const response = isGroup ?
-      await (axios.put(`${VITE_URL}/api/v1/chatroom/groups/${conversation_id}/message/${message_id}`, {messageStatus:"deleted"}, { withCredentials:"include"})).data :
-      await (axios.put(`${VITE_URL}/api/v1/chatroom/chat/${conversation_id}/message/${message_id}`, {messageStatus:"deleted"}, { withCredentials:"include"})).data
-    return response;
+      await (axios.put(`${VITE_URL}/chatroom/groups/${conversation_id}/message/${message_id}`, {messageStatus:"deleted"}, { withCredentials:"include"})).data :
+      await (axios.put(`${VITE_URL}/chatroom/chat/${conversation_id}/message/${message_id}`, {messageStatus:"deleted"}, { withCredentials:"include"})).data
+      return response;
   } catch (error) {
     console.log(error)
   }
@@ -93,7 +91,7 @@ const createGroupMember = createAsyncThunk("chat/createGroupMember", async({user
 
 // const setListMessages = createAsyncThunk("chat/setListMessages", async(id) =>{
 //   try {
-//     const {data} = await axios.get(`${VITE_URL}/api/v1/chatroom/chat/${id}/messages`, { withCredentials:"include"})
+//     const {data} = await axios.get(`${VITE_URL}/chatroom/chat/${id}/messages`, { withCredentials:"include"})
 //     data.messages.reverse();
 //     console.log("DATA: ", data)
 //     return data;

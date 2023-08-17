@@ -204,8 +204,13 @@ export default function profileCompany() {
     const postImage = async ()=>{
         const f = new FormData();
         f.append("image",image);
-        const URL_IMG = `${VITE_URL}/images/profile`
 
+      
+      //  const URL_IMG = `${VITE_URL}/images/profile`
+
+        const URL = `${VITE_URL}/images/upload`
+
+        
         console.log("que tiene f: ", f)
 
         try{
