@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const {VITE_URL} = import.meta.env;
+const { VITE_URL } = import.meta.env;
 
 const initialState = {
   allUsers: [],
@@ -15,100 +15,77 @@ const initialState = {
   totalPages: 0,
 };
 
-// const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async (page) => {
-    
-   //     const URL = `${VITE_URL}/api/v1/search/users?type=student&page=${page}`;
-
-//console.log(state.allUsers)
-const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async () => {
+const getMatchedUsers = createAsyncThunk(
+  "users/getMatchedUsers",
+  async (page) => {
     try {
-//        const URL = `${VITE_URL}/search/users?type=student`;
-        const URL = `${VITE_URL}/search/users?type=student&page=${page}`;
-
-
-      
-        const fetch = await axios.get(URL, {withCredentials: "include"});
-        const data = fetch.data;
-        return data;
+      const URL = `${VITE_URL}/api/v1/search/users?type=student&page=${page}`;
+      const fetch = await axios.get(URL, { withCredentials: "include" });
+      const data = fetch.data;
+      return data;
     } catch (error) {
-        return error.response.data.error
+      return error.response.data.error;
     }
-})
-
-const getStudents = createAsyncThunk("users/getStudents", async ({id, page}) => {
-  console.log(page)
-  try {
-    const URL = `${VITE_URL}/user/feed/${id}/student?page=${page}`;
-    const fetch = await axios.get(URL, {withCredentials: "include"});
-    const data = fetch.data;
-    return data;
-  } catch (error) {
-    return error.response.data.error; 
   }
-})
+);
 
-const getProfessionals = createAsyncThunk("users/getProfessionals", async ({id, page}) => {
-  try {
-    const URL = `${VITE_URL}/user/feed/${id}/professional?page=${page}`;
-    const fetch = await axios.get(URL, {withCredentials: "include"});
-    const data = fetch.data;
-    return data;
-  } catch (error) {
-    return error.response.data.error; 
+const getStudents = createAsyncThunk(
+  "users/getStudents",
+  async ({ id, page }) => {
+    console.log(page);
+    try {
+      const URL = `${VITE_URL}/user/feed/${id}/student?page=${page}`;
+      const fetch = await axios.get(URL, { withCredentials: "include" });
+      const data = fetch.data;
+      return data;
+    } catch (error) {
+      return error.response.data.error;
+    }
   }
-})
+);
+
+const getProfessionals = createAsyncThunk(
+  "users/getProfessionals",
+  async ({ id, page }) => {
+    try {
+      const URL = `${VITE_URL}/user/feed/${id}/professional?page=${page}`;
+      const fetch = await axios.get(URL, { withCredentials: "include" });
+      const data = fetch.data;
+      return data;
+    } catch (error) {
+      return error.response.data.error;
+    }
+  }
+);
 const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
-
-
-  
-  
-  
   try {
     const URL = `${VITE_URL}/user/profile`;
-    const fetch = await axios.get(URL, {withCredentials: "include"});
+    const fetch = await axios.get(URL, { withCredentials: "include" });
     const data = fetch.data;
     return data;
   } catch (error) {
     return error.response.data.error;
   }
-} )
+});
 
-const getSearchedUsers = createAsyncThunk("users/getSearchedUsers", async({name, academic_formation, academic_institution}) =>{
-  try {
-    let query = `http://localhost:3001/api/v1/search/users?name=${name}`;
-    if (academic_formation) query += `&academic_formation=${academic_formation}`;
-    if (academic_institution) query += `&academic_institution=${academic_institution}`;
-    const searchedUsers = (await axios.get(query)).data;
-
-  /*
-
-
+const getSearchedUsers = createAsyncThunk(
+  "users/getSearchedUsers",
+  async ({ name, academic_formation, academic_institution }) => {
     try {
-        const URL = `${VITE_URL}/user/profile`;
-        const fetch = await axios.get(URL, {withCredentials: "include"});
-        const data = fetch.data;
-        return data;
+      let query = `${VITE_URL}/search/users?name=${name}`;
+
+      if (academic_formation)
+        query += `&academic_formation=${academic_formation}`;
+      if (academic_institution)
+        query += `&academic_institution=${academic_institution}`;
+      const searchedUsers = (await axios.get(query)).data;
+
+      return searchedUsers;
     } catch (error) {
-        return error.response.data.error;
+      throw new Error(error.message);
     }
-} )
-
-const getSearchedUsers = createAsyncThunk("users/getSearchedUsers", async({name, academic_formation, academic_institution}) =>{
-    try {
-    // console.log("ACTION OK")
-    let query = `${VITE_URL}/search/users?name=${name}`
-
-    if (academic_formation) query += `&academic_formation=${academic_formation}`
-    if (academic_institution) query += `&academic_institution=${academic_institution}`
-    // console.log("Query: " + query)
-    const searchedUsers = (await axios.get(query)).data
-    // console.log(searchedUsers);
-
-    return searchedUsers;
-  } catch (error) {
-    throw new Error(error.message);
   }
-})
+);
 
 const usersSlice = createSlice({
   name: "users",
@@ -118,10 +95,10 @@ const usersSlice = createSlice({
       state.currentPage++;
     },
     setStatus: (state) => {
-      state.status = !state.status
+      state.status = !state.status;
     },
     setDarkMode: (state) => {
-      state.darkMode = !state.darkMode
+      state.darkMode = !state.darkMode;
     },
     logout: (state) => {
       state.allUsers = [];
@@ -135,61 +112,67 @@ const usersSlice = createSlice({
       state.totalPages = 0;
     },
     matchUsers: (state) => {
-      const studentUsers = state.students.data || []; 
-      const professionalUsers = state.professionals.data || []; 
+      const studentUsers = state.students.data || [];
+      const professionalUsers = state.professionals.data || [];
       const combinedUsers = [...studentUsers, ...professionalUsers];
-      const sortedUsers = combinedUsers.sort((userA, userB) => userB.matchscore - userA.matchscore);
-      const newUsers = sortedUsers.filter(newuser => (
-        !state.allUsers.some(existingUser => existingUser.user.id === newuser.user.id )
-      ));
+      const sortedUsers = combinedUsers.sort(
+        (userA, userB) => userB.matchscore - userA.matchscore
+      );
+      const newUsers = sortedUsers.filter(
+        (newuser) =>
+          !state.allUsers.some(
+            (existingUser) => existingUser.user.id === newuser.user.id
+          )
+      );
       state.allUsers = state.allUsers.concat(newUsers);
     },
-    //?SE AGREGA ACCION PARA CARGAR LA COMPAÑIA Y SUS TRABAJOS EN EL STORE GLOBAL
-    addCompany:(state,action)=>{
-      state.companies=action.payload;
+    addCompany: (state, action) => {
+      state.companies = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getSearchedUsers.pending, (state)=>{
+      .addCase(getSearchedUsers.pending, (state) => {
         state.searchedUsers = []; //Esto queda vacío porque despues podemos poner que si searchedUsers.length === 0 muestre un símbolo de carga
       })
-      .addCase(getSearchedUsers.fulfilled, (state, action)=>{
+      .addCase(getSearchedUsers.fulfilled, (state, action) => {
         state.searchedUsers = action.payload;
       })
-      .addCase(getUserInfo.pending, () => {
-        //console.log("cargando");
-      })
+      .addCase(getUserInfo.pending, () => {})
       .addCase(getUserInfo.fulfilled, (state, action) => {
         state.user = action.payload;
       })
       .addCase(getStudents.fulfilled, (state, action) => {
-        console.log(action.payload)
+        console.log(action.payload);
         state.students = action.payload;
       })
-      .addCase(getStudents.pending, (state) => {
-        
-      })
-      .addCase(getStudents.rejected, (state, action) => {
-      })
+      .addCase(getStudents.pending, (state) => {})
+      .addCase(getStudents.rejected, (state, action) => {})
       .addCase(getProfessionals.fulfilled, (state, action) => {
         state.professionals = action.payload;
       })
-      .addCase(getProfessionals.rejected, (state, action) => {
-      })
-  }
-})
+      .addCase(getProfessionals.rejected, (state, action) => {});
+  },
+});
 
 export default usersSlice.reducer;
 
 // export of the selectors of the global state
 
-export { getProfessionals, getStudents};
+export { getProfessionals, getStudents };
 //export const {addCompany, matchUsers, currentpage, setStatus, logout, setDarkMode} = usersSlice.actions;
 // export const selectAllUsers = (state) => state.users.allUsers;
 
-export {getSearchedUsers, getUserInfo, getMatchedUsers};
-export const {test, addCompany, setDarkMode, matchUsers, currentpage, setStatus, logout} = usersSlice.actions;
+export { getSearchedUsers, getUserInfo, getMatchedUsers };
+export const {
+  test,
+  addCompany,
+  setDarkMode,
+  matchUsers,
+  currentpage,
+  setStatus,
+  logout,
+} = usersSlice.actions;
 export const selectAllUsers = (state) => state.users?.allUsers;
 export const selectSearchedUsers = (state) => state.users.searchedUsers;
 export const selectStudents = (state) => state.users.students;

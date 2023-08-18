@@ -66,7 +66,7 @@ module.exports = async (queryParams, userType, page, perPage) => {
 
     if (!companies.length) return { error: "No companies found" };
 
-    return companies;
+    return pagination(companies, page, perPage);
   }
 
   const users = await User.findAll({
