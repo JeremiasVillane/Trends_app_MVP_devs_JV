@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import style from "./Profile.module.css";
-import ImageDropzone from "../../components/ImageDropzone/ImageDropzone";
-import { AiFillEdit } from "react-icons/ai";
-import Relations from "../../components/Relations/Relations";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserInfo, selectUserProfile } from "../../Redux/UsersSlice";
-import NavBarBase from "../../components/NavBarBase/NavBarBase";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { AiFillEdit } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import ImageDropzone from "../../components/ImageDropzone/ImageDropzone";
+import NavBarBase from "../../components/NavBarBase/NavBarBase";
+import Relations from "../../components/Relations/Relations";
+import { getUserInfo, selectUserProfile } from "../../Redux/UsersSlice";
+import style from "./Profile.module.css";
 const { VITE_URL } = import.meta.env;
 
 const Profile = () => {
@@ -45,11 +45,6 @@ const Profile = () => {
     image: false,
     general: false,
   });
-
-  //! HANDLERS DE LOS BOTONES
-  // const handleInfoButton = (infoType) => {
-  //     setShownInfo(infoType);
-  // }
 
   const handleImageChangeButton = () => {
     setIsEditing((prevState) => ({ ...prevState, image: false }));
@@ -134,8 +129,7 @@ const Profile = () => {
             <hr />
             {userData.profile_bio ? (
               <section>
-                <h2>Biografía:</h2>
-
+                <h2>Biography</h2>
                 <div className={style.Bio}>
                   <h3>{userData.profile_bio}</h3>
                 </div>
@@ -148,7 +142,7 @@ const Profile = () => {
             userData.academic_area ||
             userData.academic_graduation ? (
               <section>
-                <h2>Estudios</h2>
+                <h2>Studies</h2>
                 <div className={style.Studies}>
                   <h3>{userData.academic_institution}</h3>
                 </div>

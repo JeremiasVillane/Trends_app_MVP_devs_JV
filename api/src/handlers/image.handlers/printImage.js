@@ -13,7 +13,6 @@ module.exports = async (req, res) => {
   if (imagePath) {
     res.sendFile(imagePath);
   } else {
-    console.error(error.message);
     res.status(404).json({ error: "Image not found" });
   }
 };
