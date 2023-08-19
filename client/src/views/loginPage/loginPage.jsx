@@ -51,9 +51,9 @@ export default function LoginPage() {
           withCredentials: "include",
         });
 
-        if (data.type === "company") navigate("/Trends_app_MVP/FeedCompany");
-        else if (data.type === "admin") navigate("/Trends_app_MVP/admin");
-        else navigate("/Trends_app_MVP/Feed");
+        if (data.type === "company") navigate("/company/feed");
+        else if (data.type === "admin") navigate("/admin");
+        else navigate("/user/feed");
       } catch (error) {
         console.log(error);
       }

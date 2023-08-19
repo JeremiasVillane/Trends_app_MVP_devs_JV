@@ -35,7 +35,7 @@ export default function RegisterPage() {
         </div>
       )}
       <footer className="footer-container">
-        <button className="back-button" onClick={() => navigate("/Trends_app_MVP/")}>
+        <button className="back-button" onClick={() => navigate("/")}>
           {registerForm === "company" && <CompanyRegisterForm />}
         </button>
       </footer>

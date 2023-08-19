@@ -17,10 +17,10 @@ const FeedCard = ({user}) => {
 
 
     const handleProfile = () => {
-        navigate(`/Trends_app_MVP/profile/${user.user.id}`);
+        navigate(`/user/profile/${user.user.id}`);
     }
     const handleChats = () => {
-        navigate("/Trends_app_MVP/chat");
+        navigate("/chat");
     }
   return (
     <div className={style.Card}>

@@ -12,11 +12,11 @@ export default function ProtectedRouteAdmin() {
   }, [dispatch]);
 
   if (typeof user !== "object" || !Object.keys(user).length) {
-    return <Navigate to="/Trends_app_MVP/login" replace />;
+    return <Navigate to="/user/login" replace />;
   }
   if (user.type !== "admin") {
     // console.log(user);
-    return <Navigate to="/Trends_app_MVP" replace />;
+    return <Navigate to="/" replace />;
   }
   return <Outlet />;
 }

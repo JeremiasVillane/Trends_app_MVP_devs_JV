@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 import style from "./profileCompany.module.css";
-import ImageDropzone from "../../components/ImageDropzone/ImageDropzone";
-import {
-  FaGraduationCap,
-  FaLocationDot,
-  FaBriefcase,
-  FaCameraRotate,
-  FaPenToSquare,
-  FaFloppyDisk,
-  FaRectangleXmark,
-} from "react-icons/fa6";
-import { Select, SelectItem, Subtitle, TextInput, Title } from "@tremor/react";
+import { FaPenToSquare, FaFloppyDisk } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { addCompany } from "../../Redux/UsersSlice";
@@ -94,12 +84,10 @@ export default function profileCompany() {
     const data = formatData();
     //envio datos
     try {
-      console.log("ACTUALIZO DATOS EMPRESA", data);
-      console.log("como envia a put: ", URL);
       await axios.put(URL, data, { withCredentials: "include" });
 
       await fetchCompany();
-      navigate("/Trends_app_MVP/FeedCompany");
+      navigate("/company/feed");
 
       // console.log("que tiene el SG company:", companyDataSG);
       // console.log("que tiene companyData:", companyData);
@@ -162,9 +150,6 @@ export default function profileCompany() {
     getCountrys();
 
     deletePropJobsSL();
-
-    console.log("que tiene el SG company:", companyDataSG);
-    console.log("que tiene companyData:", companyData);
   }, []);
 
   //?PARA CARGAR LA IMAGEN AL INICIO
@@ -176,7 +161,6 @@ export default function profileCompany() {
     await axios
       .get(URL_IMAGEN, { responseType: "blob", withCredentials: "include" })
       .then((response) => {
-        //console.log("que tienen response: ", response);
         setImageload(response.data);
       })
       .catch((error) => {
@@ -186,7 +170,6 @@ export default function profileCompany() {
 
   //?AL MODIFICAR ALGUN INPUT
   useEffect(() => {
-    console.log("que modifico companyData?>>", companyData);
     loadImage();
   }, [companyData]);
 
@@ -195,24 +178,16 @@ export default function profileCompany() {
 
   const subirImagen = (e) => {
     setImage(e);
-    console.log("que tiene e: ", e);
   };
 
   const postImage = async () => {
     const f = new FormData();
     f.append("image", image);
 
-    //  const URL_IMG = `${VITE_URL}/images/profile`
-
-    const URL = `${VITE_URL}/images/upload`;
-
-    console.log("que tiene f: ", f);
-
     try {
       const response = await axios.post(URL_IMG, f, {
         withCredentials: "include",
       });
-      console.log("que trae response: ", response);
       await fetchCompany();
     } catch (error) {
       console.log("error al subir imagen: ", error.message);

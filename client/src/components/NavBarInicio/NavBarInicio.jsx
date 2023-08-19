@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/imagenes/logo.png";
 import styles from "./NavBarInicio.module.css";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 function NavBarInicio() {
+  const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -40,16 +41,24 @@ function NavBarInicio() {
       </div>
 
       {/* Login y Sign Up (Registro) */}
-      <div className={`${styles["auth-buttons"]} ${showMenu ? styles["show-menu"] : ""}`}>
-      <Link to="/Trends_app_MVP/login" className="custom-link" onClick={() => setShowMenu(false)}>
+      <div
+        className={`${styles["auth-buttons"]} ${
+          showMenu ? styles["show-menu"] : ""
+        }`}
+      >
+        { location.pathname !== "/auth/login" && <Link
+          to="/auth/login"
+          className="custom-link"
+          onClick={() => setShowMenu(false)}
+        >
           Iniciar sesión
-        </Link>
+        </Link>}
         <button className="toggle-button" onClick={toggleMenu}>
           Crea tu cuenta
         </button>
         <div className={styles["register-options"]}>
           <Link
-            to="/Trends_app_MVP/studentRegister"
+            to="auth/register/student"
             onClick={() => {
               toggleMenu();
               setShowMenu(false);
@@ -58,7 +67,7 @@ function NavBarInicio() {
             Estudiante
           </Link>
           <Link
-            to="/Trends_app_MVP/professionalRegister"
+            to="auth/register/professional"
             onClick={() => {
               toggleMenu();
               setShowMenu(false);
@@ -67,7 +76,7 @@ function NavBarInicio() {
             Profesional
           </Link>
           <Link
-            to="/Trends_app_MVP/companyRegister"
+            to="auth/register/company"
             onClick={() => {
               toggleMenu();
               setShowMenu(false);
@@ -81,7 +90,11 @@ function NavBarInicio() {
       {/* Botón de Modo Oscuro */}
       <div className={styles["dark-mode-button"]}>
         <button onClick={toggleDarkMode}>
-          {darkMode ? <i className="fas fa-sun"></i> : <i className="fas fa-moon"></i>}
+          {darkMode ? (
+            <i className="fas fa-sun"></i>
+          ) : (
+            <i className="fas fa-moon"></i>
+          )}
         </button>
       </div>
     </nav>

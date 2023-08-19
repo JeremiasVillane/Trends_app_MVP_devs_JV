@@ -5,7 +5,7 @@ export default function NotFoundPage() {
   return(
     <main className="NotFoundContainer">
       <p>This page does not exist</p>
-      <Link to="/Trends_app_MVP">
+      <Link to="/">
         Back to home
       </Link>
     </main>

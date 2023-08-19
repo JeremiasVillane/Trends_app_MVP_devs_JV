@@ -47,7 +47,7 @@ const feedCompany = () =>{
         const URL = `${VITE_URL}/auth/logout`;
         try{
             await axios.post(URL+getUniqueQueryString(),{withCredentials: "include"});
-            navigate('/Trends_app_MVP')
+            navigate('/')
             console.log("se salio")
         }catch(error){
             console.log("error al salir: ", error.message)

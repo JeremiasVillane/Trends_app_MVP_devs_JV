@@ -1,33 +1,18 @@
-import { useEffect, useState } from "react";
-import style from "./RegisterFormBase.module.css";
-import { useNavigate, useParams } from "react-router-dom";
-import { validationRegister } from "../../utils/validationRegister";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { interests } from "../../data/fields";
+import { validationRegister } from "../../utils/validationRegister";
+import style from "./RegisterFormBase.module.css";
 const { VITE_URL } = import.meta.env;
 
-const interests = [
-  "Informática / Telecomunicaciones",
-  "Medicina / Salud",
-  "Ingeniería Civil",
-  "Educación / Docencia",
-  "Marketing / Publicidad",
-  "Arquitectura",
-  "Finanzas / Contabilidad",
-  "Diseño Gráfico / Multimedia",
-  "Psicología / Terapia",
-  "Derecho / Legal",
-  "Recursos Humanos",
-  "Arte / Bellas Artes",
-  "Ciencias Ambientales",
-  "Gestión de Proyectos",
-  "Periodismo / Comunicación",
-  "Turismo / Hospitalidad",
-  "Música / Artes Escénicas",
-  "Agricultura / Agronomía",
-  "Logística / Cadena de Suministro",
-];
-
+/**
+ * Componente para el formulario de registro.
+ *
+ * @component
+ * @param {string} type - Tipo de registro ("usuario" o "admin").
+ * @returns {JSX.Element} Componente RegisterFormBase.
+ */
 const RegisterFormBase = ({ type }) => {
   const [validateLogin, setValidateLogin] = useState(null);
   const navigate = useNavigate();
@@ -50,6 +35,11 @@ const RegisterFormBase = ({ type }) => {
     }));
   }, [type]);
 
+  /**
+   * Maneja los cambios en los campos de entrada.
+   *
+   * @param {Object} event - Evento de cambio en el campo de entrada.
+   */
   const handleInputs = (event) => {
     const { value, name } = event.target;
     setInputs((prevInputs) => ({
@@ -58,6 +48,9 @@ const RegisterFormBase = ({ type }) => {
     }));
   };
 
+  /**
+   * Alterna la casilla de verificación de soporte de perfil.
+   */
   const handleIsCheck = () => {
     setInputs((prevInputs) => ({
       ...prevInputs,
@@ -65,6 +58,11 @@ const RegisterFormBase = ({ type }) => {
     }));
   };
 
+  /**
+   * Maneja el cambio de intereses seleccionados.
+   *
+   * @param {Object} event - Evento de cambio en el select.
+   */
   const handleInterestsChange = (event) => {
     event.preventDefault();
     const selectedValues = Array.from(
@@ -72,7 +70,6 @@ const RegisterFormBase = ({ type }) => {
       (option) => option.value
     );
 
-    // Utilizar un conjunto (Set) para eliminar duplicados y verificar repeticiones
     const uniqueSelectedValues = new Set([
       ...inputs.info_interests,
       ...selectedValues,
@@ -88,6 +85,11 @@ const RegisterFormBase = ({ type }) => {
     event.target.blur();
   };
 
+  /**
+   * Maneja el envío del formulario.
+   *
+   * @param {Object} event - Evento de envío del formulario.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (
@@ -101,11 +103,13 @@ const RegisterFormBase = ({ type }) => {
       if (!validation) setValidateLogin(false);
       else {
         try {
-          const fetch = await axios.post(URL, inputs, {withCredentials: "include"});
+          const fetch = await axios.post(URL, inputs, {
+            withCredentials: "include",
+          });
           const result = fetch.data;
-          console.log("result: ", result);
+          console.log("resultado: ", result);
           setValidateLogin(true);
-          navigate("/Trends_app_MVP/login");
+          navigate("/auth/login");
         } catch (error) {
           console.log(error.response.data.error);
         }
@@ -113,6 +117,12 @@ const RegisterFormBase = ({ type }) => {
     }
   };
 
+  /**
+   * Capitaliza la primera letra de una cadena.
+   *
+   * @param {string} str - Cadena de entrada.
+   * @returns {string} Cadena capitalizada.
+   */
   const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
@@ -122,7 +132,7 @@ const RegisterFormBase = ({ type }) => {
       <div className={style.Card}>
         <div className={style.RightContainer}>
           <form onSubmit={handleSubmit}>
-            <h2>Sign Up {capitalize(type)}</h2>
+            <h2>Crea una nueva cuenta {capitalize(type)}</h2>
             <div className={style.Input}>
               <input
                 name="name"
@@ -197,12 +207,12 @@ const RegisterFormBase = ({ type }) => {
               }
               type="submit"
             >
-              Register
+              Crear cuenta
             </button>
             <hr />
             <div className={style.Account}>
               <span>Already have an account?</span>
-              <Link to={"/Trends_app_MVP/login"}>
+              <Link to={"/auth/login"}>
                 <span className={style.Bold}>Log in</span>
               </Link>
             </div>

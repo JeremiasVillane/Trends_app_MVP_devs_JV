@@ -36,7 +36,7 @@ const SearchComponent = () =>{
             academic_formation: searchTerm.formation,
             academic_institution: searchTerm.institution
         }))
-        // navigate("/Trends_app_MVP/home")
+        // navigate("/home")
     }
 
     return(
