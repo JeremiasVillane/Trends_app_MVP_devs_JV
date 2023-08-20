@@ -16,16 +16,17 @@ const customStyles = {
     boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.2)",
     backgroundColor: "#fff",
     textAlign: "center",
-    color: "#242424"
+    color: "#242424",
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    zIndex: 1000,
+    zIndex: 9999,
   },
   h2: {
-    fontSize: "24px",
+    fontSize: "22px",
     marginBottom: "33px",
-    lineHeight: "2rem"
+    marginTop: "21px",
+    lineHeight: "2rem",
   },
   p: {
     fontSize: "16px",
@@ -58,9 +59,17 @@ function BackButtonModal() {
       contentLabel="Back Button Modal"
       style={customStyles}
     >
-      <h2 style={customStyles.h2}><b>¡Ups!</b><br />No tienes acceso<br />a esta página.</h2>
-      <p style={customStyles.p}>Por favor, regresa a la página anterior.</p>
-      <button onClick={closeModal} style={customStyles.button}>Regresar</button>
+      <h2 style={customStyles.h2}>
+        <b>¡Ups!</b>
+        <br />
+        <br />
+        No tienes acceso
+        <br />a esta página.
+      </h2>
+      {/* <p style={customStyles.p}>Por favor, regresa a la página anterior.</p> */}
+      <button onClick={closeModal} style={customStyles.button}>
+        Regresar
+      </button>
     </Modal>
   );
 }

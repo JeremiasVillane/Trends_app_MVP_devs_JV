@@ -1,249 +1,249 @@
 .MajorContainer {
-    display: flex;
-    width: 100vw;
+  display: flex;
+  width: 100vw;
 }
 
 .Container {
-    margin-left: 6rem;
-    width: 100%;
-    border-radius: .3rem;
-  }
+  margin-left: 6rem;
+  width: 100%;
+  border-radius: 0.3rem;
+}
 
 .BGContainer {
-    display: block;
-    width: 100%;
-    background-color: white;
-    text-align: left;
-    font-family: "Poppins-Medium";
-    border-radius: 0rem 0.6rem 0rem 0.6rem;
-    margin-left: 4.8rem;
-    width: 94%;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: block;
+  width: 100%;
+  background-color: white;
+  text-align: left;
+  font-family: "Poppins-Medium";
+  border-radius: 0rem 0.6rem 0rem 0.6rem;
+  margin-left: 4.8rem;
+  width: 94%;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .BGContainer h2 {
-    font-family: "Rubik-Medium";
-    font-weight: 100;
-    border-radius: .2rem;
-    width: fit-content;
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    padding: 0 1rem;
+  font-family: "Rubik-Medium";
+  font-weight: 100;
+  border-radius: 0.2rem;
+  width: fit-content;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
 }
 
 .BGContainer h3 {
-    font-family: "Rubik-Regular";
-    border-radius: .2rem;
-    
-    width: fit-content;
-    padding: 0 1rem;
+  font-family: "Rubik-Regular";
+  border-radius: 0.2rem;
+
+  width: fit-content;
+  padding: 0 1rem;
 }
 
 .BGContainer header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 12rem;
-    background-color: #9AC2EF ;
-    position: relative;
-    margin-bottom: 5rem;
-}
-
-.BGContainer header h1{
-    color: rgb(23, 23, 23);
-}
-.EditButton {
-    cursor: pointer;
-    background-color: transparent;
-    border: 0;
-    height: fit-content;
-    margin-top: auto;
-    margin-right: 2rem;
-    margin-left: 1rem;
-    margin-bottom: .5rem;
-
-}
-.EditButton:hover {
-    border: 0;
-}
-
-.BGContainer main {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
-}
-
-.BGContainer section {
-    position: relative;
-    padding: .5rem 6%;
-    width: 100%;
-}
-
-.ImageContainer {
-    border-radius: 90%;
-    width: 14rem;
-    height: 14rem;
-    position: absolute;
-    left: 5rem;
-    bottom: -40%;
-    cursor: pointer;
-}
-
-.ImageContainer img {
-    width: 100%;
-    height: 100%;
-    border-radius: 90%;
-}
-
-.Extra {
-    position: absolute;
-    top: 0;
-    z-index: 2;
-    height: 100%;
-    width: 100%;
-    border-radius: 90%;
-    transition: .2s;
-}
-
-.ImageContainer:hover .IconContainer {
-    visibility: visible;
-}
-
-.IconContainer {
-    position: absolute;
-    height: fit-content;
-    width: fit-content;
-    display: block;
-    top: 25%;
-    left: 25%;
-    z-index: 3;
-    visibility: hidden;
-}
-
-.ImageContainer:hover .Extra {
-    opacity: 0.5;
-    background-color: #344C5A;
-    border-radius: 90%;
-}
-
-.FirstInfo h1, .FirstInfo h3 {
-    
-    width: fit-content;
-    padding: 0 1rem;
-    border-radius: .4rem;
-    margin: 0;
-    margin-bottom: 1rem;
-}
-
-.Profile > hr {
-    width: 90%;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 12rem;
+  background-color: #9ac2ef;
+  position: relative;
+  margin-bottom: 5rem;
 }
 
 .BGContainer header h1 {
-    font-size: 2.6rem;
-    text-align: center;
-    width: fit-content;
-    display: block;
-    margin-left:22rem ;
-    padding-top: 6rem ;
+  color: rgb(23, 23, 23);
+}
+.EditButton {
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  height: fit-content;
+  margin-top: auto;
+  margin-right: 2rem;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+}
+.EditButton:hover {
+  border: 0;
+}
+
+.BGContainer main {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.BGContainer section {
+  position: relative;
+  padding: 0.5rem 6%;
+  width: 100%;
+}
+
+.ImageContainer {
+  border-radius: 90%;
+  width: 14rem;
+  height: 14rem;
+  position: absolute;
+  left: 5rem;
+  bottom: -40%;
+  cursor: pointer;
+}
+
+.ImageContainer img {
+  width: 100%;
+  height: 100%;
+  border-radius: 90%;
+}
+
+.Extra {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  border-radius: 90%;
+  transition: 0.2s;
+}
+
+.ImageContainer:hover .IconContainer {
+  visibility: visible;
+}
+
+.IconContainer {
+  position: absolute;
+  height: fit-content;
+  width: fit-content;
+  display: block;
+  top: 25%;
+  left: 25%;
+  z-index: 3;
+  visibility: hidden;
+}
+
+.ImageContainer:hover .Extra {
+  opacity: 0.5;
+  background-color: #344c5a;
+  border-radius: 90%;
+}
+
+.FirstInfo h1,
+.FirstInfo h3 {
+  width: fit-content;
+  padding: 0 1rem;
+  border-radius: 0.4rem;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.Profile > hr {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.BGContainer header h1 {
+  font-size: 2.6rem;
+  text-align: center;
+  width: fit-content;
+  display: block;
+  margin-left: 22rem;
+  padding-top: 6rem;
 }
 
 .Studies {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .Background {
-    position: absolute;
-    background-color: #C4C4C4;
-    opacity: 0.5;
-    z-index: 9999;
-    height: 100vh;
-    width: 100vw;
+  position: absolute;
+  background-color: #c4c4c4;
+  opacity: 0.5;
+  z-index: 9999;
+  height: 100vh;
+  width: 100vw;
 }
 
 .EditPhoto h2 {
-    background-color: initial;
-    margin: 0;
+  background-color: initial;
+  margin: 0;
 }
 
 @media screen and (max-width: 845px) {
-    .FirstInfo h1 {
-        font-size: 2.5rem;
-    }
+  .FirstInfo h1 {
+    font-size: 2.5rem;
+  }
 
-    .FirstInfo h2 {
-        font-size: 2rem;
-    }
+  .FirstInfo h2 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .MajorContainer {
+    margin-top: 66px;
+    margin-left: -5rem;
+  }
+}
+
+@media screen and (max-width: 758px) {
+  .MajorContainer {
+    flex-direction: column-reverse;
+    margin-left: 0;
+    margin-top: 3.9rem;
+  }
+  .Relations {
+    display: none;
+  }
+
+  .BGContainer header h1 {
+    display: none;
+  }
+
+  .BGContainer section h1,
+  .BGContainer section h3 {
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+
+  .BGContainer header {
+    background-color: #fab180;
+    border-radius: 0;
+  }
+
+  .BGContainer {
+    width: 100vw;
+    border-radius: 0;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  .ImageContainer {
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+  }
+
+  .Studies {
+    flex-direction: column;
+  }
 }
 
 :global(.dark-mode) .BGContainer {
-    background-color: #383636
+  background-color: #383636;
 }
 
-:global(.dark-mode) .BGContainer h2, :global(.dark-mode) .BGContainer h3, :global(.dark-mode) .BGContainer h1 {
-    color: #CCB5A5
+:global(.dark-mode) .BGContainer h2,
+:global(.dark-mode) .BGContainer h3,
+:global(.dark-mode) .BGContainer h1 {
+  color: #ccb5a5;
 }
 
 :global(.dark-mode) .BGContainer header {
-    background-color: #FAB180;
+  background-color: #fab180;
 }
 
 :global(.dark-mode) .BGContainer header h1 {
-    color: #344C5A;
+  color: #344c5a;
 }
-
-
-@media screen and (max-width: 758px) {
-    .MajorContainer {
-        flex-direction: column-reverse;
-    }
-    .Relations {
-        display: none;
-    }
-
-    .BGContainer header h1 {
-        display: none;
-    }
-
-    .BGContainer section h1, .BGContainer section h3 {
-        margin: 0 auto;
-        margin-bottom: 1rem;
-    }
-
-    .BGContainer header {
-        background-color: #FAB180 ;
-        border-radius: 0;
-    }
-
-    .BGContainer {
-        width: 100vw;
-        border-radius: 0;
-        margin: 0;
-        min-height: 100vh;
-    }
-
-    .ImageContainer {
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 0;
-    }
-
-    .Studies {
-        flex-direction: column;
-    }
-}
-
-
-
-
-
-
-
-
-
-
 
 /* .mainDiv{
     background-color: #e8e8e8;

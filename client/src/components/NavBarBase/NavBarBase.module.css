@@ -1,117 +1,101 @@
+/* Estilos base para la barra de navegación */
 .left {
-    width: 60px;
-    height: 100vh;
-    background-color: #9AC2EF;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    justify-content: space-evenly;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  width: 60px;
+  height: 100vh;
+  background-color: #9ac2ef;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  justify-content: space-evenly;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 3333;
 }
 
-.left p{
-    color: rgb(255, 255, 255);
-    margin-top: -3rem;
-    font-size: medium;
-
+.left p {
+  color: rgb(255, 255, 255);
+  margin-top: -3rem;
+  font-size: medium;
 }
 
-.content {
-    margin-left: 260px; 
-  }
-
-.button{
-    border-radius: .3rem;
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    height: 6vh;
-    width: 60%;
-    min-width: 43px;
-    padding: 4px;
-    background-color: rgba(255, 255, 255, 0);
-    border: 0px;
-}
-
-.button svg, .button i{
+/* Estilos para los botones */
+.button {
+  border-radius: 0.3rem;
+  margin: 20px 20px 0;
+  height: 6vh;
+  width: 60%;
+  min-width: 43px;
+  padding: 4px;
+  background-color: rgba(255, 255, 255, 0);
+  border: 0px;
   display: block;
   margin: 0 auto;
   color: rgb(255, 255, 255);
 }
 
-
-.icon-light {
-  color: white;
-}
-
-
+/* Estilos de los íconos */
+.icon-light,
 .icon-dark {
-  color: black;
+  color: white;
 }
 
 /* Estilos responsivos */
 @media screen and (max-width: 768px) {
-    .container{
-        width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        /* justify-content: flex-start; */
-        /* min-width: 100vw; */
-        margin: 0;
-        padding: 0;
-        background-color:#F1F1F1 ;
-        border: 1px solid grey;
+  .container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f1f1;
+    border: 1px solid grey;
+  }
 
-    }    
-    .left{
-        /* border: 0.1px solid greenyellow;*/
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
+  .left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-height: 60px;
+    padding: 10px;
+    background-color: #9ac2ef;
+    border: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 
-        width: 100%;
-        min-height: 10vh;
+  .left p {
+    display: none;
+  }
 
-        background-color: #9AC2EF;
-        
-        padding-top: 0px;
-        border: 0px;
-    }
-    .left p{
-        display: none;
-    }
+  .button {
+    margin: 0.5rem;
+    border-radius: 50%;
+    height: 6vh;
+    width: 4vw;
+    min-width: 2.7rem;
+  }
 
-    .button{
-        margin-top: 0px;
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-        border-radius: 50%;
-        height: 6vh;
-        width: 4vw;
-        min-width: 2.7rem;
-    }    
-    .dark-mode{
-        margin-top: 0;
-    }
+  .dark-mode {
+    margin-top: 0;
+  }
 }
 
-:global(.dark-mode) .container{
-    background-color: #383636
-}
-:global(.dark-mode) .left{
-    background-color: #383636;
-}
-:global(.dark-mode) .button{
-    background-color: #383636;
-}
-:global(.dark-mode) .left p{
-    color: #9AC2EF;
-}
-:global(.dark-mode) .left{
-    border-right: 1px solid #CCB5A5;
+/* Estilos en modo oscuro */
+:global(.dark-mode) .container,
+:global(.dark-mode) .left,
+:global(.dark-mode) .button {
+  background-color: #383636;
 }
 
+:global(.dark-mode) .left p {
+  color: #9ac2ef;
+}
 
+:global(.dark-mode) .left {
+  border-right: 1px solid #ccb5a5;
+}

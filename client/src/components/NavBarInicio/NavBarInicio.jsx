@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/imagenes/logo.png";
 import styles from "./NavBarInicio.module.css";
-import { useLocation } from "react-router-dom";
 
+/**
+ * Componente de la barra de navegación para la página de inicio.
+ *
+ * @component
+ * @returns {React.Element} Componente NavBarInicio.
+ */
 function NavBarInicio() {
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
+    /**
+     * Cierra el menú cuando se hace clic fuera de él.
+     *
+     * @param {Object} event - Evento de clic.
+     */
     function closeMenuOnClickOutside(event) {
       if (showMenu && !event.target.classList.contains("toggle-button")) {
         setShowMenu(false);
@@ -22,6 +32,9 @@ function NavBarInicio() {
     };
   }, [showMenu]);
 
+  /**
+   * Alterna el modo oscuro en la aplicación.
+   */
   function toggleDarkMode() {
     const body = document.body;
     body.classList.toggle("dark-mode");
@@ -29,30 +42,36 @@ function NavBarInicio() {
     setDarkMode((prevDarkMode) => !prevDarkMode);
   }
 
+  /**
+   * Alterna la visibilidad del menú.
+   */
   function toggleMenu() {
     setShowMenu((prevState) => !prevState);
   }
 
   return (
     <nav className={`${styles.navigation} ${darkMode ? "dark-mode" : ""}`}>
+      
       {/* Logo */}
       <div className={styles.logo}>
         <img src={Logo} alt="Logo" />
       </div>
 
-      {/* Login y Sign Up (Registro) */}
+      {/* Botones de autenticación y opciones de registro */}
       <div
         className={`${styles["auth-buttons"]} ${
           showMenu ? styles["show-menu"] : ""
         }`}
       >
-        { location.pathname !== "/auth/login" && <Link
-          to="/auth/login"
-          className="custom-link"
-          onClick={() => setShowMenu(false)}
-        >
-          Iniciar sesión
-        </Link>}
+        {location.pathname !== "/auth/login" && (
+          <Link
+            to="/auth/login"
+            className="custom-link"
+            onClick={() => setShowMenu(false)}
+          >
+            Iniciar sesión
+          </Link>
+        )}
         <button className="toggle-button" onClick={toggleMenu}>
           Crear cuenta
         </button>
@@ -87,7 +106,7 @@ function NavBarInicio() {
         </div>
       </div>
 
-      {/* Botón de Modo Oscuro */}
+      {/* Botón de modo oscuro */}
       <div className={styles["dark-mode-button"]}>
         <button onClick={toggleDarkMode}>
           {darkMode ? (

@@ -4,6 +4,12 @@ import { Navigate, useRoutes } from "react-router-dom";
 import { selectUserProfile } from "../Redux/UsersSlice";
 import { protectedRoutes } from "../utils/RouteProtection";
 
+/**
+ * HOC para cargar componentes de manera diferida.
+ *
+ * @param {React.Component} Component - Componente que se va a cargar de manera diferida.
+ * @returns {function} Componente cargado de manera diferida.
+ */
 const Loadable = (Component) => (props) => {
   return (
     <Suspense fallback={"Loading..."}>
@@ -12,9 +18,15 @@ const Loadable = (Component) => (props) => {
   );
 };
 
+/**
+ * Componente de enrutado principal.
+ *
+ * @returns {React.Element} Elemento de enrutado.
+ */
 export default function Router() {
   const user = useSelector(selectUserProfile);
 
+  // Definición de rutas de autenticación
   const authRoutes = [
     {
       path: "login",
@@ -34,6 +46,7 @@ export default function Router() {
     },
   ];
 
+  // Definición de rutas para usuarios
   const userRoutes = [
     {
       path: "profile",
@@ -49,6 +62,7 @@ export default function Router() {
     },
   ];
 
+  // Definición de rutas para empresas
   const companyRoutes = [
     {
       path: "profile",
@@ -60,6 +74,7 @@ export default function Router() {
     },
   ];
 
+  // Definición de rutas para administradores
   const adminRoutes = [
     {
       path: "dashboard",
@@ -67,6 +82,7 @@ export default function Router() {
     },
   ];
 
+  // Rutas públicas y protegidas
   return useRoutes([
     {
       path: "/",
@@ -101,6 +117,7 @@ export default function Router() {
   ]);
 }
 
+// Carga diferida de componentes
 const LandingPage = Loadable(lazy(() => import("../views/landingPage")));
 const LoginPage = Loadable(lazy(() => import("../views/loginPage/loginPage")));
 const RegisterFormBase = Loadable(

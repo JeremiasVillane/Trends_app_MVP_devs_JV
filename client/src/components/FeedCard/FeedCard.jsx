@@ -1,5 +1,5 @@
 import { HiChat, HiUser } from "react-icons/hi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectDarkMode } from "../../Redux/UsersSlice";
 import style from "./FeedCard.module.css";

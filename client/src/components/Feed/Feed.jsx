@@ -8,12 +8,17 @@ import {
   selectAllUsers,
   selectProfessionals,
   selectStudents,
-  selectUserProfile
+  selectUserProfile,
 } from "../../Redux/UsersSlice";
 import FeedCard from "../FeedCard/FeedCard";
-import NavBarBase from "../NavBarBase/NavBarBase";
 import style from "./Feed.module.css";
 
+/**
+ * Componente de carga del "feed" de usuarios.
+ *
+ * @component
+ * @returns {React.Element} Componente Feed.
+ */
 const Feed = () => {
   const users = useSelector(selectAllUsers);
   const dispatch = useDispatch();
@@ -22,6 +27,9 @@ const Feed = () => {
   const professionals = useSelector(selectProfessionals);
   const [page, setPage] = useState(1);
 
+  /**
+   * Realiza una solicitud para obtener más usuarios y actualizar la lista.
+   */
   const fetchMoreUsers = () => {
     if (profile.id) {
       dispatch(getStudents({ id: profile.id, page }));
@@ -29,6 +37,9 @@ const Feed = () => {
     }
   };
 
+  /**
+   * Maneja el evento de desplazamiento de la ventana.
+   */
   const handleScroll = () => {
     if (
       window.innerHeight + document.documentElement.scrollTop + 1 >=
@@ -38,14 +49,14 @@ const Feed = () => {
     }
   };
 
-  //validate if profile exists
+  // Carga los datos del usuario si no están ya en el estado global.
   useEffect(() => {
     if (!profile || Object.keys(profile).length === 0) {
       dispatch(getUserInfo());
     }
   }, []);
 
-  // fetch users if profile exists
+  // Si el perfil de usuario existe, se cargan los "matches"
   useEffect(() => {
     if (profile.id) {
       fetchMoreUsers();
@@ -53,10 +64,19 @@ const Feed = () => {
   }, [profile.id, page]);
 
   useEffect(() => {
+    /**
+     * Agrega un event listener para el evento de desplazamiento de la ventana.
+     * Cuando el usuario hace scroll, se verifica si se ha llegado al final de la página.
+     * Si es así, se actualiza el número de página para cargar más usuarios.
+     */
     window.addEventListener("scroll", handleScroll);
+
+    // Elimina el event listener cuando el componente se desmonta.
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Verifica la carga de estudiantes y profesionales
+  // y despacha la función que llama al algoritmo de matcheo
   useEffect(() => {
     if (students && professionals) {
       dispatch(matchUsers());
@@ -65,9 +85,6 @@ const Feed = () => {
 
   return (
     <section className={style.BGContainer}>
-      <div>
-        <NavBarBase />
-      </div>
       <div className={style.Container}>
         <header>
           <h1>Trends</h1>
@@ -77,7 +94,10 @@ const Feed = () => {
             {users && users.length > 0 ? (
               users.map((user, userIndex) => (
                 <div key={userIndex}>
+                  {/* Tarjeta de usuario */}
                   <FeedCard user={user} />
+
+                  {/* Línea divisora si no es el último usuario */}
                   {userIndex < users.length - 1 && <hr />}
                 </div>
               ))

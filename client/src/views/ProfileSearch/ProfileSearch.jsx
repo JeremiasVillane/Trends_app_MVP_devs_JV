@@ -1,23 +1,22 @@
-import { useEffect, useState } from "react";
-import style from "./ProfileSearch.module.css";
-import { HiChat } from "react-icons/hi";
-import Relations from "../../components/Relations/Relations";
-import NavBarBase from "../../components/NavBarBase/NavBarBase";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { HiChat } from "react-icons/hi";
 import { useParams } from "react-router-dom";
+import Relations from "../../components/Relations/Relations";
+import style from "./ProfileSearch.module.css";
 const { VITE_URL } = import.meta.env;
 
 const ProfileSearch = () => {
   const { id } = useParams();
   const [userData, setUserData] = useState({});
   const URL = `${VITE_URL}/search/user/${id}`;
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const fetch = await axios.get(URL, { withCredentials: "include" });
         const data = fetch.data;
         setUserData(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -25,51 +24,8 @@ const ProfileSearch = () => {
     fetchData();
   }, [id]);
 
-  //*No se qué tanta info vamos a tener de la info academica o laboral
-  const contactInfo = [
-    {
-      contactType: "Número de telefono",
-      contactInfo: "03385-123456",
-    },
-    {
-      contactType: "LinkedIn",
-      contactInfo: "https://www.linkedin.com/in/luciano-gianoglio/",
-    },
-    {
-      contactType: "Email",
-      contactInfo: "luchogianoglio@gmail.com",
-    },
-  ];
-  //*----------------------------------------------------------------
-
-  const [isProfileOwner, setIsProfileOwner] = useState(true);
-
-  //! HANDLERS DE LOS BOTONES
-  // const handleInfoButton = (infoType) => {
-  //     setShownInfo(infoType);
-  // }
-
-  const handleImageChangeButton = () => {
-    setIsEditing((prevState) => ({ ...prevState, image: false }));
-  };
-
-  const handleGeneralChangeButton = () => {
-    setIsEditing((prevState) => ({ ...prevState, general: false }));
-  };
-
-  const handleGeneralEdit = () => {
-    setIsEditing({
-      ...isEditing,
-      general: true,
-    });
-  };
-
   return (
     <div className={style.MajorContainer}>
-      <div className={style.NavBar}>
-        <NavBarBase />
-      </div>
-
       <div className={style.BGContainer}>
         <header>
           <div className={style.ImageContainer}>

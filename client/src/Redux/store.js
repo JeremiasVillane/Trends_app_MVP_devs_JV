@@ -1,15 +1,35 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/es/storage/session";
 import usersReducer from "./UsersSlice";
-import chatReducer from './chatSlice';
+import chatReducer from "./chatSlice";
+import thunk from "redux-thunk";
 
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(
+  persistConfig,
+  combineReducers({
+    users: usersReducer,
+    chat: chatReducer,
+  })
+);
 
 const store = configureStore({
-    reducer: {
-        users: usersReducer,
-        chat: chatReducer,
-    },
-    // middleware of the redux devtools
-    devTools: true,
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => {
+    const middleware = getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+    });
+    return middleware.concat(thunk);
+  },
+  devTools: import.meta.env.VITE_NODE_ENV !== "production",
 });
 
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };

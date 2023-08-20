@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import NavBarBase from "../../components/NavBarBase/NavBarBase";
 import { ImageUpload, ProfileUpdate } from "../../components/ProfileEdit";
 import Relations from "../../components/Relations/Relations";
 import { getUserInfo, selectUserProfile } from "../../Redux/UsersSlice";
@@ -62,10 +61,6 @@ const Profile = () => {
 
   return (
     <div className={style.MajorContainer}>
-      <div className={style.NavBar}>
-        <NavBarBase />
-      </div>
-
       <div className={style.BGContainer}>
         {isEditing.image && (
           <div className={style.EditPhoto}>
