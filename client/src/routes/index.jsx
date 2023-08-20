@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useRoutes } from "react-router-dom";
+import Loader from "../components/Loader/Loader";
 import { selectUserProfile } from "../Redux/UsersSlice";
 import { protectedRoutes } from "../utils/RouteProtection";
 
@@ -12,7 +13,7 @@ import { protectedRoutes } from "../utils/RouteProtection";
  */
 const Loadable = (Component) => (props) => {
   return (
-    <Suspense fallback={"Loading..."}>
+    <Suspense fallback={<Loader />}>
       <Component {...props} />
     </Suspense>
   );
