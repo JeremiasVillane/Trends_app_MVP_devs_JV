@@ -41,7 +41,6 @@ export default function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (inputs.user && inputs.password) {
-
       try {
         await axios.post(`${VITE_URL}/auth/login`, inputs, {
           withCredentials: "include",
@@ -67,68 +66,56 @@ export default function LoginPage() {
       <div className={style.Card}>
         <div className={style.LeftContainer}>
           <div>
-            <h1>Te damos la bienvenida</h1>
+            <h1>Bienvenido/a a nuestra plataforma,</h1>
             <h3 className={style.MainText}>
-              Al comenzar, vas a encontrar una lista de profesionales dispuestos
-              a ayudarte y compartirte sus experiencias.
+              Desde el momento en que te unas, tendrás acceso directo a
+              profesionales dispuestos a ayudarte y compartir sus experiencias.
             </h3>
           </div>
           <img src={welcome} alt="" />
-          <h3>Tambien tenemos convenios con empresas!</h3>
           <h3>
-            Para que puedas navegar en muchas oportunidades laborales de tu
-            nicho.
+            ¡Pero eso no es todo! ¡También contamos con alianzas empresariales!
+          </h3>
+          <h3>
+            Podrás explorar oportunidades laborales en tu campo de
+            especialización.
           </h3>
         </div>
 
         <div className={style.RightContainer}>
           <form onSubmit={handleSubmit}>
-            <h2>Log In</h2>
+            <h2>Ingresa con tu cuenta</h2>
             <div className={style.Input}>
               <input
                 name="user"
                 onChange={handleInputs}
                 type="text"
-                placeholder="Email or username"
+                placeholder="Correo o nombre de usuario"
               />
-              <p
-                className={
-                  validateLogin === false ? `${style.Error}` : style.NoError
-                }
-              >
-                wrong email or password
-              </p>
             </div>
             <div className={style.Input}>
               <input
                 name="password"
                 onChange={handleInputs}
                 type="password"
-                placeholder="Password"
+                placeholder="Contraseña"
               />
-              <p
-                className={
-                  validateLogin === false ? `${style.Error}` : style.NoError
-                }
-              >
-                wrong email or password
-              </p>
             </div>
             <div className={style.Options}>
-              <div>
+              {/* <div>
                 <input id="remember" type="checkbox" />
-                <label htmlFor="remember"> Remember me</label>
-              </div>
-              <div>forgot Password</div>
+                <label htmlFor="remember"> Recuérdame</label>
+              </div> */}
+              {/* <div>forgot Password</div> */}
             </div>
             <button disabled={!(inputs.user && inputs.password)} type="submit">
-              Sign In
+              Ingresar
             </button>
             <hr />
-            <div className={style.Account}>
-              <span>Doesn&apos;t have an account?</span>{" "}
-              <span className={style.Bold}>Create Account</span>
-            </div>
+            {/* <div className={style.Account}>
+              <span>¿No tienes cuenta?</span>{" "}
+              <span className={style.Bold}>Crea tu cuenta</span>
+            </div> */}
           </form>
         </div>
       </div>

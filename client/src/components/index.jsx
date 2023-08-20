@@ -3,7 +3,6 @@ import ProfessionalRegisterForm from "./registerFormProfesional";
 import StudentRegisterForm from "./registerFormStudent";
 import Feed from "./Feed/Feed";
 import FeedCard from "./FeedCard/FeedCard";
-import ImageDropzone from "./ImageDropzone/ImageDropzone";
 import CustomInputDate from "./customInputDate";
 import CustomRadioInput from "./customRadioInput";
 import CompanyJobs from "./CompanyJobs/CompanyJobs";
@@ -33,7 +32,6 @@ export {
   StudentRegisterForm,
   Feed,
   FeedCard,
-  ImageDropzone,
   CustomInputDate,
   CustomRadioInput,
   CustomSelect,

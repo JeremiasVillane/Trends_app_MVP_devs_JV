@@ -1,10 +1,10 @@
-
-
 const { Image, Admin } = require("../../db");
 const { getUserById } = require("../search.controllers");
 const { putUserProfile } = require("../user.controllers");
+const path = require("path");
+const fs = require("fs");
 
-module.exports = async (userId, userType, filename, path) => {
+module.exports = async (userId, userType, filename, filepath) => {
   let typeOfId;
 
   if (["student", "professional"].includes(userType)) {
@@ -18,7 +18,7 @@ module.exports = async (userId, userType, filename, path) => {
   const savedImage = await Image.create({
     [typeOfId]: userId,
     filename,
-    filepath: path,
+    filepath,
     imageUrl,
     isProfileImage: true,
   });
@@ -42,64 +42,25 @@ module.exports = async (userId, userType, filename, path) => {
       return { error: "User not found" };
     }
 
-    let imageProp;
+    const imageToReplace = await Image.findOne({
+      where: {
+        userId: userId,
+        isProfileImage: true,
+      },
+    });
 
-    if (["company", "admin"].includes(currentProfile.type)) {
-      imageProp = "image";
-    } else imageProp = "profile_image";
+    if (imageToReplace) {
+      const imagePath = path.resolve(imageToReplace.filepath);
+      await fs.promises.access(imagePath);
+      await fs.promises.unlink(imagePath);
 
-    await putUserProfile(currentProfile, { [imageProp]: imageUrl });
-  } catch (error) {
-    return { error: error.message };
-  }
-
-  return { imageId: savedImage.id, profileId: userId, imageUrl };
-};
-
-/*
-
-const { Image, Admin } = require("../../db");
-const { getUserById } = require("../search.controllers");
-const { putUserProfile } = require("../user.controllers");
-
-module.exports = async (userId, userType, filename, path) => {
-  let typeOfId;
-
-  if (["student", "professional"].includes(userType)) {
-    typeOfId = "userId";
-  } else if (userType === "company") {
-    typeOfId = "companyId";
-  } else typeOfId = "adminId";
-
-  const imageUrl = `/images/files/${filename}`;
-
-  const savedImage = await Image.create({
-    [typeOfId]: userId,
-    filename,
-    filepath: path,
-    imageUrl,
-    isProfileImage: true,
-  });
-
-  if (!savedImage) {
-    return { error: "Failed to upload image" };
-  }
-
-  let currentProfile;
-
-  try {
-    currentProfile = await getUserById(userId);
-
-    if (!currentProfile) {
-      currentProfile = await Admin.findOne({
-        where: { id: userId },
+      await Image.destroy({
+        where: {
+          id: imageToReplace.id,
+        },
       });
     }
 
-    if (!currentProfile) {
-      return { error: "User not found" };
-    }
-
     let imageProp;
 
     if (["company", "admin"].includes(currentProfile.type)) {
@@ -113,5 +74,3 @@ module.exports = async (userId, userType, filename, path) => {
 
   return { imageId: savedImage.id, profileId: userId, imageUrl };
 };
-*/
-

@@ -54,7 +54,7 @@ function NavBarInicio() {
           Iniciar sesión
         </Link>}
         <button className="toggle-button" onClick={toggleMenu}>
-          Crea tu cuenta
+          Crear cuenta
         </button>
         <div className={styles["register-options"]}>
           <Link

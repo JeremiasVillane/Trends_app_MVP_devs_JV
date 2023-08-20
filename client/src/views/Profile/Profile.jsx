@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import ImageDropzone from "../../components/ImageDropzone/ImageDropzone";
 import NavBarBase from "../../components/NavBarBase/NavBarBase";
+import { ImageUpload, ProfileUpdate } from "../../components/ProfileEdit";
 import Relations from "../../components/Relations/Relations";
 import { getUserInfo, selectUserProfile } from "../../Redux/UsersSlice";
 import style from "./Profile.module.css";
@@ -16,7 +16,6 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getUserInfo());
-    console.log(userData);
   }, []);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const Profile = () => {
 
   const loadImage = async () => {
     const URLImage = `${VITE_URL}${userData.profile_image}`;
-    console.log(URLImage);
+
     await axios
       .get(URLImage, { responseType: "blob", withCredentials: "include" })
       .then((response) => {
@@ -70,19 +69,13 @@ const Profile = () => {
       <div className={style.BGContainer}>
         {isEditing.image && (
           <div className={style.EditPhoto}>
-            <ImageDropzone
-              type={"photo"}
-              handleCancelButton={handleImageChangeButton}
-            />
+            <ImageUpload handleCancelButton={handleImageChangeButton} />
           </div>
         )}
 
         {isEditing.general && (
           <div className={style.EditPhoto}>
-            <ImageDropzone
-              type={"general"}
-              handleCancelButton={handleGeneralChangeButton}
-            />
+            <ProfileUpdate handleCancelButton={handleGeneralChangeButton} />
           </div>
         )}
         <header>
@@ -95,14 +88,17 @@ const Profile = () => {
               }))
             }
           >
-            <img src={image ? URL.createObjectURL(image) : ""} alt="" />
+            <img
+              src={image ? URL.createObjectURL(image) : ""}
+              alt="Foto de perfil"
+            />
             <div className={style.Extra}></div>
             <div className={style.IconContainer}>
               <AiFillEdit size="6rem" color="white" />
             </div>
           </div>
 
-          <h1>{userData.type}</h1>
+          <h1>{userData.type === "student" ? "Estudiante" : "Profesional"}</h1>
 
           <button onClick={handleGeneralEdit} className={style.EditButton}>
             <AiFillEdit size="2rem" color="#344C5A" />
@@ -129,7 +125,7 @@ const Profile = () => {
             <hr />
             {userData.profile_bio ? (
               <section>
-                <h2>Biography</h2>
+                <h2>Biografía</h2>
                 <div className={style.Bio}>
                   <h3>{userData.profile_bio}</h3>
                 </div>
@@ -142,7 +138,7 @@ const Profile = () => {
             userData.academic_area ||
             userData.academic_graduation ? (
               <section>
-                <h2>Studies</h2>
+                <h2>Estudios</h2>
                 <div className={style.Studies}>
                   <h3>{userData.academic_institution}</h3>
                 </div>

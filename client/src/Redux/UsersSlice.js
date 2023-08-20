@@ -32,7 +32,6 @@ const getMatchedUsers = createAsyncThunk(
 const getStudents = createAsyncThunk(
   "users/getStudents",
   async ({ id, page }) => {
-    console.log(page);
     try {
       const URL = `${VITE_URL}/user/feed/${id}/student?page=${page}`;
       const fetch = await axios.get(URL, { withCredentials: "include" });
@@ -87,6 +86,22 @@ const getSearchedUsers = createAsyncThunk(
   }
 );
 
+const updateUserProfile = createAsyncThunk(
+  "users/updateUserProfile",
+  async (editData) => {
+    try {
+      const URL = `${VITE_URL}/user/${editData.id}`;
+      const fetch = await axios.put(URL, editData, {
+        withCredentials: "include",
+      });
+      const data = fetch.data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -132,6 +147,10 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(updateUserProfile.pending, () => {})
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
       .addCase(getSearchedUsers.pending, (state) => {
         state.searchedUsers = []; //Esto queda vacío porque despues podemos poner que si searchedUsers.length === 0 muestre un símbolo de carga
       })
@@ -143,7 +162,6 @@ const usersSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(getStudents.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.students = action.payload;
       })
       .addCase(getStudents.pending, (state) => {})
@@ -159,10 +177,9 @@ export default usersSlice.reducer;
 
 // export of the selectors of the global state
 
-export { getProfessionals, getStudents };
+export { getProfessionals, getStudents, updateUserProfile };
 //export const {addCompany, matchUsers, currentpage, setStatus, logout, setDarkMode} = usersSlice.actions;
 // export const selectAllUsers = (state) => state.users.allUsers;
-
 export { getSearchedUsers, getUserInfo, getMatchedUsers };
 export const {
   test,
@@ -173,6 +190,7 @@ export const {
   setStatus,
   logout,
 } = usersSlice.actions;
+
 export const selectAllUsers = (state) => state.users?.allUsers;
 export const selectSearchedUsers = (state) => state.users.searchedUsers;
 export const selectStudents = (state) => state.users.students;

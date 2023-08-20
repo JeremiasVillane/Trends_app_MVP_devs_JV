@@ -14,7 +14,6 @@ const { VITE_URL } = import.meta.env;
  * @returns {JSX.Element} Componente RegisterFormBase.
  */
 const RegisterFormBase = ({ type }) => {
-  const [validateLogin, setValidateLogin] = useState(null);
   const navigate = useNavigate();
   const URL = `${VITE_URL}/auth/register`;
 
@@ -49,7 +48,7 @@ const RegisterFormBase = ({ type }) => {
   };
 
   /**
-   * Alterna la casilla de verificación de soporte de perfil.
+   * Alterna la casilla de verificación de soporte.
    */
   const handleIsCheck = () => {
     setInputs((prevInputs) => ({
@@ -100,15 +99,11 @@ const RegisterFormBase = ({ type }) => {
       type
     ) {
       const validation = validationRegister(inputs.email);
-      if (!validation) setValidateLogin(false);
-      else {
+      if (!validation) {
         try {
-          const fetch = await axios.post(URL, inputs, {
+          await axios.post(URL, inputs, {
             withCredentials: "include",
           });
-          const result = fetch.data;
-          console.log("resultado: ", result);
-          setValidateLogin(true);
           navigate("/auth/login");
         } catch (error) {
           console.log(error.response.data.error);
@@ -118,13 +113,19 @@ const RegisterFormBase = ({ type }) => {
   };
 
   /**
-   * Capitaliza la primera letra de una cadena.
+   * Traduce el 'tipo' de usuario.
    *
    * @param {string} str - Cadena de entrada.
-   * @returns {string} Cadena capitalizada.
+   * @returns {string} Cadena traducida.
    */
-  const capitalize = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  const translate = (str) => {
+    let type;
+
+    str === "student" && (type = "estudiante");
+    str === "professional" && (type = "profesional");
+    str === "company" && (type = "empresa");
+
+    return type;
   };
 
   return (
@@ -132,13 +133,13 @@ const RegisterFormBase = ({ type }) => {
       <div className={style.Card}>
         <div className={style.RightContainer}>
           <form onSubmit={handleSubmit}>
-            <h2>Crea una nueva cuenta {capitalize(type)}</h2>
+            <h2>Crea tu cuenta de {translate(type)}</h2>
             <div className={style.Input}>
               <input
                 name="name"
                 onChange={handleInputs}
                 type="text"
-                placeholder="Name"
+                placeholder="Nombre"
               />
             </div>
             <div className={style.Input}>
@@ -146,7 +147,7 @@ const RegisterFormBase = ({ type }) => {
                 name="username"
                 onChange={handleInputs}
                 type="text"
-                placeholder="Username"
+                placeholder="Apellido"
               />
             </div>
             <div className={style.Input}>
@@ -154,22 +155,15 @@ const RegisterFormBase = ({ type }) => {
                 name="email"
                 onChange={handleInputs}
                 type="text"
-                placeholder="Email"
+                placeholder="Correo electrónico"
               />
-              <p
-                className={
-                  validateLogin === false ? `${style.Error}` : style.NoError
-                }
-              >
-                you must enter a validate email
-              </p>
             </div>
             <div className={style.Input}>
               <input
                 name="password"
                 onChange={handleInputs}
                 type="password"
-                placeholder="Password"
+                placeholder="Contraseña"
               />
             </div>
             <div className={style.Input}>
@@ -178,24 +172,32 @@ const RegisterFormBase = ({ type }) => {
                 value={inputs.info_interests}
                 onChange={handleInterestsChange}
               >
-                {interests.map((categoria, index) => (
-                  <option key={index} value={categoria}>
-                    {categoria}
+                {interests.map((interest, index) => (
+                  <option key={index} value={interest}>
+                    {interest}
                   </option>
                 ))}
               </select>
             </div>
-            <div className={style.Options}>
-              <div>
-                <input
-                  id="remember"
-                  type="checkbox"
-                  checked={inputs.support}
-                  onChange={handleIsCheck}
-                />
-                <label htmlFor="remember"> Support?</label>
+            {type !== "company" && (
+              <div className={style.Options}>
+                <div>
+                  <input
+                    id="remember"
+                    type="checkbox"
+                    checked={inputs.support}
+                    onChange={handleIsCheck}
+                  />
+                  <label htmlFor="remember">
+                    ¿
+                    {type === "professional"
+                      ? "Estás dispuesto a brindar"
+                      : "Quieres recibir"}{" "}
+                    apoyo?
+                  </label>
+                </div>
               </div>
-            </div>
+            )}
             <button
               disabled={
                 !(
@@ -211,9 +213,9 @@ const RegisterFormBase = ({ type }) => {
             </button>
             <hr />
             <div className={style.Account}>
-              <span>Already have an account?</span>
+              <span>¿Ya tienes cuenta?</span>
               <Link to={"/auth/login"}>
-                <span className={style.Bold}>Log in</span>
+                <span className={style.Bold}>Ingresa aquí</span>
               </Link>
             </div>
           </form>

@@ -1,19 +1,22 @@
-import FeedCard from "../FeedCard/FeedCard";
-import style from "./Feed.module.css";
-import filterIcon from "../../assets/TestIcons/filter.png";
-import { useEffect } from "react";
-import {students, professionals} from "../../utils/users";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfessionals, getStudents, getUserInfo, matchUsers, selectAllUsers, selectProfessionals, selectStatus, selectStudents, selectTotalPages, selectUserProfile, setStatus } from "../../Redux/UsersSlice";
+import {
+  getProfessionals,
+  getStudents,
+  getUserInfo,
+  matchUsers,
+  selectAllUsers,
+  selectProfessionals,
+  selectStudents,
+  selectUserProfile
+} from "../../Redux/UsersSlice";
+import FeedCard from "../FeedCard/FeedCard";
 import NavBarBase from "../NavBarBase/NavBarBase";
-//import { matcher } from "../../utils/matchingAlgorithm/matcher";
+import style from "./Feed.module.css";
 
 const Feed = () => {
   const users = useSelector(selectAllUsers);
   const dispatch = useDispatch();
-  const status = useSelector(selectStatus);
-  const totalPages = useSelector(selectTotalPages); 
   const profile = useSelector(selectUserProfile);
   const students = useSelector(selectStudents);
   const professionals = useSelector(selectProfessionals);
@@ -21,13 +24,16 @@ const Feed = () => {
 
   const fetchMoreUsers = () => {
     if (profile.id) {
-      dispatch(getStudents({id: profile.id, page}));
-      dispatch(getProfessionals({id: profile.id, page}));
+      dispatch(getStudents({ id: profile.id, page }));
+      dispatch(getProfessionals({ id: profile.id, page }));
     }
   };
 
   const handleScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 1 >=
+      document.documentElement.scrollHeight
+    ) {
       setPage(page + 1);
     }
   };
@@ -39,7 +45,7 @@ const Feed = () => {
     }
   }, []);
 
-  // fetch users if profile exists 
+  // fetch users if profile exists
   useEffect(() => {
     if (profile.id) {
       fetchMoreUsers();
@@ -47,8 +53,8 @@ const Feed = () => {
   }, [profile.id, page]);
 
   useEffect(() => {
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -60,7 +66,7 @@ const Feed = () => {
   return (
     <section className={style.BGContainer}>
       <div>
-        <NavBarBase/>
+        <NavBarBase />
       </div>
       <div className={style.Container}>
         <header>
@@ -76,15 +82,13 @@ const Feed = () => {
                 </div>
               ))
             ) : (
-                <p>Cargando usuarios...</p>
-              )}
+              <p>Cargando usuarios...</p>
+            )}
           </div>
         </div>
       </div>
     </section>
-  )
-}
-
+  );
+};
 
 export default Feed;
-
