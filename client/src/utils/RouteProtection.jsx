@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import BackButtonModal from "../components/Modals/BackButtonModal";
+import GoBackModal from "../components/Modals/GoBackModal";
 
 /**
  * Componente que protege el acceso a rutas según los roles permitidos.
@@ -17,7 +17,7 @@ export const RouteGuard = ({ user, allowedRoles, children }) => {
   if (!user) {
     navigate(-1);
   } else if (user && !allowedRoles.includes(user.type)) {
-    return <BackButtonModal />;
+    return <GoBackModal />;
   }
   return children;
 };

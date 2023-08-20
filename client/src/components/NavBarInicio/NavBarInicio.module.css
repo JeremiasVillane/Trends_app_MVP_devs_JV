@@ -20,7 +20,6 @@
   opacity: 90%;
 }
 
-
 /* Estilos para los botones de inicio de sesión y registro */
 
 .auth-buttons {
@@ -28,7 +27,8 @@
   align-items: center;
 }
 
-.auth-buttons button, .auth-buttons a {
+.auth-buttons button,
+.auth-buttons a {
   font-size: 1rem;
   text-decoration: none;
   margin-right: 1rem;
@@ -39,10 +39,10 @@
   color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  
 }
 
-.auth-buttons button:hover, .auth-buttons a:hover  {
+.auth-buttons button:hover,
+.auth-buttons a:hover {
   background-color: #fab180;
 }
 
@@ -83,13 +83,13 @@
 
 .register-options a {
   color: #ffffff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    transition: background-color 0.3s;
-    margin-bottom: 0.3rem;
-    background-color: #9ac2ef;
+  text-align: center;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  margin-bottom: 0.3rem;
+  background-color: #9ac2ef;
 }
 
 .register-options a:hover {
@@ -97,7 +97,7 @@
 }
 
 /* Estilo para el botón de modo oscuro en modo claro */
-.dark-mode-button button{
+.dark-mode-button button {
   background-color: #4b596500;
   color: #fab180;
   border: none;
@@ -126,7 +126,6 @@
   .desktop-create-account-button {
     display: none;
   }
-  
 
   /* Mostrar el botón "Crea tu cuenta" en el menú desplegable */
   .auth-buttons.show-menu .desktop-create-account-button {
@@ -190,9 +189,8 @@
   background-color: #4b5965;
 }
 
-
 :global(.dark-mode) .register-options a {
-  color: #232323
+  color: #232323;
 }
 
 :global(.dark-mode) .register-options a:hover {
