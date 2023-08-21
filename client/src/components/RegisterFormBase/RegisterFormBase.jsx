@@ -98,16 +98,13 @@ const RegisterFormBase = ({ type }) => {
       inputs.name &&
       type
     ) {
-      const validation = validationRegister(inputs.email);
-      if (!validation) {
-        try {
-          await axios.post(URL, inputs, {
-            withCredentials: "include",
-          });
-          navigate("/auth/login");
-        } catch (error) {
-          console.log(error.response.data.error);
-        }
+      try {
+        await axios.post(URL, inputs, {
+          withCredentials: "include",
+        });
+        navigate("/auth/login");
+      } catch (error) {
+        console.log(error.response.data.error);
       }
     }
   };

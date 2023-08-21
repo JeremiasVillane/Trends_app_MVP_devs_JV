@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useDispatch } from "react-redux";
+import { getUserInfo } from "../../../Redux/UsersSlice";
 import style from "./ImageUpload.module.css";
 const { VITE_URL } = import.meta.env;
 
 const ImageUpload = ({ handleCancelButton }) => {
+  const dispatch = useDispatch();
   const [image, setImage] = useState(null);
   const URLImage = `${VITE_URL}/images/profile`;
 
@@ -28,9 +31,13 @@ const ImageUpload = ({ handleCancelButton }) => {
       formData.append("image", image.file);
 
       try {
-        await axios.post(URLImage, formData, {
-          withCredentials: true,
-        });
+        await axios
+          .post(URLImage, formData, {
+            withCredentials: true,
+          })
+          .then(() => {
+            dispatch(getUserInfo());
+          });
 
         setImage(null);
         handleCancelButton();

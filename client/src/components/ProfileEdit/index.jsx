@@ -1,2 +1,2 @@
-export * from "./ImageUpload";
-export * from "./ProfileUpdate";
+export * from "./ImageUpload/ImageUpload";
+export * from "./ProfileUpdate/ProfileUpdate";

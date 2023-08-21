@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       levelRequired: {
-        type: DataTypes.STRING, ///////
+        type: DataTypes.STRING,
         allowNull: false,
       },
       studyArea: {

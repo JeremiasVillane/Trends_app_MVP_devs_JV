@@ -67,7 +67,6 @@ export default function profileCompany() {
       const { data } = await axios.get(URL + getUniqueQueryString(), {
         withCredentials: "include",
       });
-      console.log("que trae data <profileCompany>: ", data);
       dispatch(addCompany(data));
       //setJobs(data.jobs);
     } catch (error) {
