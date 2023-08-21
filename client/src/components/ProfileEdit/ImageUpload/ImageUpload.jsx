@@ -33,7 +33,7 @@ const ImageUpload = ({ handleCancelButton }) => {
       try {
         await axios
           .post(URLImage, formData, {
-            withCredentials: true,
+            withCredentials: "include",
           })
           .then(() => {
             dispatch(getUserInfo());

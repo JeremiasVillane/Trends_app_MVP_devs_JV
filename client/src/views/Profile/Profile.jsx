@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { ImageUpload, ProfileUpdate } from "../../components/ProfileEdit";
-import Relations from "../../components/Relations/Relations";
-import { getUserInfo, selectUserProfile } from "../../Redux/UsersSlice";
+import {
+  getUserInfo,
+  selectDarkMode,
+  selectUserProfile,
+} from "../../Redux/UsersSlice";
 import style from "./Profile.module.css";
 const { VITE_URL } = import.meta.env;
 
@@ -12,6 +15,9 @@ const Profile = () => {
   const dispatch = useDispatch();
   const userData = useSelector(selectUserProfile);
   const [image, setImage] = useState(null);
+  const darkMode = useSelector(selectDarkMode);
+  const lightColor = "#232323";
+  const darkColor = "#FFF";
 
   useEffect(() => {
     dispatch(getUserInfo());
@@ -26,17 +32,21 @@ const Profile = () => {
   const loadImage = async () => {
     const URLImage = `${VITE_URL}${userData.profile_image}`;
 
-    await axios
-      .get(URLImage, { responseType: "blob", withCredentials: "include" })
-      .then((response) => {
-        const blob = new Blob([response.data], {
-          type: response.headers["content-type"],
+    if (!userData.profile_image.startsWith("http")) {
+      await axios
+        .get(URLImage, { responseType: "blob", withCredentials: "include" })
+        .then((response) => {
+          const blob = new Blob([response.data], {
+            type: response.headers["content-type"],
+          });
+          setImage(blob);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        setImage(blob);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    } else {
+      setImage(userData.profile_image);
+    }
   };
 
   const [isEditing, setIsEditing] = useState({
@@ -58,6 +68,16 @@ const Profile = () => {
       general: true,
     });
   };
+
+  function getImageSrc(image) {
+    if (typeof image === "string") {
+      return image;
+    } else if (typeof image === "object" && image instanceof File) {
+      return URL.createObjectURL(image);
+    } else {
+      return "";
+    }
+  }
 
   return (
     <div className={style.MajorContainer}>
@@ -83,11 +103,7 @@ const Profile = () => {
               }))
             }
           >
-            <img
-              src={image ? URL.createObjectURL(image) : ""}
-              alt="Foto de perfil"
-            />
-            <div className={style.Extra}></div>
+            <img src={getImageSrc(image)} alt="Foto de perfil" />
             <div className={style.IconContainer}>
               <AiFillEdit size="6rem" color="white" />
             </div>
@@ -96,7 +112,7 @@ const Profile = () => {
           <h1>{userData.type === "student" ? "Estudiante" : "Profesional"}</h1>
 
           <button onClick={handleGeneralEdit} className={style.EditButton}>
-            <AiFillEdit size="2rem" color="#344C5A" />
+            <AiFillEdit size="2rem" color={darkMode ? darkColor : lightColor} />
           </button>
         </header>
 
@@ -142,13 +158,6 @@ const Profile = () => {
                 </div>
               </section>
             ) : null}
-          </div>
-
-          <div className={style.Relations}>
-            <Relations />
-            <Relations />
-            <Relations />
-            <Relations />
           </div>
         </main>
       </div>

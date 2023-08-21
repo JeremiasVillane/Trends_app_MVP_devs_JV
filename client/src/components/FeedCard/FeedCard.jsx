@@ -7,8 +7,8 @@ import style from "./FeedCard.module.css";
 const FeedCard = ({ user }) => {
   const navigate = useNavigate();
   const darkMode = useSelector(selectDarkMode);
-  const lightColor = "#9AC2EF";
-  const darkColor = "#FAB180";
+  const lightColor = "#58C9E5";
+  const darkColor = "#FFF";
 
   const handleProfile = () => {
     navigate(`/user/profile/${user.user.id}`);
@@ -31,7 +31,7 @@ const FeedCard = ({ user }) => {
 
               <h2>{user.user.info_skills}</h2>
 
-              <h2>{user.user.info_skills.join(", ")}</h2>
+              <h2>{user.user.info_skills?.join(", ")}</h2>
 
               {user.user.profile_city || user.user.profile_country ? (
                 <h3>

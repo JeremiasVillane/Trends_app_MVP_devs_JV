@@ -8,9 +8,7 @@ import { getUserInfo } from "../../Redux/UsersSlice";
 const { VITE_URL } = import.meta.env;
 
 export default function LoginPage() {
-  const [validateLogin, setValidateLogin] = useState(null);
   const navigate = useNavigate();
-  const URL = `${VITE_URL}/auth/login`;
   const dispatch = useDispatch();
 
   const [inputs, setInputs] = useState({
@@ -26,38 +24,27 @@ export default function LoginPage() {
     }));
   };
 
-  //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
-  //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
-  function getUniqueQueryString() {
-    return `?_=${Date.now()}`;
-  }
-
-  //?FUNCION PARA OBTENER UNA CADENA DE CONSULTA UNICA
-  //?Y SE ACTUALICEN LOS DATOS (SIMULA CTRL+F5)
-  function getUniqueQueryString() {
-    return `?_=${Date.now()}`;
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (inputs.user && inputs.password) {
       try {
         await axios.post(`${VITE_URL}/auth/login`, inputs, {
           withCredentials: "include",
         });
+
         dispatch(getUserInfo());
+
         const { data } = await axios.get(`${VITE_URL}/user/profile`, {
           withCredentials: "include",
         });
 
         if (data.type === "company") navigate("/company/feed");
-        else if (data.type === "admin") navigate("/admin");
+        else if (data.type === "admin") navigate("/admin/dashboard");
         else navigate("/user/feed");
       } catch (error) {
         console.log(error);
       }
-    } else {
-      setValidateLogin(false);
     }
   };
 
@@ -112,10 +99,6 @@ export default function LoginPage() {
               Ingresar
             </button>
             <hr />
-            {/* <div className={style.Account}>
-              <span>¿No tienes cuenta?</span>{" "}
-              <span className={style.Bold}>Crea tu cuenta</span>
-            </div> */}
           </form>
         </div>
       </div>

@@ -15,7 +15,7 @@ const users = [...students, ...professionals];
 (async () => {
   // Se crean los usuarios
   for (const user of users) {
-    await axios.post(`http://localhost:3004/userTest`, user);
+    await axios.post(`http://localhost:3001/userTest`, user);
   }
 
   // Se crean las empresas y se les asocian trabajos al azar
@@ -26,7 +26,7 @@ const users = [...students, ...professionals];
   for (let i = 0; i < companyCount; i++) {
     const company = companies[i];
     const createdCompany = await axios.post(
-      `http://localhost:3004/userTest`,
+      `http://localhost:3001/userTest`,
       company
     ).then((data) => companyId = data.data.id)
 
@@ -48,7 +48,7 @@ const users = [...students, ...professionals];
     if (randomCompanyJobs) {
       for (const job of randomCompanyJobs) {
         job.companyId = companyId;
-        await axios.post(`http://localhost:3004/userTest`, job);
+        await axios.post(`http://localhost:3001/userTest`, job);
       }
     }
   }

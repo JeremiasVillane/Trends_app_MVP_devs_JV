@@ -91,7 +91,8 @@ const Feed = () => {
         </header>
         <div className={style.FeedContainer}>
           <div className={style.Feed}>
-            {users && users.length > 0 ? (
+            {users &&
+              users.length > 0 &&
               users.map((user, userIndex) => (
                 <div key={userIndex}>
                   {/* Tarjeta de usuario */}
@@ -100,10 +101,7 @@ const Feed = () => {
                   {/* Línea divisora si no es el último usuario */}
                   {userIndex < users.length - 1 && <hr />}
                 </div>
-              ))
-            ) : (
-              <p>Cargando usuarios...</p>
-            )}
+              ))}
           </div>
         </div>
       </div>

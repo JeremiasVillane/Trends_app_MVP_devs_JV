@@ -96,9 +96,9 @@
 }
 
 :global(.dark-mode) .AttributesContainer h1 {
-    color:#ddaf8f
+    color:#fff
 }
 
 :global(.dark-mode) .AttributesContainer h2, :global(.dark-mode) .AttributesContainer h3  {
-    color:#ddaf8f
+    color:#D9D9D9
 }

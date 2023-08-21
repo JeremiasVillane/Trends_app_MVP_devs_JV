@@ -3,7 +3,7 @@ import { AiFillHome } from "react-icons/ai";
 import { HiChat, HiLogout, HiUser } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout, selectDarkMode, setDarkMode } from "../../Redux/UsersSlice";
+import { logout, selectDarkMode, selectUserProfile, setDarkMode } from "../../Redux/UsersSlice";
 import style from "./NavBarBase.module.css";
 const { VITE_URL } = import.meta.env;
 
@@ -17,21 +17,26 @@ const NavBarBase = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const darkMode = useSelector(selectDarkMode);
+  const userData = useSelector(selectUserProfile);
   const lightColor = "white";
-  const darkColor = "#FAB180";
+  const darkColor = "white";
 
   /**
    * Navega a la página de inicio.
    */
   const handleHome = () => {
-    navigate("/user/feed");
+    userData.type === "company" 
+    ? navigate("/company/feed")
+    : navigate("/user/feed");
   };
 
   /**
    * Navega a la página de perfil del usuario.
    */
   const handleProfile = () => {
-    navigate("/user/profile");
+    userData.type === "company" 
+    ? navigate("/company/profile")
+    : navigate("/user/profile");
   };
 
   /**
@@ -45,12 +50,11 @@ const NavBarBase = () => {
    * Maneja la acción de cerrar sesión.
    */
   const handleLogout = async () => {
-    dispatch(logout());
     try {
+      navigate("/");
+      dispatch(logout());
       const URL = `${VITE_URL}/auth/logout`;
       await axios.post(URL, { withCredentials: "include" });
-      
-      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -65,10 +69,9 @@ const NavBarBase = () => {
 
     dispatch(setDarkMode());
   };
-  
+
   return (
     <div className={style.left}>
-
       {/* Botón y texto de Inicio */}
       <button onClick={handleHome} className={style.button} title="Inicio">
         <AiFillHome size={"2rem"} color={darkMode ? darkColor : lightColor} />

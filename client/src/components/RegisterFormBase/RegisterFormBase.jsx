@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { interests } from "../../data/fields";
-import { validationRegister } from "../../utils/validationRegister";
+import { getUserInfo } from "../../Redux/UsersSlice";
 import style from "./RegisterFormBase.module.css";
 const { VITE_URL } = import.meta.env;
 
@@ -15,8 +16,13 @@ const { VITE_URL } = import.meta.env;
  */
 const RegisterFormBase = ({ type }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const URL = `${VITE_URL}/auth/register`;
+  const URL_LOGIN = `${VITE_URL}/auth/login`;
 
+  /**
+   * Define los campos de registro
+   */
   const [inputs, setInputs] = useState({
     profile_support: false,
     info_interests: [],
@@ -27,6 +33,9 @@ const RegisterFormBase = ({ type }) => {
     username: "",
   });
 
+  /**
+   * Actualiza únicamente el tipo de usuario
+   */
   useEffect(() => {
     setInputs((prevInputs) => ({
       ...prevInputs,
@@ -69,16 +78,21 @@ const RegisterFormBase = ({ type }) => {
       (option) => option.value
     );
 
-    const uniqueSelectedValues = new Set([
-      ...inputs.info_interests,
-      ...selectedValues,
-    ]);
+    // Filtra los valores seleccionados
+    // que ya existen y los elimina del array
+    const newInterests = inputs.info_interests.filter(
+      (interest) => !selectedValues.includes(interest)
+    );
 
-    const updatedInterests = Array.from(uniqueSelectedValues);
+    // Verifica si algún elemento seleccionado
+    // ya existe en info_interests, si existe, lo elimina
+    const updatedInterests = selectedValues.filter(
+      (value) => !inputs.info_interests.includes(value)
+    );
 
     setInputs((prevInputs) => ({
       ...prevInputs,
-      info_interests: updatedInterests,
+      info_interests: [...newInterests, ...updatedInterests],
     }));
 
     event.target.blur();
@@ -91,22 +105,32 @@ const RegisterFormBase = ({ type }) => {
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (
-      inputs.email &&
-      inputs.password &&
-      inputs.username &&
-      inputs.name &&
-      type
-    ) {
-      try {
-        await axios.post(URL, inputs, {
-          withCredentials: "include",
-        });
-        navigate("/auth/login");
-      } catch (error) {
-        console.log(error.response.data.error);
-      }
+    try {
+      await axios.post(URL, inputs).then(
+        async () =>
+          await axios.post(
+            URL_LOGIN,
+            {
+              user: inputs.email,
+              password: inputs.password,
+            },
+            { withCredentials: "include" }
+          )
+      );
+      
+      dispatch(getUserInfo());
+
+      const { data } = await axios.get(`${VITE_URL}/user/profile`, {
+        withCredentials: "include",
+      });
+
+      if (data.type === "company") navigate("/company/feed");
+      else if (data.type === "admin") navigate("/admin/dashboard");
+      else navigate("/user/feed");
+    } catch (error) {
+      console.log(error.response.data.error);
     }
+    // }
   };
 
   /**
@@ -144,7 +168,7 @@ const RegisterFormBase = ({ type }) => {
                 name="username"
                 onChange={handleInputs}
                 type="text"
-                placeholder="Apellido"
+                placeholder="Nombre de usuario"
               />
             </div>
             <div className={style.Input}>
@@ -188,9 +212,8 @@ const RegisterFormBase = ({ type }) => {
                   <label htmlFor="remember">
                     ¿
                     {type === "professional"
-                      ? "Estás dispuesto a brindar"
-                      : "Quieres recibir"}{" "}
-                    apoyo?
+                      ? "Te gustaría conectar con un profesional en tu área de interés?"
+                      : "Estás dispuesto a compartir tu experiencia con estudiantes?"}
                   </label>
                 </div>
               </div>

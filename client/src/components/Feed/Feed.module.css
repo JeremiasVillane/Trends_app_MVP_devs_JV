@@ -12,7 +12,7 @@
 }
 
 .BGContainer header {
-  background-color: #9ac2ef;
+  background-color: #58C9E5;
   font-family: "Rubik-Regular";
   height: 6rem;
   display: flex;
@@ -91,7 +91,7 @@
   background-color: #242424;
 }
 :global(.dark-mode) .BGContainer header {
-  background-color: #fab180;
+  background-color: #232323;
 }
 :global(.dark-mode) .Feed {
   background-color: #383636;
