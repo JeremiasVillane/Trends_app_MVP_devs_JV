@@ -6,39 +6,23 @@
   /* padding-left: 3rem; */
 }
 
-.Container {
+/* .Container {
   margin-left: 6rem;
   width: 100%;
   border-radius: 0.3rem;
-}
+} */
 
 .BGContainer {
-  display: flex;
+  display: block;
   flex-direction: column;
   flex: 1;
   background-color: white;
   overflow-y: auto;
   text-align: left;
   font-family: "Poppins-Medium";
+  width: 100vw;
+  height: 100vh;
   /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
-}
-
-.BGContainer h2 {
-  font-family: "Rubik-Medium";
-  font-weight: 100;
-  border-radius: 0.2rem;
-  width: fit-content;
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  padding: 0 1rem;
-}
-
-.BGContainer h3 {
-  font-family: "Rubik-Regular";
-  border-radius: 0.2rem;
-
-  width: fit-content;
-  padding: 0 1rem;
 }
 
 .BGContainer header {
@@ -55,6 +39,31 @@
   color: rgb(23, 23, 23);
   cursor: default;
 }
+
+.BGContainer h2 {
+  font-family: "Rubik-Medium";
+  font-weight: 100;
+  border-radius: 0.2rem;
+  width: fit-content;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.BGContainer h3 {
+  font-family: "Rubik-Regular";
+  border-radius: 0.2rem;
+  width: fit-content;
+  padding: 0 1rem;
+}
+
+.BGContainer p {
+  font-family: "Rubik-Regular";
+  padding: 0 1rem;
+  line-height: 1rem;
+}
+
+
 .EditButton {
   cursor: pointer;
   background-color: transparent;
@@ -89,6 +98,7 @@
   left: 5rem;
   bottom: -40%;
   cursor: pointer;
+  background-color: #344c5a;
 }
 
 .ImageContainer img {
@@ -96,16 +106,6 @@
   height: 100%;
   border-radius: 90%;
 }
-
-/* .Extra {
-  position: absolute;
-  top: 0;
-  z-index: 2;
-  height: 100%;
-  width: 100%;
-  border-radius: 90%;
-  transition: 0.2s;
-} */
 
 .ImageContainer:hover .IconContainer {
   visibility: visible;
@@ -176,8 +176,12 @@
 }
 
 @media screen and (max-width: 845px) {
-  .MajorContainer {
+  /* .MajorContainer {
     height: 100vh;
+  } */
+
+  .BGContainer {
+    overflow-y: visible;
   }
   
   .FirstInfo h1 {
@@ -191,22 +195,23 @@
 
 @media screen and (max-width: 768px) {
   .MajorContainer {
-    padding-top: 3rem;
+    padding-top: 6rem;
     margin-left: 0;
-    height: 100vh;
+    /* height: 100vh; */
+  }
+
+  .BGContainer {
+    padding-top: 3rem;
   }
 }
 
 @media screen and (max-width: 758px) {
-  .MajorContainer {
+  /* .MajorContainer {
     flex-direction: column-reverse;
     margin-left: 0;
     margin-top: 3.3rem;
     height: 100vh;
-  }
-  .Relations {
-    display: none;
-  }
+  } */
 
   .BGContainer header h1 {
     display: none;
@@ -236,8 +241,8 @@
     margin: 0;
   }
 
-  .Studies {
-    flex-direction: column;
+  .FirstInfo h3 {
+    text-align: center;
   }
 }
 
@@ -249,7 +254,8 @@
 :global(.dark-mode) .BGContainer h1 {
   color: #fff;
 }
-:global(.dark-mode) .BGContainer h3 {
+:global(.dark-mode) .BGContainer h3,
+:global(.dark-mode) .BGContainer p {
   color: #d9d9d9;
 }
 

@@ -80,7 +80,7 @@ const Profile = () => {
   }
 
   return (
-    <div className={style.MajorContainer}>
+    // <div className={style.MajorContainer}>
       <div className={style.BGContainer}>
         {isEditing.image && (
           <div className={style.EditPhoto}>
@@ -151,17 +151,15 @@ const Profile = () => {
               <section>
                 <h2>Estudios</h2>
                 <div className={style.Studies}>
-                  <h3>{userData.academic_institution}</h3>
-                </div>
-                <div>
-                  <h3>{userData.academic_formation}</h3>
+                  <p>{userData.academic_institution}</p>
+                  <p>{userData.academic_formation}</p>
                 </div>
               </section>
             ) : null}
           </div>
         </main>
       </div>
-    </div>
+    // </div>
   );
 };
 
