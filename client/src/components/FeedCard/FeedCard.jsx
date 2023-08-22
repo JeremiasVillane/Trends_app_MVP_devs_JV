@@ -7,7 +7,7 @@ import style from "./FeedCard.module.css";
 const FeedCard = ({ user }) => {
   const navigate = useNavigate();
   const darkMode = useSelector(selectDarkMode);
-  const lightColor = "#58C9E5";
+  const lightColor = "#232323";
   const darkColor = "#FFF";
 
   const handleProfile = () => {

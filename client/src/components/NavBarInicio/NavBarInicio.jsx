@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../../assets/imagenes/logo.png";
+import logoClaro from "../../assets/logos/logoClaro.png";
 import styles from "./NavBarInicio.module.css";
 
 /**
@@ -51,12 +51,12 @@ function NavBarInicio() {
 
   return (
     <nav className={`${styles.navigation} ${darkMode ? "dark-mode" : ""}`}>
-      
       {/* Logo */}
-      <div className={styles.logo}>
-        <img src={Logo} alt="Logo" />
-      </div>
-
+      <Link to="/">
+        <div className={styles.logo}>
+          <img src={logoClaro} alt="Logo" />
+        </div>
+      </Link>
       {/* Botones de autenticación y opciones de registro */}
       <div
         className={`${styles["auth-buttons"]} ${

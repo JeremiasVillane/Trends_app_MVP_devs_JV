@@ -168,22 +168,22 @@
 }
 
 :global(.dark-mode) .auth-buttons button {
-  background-color: #fab180;
+  /* background-color: #fab180; */
   color: #232323;
 }
 
-:global(.dark-mode) .auth-buttons button:hover {
+/* :global(.dark-mode) .auth-buttons button:hover {
   background-color: #9ac2ef;
-}
+} */
 
 :global(.dark-mode) .auth-buttons a {
-  background-color: #fab180;
+  /* background-color: #fab180; */
   color: #232323;
 }
 
-:global(.dark-mode) .auth-buttons a:hover {
+/* :global(.dark-mode) .auth-buttons a:hover {
   background-color: #9ac2ef;
-}
+} */
 
 :global(.dark-mode) .register-options {
   background-color: #4b5965;
