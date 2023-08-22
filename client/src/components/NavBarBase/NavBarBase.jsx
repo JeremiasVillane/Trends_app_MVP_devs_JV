@@ -1,9 +1,17 @@
 import axios from "axios";
+import { useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { HiChat, HiLogout, HiUser } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout, selectDarkMode, selectUserProfile, setDarkMode } from "../../Redux/UsersSlice";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import {
+  logout,
+  selectDarkMode,
+  selectUserProfile,
+  setDarkMode,
+} from "../../Redux/UsersSlice";
 import style from "./NavBarBase.module.css";
 const { VITE_URL } = import.meta.env;
 
@@ -18,6 +26,7 @@ const NavBarBase = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector(selectDarkMode);
   const userData = useSelector(selectUserProfile);
+  const MySwal = withReactContent(Swal);
   const lightColor = "white";
   const darkColor = "white";
 
@@ -25,18 +34,18 @@ const NavBarBase = () => {
    * Navega a la página de inicio.
    */
   const handleHome = () => {
-    userData.type === "company" 
-    ? navigate("/company/feed")
-    : navigate("/user/feed");
+    userData.type === "company"
+      ? navigate("/company/feed")
+      : navigate("/user/feed");
   };
 
   /**
    * Navega a la página de perfil del usuario.
    */
   const handleProfile = () => {
-    userData.type === "company" 
-    ? navigate("/company/profile")
-    : navigate("/user/profile");
+    userData.type === "company"
+      ? navigate("/company/profile")
+      : navigate("/user/profile");
   };
 
   /**
@@ -47,9 +56,9 @@ const NavBarBase = () => {
   };
 
   /**
-   * Maneja la acción de cerrar sesión.
+   * Maneja el cierre de sesión del usuario.
    */
-  const handleLogout = async () => {
+  const handleConfirmLogout = async () => {
     try {
       navigate("/");
       dispatch(logout());
@@ -58,6 +67,28 @@ const NavBarBase = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  /**
+   * Renderiza el cuadro de diálogo de confirmación
+   * de cierre de sesión del usuario.
+   */
+  const handleLogout = () => {
+    MySwal.fire({
+      icon: "warning",
+      iconColor: "#f1ca67",
+      title: <strong>¿Estás seguro que quieres cerrar sesión?</strong>,
+      confirmButtonText: "Cerrar sesión",
+      confirmButtonColor: "#3085d6",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      background: darkMode ? "#383636" : "#FFF",
+      color: darkMode ? "#FFF" : "#545454",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleConfirmLogout();
+      }
+    });
   };
 
   /**
@@ -71,43 +102,45 @@ const NavBarBase = () => {
   };
 
   return (
-    <div className={style.left}>
-      {/* Botón y texto de Inicio */}
-      <button onClick={handleHome} className={style.button} title="Inicio">
-        <AiFillHome size={"2rem"} color={darkMode ? darkColor : lightColor} />
-      </button>
-      <p>Inicio</p>
+    <>
+      <div className={style.left}>
+        {/* Botón y texto de Inicio */}
+        <button onClick={handleHome} className={style.button} title="Inicio">
+          <AiFillHome size={"2rem"} color={darkMode ? darkColor : lightColor} />
+        </button>
+        <p>Inicio</p>
 
-      {/* Botón y texto de Perfil */}
-      <button
-        onClick={handleProfile}
-        className={style.button}
-        title="Mi Perfil"
-      >
-        <HiUser size={"2rem"} color={darkMode ? darkColor : lightColor} />
-      </button>
-      <p>Perfil</p>
+        {/* Botón y texto de Perfil */}
+        <button
+          onClick={handleProfile}
+          className={style.button}
+          title="Mi Perfil"
+        >
+          <HiUser size={"2rem"} color={darkMode ? darkColor : lightColor} />
+        </button>
+        <p>Perfil</p>
 
-      {/* Botón y texto de Chats */}
-      <button onClick={handleChats} className={style.button} title="Chats">
-        <HiChat size={"2rem"} color={darkMode ? darkColor : lightColor} />
-      </button>
-      <p>Chats</p>
+        {/* Botón y texto de Chats */}
+        <button onClick={handleChats} className={style.button} title="Chats">
+          <HiChat size={"2rem"} color={darkMode ? darkColor : lightColor} />
+        </button>
+        <p>Chats</p>
 
-      {/* Botón y texto de Salir */}
-      <button onClick={handleLogout} className={style.button} title="Salir">
-        <HiLogout size={"2rem"} color={darkMode ? darkColor : lightColor} />
-      </button>
-      <p>Salir</p>
+        {/* Botón y texto de Salir */}
+        <button onClick={handleLogout} className={style.button} title="Salir">
+          <HiLogout size={"2rem"} color={darkMode ? darkColor : lightColor} />
+        </button>
+        <p>Salir</p>
 
-      {/* Botón para alternar el modo oscuro */}
-      <button className={style.button} onClick={toggleDarkMode}>
-        <i
-          className="fas fa-moon text-3xl"
-          style={{ color: darkMode ? darkColor : lightColor }}
-        />
-      </button>
-    </div>
+        {/* Botón para alternar el modo oscuro */}
+        <button className={style.button} onClick={toggleDarkMode}>
+          <i
+            className="fas fa-moon text-3xl"
+            style={{ color: darkMode ? darkColor : lightColor }}
+          />
+        </button>
+      </div>
+    </>
   );
 };
 

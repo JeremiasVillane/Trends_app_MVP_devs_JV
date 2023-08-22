@@ -14,7 +14,6 @@ import {
 } from "./customSelect";
 import { CustomTextInput, CustomMultiTextInput } from "./customTextInput";
 import SearchComponent from "./SearchComponent/SearchComponent";
-import NavBar from "./NavBar/NavBar"
 import ChatButton from "./ChatButton/ChatButton";
 import ChatList from "./ChatList/ChatList";
 import ChatUnselected from "./ChatUnselected/ChatUnselected";
@@ -42,7 +41,6 @@ export {
   CompanyJobs,
   JobFormCompany,  
   SearchComponent,
-  NavBar,
   ChatButton,
   ChatList,
   ChatUnselected,

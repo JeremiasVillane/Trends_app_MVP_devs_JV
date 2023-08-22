@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import {
+  selectDarkMode,
   selectUserProfile,
   updateUserProfile,
 } from "../../../Redux/UsersSlice";
@@ -9,7 +12,9 @@ import style from "./ProfileUpdate.module.css";
 const ProfileUpdate = ({ handleCancelButton }) => {
   const dispatch = useDispatch();
   const userData = useSelector(selectUserProfile);
+  const darkMode = useSelector(selectDarkMode);
   const [editData, setEditData] = useState({});
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     setEditData({ ...userData });
@@ -38,6 +43,22 @@ const ProfileUpdate = ({ handleCancelButton }) => {
     });
 
     handleCancelButton();
+
+    MySwal.fire({
+      icon: "success",
+      position: "top-end",
+      toast: true,
+      title: "Perfil actualizado",
+      showConfirmButton: false,
+      timer: 2500,
+      timerProgressBar: true,
+      background: darkMode ? "#383636" : "#FFF",
+      color: darkMode ? "#FFF" : "#545454",
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
   };
 
   return (
@@ -178,7 +199,7 @@ const ProfileUpdate = ({ handleCancelButton }) => {
           </div>
           <div className={style.buttonDiv}>
             <button className={style.saveButton} type="submit">
-              SUBIR
+              ACTUALIZAR
             </button>
             <button className={style.cancelButton} onClick={handleCancelButton}>
               CANCELAR

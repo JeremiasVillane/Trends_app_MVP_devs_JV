@@ -51,7 +51,7 @@
 }
 
 .Card:hover .AttributesContainer h1 {
-  text-decoration: nonde;
+  text-decoration: none;
   /* text-decoration-thickness: 2px; */
 }
 

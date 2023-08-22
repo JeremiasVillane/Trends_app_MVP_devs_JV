@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import logoClaroBig from "../../assets/logos/logoClaroBig.png";
+import logoOscuroBig from "../../assets/logos/logoOscuroBig.png";
 import {
   getProfessionals,
   getStudents,
   getUserInfo,
   matchUsers,
   selectAllUsers,
+  selectDarkMode,
+  selectIsFirstTime,
   selectProfessionals,
   selectStudents,
   selectUserProfile,
+  unsetFirstTime,
 } from "../../Redux/UsersSlice";
 import FeedCard from "../FeedCard/FeedCard";
 import style from "./Feed.module.css";
@@ -20,12 +27,35 @@ import style from "./Feed.module.css";
  * @returns {React.Element} Componente Feed.
  */
 const Feed = () => {
-  const users = useSelector(selectAllUsers);
   const dispatch = useDispatch();
+  const users = useSelector(selectAllUsers);
   const profile = useSelector(selectUserProfile);
   const students = useSelector(selectStudents);
   const professionals = useSelector(selectProfessionals);
+  const darkMode = useSelector(selectDarkMode);
+  const isFirstTime = useSelector(selectIsFirstTime);
   const [page, setPage] = useState(1);
+  const MySwal = withReactContent(Swal);
+
+  useEffect(() => {
+    isFirstTime &&
+    MySwal.fire({
+      icon: "info",
+      position: "bottom-end",
+      title: "Completa tu perfil",
+      text: "Cuéntanos más sobre tus estudios y objetivos para poder mejorar nuestras recomendaciones",
+      confirmButtonText: "Completa este formulario en 1 minuto",
+      confirmButtonColor: "#3085d6",
+      showCancelButton: true,
+      cancelButtonText: "Saltar",
+      background: darkMode ? "#383636" : "#FFF",
+      color: darkMode ? "#FFF" : "#545454",
+    }).then((result) => {
+      if (result.isDismissed) {
+        dispatch(unsetFirstTime());
+      }
+    });
+  }, []);
 
   /**
    * Realiza una solicitud para obtener más usuarios y actualizar la lista.
@@ -87,7 +117,7 @@ const Feed = () => {
     <section className={style.BGContainer}>
       <div className={style.Container}>
         <header>
-          <h1>Trends</h1>
+          <img src={darkMode ? logoClaroBig : logoOscuroBig} />
         </header>
         <div className={style.FeedContainer}>
           <div className={style.Feed}>

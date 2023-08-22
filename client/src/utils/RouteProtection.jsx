@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import GoBackModal from "../components/Modals/GoBackModal";
+import { GoBackModal } from "../components/Modals";
 
 /**
  * Componente que protege el acceso a rutas según los roles permitidos.

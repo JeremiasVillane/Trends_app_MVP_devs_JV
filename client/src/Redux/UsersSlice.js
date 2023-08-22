@@ -1,4 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 const { VITE_URL } = import.meta.env;
 
@@ -106,6 +109,12 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    setFirstTime: (state) => {
+      state.isFirstTime = true;
+    },
+    unsetFirstTime: (state) => {
+      state.isFirstTime = false;
+    },
     currentpage: (state) => {
       state.currentPage++;
     },
@@ -124,6 +133,7 @@ const usersSlice = createSlice({
       state.currentPage = 0;
       state.status = false;
       state.user = {};
+      state.isFirstTime = null;
       state.totalPages = 0;
     },
     matchUsers: (state) => {
@@ -189,6 +199,8 @@ export const {
   currentpage,
   setStatus,
   logout,
+  setFirstTime,
+  unsetFirstTime,
 } = usersSlice.actions;
 
 export const selectAllUsers = (state) => state.users?.allUsers;
@@ -201,3 +213,4 @@ export const selectTotalPages = (state) => state.users.totalPages;
 export const selectCurrentPage = (state) => state.users.currentpage;
 export const selectStatus = (state) => state.users.status;
 export const selectDarkMode = (state) => state.users.darkMode;
+export const selectIsFirstTime = (state) => state.users.isFirstTime;

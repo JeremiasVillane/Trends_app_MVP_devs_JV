@@ -80,86 +80,84 @@ const Profile = () => {
   }
 
   return (
-    // <div className={style.MajorContainer}>
-      <div className={style.BGContainer}>
-        {isEditing.image && (
-          <div className={style.EditPhoto}>
-            <ImageUpload handleCancelButton={handleImageChangeButton} />
-          </div>
-        )}
+    <div className={style.BGContainer}>
+      {isEditing.image && (
+        <div className={style.EditPhoto}>
+          <ImageUpload handleCancelButton={handleImageChangeButton} />
+        </div>
+      )}
 
-        {isEditing.general && (
-          <div className={style.EditPhoto}>
-            <ProfileUpdate handleCancelButton={handleGeneralChangeButton} />
+      {isEditing.general && (
+        <div className={style.EditPhoto}>
+          <ProfileUpdate handleCancelButton={handleGeneralChangeButton} />
+        </div>
+      )}
+      <header>
+        <div
+          className={style.ImageContainer}
+          onClick={() =>
+            setIsEditing((prevState) => ({
+              ...prevState,
+              image: !prevState.image,
+            }))
+          }
+        >
+          <img src={getImageSrc(image)} alt="Foto de perfil" />
+          <div className={style.IconContainer}>
+            <AiFillEdit size="6rem" color="white" />
           </div>
-        )}
-        <header>
-          <div
-            className={style.ImageContainer}
-            onClick={() =>
-              setIsEditing((prevState) => ({
-                ...prevState,
-                image: !prevState.image,
-              }))
-            }
-          >
-            <img src={getImageSrc(image)} alt="Foto de perfil" />
-            <div className={style.IconContainer}>
-              <AiFillEdit size="6rem" color="white" />
+        </div>
+
+        <h1>{userData.type === "student" ? "Estudiante" : "Profesional"}</h1>
+
+        <button onClick={handleGeneralEdit} className={style.EditButton}>
+          <AiFillEdit size="2rem" color={darkMode ? darkColor : lightColor} />
+        </button>
+      </header>
+
+      <main>
+        <div className={style.Profile}>
+          <section>
+            <div className={style.About}>
+              <div className={style.FirstInfo}>
+                <h1>{userData.name}</h1>
+                {userData.info_skills ? (
+                  <h3>{userData.info_skills.join(" | ")}</h3>
+                ) : null}
+                {userData.profile_city || userData.profile_country ? (
+                  <h3>
+                    {`${userData.profile_city} - ${userData.profile_country}`}{" "}
+                  </h3>
+                ) : null}
+              </div>
             </div>
-          </div>
-
-          <h1>{userData.type === "student" ? "Estudiante" : "Profesional"}</h1>
-
-          <button onClick={handleGeneralEdit} className={style.EditButton}>
-            <AiFillEdit size="2rem" color={darkMode ? darkColor : lightColor} />
-          </button>
-        </header>
-
-        <main>
-          <div className={style.Profile}>
+          </section>
+          <hr />
+          {userData.profile_bio ? (
             <section>
-              <div className={style.About}>
-                <div className={style.FirstInfo}>
-                  <h1>{userData.name}</h1>
-                  {userData.info_skills ? (
-                    <h3>{userData.info_skills.join(" | ")}</h3>
-                  ) : null}
-                  {userData.profile_city || userData.profile_country ? (
-                    <h3>
-                      {`${userData.profile_city} - ${userData.profile_country}`}{" "}
-                    </h3>
-                  ) : null}
-                </div>
+              <h2>Biografía</h2>
+              <div className={style.Bio}>
+                <h3>{userData.profile_bio}</h3>
               </div>
             </section>
-            <hr />
-            {userData.profile_bio ? (
-              <section>
-                <h2>Biografía</h2>
-                <div className={style.Bio}>
-                  <h3>{userData.profile_bio}</h3>
-                </div>
-              </section>
-            ) : null}
-            <hr />
-            {userData.academic_institution ||
-            userData.academic_formation ||
-            userData.academic_level ||
-            userData.academic_area ||
-            userData.academic_graduation ? (
-              <section>
-                <h2>Estudios</h2>
-                <div className={style.Studies}>
-                  <p>{userData.academic_institution}</p>
-                  <p>{userData.academic_formation}</p>
-                </div>
-              </section>
-            ) : null}
-          </div>
-        </main>
-      </div>
-    // </div>
+          ) : null}
+          <hr />
+          {userData.academic_institution ||
+          userData.academic_formation ||
+          userData.academic_level ||
+          userData.academic_area ||
+          userData.academic_graduation ? (
+            <section>
+              <h2>Estudios</h2>
+              <div className={style.Studies}>
+                <p>{userData.academic_institution}</p>
+                <p>{userData.academic_formation}</p>
+              </div>
+            </section>
+          ) : null}
+        </div>
+      </main>
+    </div>
   );
 };
 

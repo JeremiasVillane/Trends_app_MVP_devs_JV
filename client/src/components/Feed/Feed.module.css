@@ -21,8 +21,12 @@
 }
 
 .BGContainer header h1 {
-  color: rgb(58, 58, 58);
+  color: #3a3a3a;
   margin: 0;
+}
+
+.BGContainer header img {
+  height: 4.4rem;
 }
 
 .Feed {

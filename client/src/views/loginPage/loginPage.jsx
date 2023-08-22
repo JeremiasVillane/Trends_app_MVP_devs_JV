@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import style from "./loginPage.module.css";
-import welcome from "../../assets/TestIcons/welcome.jpeg";
 import axios from "axios";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import welcome from "../../assets/imagenes/welcome.png";
 import { getUserInfo } from "../../Redux/UsersSlice";
+import style from "./loginPage.module.css";
 const { VITE_URL } = import.meta.env;
 
 export default function LoginPage() {
@@ -59,7 +59,7 @@ export default function LoginPage() {
               profesionales dispuestos a ayudarte y compartir sus experiencias.
             </h3>
           </div>
-          <img src={welcome} alt="" />
+          <img src={welcome} alt="Bienvenido" />
           <h3>
             ¡Pero eso no es todo! ¡También contamos con alianzas empresariales!
           </h3>
