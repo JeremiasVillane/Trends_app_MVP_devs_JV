@@ -1,1 +1,1 @@
-export * from "./GoBackModal/GoBackModal";
+export * from "./GoBackModal";

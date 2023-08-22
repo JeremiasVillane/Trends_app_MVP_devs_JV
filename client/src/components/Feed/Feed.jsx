@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import logoClaroBig from "../../assets/logos/logoClaroBig.png";
-import logoOscuroBig from "../../assets/logos/logoOscuroBig.png";
+import logoBlancoBig from "../../assets/logos/logoBlancoBig.png";
 import {
   getProfessionals,
   getStudents,
@@ -11,14 +11,14 @@ import {
   matchUsers,
   selectAllUsers,
   selectDarkMode,
-  selectIsFirstTime,
   selectProfessionals,
   selectStudents,
   selectUserProfile,
-  unsetFirstTime,
+  updateUserProfile,
 } from "../../Redux/UsersSlice";
 import FeedCard from "../FeedCard/FeedCard";
 import style from "./Feed.module.css";
+import { ProfileUpdate } from "../ProfileEdit";
 
 /**
  * Componente de carga del "feed" de usuarios.
@@ -33,28 +33,33 @@ const Feed = () => {
   const students = useSelector(selectStudents);
   const professionals = useSelector(selectProfessionals);
   const darkMode = useSelector(selectDarkMode);
-  const isFirstTime = useSelector(selectIsFirstTime);
   const [page, setPage] = useState(1);
+  const [isEditing, setIsEditing] = useState(false);
   const MySwal = withReactContent(Swal);
 
   useEffect(() => {
-    isFirstTime &&
-    MySwal.fire({
-      icon: "info",
-      position: "bottom-end",
-      title: "Completa tu perfil",
-      text: "Cuéntanos más sobre tus estudios y objetivos para poder mejorar nuestras recomendaciones",
-      confirmButtonText: "Completa este formulario en 1 minuto",
-      confirmButtonColor: "#3085d6",
-      showCancelButton: true,
-      cancelButtonText: "Saltar",
-      background: darkMode ? "#383636" : "#FFF",
-      color: darkMode ? "#FFF" : "#545454",
-    }).then((result) => {
-      if (result.isDismissed) {
-        dispatch(unsetFirstTime());
-      }
-    });
+    profile?.kind === "new" &&
+      MySwal.fire({
+        icon: "info",
+        position: "bottom-end",
+        title: "Completa tu perfil",
+        text: "Cuéntanos más sobre tus estudios y objetivos para poder mejorar nuestras recomendaciones",
+        confirmButtonText: "Completa este formulario en 1 minuto",
+        confirmButtonColor: "#3085d6",
+        showCancelButton: true,
+        cancelButtonText: "Saltar",
+        background: darkMode ? "#383636" : "#FFF",
+        color: darkMode ? "#FFF" : "#545454",
+      }).then((result) => {
+        if (result.isDismissed || result.isDenied) {
+          dispatch(
+            updateUserProfile({ id: profile.id, kind: "incomplete" })
+          ).then(() => dispatch(getUserInfo()));
+        } else if (result.isConfirmed) {
+          dispatch(updateUserProfile({ id: profile.id, kind: "ongoing" })
+          ).then(() => setIsEditing(true));
+        }
+      });
   }, []);
 
   /**
@@ -113,11 +118,22 @@ const Feed = () => {
     }
   }, [students, professionals]);
 
+  const handleCancelButton = () => {
+    setIsEditing(false);
+  };
+
   return (
     <section className={style.BGContainer}>
+      {isEditing && (
+        <div className={style.EditPhoto}>
+          <ProfileUpdate handleCancelButton={handleCancelButton} />
+        </div>
+      )}
+
       <div className={style.Container}>
         <header>
-          <img src={darkMode ? logoClaroBig : logoOscuroBig} />
+          <img src={logoBlancoBig} />
+          {/* <img src={darkMode ? logoClaroBig : logoBlancoBig} /> */}
         </header>
         <div className={style.FeedContainer}>
           <div className={style.Feed}>

@@ -46,6 +46,14 @@ module.exports = (sequelize) => {
           len: [2, 55],
         },
       },
+      status: {
+        type: DataTypes.STRING, // online, offline, busy, invisible
+        defaultValue: "online",
+      },
+      kind: {
+        type: DataTypes.STRING, // new, incomplete, full
+        defaultValue: "new",
+      },
       profile_bio: {
         type: DataTypes.TEXT,
         allowNull: true,
@@ -64,12 +72,12 @@ module.exports = (sequelize) => {
         validate: {
           isImageUrlOrLocalPath: (value) => {
             if (!isImageUrlOrLocalPath(value)) {
-              throw new Error('Invalid image URL or local path format.');
+              throw new Error("Invalid image URL or local path format.");
             }
           },
         },
         set(value) {
-          this.setDataValue('profile_image', value || DEFAULT_IMG);
+          this.setDataValue("profile_image", value || DEFAULT_IMG);
         },
       },
       profile_city: {
@@ -90,7 +98,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       academic_institution: {
-        type: DataTypes.STRING, 
+        type: DataTypes.STRING,
         allowNull: true,
       },
       academic_level: {
@@ -173,7 +181,7 @@ module.exports = (sequelize) => {
       },
       info_contract: {
         type: DataTypes.STRING,
-        allowNull: true, 
+        allowNull: true,
       },
     },
     {

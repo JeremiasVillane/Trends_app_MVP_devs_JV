@@ -82,6 +82,7 @@
   position: absolute;
   left: 5rem;
   bottom: -40%;
+  cursor: default;
   background-color: #344c5a;
   margin-left: 1.2em;
 }
@@ -201,9 +202,9 @@
   }
 
   /* .BGContainer header {
-      background-color: #fab180;
-      border-radius: 0;
-    } */
+    background-color: #fab180;
+    border-radius: 0;
+  } */
 
   .BGContainer {
     /* width: 100%; */

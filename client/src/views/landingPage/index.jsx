@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.css";
 import logoClaroBig from "../../assets/logos/logoClaroBig.png";
-import pointClaroBig from "../../assets/logos/pointClaroBig.png";
+import welcomePoint from "../../assets/logos/welcomePoint.png";
 
 export default function LandingPage() {
   return (
@@ -9,15 +9,11 @@ export default function LandingPage() {
       <article>
         <section className={styles.card}>
           <div className={styles.logo}>
-            <img src={logoClaroBig} alt="Logo" />
+            <img src={logoClaroBig} alt="Logo Point" />
           </div>
-          <h1 className={styles.welcomeHeading}>
-            ¡Bienvenido a{" "}
             <span className={styles.point}>
-              <img src={pointClaroBig} alt="Point" />
+              <img src={welcomePoint} alt="Point Bienvenida" />
             </span>
-            !
-          </h1>
           <h2>
             Descubre una plataforma que te brinda acceso directo a profesionales
             avanzados dispuestos a compartir sus experiencias contigo.

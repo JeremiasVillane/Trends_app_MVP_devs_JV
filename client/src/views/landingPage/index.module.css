@@ -25,18 +25,19 @@
   margin: 1rem;
   padding: 3px;
 }
-/* Estilos para point */
-.welcomeHeading {
+/* Estilos para el mensaje de bienvenida */
+.point {
   display: flex;
+  justify-content: center;
   align-items: center;
 }
-.point {
-  margin-left: 18px;
-}
+
 .point img {
-  height: 3rem;
-  /* margin-top: 0.5rem; */
+  min-width: 60%;
+  max-width: 80%;
+  height: auto;
 }
+
 
 /* Estilo para la tarjeta */
 .card {

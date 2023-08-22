@@ -55,19 +55,28 @@ const ProfileSearch = () => {
             </div>
           </section>
           <hr />
-          <section>
-            <h2>Biography</h2>
-            <div className={style.Bio}>
-              <h3>{userData.profile_bio}</h3>
-            </div>
-          </section>
+          {userData.profile_bio ? (
+            <section>
+              <h2>Biografía</h2>
+              <div className={style.Bio}>
+                <h3>{userData.profile_bio}</h3>
+              </div>
+            </section>
+          ) : null}
           <hr />
-          <section>
-            <h2>Studies</h2>
-            <div className={style.Studies}>
-              <h3>{userData.academic_institution}</h3>
-            </div>
-          </section>
+          {userData.academic_institution ||
+          userData.academic_formation ||
+          userData.academic_level ||
+          userData.academic_area ||
+          userData.academic_graduation ? (
+            <section>
+              <h2>Estudios</h2>
+              <div className={style.Studies}>
+                <p>{userData.academic_institution}</p>
+                <p>{userData.academic_formation}</p>
+              </div>
+            </section>
+          ) : null}
         </div>
       </main>
     </div>

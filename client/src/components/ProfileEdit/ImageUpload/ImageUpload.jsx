@@ -80,6 +80,8 @@ const ImageUpload = ({ handleCancelButton }) => {
               ) : (
                 <p className={style.dropzoneText}>
                   Arrastra y suelta una foto aquí.
+                  <br /><br /><br />
+                  O haz clic para cargar una imagen.
                 </p>
               )}
             </div>

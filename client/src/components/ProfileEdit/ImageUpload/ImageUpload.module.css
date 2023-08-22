@@ -52,6 +52,7 @@
   margin: 0;
   height: 4rem;
   line-height: 4rem;
+  cursor: default;
 }
 
 .ImageContainer {

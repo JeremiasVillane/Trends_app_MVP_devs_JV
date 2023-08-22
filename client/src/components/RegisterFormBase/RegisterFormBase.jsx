@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { interests } from "../../data/fields";
-import { getUserInfo, setFirstTime } from "../../Redux/UsersSlice";
+import { getUserInfo } from "../../Redux/UsersSlice";
 import style from "./RegisterFormBase.module.css";
 const { VITE_URL } = import.meta.env;
 
@@ -117,9 +117,8 @@ const RegisterFormBase = ({ type }) => {
             { withCredentials: "include" }
           )
       );
-      
+
       dispatch(getUserInfo());
-      dispatch(setFirstTime());
 
       const { data } = await axios.get(`${VITE_URL}/user/profile`, {
         withCredentials: "include",
@@ -213,8 +212,9 @@ const RegisterFormBase = ({ type }) => {
                   <label htmlFor="remember">
                     ¿
                     {type === "professional"
-                      ? "Te gustaría conectar con un profesional en tu área de interés?"
-                      : "Estás dispuesto a compartir tu experiencia con estudiantes?"}
+                      ? "Estás dispuesto a compartir tu experiencia con estudiantes"
+                      : "Te gustaría conectar con un profesional en tu área de interés"}
+                    ?
                   </label>
                 </div>
               </div>

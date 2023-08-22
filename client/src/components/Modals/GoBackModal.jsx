@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectDarkMode } from "../../../Redux/UsersSlice";
+import { selectDarkMode } from "../../Redux/UsersSlice";
 
 const MySwal = withReactContent(Swal);
 
@@ -25,6 +25,8 @@ export const GoBackModal = () => {
         },
       }).then((result) => {
         if (result.isConfirmed) {
+          navigate(-1);
+        } else if (result.isDismissed) {
           navigate(-1);
         }
       });

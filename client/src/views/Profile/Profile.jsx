@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { ImageUpload, ProfileUpdate } from "../../components/ProfileEdit";
 import {
   getUserInfo,
@@ -14,13 +16,49 @@ const { VITE_URL } = import.meta.env;
 const Profile = () => {
   const dispatch = useDispatch();
   const userData = useSelector(selectUserProfile);
-  const [image, setImage] = useState(null);
   const darkMode = useSelector(selectDarkMode);
+  const [image, setImage] = useState(null);
+  const [isEditing, setIsEditing] = useState({
+    image: false,
+    general: false,
+  });
   const lightColor = "#232323";
   const darkColor = "#FFF";
 
   useEffect(() => {
     dispatch(getUserInfo());
+  }, []);
+
+  const MySwal = withReactContent(Swal);
+
+  useEffect(() => {
+    userData?.kind !== "complete" &&
+      MySwal.fire({
+        icon: "info",
+        position: "top-end",
+        toast: true,
+        title: "Completa tu perfil",
+        text:
+          userData?.kind === "incomplete"
+            ? "Completa tu datos en 1 minuto para poder mejorar nuestras recomendaciones"
+            : `Tu perfil está un ${userData?.kind}% completo. Termina de completarlo para poder mejorar nuestras recomendaciones.`,
+        confirmButtonText: "Completar",
+        confirmButtonColor: "#3085d6",
+        showCancelButton: true,
+        cancelButtonText: "Saltar",
+        background: darkMode ? "#383636" : "#FFF",
+        color: darkMode ? "#FFF" : "#545454",
+        timer: 5555,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleGeneralEdit();
+        }
+      });
   }, []);
 
   useEffect(() => {
@@ -48,11 +86,6 @@ const Profile = () => {
       setImage(userData.profile_image);
     }
   };
-
-  const [isEditing, setIsEditing] = useState({
-    image: false,
-    general: false,
-  });
 
   const handleImageChangeButton = () => {
     setIsEditing((prevState) => ({ ...prevState, image: false }));
@@ -108,7 +141,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <h1>{userData.type === "student" ? "Estudiante" : "Profesional"}</h1>
+        <h1>{userData?.type === "student" ? "Estudiante" : "Profesional"}</h1>
 
         <button onClick={handleGeneralEdit} className={style.EditButton}>
           <AiFillEdit size="2rem" color={darkMode ? darkColor : lightColor} />
@@ -120,38 +153,38 @@ const Profile = () => {
           <section>
             <div className={style.About}>
               <div className={style.FirstInfo}>
-                <h1>{userData.name}</h1>
-                {userData.info_skills ? (
-                  <h3>{userData.info_skills.join(" | ")}</h3>
+                <h1>{userData?.name}</h1>
+                {userData?.info_skills ? (
+                  <h3>{userData?.info_skills.join(" | ")}</h3>
                 ) : null}
-                {userData.profile_city || userData.profile_country ? (
+                {userData?.profile_city || userData?.profile_country ? (
                   <h3>
-                    {`${userData.profile_city} - ${userData.profile_country}`}{" "}
+                    {`${userData?.profile_city} - ${userData?.profile_country}`}{" "}
                   </h3>
                 ) : null}
               </div>
             </div>
           </section>
           <hr />
-          {userData.profile_bio ? (
+          {userData?.profile_bio ? (
             <section>
               <h2>Biografía</h2>
               <div className={style.Bio}>
-                <h3>{userData.profile_bio}</h3>
+                <h3>{userData?.profile_bio}</h3>
               </div>
             </section>
           ) : null}
           <hr />
-          {userData.academic_institution ||
-          userData.academic_formation ||
-          userData.academic_level ||
-          userData.academic_area ||
-          userData.academic_graduation ? (
+          {userData?.academic_institution ||
+          userData?.academic_formation ||
+          userData?.academic_level ||
+          userData?.academic_area ||
+          userData?.academic_graduation ? (
             <section>
               <h2>Estudios</h2>
               <div className={style.Studies}>
-                <p>{userData.academic_institution}</p>
-                <p>{userData.academic_formation}</p>
+                <p>{userData?.academic_institution}</p>
+                <p>{userData?.academic_formation}</p>
               </div>
             </section>
           ) : null}
