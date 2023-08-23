@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import logoClaroBig from "../../assets/logos/logoClaroBig.png";
 import logoBlancoBig from "../../assets/logos/logoBlancoBig.png";
 import {
   getProfessionals,
@@ -133,7 +132,6 @@ const Feed = () => {
       <div className={style.Container}>
         <header>
           <img src={logoBlancoBig} />
-          {/* <img src={darkMode ? logoClaroBig : logoBlancoBig} /> */}
         </header>
         <div className={style.FeedContainer}>
           <div className={style.Feed}>
