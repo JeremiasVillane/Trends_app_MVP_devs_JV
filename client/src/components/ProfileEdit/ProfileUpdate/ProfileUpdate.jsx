@@ -42,7 +42,7 @@ const ProfileUpdate = ({ handleCancelButton }) => {
     const completionPercentage = profileCompletionPercentage(userData);
 
     const updatedKind =
-      Number(completionPercentage) >= 90 ? "complete" : completionPercentage;
+      Number(completionPercentage) >= 80 ? "complete" : completionPercentage;
 
     await dispatch(updateUserProfile({ ...editData, kind: updatedKind })).then(
       (data) => {
@@ -56,7 +56,10 @@ const ProfileUpdate = ({ handleCancelButton }) => {
       icon: "success",
       position: "top-end",
       toast: true,
-      title: completionPercentage < 93 ? `Perfil actualizado \n(${completionPercentage}% completo)` : "Perfil actualizado",
+      title:
+        completionPercentage < 93
+          ? `Perfil actualizado \n(${completionPercentage}% completo)`
+          : "Perfil actualizado",
       showConfirmButton: false,
       timer: 2500,
       timerProgressBar: true,
