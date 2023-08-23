@@ -24,9 +24,9 @@
 }
 
 .Options {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  display: block;
+  /* justify-content: space-between; */
+  margin-bottom: 0rem;
 }
 
 .Options > div {

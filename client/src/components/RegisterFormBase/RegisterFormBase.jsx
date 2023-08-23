@@ -22,6 +22,7 @@ const RegisterFormBase = ({ type }) => {
   const URL = `${VITE_URL}/auth/register`;
   const URL_LOGIN = `${VITE_URL}/auth/login`;
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedInterests, setSelectedInterests] = useState([]);
 
   /**
    * Define los campos de registro
@@ -44,14 +45,15 @@ const RegisterFormBase = ({ type }) => {
   });
 
   /**
-   * Actualiza únicamente el tipo de usuario
+   * Actualiza el tipo de usuario y sus intereses
    */
   useEffect(() => {
     setInputs((prevInputs) => ({
       ...prevInputs,
       type,
+      info_interests: selectedInterests,
     }));
-  }, [type]);
+  }, [type, selectedInterests]);
 
   /**
    * Maneja los cambios en los campos de entrada.
@@ -84,36 +86,71 @@ const RegisterFormBase = ({ type }) => {
   };
 
   /**
-   * Maneja el cambio de intereses seleccionados.
-   *
-   * @param {Object} event - Evento de cambio en el select.
+   * Manejo del cambio de intereses seleccionados.
    */
-  const handleInterestsChange = (event) => {
-    event.preventDefault();
-    const selectedValues = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
+  const checkboxInterests = [
+    { id: 1, label: "Informática / Telecomunicaciones" },
+    { id: 2, label: "Medicina / Salud" },
+    { id: 3, label: "Ingeniería Civil" },
+    { id: 4, label: "Educación / Docencia" },
+    { id: 5, label: "Marketing / Publicidad" },
+    { id: 6, label: "Arquitectura" },
+    { id: 7, label: "Finanzas / Contabilidad" },
+    { id: 8, label: "Diseño Gráfico / Multimedia" },
+    { id: 9, label: "Psicología / Terapia" },
+    { id: 10, label: "Derecho / Legal" },
+    { id: 11, label: "Recursos Humanos" },
+    { id: 12, label: "Arte / Bellas Artes" },
+    { id: 13, label: "Ciencias Ambientales" },
+    { id: 14, label: "Gestión de Proyectos" },
+    { id: 15, label: "Periodismo / Comunicación" },
+    { id: 16, label: "Turismo / Hospitalidad" },
+    { id: 17, label: "Música / Artes Escénicas" },
+    { id: 18, label: "Agricultura / Agronomía" },
+    { id: 19, label: "Logística / Cadena de Suministro" },
+  ];
+
+  const handleCheckboxChange = (event) => {
+    const interestId = parseInt(event.target.value);
+    const selectedInterest = checkboxInterests.find(
+      (interest) => interest.id === interestId
     );
 
-    // Filtra los valores seleccionados
-    // que ya existen y los elimina del array
-    const newInterests = inputs.info_interests.filter(
-      (interest) => !selectedValues.includes(interest)
-    );
-
-    // Verifica si algún elemento seleccionado
-    // ya existe en info_interests, si existe, lo elimina
-    const updatedInterests = selectedValues.filter(
-      (value) => !inputs.info_interests.includes(value)
-    );
-
-    setInputs({
-      ...inputs,
-      info_interests: [...newInterests, ...updatedInterests],
-    });
-
-    event.target.blur();
+    if (selectedInterests.includes(selectedInterest.label)) {
+      setSelectedInterests(
+        selectedInterests.filter((interest) => interest !== selectedInterest.label)
+      );
+    } else {
+      setSelectedInterests([...selectedInterests, selectedInterest.label]);
+    }
   };
+
+  // const handleInterestsChange = (event) => {
+  //   event.preventDefault();
+  //   const selectedValues = Array.from(
+  //     event.target.selectedInterests,
+  //     (option) => option.value
+  //   );
+
+  //   // Filtra los valores seleccionados
+  //   // que ya existen y los elimina del array
+  //   const newInterests = inputs.info_interests.filter(
+  //     (interest) => !selectedValues.includes(interest)
+  //   );
+
+  //   // Verifica si algún elemento seleccionado
+  //   // ya existe en info_interests, si existe, lo elimina
+  //   const updatedInterests = selectedValues.filter(
+  //     (value) => !inputs.info_interests.includes(value)
+  //   );
+
+  //   setInputs({
+  //     ...inputs,
+  //     info_interests: [...newInterests, ...updatedInterests],
+  //   });
+
+  //   event.target.blur();
+  // };
 
   /**
    * Maneja el envío del formulario.
@@ -178,10 +215,9 @@ const RegisterFormBase = ({ type }) => {
                 onChange={handleChange}
                 type="text"
                 placeholder="Nombre"
-              /><br />
-              {errors.name && (
-                <p className={style.error}>{errors.name}</p>
-              )}
+              />
+              <br />
+              {errors.name && <p className={style.error}>{errors.name}</p>}
             </div>
             <div className={style.Input}>
               <input
@@ -189,7 +225,8 @@ const RegisterFormBase = ({ type }) => {
                 onChange={handleChange}
                 type="text"
                 placeholder="Nombre de usuario"
-              /><br />
+              />
+              <br />
               {errors.username && (
                 <p className={style.error}>{errors.username}</p>
               )}
@@ -200,10 +237,9 @@ const RegisterFormBase = ({ type }) => {
                 onChange={handleChange}
                 type="text"
                 placeholder="Correo electrónico"
-              /><br />
-              {errors.email && (
-                <p className={style.error}>{errors.email}</p>
-              )}
+              />
+              <br />
+              {errors.email && <p className={style.error}>{errors.email}</p>}
             </div>
             <div className={style.Input}>
               <input
@@ -211,19 +247,16 @@ const RegisterFormBase = ({ type }) => {
                 onChange={handleChange}
                 type={showPassword ? "text" : "password"}
                 placeholder="Contraseña"
-              /><br />
-              {/* <span
-                className={style.passwordIcon}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                { showPassword ? <HiOutlineEyeOff size={"1.2em"} /> : <HiOutlineEye size={"1.2em"} />}
-              </span> */}
+              />
+              <br />
               {errors.password && (
                 <p className={style.error}>{errors.password}</p>
               )}
             </div>
-            <div className={style.Input}>
-              <select
+            <div>
+              {" "}
+              {/*  className={style.Input}> */}
+              {/* <select
                 multiple
                 value={inputs.info_interests}
                 onChange={handleInterestsChange}
@@ -233,7 +266,25 @@ const RegisterFormBase = ({ type }) => {
                     {interest}
                   </option>
                 ))}
-              </select><br />
+              </select><br /> */}
+              <details>
+                <summary>Elige tus intereses:</summary>
+              {checkboxInterests.map((interest) => (
+                <label key={interest.id}>
+                  <div className={style.Options}>
+                    <div>
+                  <input
+                    type="checkbox"
+                    value={interest.id}
+                    checked={selectedInterests.includes(interest.label)}
+                    onChange={handleCheckboxChange}
+                  />
+                  {interest.label}
+                  </div>
+                  </div>
+                </label>
+              ))}
+              </details>
               {errors.info_interests && (
                 <p className={style.error}>{errors.info_interests}</p>
               )}

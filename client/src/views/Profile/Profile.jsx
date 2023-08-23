@@ -41,6 +41,8 @@ const Profile = () => {
         text:
           userData?.kind === "incomplete"
             ? "Completa tu datos en 1 minuto para poder mejorar nuestras recomendaciones"
+            : userData?.kind === "ongoing"
+            ? `Tu perfil está incompleto. Termina de completarlo para poder mejorar nuestras recomendaciones.`
             : `Tu perfil está un ${userData?.kind}% completo. Termina de completarlo para poder mejorar nuestras recomendaciones.`,
         confirmButtonText: "Completar",
         confirmButtonColor: "#3085d6",
@@ -170,17 +172,19 @@ const Profile = () => {
             </div>
           </div> */}
           <section>
-              <div className={style.FirstInfo}>
-                <h1>{userData?.name}</h1>
-                {userData?.info_skills ? (
-                  <h3><strong>{userData?.info_skills.join(" | ")}</strong></h3>
-                ) : null}
-                {userData?.profile_city || userData?.profile_country ? (
-                  <h3 className={style.user_location}>
-                    {`${userData?.profile_city}, ${userData?.profile_country}`}
-                  </h3>
-                ) : null}
-              </div>
+            <div className={style.FirstInfo}>
+              <h1>{userData?.name}</h1>
+              {userData?.info_skills ? (
+                <h3>
+                  <strong>{userData?.info_skills.join(" | ")}</strong>
+                </h3>
+              ) : null}
+              {userData?.profile_city || userData?.profile_country ? (
+                <h3 className={style.user_location}>
+                  {`${userData?.profile_city}, ${userData?.profile_country}`}
+                </h3>
+              ) : null}
+            </div>
           </section>
           <hr />
           {userData?.profile_bio ? (
