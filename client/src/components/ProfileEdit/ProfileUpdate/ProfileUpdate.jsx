@@ -56,7 +56,7 @@ const ProfileUpdate = ({ handleCancelButton }) => {
       icon: "success",
       position: "top-end",
       toast: true,
-      title: `Perfil actualizado \n(${completionPercentage}% completo)`,
+      title: completionPercentage < 93 ? `Perfil actualizado \n(${completionPercentage}% completo)` : "Perfil actualizado",
       showConfirmButton: false,
       timer: 2500,
       timerProgressBar: true,

@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { interests } from "../../data/fields";
 import { getUserInfo } from "../../Redux/UsersSlice";
+import { validateRegister } from "../../utils";
+import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import style from "./RegisterFormBase.module.css";
 const { VITE_URL } = import.meta.env;
 
@@ -19,18 +21,26 @@ const RegisterFormBase = ({ type }) => {
   const dispatch = useDispatch();
   const URL = `${VITE_URL}/auth/register`;
   const URL_LOGIN = `${VITE_URL}/auth/login`;
+  const [showPassword, setShowPassword] = useState(false);
 
   /**
    * Define los campos de registro
    */
   const [inputs, setInputs] = useState({
-    profile_support: false,
-    info_interests: [],
     type,
-    email: "",
-    password: "",
     name: "",
     username: "",
+    email: "",
+    password: "",
+    info_interests: [],
+    profile_support: false,
+  });
+  const [errors, setErrors] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+    info_interests: [],
   });
 
   /**
@@ -48,12 +58,19 @@ const RegisterFormBase = ({ type }) => {
    *
    * @param {Object} event - Evento de cambio en el campo de entrada.
    */
-  const handleInputs = (event) => {
+  const handleChange = (event) => {
     const { value, name } = event.target;
-    setInputs((prevInputs) => ({
-      ...prevInputs,
+
+    setInputs({
+      ...inputs,
       [name]: value,
-    }));
+    });
+    setErrors(
+      validateRegister({
+        ...inputs,
+        [name]: value,
+      })
+    );
   };
 
   /**
@@ -90,10 +107,10 @@ const RegisterFormBase = ({ type }) => {
       (value) => !inputs.info_interests.includes(value)
     );
 
-    setInputs((prevInputs) => ({
-      ...prevInputs,
+    setInputs({
+      ...inputs,
       info_interests: [...newInterests, ...updatedInterests],
-    }));
+    });
 
     event.target.blur();
   };
@@ -158,34 +175,52 @@ const RegisterFormBase = ({ type }) => {
             <div className={style.Input}>
               <input
                 name="name"
-                onChange={handleInputs}
+                onChange={handleChange}
                 type="text"
                 placeholder="Nombre"
-              />
+              /><br />
+              {errors.name && (
+                <p className={style.error}>{errors.name}</p>
+              )}
             </div>
             <div className={style.Input}>
               <input
                 name="username"
-                onChange={handleInputs}
+                onChange={handleChange}
                 type="text"
                 placeholder="Nombre de usuario"
-              />
+              /><br />
+              {errors.username && (
+                <p className={style.error}>{errors.username}</p>
+              )}
             </div>
             <div className={style.Input}>
               <input
                 name="email"
-                onChange={handleInputs}
+                onChange={handleChange}
                 type="text"
                 placeholder="Correo electrónico"
-              />
+              /><br />
+              {errors.email && (
+                <p className={style.error}>{errors.email}</p>
+              )}
             </div>
             <div className={style.Input}>
               <input
                 name="password"
-                onChange={handleInputs}
-                type="password"
+                onChange={handleChange}
+                type={showPassword ? "text" : "password"}
                 placeholder="Contraseña"
-              />
+              /><br />
+              {/* <span
+                className={style.passwordIcon}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                { showPassword ? <HiOutlineEyeOff size={"1.2em"} /> : <HiOutlineEye size={"1.2em"} />}
+              </span> */}
+              {errors.password && (
+                <p className={style.error}>{errors.password}</p>
+              )}
             </div>
             <div className={style.Input}>
               <select
@@ -198,7 +233,10 @@ const RegisterFormBase = ({ type }) => {
                     {interest}
                   </option>
                 ))}
-              </select>
+              </select><br />
+              {errors.info_interests && (
+                <p className={style.error}>{errors.info_interests}</p>
+              )}
             </div>
             {type !== "company" && (
               <div className={style.Options}>
@@ -219,17 +257,7 @@ const RegisterFormBase = ({ type }) => {
                 </div>
               </div>
             )}
-            <button
-              disabled={
-                !(
-                  inputs.email &&
-                  inputs.password &&
-                  inputs.name &&
-                  inputs.username
-                )
-              }
-              type="submit"
-            >
+            <button disabled={Object.keys(errors).length > 0} type="submit">
               Crear cuenta
             </button>
             <hr />

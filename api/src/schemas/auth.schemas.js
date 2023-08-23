@@ -20,7 +20,7 @@ module.exports = (z) => {
         })
         .trim()
         .min(3, { message: "prop: 'username' must be at least 3 characters" })
-        .max(20, { message: "prop: 'username' must be at most 20 characters" }),
+        .max(33, { message: "prop: 'username' must be at most 33 characters" }),
       password: z.string({
         required_error: "prop: 'password' is required",
       }),

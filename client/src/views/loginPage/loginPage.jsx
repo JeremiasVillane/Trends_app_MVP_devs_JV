@@ -30,12 +30,14 @@ export default function LoginPage() {
       ...prevState,
       [name]: value,
     }));
-    setErrors((prevState) =>
-      validateLogin({
-        ...prevState,
-        [name]: value,
-      })
-    );
+    if (name === "user") {
+      setErrors((prevState) =>
+        validateLogin({
+          ...prevState,
+          [name]: value,
+        })
+      );
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -61,7 +63,7 @@ export default function LoginPage() {
           icon: "error",
           position: "top-end",
           toast: true,
-          title: error.response.data.error,
+          title: error.response.data.error || "Error del servidor",
           showConfirmButton: false,
           timer: 2500,
           timerProgressBar: true,
@@ -110,9 +112,9 @@ export default function LoginPage() {
                   type="text"
                   placeholder="Correo o nombre de usuario"
                 />
-              {errors.user && (
-                <span className={style.error}>{errors.user}</span>
-              )}
+                {errors.user && (
+                  <span className={style.error}>{errors.user}</span>
+                )}
               </div>
               <div className={style.Input}>
                 <input
@@ -130,7 +132,10 @@ export default function LoginPage() {
                 {/* <div>forgot Password</div> */}
               </div>
               <button
-                disabled={!(inputs.user && inputs.password)}
+                disabled={
+                  !(inputs.user && inputs.password) ||
+                  Object.keys(errors).length > 0
+                }
                 type="submit"
               >
                 Ingresar
