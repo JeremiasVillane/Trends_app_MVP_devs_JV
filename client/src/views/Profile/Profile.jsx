@@ -150,20 +150,37 @@ const Profile = () => {
 
       <main>
         <div className={style.Profile}>
+          {/* <div className={style.container_infouser}>
+            <div className={style.username}>
+              <h1>{userData.name}</h1>
+            </div>
+
+            <div className={style.user_skill}>{userData?.info_skills ? 
+                  userData.info_skills.join(" | ")
+                 : null}</div>
+
+            <div className={style.user_location}>
+              <p>
+                 {userData.profile_city}, {userData.profile_country}
+              </p>
+            </div>
+            <hr />
+            <div className={style.user_bio}>
+              <p>{userData.profile_bio}</p>
+            </div>
+          </div> */}
           <section>
-            <div className={style.About}>
               <div className={style.FirstInfo}>
                 <h1>{userData?.name}</h1>
                 {userData?.info_skills ? (
-                  <h3>{userData?.info_skills.join(" | ")}</h3>
+                  <h3><strong>{userData?.info_skills.join(" | ")}</strong></h3>
                 ) : null}
                 {userData?.profile_city || userData?.profile_country ? (
-                  <h3>
-                    {`${userData?.profile_city} - ${userData?.profile_country}`}{" "}
+                  <h3 className={style.user_location}>
+                    {`${userData?.profile_city}, ${userData?.profile_country}`}
                   </h3>
                 ) : null}
               </div>
-            </div>
           </section>
           <hr />
           {userData?.profile_bio ? (

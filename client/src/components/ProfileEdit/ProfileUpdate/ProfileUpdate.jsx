@@ -78,14 +78,14 @@ const ProfileUpdate = ({ handleCancelButton }) => {
       <div className={`${style.whiteContainer} ${style.GeneralContainer}`}>
         <div className={style.TopContainer}>
           <h2 className={style.Title}>Editar información de perfil</h2>
-          <button onClick={handleCancelButton}>X</button>
+          {/* <button onClick={handleCancelButton}>X</button> */}
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className={`${style.ImageContainer} ${style.InfoContainer}`}>
             <h4 className={style.SubTitle}>Información de la cuenta</h4>
             <div className={style.Option}>
-              <label htmlFor="username"> Nombre de usuario*</label>
+              <label htmlFor="username">Nombre de usuario*</label>
               <input
                 name="username"
                 id="username"
@@ -97,7 +97,7 @@ const ProfileUpdate = ({ handleCancelButton }) => {
             </div>
 
             <div className={style.Option}>
-              <label htmlFor="email"> Correo electrónico*</label>
+              <label htmlFor="email">Correo electrónico*</label>
               <input
                 name="email"
                 id="email"
@@ -109,7 +109,7 @@ const ProfileUpdate = ({ handleCancelButton }) => {
             </div>
 
             <div className={style.Option}>
-              <label htmlFor="name"> Nombre completo*</label>
+              <label htmlFor="name">Nombre completo*</label>
               <input
                 name="name"
                 id="name"
@@ -120,22 +120,7 @@ const ProfileUpdate = ({ handleCancelButton }) => {
             </div>
 
             <div className={style.Option}>
-              <label htmlFor="info_skills"> Habilidades*</label>
-              <input
-                name="info_skills"
-                id="info_skills"
-                value={
-                  editData?.info_skills
-                    ? editData?.info_skills.join(", ")
-                    : null
-                }
-                type="text"
-                onChange={handleOnChange}
-              />
-            </div>
-
-            <div className={style.Option}>
-              <label htmlFor="profile_country"> País*</label>
+              <label htmlFor="profile_country">País*</label>
               <input
                 name="profile_country"
                 id="profile_country"
@@ -247,11 +232,15 @@ const ProfileUpdate = ({ handleCancelButton }) => {
             </div>
 
             <div className={style.Option}>
-              <label htmlFor="info_skills">Habilidades</label>
+              <label htmlFor="info_skills">Habilidades*</label>
               <input
                 name="info_skills"
                 id="info_skills"
-                value={editData?.info_skills}
+                value={
+                  editData?.info_skills
+                    ? editData?.info_skills.join(", ")
+                    : null
+                }
                 type="text"
                 onChange={handleOnChange}
               />

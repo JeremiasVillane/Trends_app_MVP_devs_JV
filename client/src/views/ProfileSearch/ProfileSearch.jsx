@@ -40,18 +40,16 @@ const ProfileSearch = () => {
       <main>
         <div className={style.Profile}>
           <section>
-            <div className={style.About}>
-              <div className={style.FirstInfo}>
-                <h1>{userData.name}</h1>
-                {userData.info_skills ? (
-                  <h3>{userData.info_skills.join(" | ")}</h3>
-                ) : null}
-                {userData.profile_city || userData.profile_country ? (
-                  <h3>
-                    {`${userData.profile_city} - ${userData.profile_country}`}{" "}
-                  </h3>
-                ) : null}
-              </div>
+            <div className={style.FirstInfo}>
+              <h1>{userData.name}</h1>
+              {userData.info_skills ? (
+                <h3><strong>{userData.info_skills.join(" | ")}</strong></h3>
+              ) : null}
+              {userData.profile_city || userData.profile_country ? (
+                <h3 className={style.user_location}>
+                  {`${userData.profile_city}, ${userData.profile_country}`}
+                </h3>
+              ) : null}
             </div>
           </section>
           <hr />

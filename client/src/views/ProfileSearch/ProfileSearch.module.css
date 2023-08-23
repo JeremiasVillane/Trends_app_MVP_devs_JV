@@ -64,7 +64,7 @@
 }
 
 .BGContainer main {
-  display: flex;
+  display: block;
   justify-content: space-between;
   padding: 0 1rem;
 }
@@ -130,6 +130,11 @@
 .Profile > hr {
   width: 90%;
   margin: 0 auto;
+}
+
+.user_location {
+  font-style: italic;
+  margin: 0 1rem;
 }
 
 .BGContainer header h1 {
