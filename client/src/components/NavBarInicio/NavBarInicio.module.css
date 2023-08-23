@@ -93,7 +93,7 @@
 }
 
 .register-options a:hover {
-  background-color: #fab180;
+  background-color: #58C9E5;
 }
 
 /* Estilo para el botón de modo oscuro en modo claro */
@@ -197,7 +197,7 @@
 }
 
 :global(.dark-mode) .register-options a:hover {
-  background-color: #9ac2ef;
+  background-color: #58C9E5;
 }
 
 :global(.dark-mode) .dark-mode-button button {

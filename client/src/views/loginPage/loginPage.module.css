@@ -122,7 +122,8 @@
 }
 
 .RightContainer button:disabled {
-  background-color: #4b5965;
+  /* background-color: #4b5965; */
+  background-color: #777;
   cursor: not-allowed;
 }
 .RightContainer hr {
@@ -153,17 +154,16 @@
   margin: 0 auto;
 }
 
-.RightContainer form .Error {
+.RightContainer form .error {
   font-family: "Rubik-Regular";
   display: initial;
   color: #d93025;
   font-size: 0.9rem;
 }
 
-.RightContainer form .NoError {
-  display: none;
+:global(.dark-mode) {
+  background-color: #777;
 }
-
 :global(.dark-mode) .Card,
 :global(.dark-mode) .RightContainer form,
 :global(.dark-mode) .LeftContainer > div,

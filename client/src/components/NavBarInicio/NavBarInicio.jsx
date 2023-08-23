@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import logoClaro from "../../assets/logos/logoClaro.png";
+import { selectDarkMode, setDarkMode } from "../../Redux/UsersSlice";
 import styles from "./NavBarInicio.module.css";
 
 /**
@@ -10,9 +12,10 @@ import styles from "./NavBarInicio.module.css";
  * @returns {React.Element} Componente NavBarInicio.
  */
 function NavBarInicio() {
+  const dispatch = useDispatch()
   const location = useLocation();
+  const darkMode = useSelector(selectDarkMode);
   const [showMenu, setShowMenu] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     /**
@@ -39,7 +42,7 @@ function NavBarInicio() {
     const body = document.body;
     body.classList.toggle("dark-mode");
 
-    setDarkMode((prevDarkMode) => !prevDarkMode);
+    dispatch(setDarkMode());
   }
 
   /**

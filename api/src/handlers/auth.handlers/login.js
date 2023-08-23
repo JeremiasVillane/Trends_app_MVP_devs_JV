@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
       res.cookie("token", "", {
         expires: new Date(0),
       });
-      throw new Error("Incorrect credentials.");
+      return res.status(400).json({error: "Usuario o contraseña incorrectos"});
     }
     res.cookie("token", token, {
       httpOnly: true,

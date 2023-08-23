@@ -120,7 +120,8 @@
 }
 
 .RightContainer button:disabled {
-    background-color: #4B5965;
+    background-color: #777;
+    cursor: not-allowed;
 }
 .RightContainer hr {
     border: #c7c7c7 solid 0.1px;
@@ -198,7 +199,7 @@
 }
 
 :global(.dark-mode) .RightContainer button:disabled {
-    background-color: rgba(236, 189, 158, 0.348);
+    background-color: #777;
 }
 
 
