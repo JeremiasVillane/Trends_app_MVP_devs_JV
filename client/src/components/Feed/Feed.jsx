@@ -18,6 +18,7 @@ import {
 import FeedCard from "../FeedCard/FeedCard";
 import style from "./Feed.module.css";
 import { ProfileUpdate } from "../ProfileEdit";
+import FloatingButton from "../FloatingButton/FloatingButton";
 
 /**
  * Componente de carga del "feed" de usuarios.
@@ -149,6 +150,7 @@ const Feed = () => {
           </div>
         </div>
       </div>
+      <FloatingButton />
     </section>
   );
 };

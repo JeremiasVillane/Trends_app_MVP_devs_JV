@@ -30,7 +30,7 @@
 
 @keyframes adjust-header {
   to {
-    background: rgba(0, 133, 190, 0.3);
+    background: var(--header-bg-color, #58c9e55f);
     font-size: 6.6px;
     height: 33px;
   }
@@ -104,6 +104,9 @@
 }
 :global(.dark-mode) .BGContainer header {
   background-color: #232323;
+}
+:global(.dark-mode) {
+  --header-bg-color: #2323238b;
 }
 :global(.dark-mode) .Feed {
   background-color: #383636;
