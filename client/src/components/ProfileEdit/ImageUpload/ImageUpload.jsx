@@ -55,8 +55,7 @@ const ImageUpload = ({ handleCancelButton }) => {
       ></div>
       <div className={style.whiteContainer}>
         <div className={style.TopContainer}>
-          <h2 className={style.Title}>Añadir o editar foto de perfil</h2>
-          <button onClick={handleCancelButton}>X</button>
+          <h2 className={style.Title}>Cambiar foto de perfil</h2>
         </div>
 
         <div className={style.ImageContainer}>
@@ -89,10 +88,10 @@ const ImageUpload = ({ handleCancelButton }) => {
         </div>
         <div className={style.buttonDiv}>
           <button className={style.saveButton} onClick={handleUploadButton}>
-            SUBIR
+            Subir
           </button>
           <button className={style.cancelButton} onClick={handleCancelButton}>
-            CANCELAR
+            Cancelar
           </button>
         </div>
       </div>

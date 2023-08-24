@@ -1,4 +1,4 @@
-const { Image, Admin } = require("../../db");
+const { Image, Admin, conn } = require("../../db");
 const { getUserById } = require("../search.controllers");
 const { putUserProfile } = require("../user.controllers");
 const path = require("path");
@@ -42,24 +42,24 @@ module.exports = async (userId, userType, filename, filepath) => {
       return { error: "User not found" };
     }
 
-    const imageToReplace = await Image.findOne({
-      where: {
-        userId: userId,
-        isProfileImage: true,
-      },
-    });
+    // const imageToReplace = await Image.findOne({
+    //   where: {
+    //     userId: userId,
+    //     isProfileImage: true,
+    //   },
+    // });
 
-    if (imageToReplace) {
-      const imagePath = path.resolve(imageToReplace.filepath);
-      await fs.promises.access(imagePath);
-      await fs.promises.unlink(imagePath);
+    // if (imageToReplace) {
+    //   const imagePath = path.resolve(imageToReplace.filepath);
+    //   await fs.promises.access(imagePath);
+    //   await fs.promises.unlink(imagePath);
 
-      await Image.destroy({
-        where: {
-          id: imageToReplace.id,
-        },
-      });
-    }
+    //   await Image.destroy({
+    //     where: {
+    //       id: imageToReplace.id,
+    //     },
+    //   });
+    // }
 
     let imageProp;
 

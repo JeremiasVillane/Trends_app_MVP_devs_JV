@@ -4,7 +4,8 @@ import { AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { ImageUpload, ProfileUpdate } from "../../components/ProfileEdit";
+import { ImageUploadModal } from "../../components/Modals";
+import { ProfileUpdate } from "../../components/ProfileEdit";
 import {
   getUserInfo,
   selectDarkMode,
@@ -14,6 +15,7 @@ import style from "./Profile.module.css";
 const { VITE_URL } = import.meta.env;
 
 const Profile = () => {
+  const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const userData = useSelector(selectUserProfile);
   const darkMode = useSelector(selectDarkMode);
@@ -29,7 +31,11 @@ const Profile = () => {
     dispatch(getUserInfo());
   }, []);
 
-  const MySwal = withReactContent(Swal);
+  useEffect(() => {
+    if (userData.profile_image) {
+      loadImage();
+    }
+  }, [userData]);
 
   useEffect(() => {
     userData?.kind !== "complete" &&
@@ -63,12 +69,6 @@ const Profile = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (userData.profile_image) {
-      loadImage();
-    }
-  }, [userData]);
-
   const loadImage = async () => {
     const URLImage = `${VITE_URL}${userData.profile_image}`;
 
@@ -89,10 +89,6 @@ const Profile = () => {
     }
   };
 
-  const handleImageChangeButton = () => {
-    setIsEditing((prevState) => ({ ...prevState, image: false }));
-  };
-
   const handleGeneralChangeButton = () => {
     setIsEditing((prevState) => ({ ...prevState, general: false }));
   };
@@ -102,6 +98,10 @@ const Profile = () => {
       ...isEditing,
       general: true,
     });
+  };
+
+  const handleImageEdit = () => {
+    ImageUploadModal(darkMode, () => dispatch(getUserInfo()));
   };
 
   function getImageSrc(image) {
@@ -116,11 +116,11 @@ const Profile = () => {
 
   return (
     <div className={style.BGContainer}>
-      {isEditing.image && (
+      {/* {isEditing.image && (
         <div className={style.EditPhoto}>
           <ImageUpload handleCancelButton={handleImageChangeButton} />
         </div>
-      )}
+      )} */}
 
       {isEditing.general && (
         <div className={style.EditPhoto}>
@@ -130,14 +130,20 @@ const Profile = () => {
       <header>
         <div
           className={style.ImageContainer}
-          onClick={() =>
-            setIsEditing((prevState) => ({
-              ...prevState,
-              image: !prevState.image,
-            }))
-          }
+          onClick={handleImageEdit}
+
+          // onClick={() =>
+          //   setIsEditing((prevState) => ({
+          //     ...prevState,
+          //     image: !prevState.image,
+          //   }))
+          // }
         >
-          <img src={getImageSrc(image)} alt="Foto de perfil" />
+          {/* <img src={getImageSrc(image)} alt="Foto de perfil" /> */}
+          <img
+            src={image ? URL.createObjectURL(image) : ""}
+            alt="Foto de perfil"
+          />
           <div className={style.IconContainer}>
             <AiFillEdit size="6rem" color="white" />
           </div>

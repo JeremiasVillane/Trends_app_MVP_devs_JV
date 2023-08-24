@@ -1,6 +1,6 @@
 .mainDiv {
-  height: 99vh;
-  width: 98vw;
+  height: 100vh;
+  width: 100vw;
   background-color: transparent;
   position: absolute;
   left: 0;
@@ -15,24 +15,42 @@
 
 .blackContainer {
   position: absolute;
-  top: -0.9rem;
+  top: 0;
   left: 0;
   height: 100vh;
-  width: 98.9vw;
+  width: 100vw;
   opacity: 50%;
   background-color: black;
   z-index: 19;
 }
 
 .whiteContainer {
-  margin-top: 2rem;
+  margin-top: 3rem;
   background-color: white;
-  height: 42em;
-  width: 50rem;
+  height: 33em;
+  width: 44rem;
   border-radius: 0.4rem;
   position: relative;
   z-index: 20;
+  animation: bounce-in 0.33s ease;
 }
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .TopContainer {
   padding: 0 1rem;
   display: flex;
