@@ -61,8 +61,8 @@ const ProfileUpdate = ({ handleCancelButton }) => {
           ? `Perfil actualizado \n(${completionPercentage}% completo)`
           : "Perfil actualizado",
       showConfirmButton: false,
-      timer: 2500,
-      timerProgressBar: true,
+      timer: 2000,
+      timerProgressBar: false,
       background: darkMode ? "#383636" : "#FFF",
       color: darkMode ? "#FFF" : "#545454",
       didOpen: (toast) => {

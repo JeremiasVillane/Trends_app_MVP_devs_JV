@@ -1,10 +1,132 @@
-.Card {
-  align-items: center;
-  cursor: pointer;
-  /* padding-left: 1rem; */
-  background-color: transparent;
-  width: 100vw;
+.card {
+  border-radius: 7px;
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  margin: 10px;
+  cursor: default;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.cardImage {
+  margin: 1.2rem;
+  border-radius: 90%;
+  height: 8rem;
+  width: 8rem;
+  overflow: hidden;
+  align-items: center;
+  background-color: #344c5a;
+  cursor: pointer;
+}
+.cardImage img {
+  border-radius: 90%;
+  max-width: 100%;
+  max-height: 100%;
+  /* display: block; */
+}
+
+.cardProfile {
+  width: 85%;
+  text-align: left;
+  margin-left: 1vw;
+}
+.cardProfile p {
+  font-size: medium;
+}
+.cardProfile h1 {
+  font-family: "Rubik-Medium";
+  font-size: 1.5rem;
+  text-align: left;
+  padding: 0 1rem 0 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #9ac2ef;
+  cursor: pointer;
+}
+.cardProfile h1:hover {
+  color: #58c9e5;
+}
+.cardProfile h3 {
+  font-family: "Rubik-Regular";
+  text-align: left;
+  font-size: 1rem;
+  padding: 0 1rem 0 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #232323;
+}
+.subtitle {
+  font-weight: bold;
+}
+.subtitle p {
+  font-weight: normal;
+  font-style: italic;
+  color: #777;
+}
+
+.nameIcon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1vw;
+  margin-top: 0.5rem;
+}
+.nameIcon p {
+  font-weight: bold;
+}
+.nameIcon h1 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.cardButtons {
+  margin-left: auto;
+  padding-left: 2rem;
+}
+.icon {
+  size: 60px;
+  color: #232323;
+  margin: 1rem;
+}
+
+.textContainer {
+  max-height: 2.58em;
+  line-height: 1.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*:::::::::::TOOLTIP:::::::::::*/
+
+/* Contenedor */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Texto del popup */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #324a59;
+  color: #fff;
+  text-align: center;
+  padding: 2px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+/* Muestra el tooltip al posar el mouse */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+/*:::::::::::::::::::::::::::::*/
 
 .MainContainer {
   display: flex;
@@ -95,11 +217,22 @@
   line-height: 1.8rem;
 }
 
-:global(.dark-mode) .AttributesContainer h1 {
+:global(.dark-mode) .card {
+  background-color: #383636;
+}
+
+:global(.dark-mode) .cardProfile h1 {
   color: #fff;
 }
 
-:global(.dark-mode) .AttributesContainer h2,
-:global(.dark-mode) .AttributesContainer h3 {
+:global(.dark-mode) .cardProfile p {
+  color: #999;
+}
+:global(.dark-mode) .cardProfile h3 {
   color: #d9d9d9;
+}
+
+:global(.dark-mode) .tooltip .tooltiptext {
+  color: #333;
+  background-color: #fff;
 }

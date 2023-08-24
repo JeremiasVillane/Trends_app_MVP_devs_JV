@@ -5,11 +5,13 @@ const URLImage = `${VITE_URL}/images/profile`;
 
 export const ImageUploadModal = (darkMode, updater) => {
   Swal.fire({
-    title: "Subir Imagen",
+    title: "Cambiar foto de perfil",
     html: `
       <div>
-        <p>Arrastra y suelta una imagen aquí</p>
-        <p>O busca en tu dispositivo</p>
+        <em>
+          <p>Arrastra y suelta una imagen aquí</p>
+          <p>O busca en tu dispositivo</p>
+        </em>
         <br /><br />
         <input type="file" accept="image/*">
       </div>
@@ -18,6 +20,8 @@ export const ImageUploadModal = (darkMode, updater) => {
     showConfirmButton: false,
     allowOutsideClick: true,
     showCloseButton: true,
+    background: darkMode ? "#383636" : "#FFF",
+    color: darkMode ? "#FFF" : "#545454",
     willOpen: (modal) => {
       const input = modal.querySelector("input");
 
@@ -30,12 +34,14 @@ export const ImageUploadModal = (darkMode, updater) => {
 
           reader.onload = async (e) => {
             const response = await Swal.fire({
-              title: "Vista Previa de la Imagen",
               imageUrl: e.target.result,
               showCancelButton: true,
               confirmButtonText: "Aceptar",
               showLoaderOnConfirm: true,
               allowOutsideClick: false,
+              width: 333,
+              background: darkMode ? "#383636" : "#FFF",
+              color: darkMode ? "#FFF" : "#545454",
               preConfirm: async () => {
                 try {
                   await axios.post(URLImage, formData, {
@@ -58,8 +64,8 @@ export const ImageUploadModal = (darkMode, updater) => {
                 title: "Operación Exitosa",
                 text: "La imagen se ha subido correctamente.",
                 showConfirmButton: false,
-                timer: 2500,
-                timerProgressBar: true,
+                timer: 2000,
+                timerProgressBar: false,
                 background: darkMode ? "#383636" : "#FFF",
                 color: darkMode ? "#FFF" : "#545454",
               });

@@ -1,7 +1,7 @@
 .BGContainer {
   position: relative;
   /* gap: 0.5rem; */
-  width: 100vw;
+  /* width: 100vw; */
   display: flex;
 }
 .Container {
@@ -37,46 +37,13 @@
 }
 
 .Feed {
-  background-color: white;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 1.3rem 5%;
+  background-color: #fff;
+  /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
+  padding: 1.3rem 2.7rem;
 }
 
 .Feed hr {
-  border: 1px solid #d7d7d7;
-}
-
-.Filters {
-  position: sticky;
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  height: 30rem;
-  width: 17rem;
-  color: #324a59;
-  top: 1.2rem;
-}
-
-.Title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0 1.3rem;
-  padding-top: 1rem;
-}
-
-.Title img {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-.Title h2 {
-  font-family: "Montserrat-SemiBold";
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.Feed hr {
+  border: 0px solid #d7d7d7;
   margin: 1rem 0;
   width: 100%;
 }
@@ -109,5 +76,5 @@
   --header-bg-color: #2323238b;
 }
 :global(.dark-mode) .Feed {
-  background-color: #383636;
+  background-color: #343436;
 }

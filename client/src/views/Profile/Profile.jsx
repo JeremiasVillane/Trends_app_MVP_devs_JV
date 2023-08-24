@@ -107,8 +107,14 @@ const Profile = () => {
   function getImageSrc(image) {
     if (typeof image === "string") {
       return image;
-    } else if (typeof image === "object" && image instanceof File) {
-      return URL.createObjectURL(image);
+    } else if (typeof image === "object") {
+      try {
+        const imageURL = URL.createObjectURL(image);
+
+        return imageURL;
+      } catch (error) {
+        return;
+      }
     } else {
       return "";
     }
@@ -116,34 +122,14 @@ const Profile = () => {
 
   return (
     <div className={style.BGContainer}>
-      {/* {isEditing.image && (
-        <div className={style.EditPhoto}>
-          <ImageUpload handleCancelButton={handleImageChangeButton} />
-        </div>
-      )} */}
-
       {isEditing.general && (
         <div className={style.EditPhoto}>
           <ProfileUpdate handleCancelButton={handleGeneralChangeButton} />
         </div>
       )}
       <header>
-        <div
-          className={style.ImageContainer}
-          onClick={handleImageEdit}
-
-          // onClick={() =>
-          //   setIsEditing((prevState) => ({
-          //     ...prevState,
-          //     image: !prevState.image,
-          //   }))
-          // }
-        >
-          {/* <img src={getImageSrc(image)} alt="Foto de perfil" /> */}
-          <img
-            src={image ? URL.createObjectURL(image) : ""}
-            alt="Foto de perfil"
-          />
+        <div className={style.ImageContainer} onClick={handleImageEdit}>
+          <img src={getImageSrc(image)} alt="" />
           <div className={style.IconContainer}>
             <AiFillEdit size="6rem" color="white" />
           </div>
@@ -196,25 +182,77 @@ const Profile = () => {
           {userData?.profile_bio ? (
             <section>
               <h2>Biografía</h2>
-              <div className={style.Bio}>
+              <div className={style.user_bio}>
                 <h3>{userData?.profile_bio}</h3>
               </div>
             </section>
           ) : null}
           <hr />
-          {userData?.academic_institution ||
-          userData?.academic_formation ||
-          userData?.academic_level ||
-          userData?.academic_area ||
-          userData?.academic_graduation ? (
+          {(userData.academic_area ||
+            userData.info_career ||
+            userData.academic_graduation ||
+            userData.academic_institution) && (
             <section>
-              <h2>Estudios</h2>
-              <div className={style.Studies}>
-                <p>{userData?.academic_institution}</p>
-                <p>{userData?.academic_formation}</p>
+              <h2>Información académica</h2>
+              <div className={style.user_bio}>
+                <h3>
+                  <span>
+                    <strong>Área de estudios:</strong>{" "}
+                    {userData?.academic_area.join(", ")}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Estudios:</strong>{" "}
+                    {userData?.info_career.join(", ")}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Año de graduación / previsto:</strong>{" "}
+                    {userData?.academic_graduation}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Institución:</strong>{" "}
+                    {userData.academic_institution}
+                  </span>
+                  <br />
+                </h3>
               </div>
             </section>
-          ) : null}
+          )}
+          <hr />
+          {(userData.info_interests ||
+            userData.info_languages ||
+            userData.info_goals ||
+            userData.info_skills) && (
+            <section>
+              <h2>Información Adicional</h2>
+              <div className={style.user_bio}>
+                <h3>
+                  <span>
+                    <strong>Intereses:</strong>{" "}
+                    {userData?.info_interests.join(", ")}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Idiomas:</strong>{" "}
+                    {userData?.info_languages.join(", ")}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Objetivos:</strong>{" "}
+                    {userData?.info_goals.join(", ")}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Habilidades:</strong>{" "}
+                    {userData?.info_skills.join(", ")}
+                  </span>
+                  <br />
+                </h3>
+              </div>
+            </section>
+          )}
         </div>
       </main>
     </div>

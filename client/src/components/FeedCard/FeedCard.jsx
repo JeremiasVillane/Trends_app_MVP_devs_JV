@@ -1,4 +1,4 @@
-import { HiChat, HiUser } from "react-icons/hi";
+import { HiAcademicCap, HiBriefcase, HiUser, HiChat } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectDarkMode } from "../../Redux/UsersSlice";
@@ -17,44 +17,60 @@ const FeedCard = ({ user }) => {
     navigate("/chat");
   };
   return (
-    <div className={style.Card}>
-      <div className={style.MainContainer}>
-        <div className={style.ConfigContainer}>
-          <div onClick={handleProfile} className={style.ConfigContainer}>
-            <div className={style.PhotoContainer}>
-              <img src={user.user.profile_image} alt="" />
-            </div>
+    <div className={style.card}>
+      <div className={style.cardImage} onClick={handleProfile}>
+        <img src={user.user.profile_image} alt="" />
+      </div>
 
-            <div className={style.AttributesContainer}>
-              <h1>{user.user.name}</h1>
-              <h2>{user.user.academic_area}</h2>
+      <div className={style.cardProfile}>
+        <div className={style.nameIcon}>
+          <h1 onClick={handleProfile}>{user.user.name}</h1>
 
-              <h2>{user.user.info_skills}</h2>
-
-              <h2>{user.user.info_skills?.join(", ")}</h2>
-
-              {user.user.profile_city || user.user.profile_country ? (
-                <h3>
-                  {`${user.user.profile_city} - ${user.user.profile_country}`}{" "}
-                </h3>
-              ) : null}
-            </div>
+          <div className={style.tooltip}>
+            {user.user.type === "student" ? (
+              <HiAcademicCap color={darkMode ? darkColor : lightColor} />
+            ) : (
+              <HiBriefcase color={darkMode ? darkColor : lightColor} />
+            )}
+            <span className={style.tooltiptext}>
+              {user.user.type === "student" ? "Estudiante" : "Profesional"}
+            </span>
           </div>
-          <div className={style.IconsContainer}>
-            <button onClick={handleChats}>
-              <HiChat
-                size={"2.6rem"}
-                color={darkMode ? darkColor : lightColor}
-              />
-            </button>
-            <button onClick={handleProfile}>
-              <HiUser
-                size={"2.6rem"}
-                color={darkMode ? darkColor : lightColor}
-              />
-            </button>
+
+          <div className={style.cardButtons}>
+            <div className={style.tooltip}>
+              <button onClick={handleProfile}>
+                <HiUser
+                  size={20}
+                  className={style.icon}
+                  color={darkMode ? darkColor : lightColor}
+                />
+              </button>
+              <span className={style.tooltiptext}>Ver perfil</span>
+            </div>
+
+            <div className={style.tooltip}>
+              <button onClick={handleChats}>
+                <HiChat
+                  size={20}
+                  className={style.icon}
+                  color={darkMode ? darkColor : lightColor}
+                />
+              </button>
+              <span className={style.tooltiptext}>Iniciar chat</span>
+            </div>
           </div>
         </div>
+
+        <h3 className={style.subtitle}>
+          {user.user.info_skills
+            ? user.user.info_skills.join(" | ")
+            : user.user.info_interests[0]}
+          {user.user.profile_city || user.user.profile_country ? (
+            <p>{`${user.user.profile_city}, ${user.user.profile_country}`} </p>
+          ) : null}
+        </h3>
+        <h3 className={style.textContainer}>{user.user.profile_bio}</h3>
       </div>
     </div>
   );

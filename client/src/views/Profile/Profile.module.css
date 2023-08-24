@@ -39,7 +39,7 @@
 .BGContainer h3 {
   font-family: "Rubik-Regular";
   border-radius: 0.2rem;
-  width: fit-content;
+  /* width: fit-content; */
   padding: 0 1rem;
 }
 
@@ -153,7 +153,10 @@
 
 .user_bio {
   margin-top: 1rem;
-} 
+}
+.user_bio h3 {
+  line-height: 1.9;
+}
 /* ------------------*/
 
 .BGContainer header h1 {

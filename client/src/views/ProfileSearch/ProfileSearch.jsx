@@ -9,6 +9,7 @@ const ProfileSearch = () => {
   const { id } = useParams();
   const [userData, setUserData] = useState({});
   const URL = `${VITE_URL}/search/user/${id}`;
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,11 +24,52 @@ const ProfileSearch = () => {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    if (userData.profile_image) {
+      loadImage();
+    }
+  }, [userData]);
+
+  const loadImage = async () => {
+    const URLImage = `${VITE_URL}${userData.profile_image}`;
+    if (!userData.profile_image.startsWith("http")) {
+      await axios
+        .get(URLImage, { responseType: "blob", withCredentials: "include" })
+        .then((response) => {
+          const blob = new Blob([response.data], {
+            type: response.headers["content-type"],
+          });
+          setImage(blob);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setImage(userData.profile_image);
+    }
+  };
+
+  function getImageSrc(image) {
+    if (typeof image === "string") {
+      return image;
+    } else if (typeof image === "object") {
+      try {
+        const imageURL = URL.createObjectURL(image);
+
+        return imageURL;
+      } catch (error) {
+        return;
+      }
+    } else {
+      return "";
+    }
+  }
+
   return (
     <div className={style.BGContainer}>
       <header>
         <div className={style.ImageContainer}>
-          <img src={userData.profile_image} alt="Foto de perfil" />
+          <img src={getImageSrc(image)} alt="" />
         </div>
 
         <h1>{userData.type === "student" ? "Estudiante" : "Profesional"}</h1>
@@ -43,7 +85,9 @@ const ProfileSearch = () => {
             <div className={style.FirstInfo}>
               <h1>{userData.name}</h1>
               {userData.info_skills ? (
-                <h3><strong>{userData.info_skills.join(" | ")}</strong></h3>
+                <h3>
+                  <strong>{userData.info_skills.join(" | ")}</strong>
+                </h3>
               ) : null}
               {userData.profile_city || userData.profile_country ? (
                 <h3 className={style.user_location}>
@@ -62,19 +106,56 @@ const ProfileSearch = () => {
             </section>
           ) : null}
           <hr />
-          {userData.academic_institution ||
-          userData.academic_formation ||
-          userData.academic_level ||
-          userData.academic_area ||
-          userData.academic_graduation ? (
+          {(userData.academic_area ||
+            userData.info_career ||
+            userData.academic_graduation ||
+            userData.academic_institution) && (
             <section>
-              <h2>Estudios</h2>
-              <div className={style.Studies}>
-                <p>{userData.academic_institution}</p>
-                <p>{userData.academic_formation}</p>
+              <h2>Información académica</h2>
+              <div className={style.Bio}>
+                <h3>
+                  <strong>Área de estudios:</strong>{" "}
+                  {userData?.academic_area.join(", ")}
+                </h3>
+                <h3>
+                  <strong>Estudios:</strong> {userData?.info_career.join(", ")}
+                </h3>
+                <h3>
+                  <strong>Año de graduación / previsto:</strong>{" "}
+                  {userData?.academic_graduation}
+                </h3>
+                <h3>
+                  <strong>Institución:</strong> {userData.academic_institution}
+                </h3>
               </div>
             </section>
-          ) : null}
+          )}
+          <hr />
+          {(userData.info_interests ||
+            userData.info_languages ||
+            userData.info_goals ||
+            userData.info_skills) && (
+            <section>
+              <h2>Información Adicional</h2>
+              <div className={style.Bio}>
+                <h3>
+                  <strong>Intereses:</strong>{" "}
+                  {userData?.info_interests.join(", ")}
+                </h3>
+                <h3>
+                  <strong>Idiomas:</strong>{" "}
+                  {userData?.info_languages.join(", ")}
+                </h3>
+                <h3>
+                  <strong>Objetivos:</strong> {userData?.info_goals.join(", ")}
+                </h3>
+                <h3>
+                  <strong>Habilidades:</strong>{" "}
+                  {userData?.info_skills.join(", ")}
+                </h3>
+              </div>
+            </section>
+          )}
         </div>
       </main>
     </div>

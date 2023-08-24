@@ -160,6 +160,7 @@ const RegisterFormBase = ({ type }) => {
                 onChange={handleChange}
                 type="text"
                 placeholder="Nombre"
+                className={style.field}
               />
               <br />
               {errors.name && <p className={style.error}>{errors.name}</p>}
@@ -170,6 +171,7 @@ const RegisterFormBase = ({ type }) => {
                 onChange={handleChange}
                 type="text"
                 placeholder="Nombre de usuario"
+                className={style.field}
               />
               <br />
               {errors.username && (
@@ -182,6 +184,7 @@ const RegisterFormBase = ({ type }) => {
                 onChange={handleChange}
                 type="text"
                 placeholder="Correo electrónico"
+                className={style.field}
               />
               <br />
               {errors.email && <p className={style.error}>{errors.email}</p>}
@@ -192,6 +195,7 @@ const RegisterFormBase = ({ type }) => {
                 onChange={handleChange}
                 type={showPassword ? "text" : "password"}
                 placeholder="Contraseña"
+                className={style.field}
               />
               <br />
               {errors.password && (
@@ -210,6 +214,7 @@ const RegisterFormBase = ({ type }) => {
                       <div>
                         <input
                           type="checkbox"
+                          className={style.ui_checkbox}
                           value={interest.id}
                           checked={selectedInterests.includes(interest.label)}
                           onChange={handleCheckboxChange}
@@ -225,15 +230,16 @@ const RegisterFormBase = ({ type }) => {
               )}
             </div>
             {type !== "company" && (
-              <div className={style.Options}>
+              // <div className={style.Options}>
                 <div>
                   <input
                     id="remember"
                     type="checkbox"
+                    className={style.ui_checkbox}
                     checked={inputs.support}
                     onChange={handleIsCheck}
                   />
-                  <label htmlFor="remember">
+                  <label htmlFor="remember" className={style.support}>
                     ¿
                     {type === "professional"
                       ? "Estás dispuesto a compartir tu experiencia con estudiantes"
@@ -241,7 +247,7 @@ const RegisterFormBase = ({ type }) => {
                     ?
                   </label>
                 </div>
-              </div>
+              // </div>
             )}
             <button disabled={Object.keys(errors).length > 0} type="submit">
               Crear cuenta
