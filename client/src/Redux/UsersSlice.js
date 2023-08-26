@@ -1,7 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 const { VITE_URL } = import.meta.env;
 
@@ -22,7 +19,7 @@ const getMatchedUsers = createAsyncThunk(
   "users/getMatchedUsers",
   async (page) => {
     try {
-      const URL = `${VITE_URL}/api/v1/search/users?type=student&page=${page}`;
+      const URL = `${VITE_URL}/search/users?type=student&page=${page}`;
       const fetch = await axios.get(URL, { withCredentials: "include" });
       const data = fetch.data;
       return data;
@@ -118,16 +115,8 @@ const usersSlice = createSlice({
     setDarkMode: (state) => {
       state.darkMode = !state.darkMode;
     },
-    logout: (state) => {
-      state.allUsers = [];
-      state.searchedUsers = [];
-      state.students = {};
-      state.professionals = {};
-      state.companies = [];
-      state.currentPage = 0;
-      state.status = false;
-      state.user = {};
-      state.totalPages = 0;
+    logout: () => {
+      return initialState;
     },
     matchUsers: (state) => {
       const studentUsers = state.students.data || [];

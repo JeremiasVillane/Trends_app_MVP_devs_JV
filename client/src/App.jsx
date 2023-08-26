@@ -1,8 +1,7 @@
 import { useLocation } from "react-router-dom";
-import NavBarInicio from "../src/components/NavBarInicio/NavBarInicio";
-import "./App.css";
-import NavBarBase from "./components/NavBarBase/NavBarBase";
+import { LandingNavBar, MainNavBar } from "./components/navbars";
 import Router from "./routes";
+import { ErrorBoundary } from "./utils";
 
 function App() {
   const location = useLocation();
@@ -16,11 +15,11 @@ function App() {
     !notFoundPath.test(location.pathname);
 
   return (
-    <>
-      {isLandingPage && <NavBarInicio />}
-      {showNavBar && <NavBarBase />}
+    <ErrorBoundary>
+      {isLandingPage && <LandingNavBar />}
+      {showNavBar && <MainNavBar />}
       <Router />
-    </>
+    </ErrorBoundary>
   );
 }
 

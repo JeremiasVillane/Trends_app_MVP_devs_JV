@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        assetFileNames: "./src/assets/Logo.svg",
+        assetFileNames: "./src/assets/logos/logoClaro.png",
       },
     },
   },

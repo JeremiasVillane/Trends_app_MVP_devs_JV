@@ -19,7 +19,8 @@ module.exports = async (
   const userChats = await getChatsByUser(id, userId, userType);
 
   if ((!userGroups || userGroups.error) && (!userChats || userChats.error)) {
-    return { error: "No conversations found" };
+    return [];
+    // return { error: "No conversations found" };
   }
 
   if (userGroups && !userGroups.error) {

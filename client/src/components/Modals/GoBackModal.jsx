@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectDarkMode } from "../../Redux/UsersSlice";
+import { selectDarkMode } from "../../redux/UsersSlice";
 
 const MySwal = withReactContent(Swal);
 
