@@ -1,0 +1,41 @@
+.conversation_item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.conversation_item:hover {
+  background-color: #e0e0e0;
+}
+
+.conversation_details {
+  margin-left: 10px;
+}
+
+.conversation_details h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.conversation_details p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  max-width: 80%; /* Limit the width of the message snippet */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unread_count {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  margin-left: auto;
+}

@@ -12,7 +12,7 @@ function App() {
   const showNavBar =
     !authPaths.test(location.pathname) &&
     !adminPaths.test(location.pathname) &&
-    !notFoundPath.test(location.pathname);
+    !notFoundPath.test(location.pathname)
 
   return (
     <ErrorBoundary>

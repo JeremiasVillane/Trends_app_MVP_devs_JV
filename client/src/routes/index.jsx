@@ -122,14 +122,24 @@ export default function Router() {
       element: null,
       children: protectedRoutes(adminRoutes, user, ["admin"]),
     },
-    { path: "404", element: <NotFound /> },
-    { path: "*", element: <Navigate to="/404" replace /> },
+    { 
+      path: "/forbidden", 
+      element: <ForbiddenModal /> 
+    },
+    { 
+      path: "/404", 
+      element: <NotFoundModal /> 
+    },
+    { 
+      path: "*", 
+      element: <Navigate to="/404" replace />
+    },
   ]);
 }
 
 // Carga diferida de componentes
 const Landing = Loadable(
-  lazy(() => import("../modules/views/Landing/Landing"))
+  lazy(() => import("../modules/landing/Landing"))
 );
 const Login = Loadable(
   lazy(() => import("../modules/auth/pages/Login/Login"))
@@ -154,11 +164,14 @@ const CompanyFeed = Loadable(
   lazy(() => import("../modules/company/feed/pages/CompanyFeed"))
 );
 const Chat = Loadable(
-  lazy(() => import("../modules/chat/pages/Chat/Chat"))
+  lazy(() => import("../modules/chat/components/Chat"))
 );
 const AdminPage = Loadable(
   lazy(() => import("../modules/admin/pages/AdminPage"))
 );
-const NotFound = Loadable(
-  lazy(() => import("../modules/views/NotFound/NotFound"))
+const NotFoundModal = Loadable(
+  lazy(() => import("../components/modals/NotFoundModal"))
+);
+const ForbiddenModal = Loadable(
+  lazy(() => import("../components/modals/ForbiddenModal"))
 );

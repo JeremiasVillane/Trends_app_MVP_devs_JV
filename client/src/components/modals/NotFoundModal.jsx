@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { selectDarkMode } from "../../redux/UsersSlice";
 
-const MySwal = withReactContent(Swal);
-
-export const GoBackModal = () => {
+const NotFoundModal = () => {
+  const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const darkMode = useSelector(selectDarkMode);
 
@@ -15,7 +14,7 @@ export const GoBackModal = () => {
     return () =>
       MySwal.fire({
         icon: "error",
-        title: <strong>No tienes acceso a esta página</strong>,
+        title: <strong>La página no existe</strong>,
         confirmButtonText: "Regresar",
         confirmButtonColor: "#3085d6",
         background: darkMode ? "#383636" : "#FFF",
@@ -24,9 +23,7 @@ export const GoBackModal = () => {
           MySwal.disableLoading();
         },
       }).then((result) => {
-        if (result.isConfirmed) {
-          navigate(-1);
-        } else if (result.isDismissed) {
+        if (result.isConfirmed || result.isDismissed) {
           navigate(-1);
         }
       });
@@ -34,3 +31,5 @@ export const GoBackModal = () => {
 
   return null;
 };
+
+export default NotFoundModal;

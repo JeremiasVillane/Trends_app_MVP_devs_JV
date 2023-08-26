@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import { GoBackModal } from "../../components/modals";
+import { Navigate } from "react-router-dom";
 
 /**
  * Componente que protege el acceso a rutas según los roles permitidos.
@@ -12,12 +11,10 @@ import { GoBackModal } from "../../components/modals";
  * @returns {React.Element} Componente RouteGuard.
  */
 const RouteGuard = ({ user, allowedRoles, children }) => {
-  const navigate = useNavigate();
-
-  if (!user) {
-    navigate(-1);
+  if (!user || Object.keys(user).length === 0) {
+    return <Navigate to="/" replace />;
   } else if (user && !allowedRoles.includes(user.type)) {
-    return <GoBackModal />;
+    return <Navigate to="/forbidden" replace />;
   }
   return children;
 };

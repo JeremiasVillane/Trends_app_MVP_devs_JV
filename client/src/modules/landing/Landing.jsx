@@ -1,6 +1,6 @@
 import React from "react";
-import logoClaroBig from "../../../assets/logos/logoClaroBig.png";
-import welcomePoint from "../../../assets/logos/welcomePoint.png";
+import logoClaroBig from "../../assets/logos/logoClaroBig.png";
+import welcomePoint from "../../assets/logos/welcomePoint.png";
 import styles from "./Landing.module.css";
 
 const Landing = () => {

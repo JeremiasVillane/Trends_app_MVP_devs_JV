@@ -40,7 +40,8 @@ const Profile = () => {
   }, [userData]);
 
   useEffect(() => {
-    userData?.kind !== "complete" &&
+    userData?.kind !== undefined &&
+      userData?.kind !== "complete" &&
       MySwal.fire({
         icon: "info",
         position: "top-end",
@@ -171,7 +172,7 @@ const Profile = () => {
                 <h1>{userData?.name}</h1>
                 {userData?.info_skills ? (
                   <h3>
-                    <strong>{userData?.info_skills.join(" | ")}</strong>
+                    <strong>{userData?.info_skills?.join(" | ")}</strong>
                   </h3>
                 ) : null}
                 {userData?.profile_city || userData?.profile_country ? (
@@ -191,71 +192,77 @@ const Profile = () => {
               </section>
             ) : null}
             <hr />
-            {(userData.academic_area ||
-              userData.info_career ||
-              userData.academic_graduation ||
-              userData.academic_institution) && (
-              <section>
+            <section>
+              {(userData.academic_area ||
+                userData.info_career ||
+                userData.academic_graduation ||
+                userData.academic_institution) && (
                 <h2>Información académica</h2>
-                <div className={styles.user_bio}>
-                  <h3>
-                    <span>
-                      <strong>Área de estudios:</strong>{" "}
-                      {userData?.academic_area.join(", ")}
-                    </span>
-                    <br />
-                    <span>
-                      <strong>Estudios:</strong>{" "}
-                      {userData?.info_career.join(", ")}
-                    </span>
-                    <br />
-                    <span>
-                      <strong>Año de graduación / previsto:</strong>{" "}
-                      {userData?.academic_graduation}
-                    </span>
-                    <br />
-                    <span>
-                      <strong>Institución:</strong>{" "}
-                      {userData.academic_institution}
-                    </span>
-                    <br />
-                  </h3>
-                </div>
-              </section>
-            )}
+              )}
+              <div className={styles.user_bio}>
+                <h3>
+                  <span>
+                    <strong>Área de estudios:</strong>{" "}
+                    {userData?.academic_area?.join(", ")}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Estudios:</strong>{" "}
+                    {userData?.info_career?.join(", ")}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Año de graduación / previsto:</strong>{" "}
+                    {userData?.academic_graduation}
+                  </span>
+                  <br />
+                  <span>
+                    <strong>Institución:</strong>{" "}
+                    {userData.academic_institution}
+                  </span>
+                  <br />
+                </h3>
+              </div>
+            </section>
             <hr />
-            {(userData.info_interests ||
-              userData.info_languages ||
-              userData.info_goals ||
-              userData.info_skills) && (
-              <section>
-                <h2>Información Adicional</h2>
-                <div className={styles.user_bio}>
-                  <h3>
+            <section>
+              {(userData.info_interests ||
+                userData.info_languages ||
+                userData.info_goals ||
+                userData.info_skills) && <h2>Información Adicional</h2>}
+              <div className={styles.user_bio}>
+                <h3>
+                  {userData.info_interests && (
                     <span>
                       <strong>Intereses:</strong>{" "}
-                      {userData?.info_interests.join(", ")}
+                      {userData.info_interests.join(", ")}
                     </span>
-                    <br />
+                  )}
+                  <br />
+                  {userData.info_languages && (
                     <span>
                       <strong>Idiomas:</strong>{" "}
-                      {userData?.info_languages.join(", ")}
+                      {userData.info_languages.join(", ")}
                     </span>
-                    <br />
+                  )}
+                  <br />
+                  {userData.info_goals && (
                     <span>
                       <strong>Objetivos:</strong>{" "}
-                      {userData?.info_goals.join(", ")}
+                      {userData.info_goals.join(", ")}
                     </span>
-                    <br />
+                  )}
+                  <br />
+                  {userData.info_skills && (
                     <span>
                       <strong>Habilidades:</strong>{" "}
-                      {userData?.info_skills.join(", ")}
+                      {userData.info_skills.join(", ")}
                     </span>
-                    <br />
-                  </h3>
-                </div>
-              </section>
-            )}
+                  )}
+                  <br />
+                </h3>
+              </div>
+            </section>
           </div>
         </main>
       </Animate>

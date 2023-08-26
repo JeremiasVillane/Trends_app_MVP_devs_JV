@@ -3,10 +3,10 @@ import { AiFillHome } from "react-icons/ai";
 import { HiChat, HiLogout, HiUser } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import storageSession from "redux-persist/lib/storage/session";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { selectIsMinimized } from "../../../redux/chatSlice";
+import { persistor } from "../../../redux/store";
 import {
   logout,
   selectDarkMode,
@@ -32,7 +32,6 @@ export const MainNavBar = () => {
   const lightColor = "white";
   const darkColor = "white";
 
-  
   // Navega a la página de inicio.
   const handleHome = () => {
     userData.type === "company"
@@ -49,7 +48,7 @@ export const MainNavBar = () => {
 
   // Navega a la página de chats.
   const handleChats = () => {
-    navigate("/chat");
+    navigate("/chatroom/chat");
     // dispatch(setIsMinimized(!isMinimized))
   };
 
@@ -60,12 +59,14 @@ export const MainNavBar = () => {
       navigate("/");
 
       // Borra el persistStore de Redux
-      storageSession.removeItem("persist:root");
+      persistor.pause();
+      persistor.flush().then(() => {
+        return persistor.purge();
+      });
 
       // Borra el estado global de Redux
       dispatch(logout());
 
-      // Borra la cookie del usuario
       const URL = `${VITE_URL}/auth/logout`;
       await axios.post(URL, { withCredentials: "include" });
     } catch (error) {
@@ -73,9 +74,8 @@ export const MainNavBar = () => {
     }
   };
 
-
-   // Renderiza el cuadro de diálogo de confirmación
-   // de cierre de sesión del usuario.
+  // Renderiza el cuadro de diálogo de confirmación
+  // de cierre de sesión del usuario.
   const handleLogout = () => {
     MySwal.fire({
       icon: "warning",

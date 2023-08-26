@@ -14,10 +14,10 @@ module.exports = async (req, res) => {
         .json({ error: "Usuario o contraseña incorrectos" });
     }
 
-    // Cabeceras para evitar el almacenamiento en caché de la cookie
-    res.header("Cache-Control", "no-store");
-    res.header("Expires", "Mon, 01 Jan 2000 00:00:00 GMT");
-    res.header("Pragma", "no-cache");
+    // // Cabeceras para evitar el almacenamiento en caché de la cookie
+    // res.header("Cache-Control", "no-store");
+    // res.header("Expires", "Mon, 01 Jan 2000 00:00:00 GMT");
+    // res.header("Pragma", "no-cache");
 
     res.cookie("token", token, {
       httpOnly: true,

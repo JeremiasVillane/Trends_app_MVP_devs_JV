@@ -73,7 +73,7 @@ const ProfileSearch = () => {
           <img src={getImageSrc(image)} alt="" />
         </div>
 
-        <h1>{userData.type === "student" ? "Estudiante" : "Profesional"}</h1>
+        <h1>{userData?.type === "student" ? "Estudiante" : "Profesional"}</h1>
 
         <button className={styles.ChatButton}>
           <HiChat size="2rem" color="#344C5A" />
@@ -85,43 +85,43 @@ const ProfileSearch = () => {
           <div className={styles.Profile}>
             <section>
               <div className={styles.FirstInfo}>
-                <h1>{userData.name}</h1>
-                {userData.info_skills ? (
+                <h1>{userData?.name}</h1>
+                {userData?.info_skills ? (
                   <h3>
-                    <strong>{userData.info_skills.join(" | ")}</strong>
+                    <strong>{userData?.info_skills?.join(" | ")}</strong>
                   </h3>
                 ) : null}
-                {userData.profile_city || userData.profile_country ? (
+                {userData?.profile_city || userData?.profile_country ? (
                   <h3 className={styles.user_location}>
-                    {`${userData.profile_city}, ${userData.profile_country}`}
+                    {`${userData?.profile_city}, ${userData?.profile_country}`}
                   </h3>
                 ) : null}
               </div>
             </section>
             <hr />
-            {userData.profile_bio ? (
+            {userData?.profile_bio ? (
               <section>
                 <h2>Biografía</h2>
                 <div className={styles.Bio}>
-                  <h3>{userData.profile_bio}</h3>
+                  <h3>{userData?.profile_bio}</h3>
                 </div>
               </section>
             ) : null}
             <hr />
-            {(userData.academic_area ||
-              userData.info_career ||
-              userData.academic_graduation ||
-              userData.academic_institution) && (
+            {(userData?.academic_area ||
+              userData?.info_career ||
+              userData?.academic_graduation ||
+              userData?.academic_institution) && (
               <section>
                 <h2>Información académica</h2>
                 <div className={styles.Bio}>
                   <h3>
                     <strong>Área de estudios:</strong>{" "}
-                    {userData?.academic_area.join(", ")}
+                    {userData?.academic_area?.join(", ")}
                   </h3>
                   <h3>
                     <strong>Estudios:</strong>{" "}
-                    {userData?.info_career.join(", ")}
+                    {userData?.info_career?.join(", ")}
                   </h3>
                   <h3>
                     <strong>Año de graduación / previsto:</strong>{" "}
@@ -129,34 +129,34 @@ const ProfileSearch = () => {
                   </h3>
                   <h3>
                     <strong>Institución:</strong>{" "}
-                    {userData.academic_institution}
+                    {userData?.academic_institution}
                   </h3>
                 </div>
               </section>
             )}
             <hr />
-            {(userData.info_interests ||
-              userData.info_languages ||
-              userData.info_goals ||
-              userData.info_skills) && (
+            {(userData?.info_interests ||
+              userData?.info_languages ||
+              userData?.info_goals ||
+              userData?.info_skills) && (
               <section>
                 <h2>Información Adicional</h2>
                 <div className={styles.Bio}>
                   <h3>
                     <strong>Intereses:</strong>{" "}
-                    {userData?.info_interests.join(", ")}
+                    {userData?.info_interests?.join(", ")}
                   </h3>
                   <h3>
                     <strong>Idiomas:</strong>{" "}
-                    {userData?.info_languages.join(", ")}
+                    {userData?.info_languages?.join(", ")}
                   </h3>
                   <h3>
                     <strong>Objetivos:</strong>{" "}
-                    {userData?.info_goals.join(", ")}
+                    {userData?.info_goals?.join(", ")}
                   </h3>
                   <h3>
                     <strong>Habilidades:</strong>{" "}
-                    {userData?.info_skills.join(", ")}
+                    {userData?.info_skills?.join(", ")}
                   </h3>
                 </div>
               </section>

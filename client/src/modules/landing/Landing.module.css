@@ -12,7 +12,7 @@
   text-align: left;
   align-items: center;
   justify-content: center;
-  background-image: url("../../../assets/imagenes/Land.png");
+  background-image: url("../../assets/imagenes/Land.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -94,7 +94,7 @@
 
 :global(.dark-mode) .LandingContainer {
   background-color: #383636;
-  background-image: url("../../../assets/imagenes/LandMo.png");
+  background-image: url("../../assets/imagenes/LandMo.png");
 }
 
 /* Estilos para el modo oscuro */

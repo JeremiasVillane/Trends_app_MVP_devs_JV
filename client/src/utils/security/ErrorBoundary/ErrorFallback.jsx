@@ -1,6 +1,15 @@
 import React from "react";
 import styles from "./ErrorFallback.module.css";
 
+/**
+ * Componente funcional que se muestra cuando ocurre un error en un componente.
+ *
+ * @param {Object} props - Propiedades pasadas al componente.
+ * @param {Error} props.error - El error que ocurrió.
+ * @param {Object} props.errorInfo - Información adicional sobre el error.
+ * @param {Function} props.resetErrorBoundary - Función para intentar nuevamente después de un error.
+ * @returns {React.Element} Componente de error con detalles y opciones para intentar nuevamente.
+ */
 const ErrorFallback = ({ error, errorInfo, resetErrorBoundary }) => {
   return (
     <div className={styles.errorModalContainer}>
