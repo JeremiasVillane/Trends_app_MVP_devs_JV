@@ -1,25 +1,37 @@
-import { useState } from "react";
-import styles from "./Chat.module.css";
-import ChatHeader from "./ChatHeader";
-import ChatSidebar from "./ChatSideBar";
-import MessageInput from "./MessageInput";
-import MessageList from "./MessageList";
+import React, { useState } from "react";
 import { TypingIndicatorProvider } from "./TypingIndicatorContext";
+import ChatHeader from "./ChatHeader";
+import MessageList from "./MessageList";
+import MessageInput from "./MessageInput";
+import styles from "./Chat.module.css";
+import ChatSidebar from "./ChatSideBar";
 
 const Chat = ({ userId }) => {
   const [activeConversation, setActiveConversation] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
   const conversations = [
     {
       id: 1,
       contactName: "Alice",
-      lastMessage: "Hey! How are you?",
+      lastMessage: "Hey! How are you? I was wondering if you wanted to see me soon.",
       unreadCount: 2,
       messages: [
         {
           id: 1,
-          content: "Hi there!",
+          content: "Hey! How are you? I was wondering if you wanted to see me soon.",
           author: "Alice",
-          timestamp: "2023-08-27 10:00 AM",
+          timestamp: "2023-08-26 10:39 PM",
+          // parentMessage: {
+          //   id: 1,
+          //   content: "Hi there!",
+          //   author: "Bob",
+          //   timestamp: "2023-08-27 11:30 AM",
+          // }
         },
       ],
     },
@@ -31,13 +43,14 @@ const Chat = ({ userId }) => {
       messages: [
         {
           id: 1,
-          content: "Hello!",
+          content: "Sure thing!",
           author: "Bob",
           timestamp: "2023-08-27 11:30 AM",
         },
       ],
     },
   ];
+  
   const activeConversationData = conversations.find(
     (conversation) => conversation.id === activeConversation
   );
@@ -52,6 +65,7 @@ const Chat = ({ userId }) => {
         <ChatSidebar
           conversations={conversations}
           setActiveConversation={setActiveConversation}
+          handleSearch={handleSearch}
         />
         <div className={styles.chat_content}>
           {activeConversationData ? (

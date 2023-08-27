@@ -1,12 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import EmojiSelector from "./EmojiSelector";
+import data from "@emoji-mart/data";
+import i18n from "@emoji-mart/data/i18n/es.json";
+import Picker from "@emoji-mart/react";
+import React, { useState } from "react";
+import { BsEmojiSmile, BsSendFill } from "react-icons/bs";
 import styles from "./MessageInput.module.css";
 import { useTypingIndicatorContext } from "./TypingIndicatorContext";
 
 const MessageInput = ({ userId, onSendMessage }) => {
   const [message, setMessage] = useState("");
-  const { startTyping, stopTyping, isTyping } = useTypingIndicatorContext();  
-  const inputRef = useRef(null); // Ref al input field
+  const [showEmoji, setShowEmoji] = useState(false);
+  const { startTyping, stopTyping, isTyping } = useTypingIndicatorContext();
 
   const handleInputChange = (event) => {
     setMessage(event.target.value);
@@ -19,31 +22,15 @@ const MessageInput = ({ userId, onSendMessage }) => {
     }
   };
 
+  const handleEmojiSelection = (event) => {
+    setMessage(message + event.native);
+  };
+
   const handleSendClick = () => {
     if (message.trim() !== "") {
       onSendMessage(message);
       setMessage("");
     }
-  };
-
-  const handleEmojiSelection = (emoji) => {
-    // Se toma la representación nativa del emoji
-    const emojiNative = emoji.native;
-
-    // Se toma la posición actual del cursor
-    const cursorPosition = inputRef.current.selectionStart;
-
-    // Se inserta el emoji en la posición del cursor
-    const newMessage =
-      message.slice(0, cursorPosition) +
-      emojiNative +
-      message.slice(cursorPosition);
-
-    setMessage(newMessage);
-
-    // Se mueve el cursor después del emoji
-    inputRef.current.selectionStart = cursorPosition + emojiNative.length;
-    inputRef.current.selectionEnd = cursorPosition + emojiNative.length;
   };
 
   const handleKeyPress = (event) => {
@@ -55,16 +42,35 @@ const MessageInput = ({ userId, onSendMessage }) => {
 
   return (
     <div className={styles.message_input}>
-      <textarea
-        ref={inputRef} // Se establece el ref al input
-        rows="3"
+      <input
+        type="text"
         value={message}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
         placeholder="Escribe tu mensaje..."
       />
-      <button onClick={handleSendClick}>Send</button>
+      <button className={styles.send_button} onClick={handleSendClick}>
+        <BsSendFill onClick={handleSendClick} title="Enviar" />
+      </button>
+      <button
+        className={styles.emoji_button}
+        onClick={() => setShowEmoji(!showEmoji)}
+      >
+        <BsEmojiSmile />
+      </button>
       {/* <EmojiSelector onSelect={handleEmojiSelection} /> */}
+      {showEmoji && (
+        <div className={styles.emoji_picker}>
+          <Picker
+            i18n={i18n}
+            data={data}
+            emojiSize={20}
+            emojiButtonSize={28}
+            maxFrequentRows={2}
+            onEmojiSelect={handleEmojiSelection}
+          />
+        </div>
+      )}
     </div>
   );
 };

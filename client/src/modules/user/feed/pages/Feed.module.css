@@ -18,7 +18,7 @@
   justify-content: center;
   backdrop-filter: blur(5px);
   position: sticky;
-  top: 0px;
+  top: -33px;
   animation: adjust-header linear both;
   animation-timeline: scroll();
   animation-range: 0 200px;

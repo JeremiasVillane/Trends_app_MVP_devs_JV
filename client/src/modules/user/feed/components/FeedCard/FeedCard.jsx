@@ -28,9 +28,9 @@ export const FeedCard = ({ user }) => {
 
           <div className={styles.tooltip}>
             {user.user.type === "student" ? (
-              <HiAcademicCap color={darkMode ? darkColor : lightColor} />
+              <HiAcademicCap className={styles.icon} color={darkMode ? darkColor : lightColor} />
             ) : (
-              <HiBriefcase color={darkMode ? darkColor : lightColor} />
+              <HiBriefcase className={styles.icon} color={darkMode ? darkColor : lightColor} />
             )}
             <span className={styles.tooltiptext}>
               {user.user.type === "student" ? "Estudiante" : "Profesional"}

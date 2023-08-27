@@ -1,24 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+em-emoji-picker {
+  --background-rgb: 85, 170, 255;
+  --border-radius: 10px;
+  /* --category-icon-size: 24px; */
+  --color-border-over: rgba(0, 0, 0, 0.1);
+  --color-border: rgba(0, 0, 0, 0.05);
+  --font-family: "Poppins", sans-serif;
+  --font-size: 14px;
+  /* --rgb-accent: 88, 201, 229; */
+  --rgb-background: 240, 240, 240;
+  --rgb-color: 24, 24, 24;
+  --rgb-input: 240, 240, 240;
+  --shadow: 5px 5px 15px -8px #000;
+
+  height: 50vh;
+  min-height: 400px;
+  max-height: 800px;
+}
+
 .message_input {
   display: flex;
   align-items: center;
   padding: 10px;
   border-top: 1px solid #ccc;
+  background-color: #f5f5f5;
+  margin: 0 1rem 0 1rem;
 }
 
-.message_input textarea {
+.message_input input {
   flex: 1;
   min-height: 40px;
   padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 12px;
+}
+.message_input input:hover {
+  border: 1px solid #999;
+}
+.message_input input:focus {
+  outline: none;
+  border: 1px solid #555f69;
 }
 
-.message_input button {
+.message_input .send_button {
+  position: absolute;
+  right: 39px;
+  padding: 2px 4px;
   margin-left: 10px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: transparent;
+  /* background-color: #007bff; */
+  color: #383836;
+  font-size: x-large;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   cursor: pointer;
+}
+
+.message_input .emoji_button {
+  position: absolute;
+  right: 77px;
+  padding: 2px 4px;
+  margin-left: 10px;
+  background-color: transparent;
+  /* background-color: #007bff; */
+  color: #383836;
+  font-size: x-large;
+  border: none;
+  /* border-radius: 4px; */
+  cursor: pointer;
+}
+
+.message_input .emoji_picker {
+  position: absolute;
+  bottom: 9%;
+  right: 27px;
+}
+
+:global(.dark-mode) .message_input {
+  background-color: #242424;
+  border-top: 1px solid #383836;
+}
+:global(.dark-mode) .message_input input {
+  background-color: #383836;
+  color: #d9d9d9;
+  border: 1px solid #202020;
+}
+:global(.dark-mode) .message_input input:hover {
+  border: 1px solid #7a7a7a;
+}
+:global(.dark-mode) .message_input input:focus {
+  border: 1px solid #b8b8b8;
+}
+:global(.dark-mode) .message_input button {
+  color: #9d9d9d;
+}
+:global(.dark-mode) em-emoji-picker {
+  --rgb-background: 56, 56, 54; 
+  --rgb-color: 255, 255, 255;
+  --rgb-input: 56, 56, 54;
 }

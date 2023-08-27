@@ -1,9 +1,7 @@
-import React from "react";
-
 const Timestamp = ({ timestamp }) => {
   const formattedTimestamp = formatTimestamp(timestamp);
 
-  return <span className="timestamp">{formattedTimestamp}</span>;
+  return <span>{formattedTimestamp}</span>;
 };
 
 export default Timestamp;
@@ -21,8 +19,4 @@ function formatTimestamp(timestamp) {
     const options = { month: "short", day: "numeric" };
     return messageTime.toLocaleDateString(undefined, options);
   }
-}
-
-{
-  /* <Timestamp timestamp={message.timestamp} /> */
 }

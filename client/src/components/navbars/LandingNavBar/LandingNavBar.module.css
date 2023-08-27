@@ -1,5 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
 /* Estilos para la barra de navegación en modo claro */
 .navigation {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
   display: flex;
   position: fixed;
   left: 0;
@@ -11,7 +15,6 @@
   color: #000000;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 100;
-  font-family: "Poppins Medium", sans-serif;
 }
 
 /* Estilos para el logo */
@@ -93,7 +96,7 @@
 }
 
 .register-options a:hover {
-  background-color: #58C9E5;
+  background-color: #58c9e5;
 }
 
 /* Estilo para el botón de modo oscuro en modo claro */
@@ -197,7 +200,7 @@
 }
 
 :global(.dark-mode) .register-options a:hover {
-  background-color: #58C9E5;
+  background-color: #58c9e5;
 }
 
 :global(.dark-mode) .dark-mode-button button {

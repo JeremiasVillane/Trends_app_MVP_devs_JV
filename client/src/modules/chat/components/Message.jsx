@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import ThreadSidebar from "./ThreadSidebar"; // Import the ThreadSidebar component
+import ThreadSidebar from "./ThreadSidebar";
+import styles from "./Message.module.css";
+import Timestamp from "./Timestamp";
 
 const Message = ({ content, author, timestamp, parentMessage, messages }) => {
   const [showThreadSidebar, setShowThreadSidebar] = useState(false);
@@ -9,15 +11,33 @@ const Message = ({ content, author, timestamp, parentMessage, messages }) => {
   };
 
   return (
-    <div className="message">
-      <div className="message-content">
-        <div className="message-text">{content}</div>
-        <div className="message-author">{author}</div>
-        <div className="message-timestamp">{timestamp}</div>
+    <div className={styles.message}>
+      <div className={styles.message_received_avatar}>
+        <img src="https://i.postimg.cc/J4QGQWmr/user-default.png" />
+      </div>
+
+      <div className={styles.message_received}>
+        <div className={styles.message_received_content}>
+          <p>{content}</p>
+        </div>
+        <span className={styles.message_received_timestamp}>
+          <Timestamp timestamp={timestamp} />
+        </span>
         {parentMessage && (
-          <button onClick={handleReplyInThreadClick}>Responder en hilo</button>
+          <button
+            className={styles.reply_button}
+            onClick={handleReplyInThreadClick}
+          >
+            Responder en hilo
+          </button>
         )}
       </div>
+      {showThreadSidebar && (
+        <ThreadSidebar
+          messages={messages}
+          setShowThreadSidebar={setShowThreadSidebar}
+        />
+      )}
     </div>
   );
 };

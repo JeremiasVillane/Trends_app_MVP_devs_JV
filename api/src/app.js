@@ -67,7 +67,7 @@ app.use("/userTest", userTestRoutes);
 //<-------------------Servidor Socket.io---------------------->//
 const { createServer } = require("http");
 appSocket = createServer(app);
-const serverSocket = require("./sockets/serverSokect");
+const serverSocket = require("./socket/serverSocket");
 serverSocket(appSocket);
 
 module.exports = appSocket;

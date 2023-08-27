@@ -14,6 +14,7 @@ const MessageList = ({ messages }) => {
           content={message.content}
           author={message.author}
           timestamp={message.timestamp}
+          parentMessage={message.parentMessage}
         />
       ))}
       {typingUsers.length > 0 && (

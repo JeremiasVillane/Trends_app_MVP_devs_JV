@@ -109,7 +109,7 @@ export const MainNavBar = () => {
         <button onClick={handleHome} className={styles.button} title="Inicio">
           <AiFillHome size={"2rem"} color={darkMode ? darkColor : lightColor} />
         </button>
-        <p>Inicio</p>
+        {/* <p>Inicio</p> */}
 
         {/* Botón y texto de Perfil */}
         <button
@@ -119,26 +119,37 @@ export const MainNavBar = () => {
         >
           <HiUser size={"2rem"} color={darkMode ? darkColor : lightColor} />
         </button>
-        <p>Perfil</p>
+        {/* <p>Perfil</p> */}
 
         {/* Botón y texto de Chats */}
         <button onClick={handleChats} className={styles.button} title="Chats">
           <HiChat size={"2rem"} color={darkMode ? darkColor : lightColor} />
         </button>
-        <p>Chats</p>
+        {/* <p>Chats</p> */}
 
         {/* Botón y texto de Salir */}
         <button onClick={handleLogout} className={styles.button} title="Salir">
           <HiLogout size={"2rem"} color={darkMode ? darkColor : lightColor} />
         </button>
-        <p>Salir</p>
+        {/* <p>Salir</p> */}
 
         {/* Botón para alternar el modo oscuro */}
-        <button className={styles.button} onClick={toggleDarkMode}>
-          <i
-            className="fas fa-moon text-3xl"
-            style={{ color: darkMode ? darkColor : lightColor }}
-          />
+        <button
+          className={styles.button}
+          onClick={toggleDarkMode}
+          title="Modo Oscuro/Claro"
+        >
+          {darkMode ? (
+            <i
+              className="fas fa-sun text-3xl"
+              style={{ color: darkMode ? darkColor : lightColor }}
+            />
+          ) : (
+            <i
+              className="fas fa-moon text-3xl"
+              style={{ color: darkMode ? darkColor : lightColor }}
+            />
+          )}
         </button>
       </div>
     </>

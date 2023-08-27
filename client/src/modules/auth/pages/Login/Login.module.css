@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+
 .BGContainer {
   margin: auto;
   padding-top: 5rem;
@@ -13,7 +16,7 @@
   border-radius: 0.5rem;
   display: flex;
   width: 51rem;
-  font-family: "Poppins-Medium";
+  font-family: "Poppins", sans-serif;
   font-weight: 70%;
   margin: auto auto;
   padding: 2rem;
@@ -27,8 +30,9 @@
 }
 
 .Options > div {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
   font-style: italic;
-  font-family: "Rubik-Regular";
   display: flex;
   align-items: center;
 }
@@ -76,8 +80,9 @@
 }
 
 .RightContainer h2 {
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
   font-size: 1.3rem;
-  font-family: "Rubik-Medium";
   margin-bottom: 1rem;
   font-style: italic;
   color: #4d4d4d;
@@ -85,12 +90,12 @@
 }
 
 .RightContainer input {
+  font-family: "Rubik", sans-serif;
+  font-weight: 300;
   font-size: 1rem;
-  font-family: "Rubik-Light";
   font-style: italic;
   color: #4d4d4d;
   padding-left: 1rem;
-  font-weight: 100;
   height: 3rem;
   width: 100%;
   background-color: #e4e4e4;
@@ -106,6 +111,8 @@
 }
 
 .RightContainer button {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
   background-color: #9ac2ef;
   border: 0;
   font-size: 1.1rem;
@@ -115,7 +122,6 @@
   border-radius: 0.4rem;
   color: #fff;
   font-style: italic;
-  font-family: "Rubik-Regular";
 }
 .RightContainer button:hover {
   background-color: #58c9e5;
@@ -138,8 +144,9 @@
 }
 
 .RightContainer form span {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
   font-style: italic;
-  font-family: "Rubik-Regular";
   font-size: 1rem;
 }
 
@@ -155,7 +162,8 @@
 }
 
 .RightContainer form .error {
-  font-family: "Rubik-Regular";
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
   display: initial;
   color: #d93025;
   font-size: 0.9rem;
