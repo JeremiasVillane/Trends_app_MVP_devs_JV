@@ -5,25 +5,27 @@ import { useTypingIndicatorContext } from "./TypingIndicatorContext";
 
 const MessageList = ({ messages }) => {
   const { typingUsers } = useTypingIndicatorContext();
-
+// console.log("messages: ", messages)
   return (
     <div className={styles.message_list}>
-      {messages.map((message) => (
+      {messages.map((message, index) => (
         <Message
-          key={message.id}
+          key={index}
+          author={message.username}
+          avatar={message.profile_image}
+          messageId={message.messageId}
+          timestamp={message.createdAt}
           content={message.content}
-          author={message.author}
-          timestamp={message.timestamp}
           parentMessage={message.parentMessage}
         />
       ))}
-      {typingUsers.length > 0 && (
+      {/* {typingUsers.length > 0 && (
         <div className={styles.typing_indicator}>
           {typingUsers.length === 1
             ? `${typingUsers[0]} está escribiendo...`
             : `${typingUsers.join(", ")} están escribiendo...`}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

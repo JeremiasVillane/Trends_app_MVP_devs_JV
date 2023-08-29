@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { HiChat } from "react-icons/hi";
 import { useParams } from "react-router-dom";
 import { Animate } from "react-simple-animate";
+import Avatar from "../../../../chat/components/Avatar";
 import styles from "./ProfileSearch.module.css";
 const { VITE_URL } = import.meta.env;
 
@@ -70,7 +71,13 @@ const ProfileSearch = () => {
     <div className={styles.BGContainer}>
       <header>
         <div className={styles.ImageContainer}>
-          <img src={getImageSrc(image)} alt="" />
+          <Avatar
+            imageUrl={getImageSrc(image)}
+            altText={userData.name}
+            size={"14rem"}
+            status={userData.status}
+            type={"profile"}
+          />
         </div>
 
         <h1>{userData?.type === "student" ? "Estudiante" : "Profesional"}</h1>

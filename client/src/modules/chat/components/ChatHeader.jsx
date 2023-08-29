@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./ChatHeader.module.css"
 
-const ChatHeader = ({ chatTitle, participants }) => {
+const ChatHeader = ({ chatTitle, contactId, participants }) => {
+  const navigate = useNavigate();
+  const handleProfile = () => {
+    navigate(`/user/profile/${contactId}`);
+  };
+
   return (
     <div className={styles.chat_header}>
-      <h2>{chatTitle}</h2>
-      <p>{participants.join(", ")}</p>
+      <h2 onClick={handleProfile}>{chatTitle}</h2>
+      {/* <p>{participants.join(", ")}</p> */}
     </div>
   );
 };

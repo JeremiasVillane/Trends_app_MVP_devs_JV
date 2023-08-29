@@ -32,8 +32,8 @@ export const validateRegister = (inputs) => {
   if (!REGEX_EMAIL.test(email)) {
     errors.email = "Ingrese un email válido";
   }
-  if (email.length && email.length > 21) {
-    errors.email = "El email no puede tener más de 21 caracteres";
+  if (email.length && email.length > 55) {
+    errors.email = "El email no puede tener más de 55 caracteres";
   }
 
   // Validación de la contraseña
@@ -69,7 +69,7 @@ export const validateRegister = (inputs) => {
   }
 
   // Validación de los intereses
-  // if (!info_interests || !info_interests.length) {
+  // if (info_interests || info_interests.length) {
   //   errors.info_interests = "Elige al menos un interés";
   // }
 

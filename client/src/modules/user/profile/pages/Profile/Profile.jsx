@@ -14,6 +14,7 @@ import {
   selectUserProfile,
 } from "../../../../../redux/UsersSlice";
 import styles from "./Profile.module.css";
+import Avatar from "../../../../chat/components/Avatar";
 const { VITE_URL } = import.meta.env;
 
 const Profile = () => {
@@ -132,11 +133,23 @@ const Profile = () => {
       )}
       <header>
         <div className={styles.ImageContainer} onClick={handleImageEdit}>
-          <img src={getImageSrc(image)} alt="" />
+          <Avatar
+            imageUrl={getImageSrc(image)}
+            altText={userData.name}
+            size={"14rem"}
+            status={userData.status}
+            type={"profile"}
+          />
           <div className={styles.IconContainer}>
             <AiFillEdit size="6rem" color="white" />
           </div>
         </div>
+        {/* <div className={styles.ImageContainer} onClick={handleImageEdit}>
+          <img src={getImageSrc(image)} alt="" />
+          <div className={styles.IconContainer}>
+            <AiFillEdit size="6rem" color="white" />
+          </div>
+        </div> */}
 
         <h1>{userData?.type === "student" ? "Estudiante" : "Profesional"}</h1>
 

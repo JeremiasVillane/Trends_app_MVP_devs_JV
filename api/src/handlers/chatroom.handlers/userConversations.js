@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
       username,
       name,
       profile_image,
+      status
     } = req.user;
 
     const allConversations = await getUserConversations(
@@ -21,6 +22,7 @@ module.exports = async (req, res) => {
       username,
       name,
       profile_image,
+      status,
       query_name
     );
 

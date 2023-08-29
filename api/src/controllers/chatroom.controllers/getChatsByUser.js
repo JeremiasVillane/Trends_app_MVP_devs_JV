@@ -35,7 +35,7 @@ module.exports = async (id, userId, userType) => {
         {
           model: User,
           as: "UserSent",
-          attributes: ["name", "username", "id", "profile_image"],
+          attributes: ["name", "username", "id", "profile_image", "status"],
         },
         {
           model: Company,
@@ -45,7 +45,7 @@ module.exports = async (id, userId, userType) => {
         {
           model: User,
           as: "UserReceived",
-          attributes: ["name", "username", "id", "profile_image"],
+          attributes: ["name", "username", "id", "profile_image", "status"],
         },
         {
           model: Company,

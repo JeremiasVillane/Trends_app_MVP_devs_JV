@@ -2,6 +2,7 @@ import { HiAcademicCap, HiBriefcase, HiChat, HiUser } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectDarkMode } from "../../../../../redux/UsersSlice";
+import Avatar from "../../../../chat/components/Avatar";
 import styles from "./FeedCard.module.css";
 
 export const FeedCard = ({ user }) => {
@@ -16,10 +17,17 @@ export const FeedCard = ({ user }) => {
   const handleChats = () => {
     navigate("/chat");
   };
+
   return (
     <div className={styles.card}>
       <div className={styles.cardImage} onClick={handleProfile}>
-        <img src={user.user.profile_image} alt="" />
+        <Avatar
+          imageUrl={user.user.profile_image}
+          altText={user.user.name}
+          size={"8rem"}
+          status={user.user.status}
+          type={"feed"}
+        />
       </div>
 
       <div className={styles.cardProfile}>
@@ -28,9 +36,15 @@ export const FeedCard = ({ user }) => {
 
           <div className={styles.tooltip}>
             {user.user.type === "student" ? (
-              <HiAcademicCap className={styles.icon} color={darkMode ? darkColor : lightColor} />
+              <HiAcademicCap
+                className={styles.icon}
+                color={darkMode ? darkColor : lightColor}
+              />
             ) : (
-              <HiBriefcase className={styles.icon} color={darkMode ? darkColor : lightColor} />
+              <HiBriefcase
+                className={styles.icon}
+                color={darkMode ? darkColor : lightColor}
+              />
             )}
             <span className={styles.tooltiptext}>
               {user.user.type === "student" ? "Estudiante" : "Profesional"}

@@ -93,11 +93,11 @@
   margin-left: 1.2em;
 }
 
-.ImageContainer img {
+/* .ImageContainer img {
   width: 100%;
   height: 100%;
   border-radius: 90%;
-}
+} */
 
 .ImageContainer:hover .IconContainer {
   visibility: visible;

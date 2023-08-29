@@ -14,6 +14,10 @@
   margin: 0;
   font-size: 20px;
   font-weight: medium;
+  cursor: pointer;
+}
+.chat_header h2:hover {
+  color: #383836;
 }
 
 .chat_header p {
@@ -28,4 +32,7 @@
 }
 :global(.dark-mode) .chat_header h2 {
   color: #d9d9d9;
+}
+:global(.dark-mode) .chat_header h2:hover {
+  color: #fff;
 }

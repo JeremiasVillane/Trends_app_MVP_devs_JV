@@ -15,7 +15,7 @@
   border-radius: 90%;
   height: 8rem;
   width: 8rem;
-  overflow: hidden;
+  /* overflow: hidden; */
   align-items: center;
   background-color: #344c5a;
   cursor: pointer;

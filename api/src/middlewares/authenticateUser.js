@@ -21,6 +21,7 @@ const authenticateUser = (req, res, next) => {
       username: user.username,
       name: user.name,
       profile_image: user.profile_image,
+      status: user.status,
     };
     next();
   })(req, res, next);

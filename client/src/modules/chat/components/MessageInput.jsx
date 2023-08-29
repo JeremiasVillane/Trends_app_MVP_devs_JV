@@ -1,8 +1,6 @@
-import data from "@emoji-mart/data";
-import i18n from "@emoji-mart/data/i18n/es.json";
-import Picker from "@emoji-mart/react";
 import React, { useState } from "react";
 import { BsEmojiSmile, BsSendFill } from "react-icons/bs";
+import EmojiSelector from "./EmojiSelector";
 import styles from "./MessageInput.module.css";
 import { useTypingIndicatorContext } from "./TypingIndicatorContext";
 
@@ -58,19 +56,7 @@ const MessageInput = ({ userId, onSendMessage }) => {
       >
         <BsEmojiSmile />
       </button>
-      {/* <EmojiSelector onSelect={handleEmojiSelection} /> */}
-      {showEmoji && (
-        <div className={styles.emoji_picker}>
-          <Picker
-            i18n={i18n}
-            data={data}
-            emojiSize={20}
-            emojiButtonSize={28}
-            maxFrequentRows={2}
-            onEmojiSelect={handleEmojiSelection}
-          />
-        </div>
-      )}
+      {showEmoji && <EmojiSelector onSelect={handleEmojiSelection} />}
     </div>
   );
 };
@@ -78,15 +64,3 @@ const MessageInput = ({ userId, onSendMessage }) => {
 export default MessageInput;
 
 // <MessageInput onSendMessage={(message) => handleSendMessage(message)} />
-
-/**
- *
- * const handleSendMessage = () => {
- *   // Logic to send the message
- *
- *   // Stop typing indicator
- *   stopTyping(userId);
- *   setMessage('');
- * };
- *
- */

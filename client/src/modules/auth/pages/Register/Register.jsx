@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserInfo } from "../../../../redux/UsersSlice";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { getUserInfo, selectDarkMode } from "../../../../redux/UsersSlice";
 import { validateRegister } from "../../utils";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import styles from "./Register.module.css";
@@ -19,6 +21,8 @@ const { VITE_URL } = import.meta.env;
 const Register = ({ type }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const darkMode = useSelector(selectDarkMode);
+  const MySwal = withReactContent(Swal);
   const URL = `${VITE_URL}/auth/register`;
   const URL_LOGIN = `${VITE_URL}/auth/login`;
   const [showPassword, setShowPassword] = useState(false);
@@ -127,9 +131,23 @@ const Register = ({ type }) => {
       else if (data.type === "admin") navigate("/admin/dashboard");
       else navigate("/user/feed");
     } catch (error) {
-      console.log(error.response.data.error);
+      MySwal.fire({
+        icon: "error",
+        position: "top-end",
+        toast: true,
+        title: error.response.data.error || "Error del servidor",
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+        background: darkMode ? "#383636" : "#FFF",
+        color: darkMode ? "#FFF" : "#545454",
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
     }
-    // }
+
   };
 
   /**
@@ -161,6 +179,7 @@ const Register = ({ type }) => {
                 type="text"
                 placeholder="Nombre"
                 className={styles.field}
+                autoComplete="given-name"
               />
               <br />
               {errors.name && <p className={styles.error}>{errors.name}</p>}
@@ -172,6 +191,7 @@ const Register = ({ type }) => {
                 type="text"
                 placeholder="Nombre de usuario"
                 className={styles.field}
+                autoComplete="username"
               />
               <br />
               {errors.username && (
@@ -185,6 +205,7 @@ const Register = ({ type }) => {
                 type="text"
                 placeholder="Correo electrónico"
                 className={styles.field}
+                autoComplete="email"
               />
               <br />
               {errors.email && <p className={styles.error}>{errors.email}</p>}
@@ -196,6 +217,7 @@ const Register = ({ type }) => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Contraseña"
                 className={styles.field}
+                autoComplete="new-password"
               />
               <br />
               {errors.password && (
@@ -204,9 +226,9 @@ const Register = ({ type }) => {
             </div>
             <div style={{ marginBottom: "1rem" }}>
               <details>
-                <summary style={{ fontStyle: "italic", fontWeight: "medium" }}>
+                <summary style={{ fontStyle: "italic", fontWeight: "medium", cursor: "pointer" }}>
                   Elige{" "}
-                  {type === "company" ? "tu área/industria" : "tus intereses"}:
+                  {type === "company" ? "tu área/industria" : "tus intereses"}* :
                 </summary>
                 <div className={styles.checkboxes_list}>
                   {checkboxInterests.map((interest) => (
@@ -232,7 +254,6 @@ const Register = ({ type }) => {
               )}
             </div>
             {type !== "company" && (
-              // <div className={styles.Options}>
               <div>
                 <input
                   id="remember"
@@ -249,9 +270,13 @@ const Register = ({ type }) => {
                   ?
                 </label>
               </div>
-              // </div>
             )}
-            <button disabled={Object.keys(errors).length > 0} type="submit">
+            <button
+              disabled={
+                Object.keys(errors).length > 0 || !selectedInterests.length
+              }
+              type="submit"
+            >
               Crear cuenta
             </button>
             <hr />

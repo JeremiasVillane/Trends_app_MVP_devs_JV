@@ -111,6 +111,7 @@ const Login = () => {
                   onChange={handleChange}
                   type="text"
                   placeholder="Correo o nombre de usuario"
+                  autoComplete="username"
                 />
                 {errors.user && (
                   <span className={styles.error}>{errors.user}</span>
@@ -122,6 +123,7 @@ const Login = () => {
                   onChange={handleChange}
                   type="password"
                   placeholder="Contraseña"
+                  autoComplete="current-password"
                 />
               </div>
               <div className={styles.Options}>

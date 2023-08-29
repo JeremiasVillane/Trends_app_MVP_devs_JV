@@ -1,26 +1,36 @@
+/*::::::::: Estilos generales :::::::::*/
+
+p {
+  overflow-wrap: break-word;
+}
+
 .message {
   margin-bottom: 10px;
   cursor: default;
+}
+
+/*::::::::: Mensajes recibidos :::::::::*/
+
+.message_received {
+  display: inline-block;
+  /* padding-left: 10px; */
+  vertical-align: top;
+  width: 92%;
+  text-align: left;
 }
 
 .message_received_avatar {
   display: inline-block;
   width: 50px;
   float: left;
-  border: 2px solid #777;
+  /* border: 2px solid #777; */
   border-radius: 50%;
   overflow: hidden;
 }
 
-.message_received {
-  display: inline-block;
-  padding: 0 0 0 10px;
-  vertical-align: top;
-  width: 92%;
-}
-
 .message_received_content {
   width: 57%;
+  text-align: left;
 }
 
 .message_received_content p {
@@ -33,57 +43,66 @@
   width: 100%;
   box-shadow: rgb(0 0 0 / 25%) 0px 5px 5px 2px;
 }
-p {
-  overflow-wrap: break-word;
-}
 
 .message_received_timestamp {
   color: #777;
   display: block;
   font-size: 12px;
-  margin: 8px 21px 0;
+  margin: 8px 21px 0 21px;
+}
+
+/*::::::::: Mensajes enviados :::::::::*/
+
+.message_sent {
+  display: inline-block;
+  /* padding-right: 10px; */
+  vertical-align: top;
+  width: 92%;
+  text-align: right;
+}
+
+.message_sent_avatar {
+  display: inline-block;
+  width: 50px;
+  float: right;
+  /* border: 2px solid #007bff; */
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+
+.message_sent_content {
+  width: 57%;
+  text-align: right;
+}
+
+.message_sent_content p {
+  background: #007bff none repeat scroll 0 0;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  margin-right: 1rem;
+  padding: 1rem;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 25%) -2px 5px 5px 2px;
+}
+
+.message_sent_timestamp {
+  color: #777;
+  display: block;
+  font-size: 12px;
+  margin: 8px 10px 0 25px;
 }
 
 :global(.dark-mode) .message_received_content p {
   background: #9d9d9d none repeat scroll 0 0;
   color: #000;
 }
-
-/* .message {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 10px;
-  cursor: default;
+:global(.dark-mode) .message_sent_content p {
+  background: #004080;
+  color: #d1d1d1;
 }
 
-.message_content {
-  background-color: #fff;
-  border-radius: 15px;
-  padding: 8px 12px;
-  max-width: 70%;
-}
-
-.message_content p {
-  margin: 0;
-  font-size: 14px;
-  color: #333;
-}
-
-.message_meta {
-  margin-left: 10px;
-  font-size: 12px;
-  color: #888;
-  display: flex;
-  flex-direction: column;
-}
-
-.message_author {
-  text-align: right;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.message_timestamp {
-  margin-top: 4px;
-  font-size: 10px;
+/* :global(.dark-mode) .message_sent_avatar {
+  border: 2px solid #004080;
 } */

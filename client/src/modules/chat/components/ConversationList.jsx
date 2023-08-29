@@ -4,11 +4,15 @@ import styles from "./ConversationList.module.css";
 const ConversationList = ({ conversations, setActiveConversation }) => {
   return (
     <div className={styles.conversation_list}>
-      {conversations.map((conversation) => (
+      {conversations.map((conversation, index) => (
         <Conversation
-          key={conversation.id}
+          key={index}
+          isGroup={conversation.isGroup}
           conversationId={conversation.id}
-          contactName={conversation.contactName}
+          contactName={conversation.name}
+          contactAvatar={conversation.image}
+          contactStatus={conversation.status}
+          messages={conversation.messages}
           lastMessage={conversation.lastMessage}
           unreadCount={conversation.unreadCount}
           setActiveConversation={setActiveConversation}
