@@ -2,22 +2,13 @@ import React, { useState } from "react";
 import { BsEmojiSmile, BsSendFill } from "react-icons/bs";
 import EmojiSelector from "./EmojiSelector";
 import styles from "./MessageInput.module.css";
-import { useTypingIndicatorContext } from "./TypingIndicatorContext";
 
 const MessageInput = ({ userId, onSendMessage }) => {
   const [message, setMessage] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
-  const { startTyping, stopTyping, isTyping } = useTypingIndicatorContext();
 
   const handleInputChange = (event) => {
     setMessage(event.target.value);
-
-    // Indicador de "está escribiendo"
-    if (event.target.value.trim() !== "") {
-      startTyping(userId);
-    } else {
-      stopTyping(userId);
-    }
   };
 
   const handleEmojiSelection = (event) => {
@@ -47,12 +38,13 @@ const MessageInput = ({ userId, onSendMessage }) => {
         onKeyDown={handleKeyPress}
         placeholder="Escribe tu mensaje..."
       />
-      <button className={styles.send_button} onClick={handleSendClick}>
+      <button className={styles.send_button}>
         <BsSendFill onClick={handleSendClick} title="Enviar" />
       </button>
       <button
         className={styles.emoji_button}
         onClick={() => setShowEmoji(!showEmoji)}
+        title="Emojis"
       >
         <BsEmojiSmile />
       </button>

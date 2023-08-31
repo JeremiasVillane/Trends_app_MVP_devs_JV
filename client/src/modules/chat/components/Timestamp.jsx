@@ -7,16 +7,46 @@ const Timestamp = ({ timestamp }) => {
 export default Timestamp;
 
 function formatTimestamp(timestamp) {
-  const now = new Date();
-  const messageTime = new Date(timestamp);
-  const diffInMinutes = Math.floor((now - messageTime) / (1000 * 60));
+  const diasSemana = [
+    "domingo",
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado",
+  ];
+  const hoy = new Date();
+  const date = new Date(timestamp);
+  const nombreDiaSemana = diasSemana[date.getDay()];
+  const dia = date.getDate();
+  const mes = date.getMonth() + 1;
+  const anio = date.getFullYear();
+  const hora = date.getHours();
+  let minutos = date.getMinutes();
+  minutos = minutos < 10 ? `0${minutos}` : minutos;
 
-  if (diffInMinutes < 1) {
-    return "Justo ahora";
-  } else if (diffInMinutes < 60) {
-    return `${diffInMinutes} min atrás`;
+  if (esMismoDia(date, hoy)) {
+    return `hoy ${hora}:${minutos}`;
+  } else if (esMismoDia(date, new Date(hoy.getTime() - 86400000))) {
+    return `ayer ${hora}:${minutos}`;
+  } else if (esMismaSemana(date, hoy)) {
+    return `${nombreDiaSemana} ${hora}:${minutos}`;
   } else {
-    const options = { month: "short", day: "numeric" };
-    return messageTime.toLocaleDateString(undefined, options);
+    return `${dia}/${mes}/${anio} ${hora}:${minutos}`;
   }
 }
+
+const esMismoDia = (date1, date2) => {
+  return (
+    date1.getDate() === date2.getDate() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getFullYear() === date2.getFullYear()
+  );
+};
+
+const esMismaSemana = (date1, date2) => {
+  const diff = Math.abs(date1 - date2);
+  const unaSemanaEnMilisegundos = 7 * 24 * 60 * 60 * 1000;
+  return diff < unaSemanaEnMilisegundos;
+};

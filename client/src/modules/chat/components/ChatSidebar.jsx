@@ -1,19 +1,14 @@
 import ConversationList from "./ConversationList";
 import ConversationSearchBar from "./ConversationSearchBar";
 import styles from "./ChatSidebar.module.css";
+import ConversationButtons from "./ConversationButtons";
 
-const ChatSidebar = ({
-  conversations,
-  setActiveConversation,
-  handleSearch,
-}) => {
+const ChatSidebar = ({ onSearch, onCreateGroup }) => {
   return (
     <div className={styles.chat_sidebar}>
-      <ConversationSearchBar onSearch={handleSearch} />
-      <ConversationList
-        conversations={conversations}
-        setActiveConversation={setActiveConversation}
-      />
+      <ConversationSearchBar onSearch={onSearch} />
+      <ConversationButtons onCreateGroup={onCreateGroup} />
+      <ConversationList />
     </div>
   );
 };

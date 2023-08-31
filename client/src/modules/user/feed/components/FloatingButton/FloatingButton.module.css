@@ -21,6 +21,10 @@
 }
 
 :global(.dark-mode) .UpButton {
-  background-color: #fff; /* #3085d6 */
+  background-color: #ccc; /* #3085d6 */
+  color: #1e242a;
+}
+:global(.dark-mode) .UpButton:hover {
+  background-color: #fff;
   color: #1e242a;
 }

@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Message from "./Message";
 import styles from "./MessageList.module.css";
-import { useTypingIndicatorContext } from "./TypingIndicatorContext";
 
 const MessageList = ({ messages }) => {
-  const { typingUsers } = useTypingIndicatorContext();
-// console.log("messages: ", messages)
+  const messageListRef = useRef(null);
+
+  useEffect(() => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
-    <div className={styles.message_list}>
-      {messages.map((message, index) => (
+    <div ref={messageListRef} className={styles.message_list}>
+      {messages?.map((message, index) => (
         <Message
           key={index}
           author={message.username}
@@ -19,17 +24,8 @@ const MessageList = ({ messages }) => {
           parentMessage={message.parentMessage}
         />
       ))}
-      {/* {typingUsers.length > 0 && (
-        <div className={styles.typing_indicator}>
-          {typingUsers.length === 1
-            ? `${typingUsers[0]} está escribiendo...`
-            : `${typingUsers.join(", ")} están escribiendo...`}
-        </div>
-      )} */}
     </div>
   );
 };
 
 export default MessageList;
-
-// <MessageList messages={messageData} />

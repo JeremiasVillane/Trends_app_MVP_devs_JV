@@ -16,9 +16,8 @@ const messageFormatter = (messages) => {
   // Si el parámetro messages es un array, lo dejamos como está; 
   // de lo contrario, lo convertimos en un array.
   let inputMessages = Array.isArray(messages) ? messages : [messages];
-
   let outputMessages = [];
-
+  
   // Iteramos a través de cada mensaje para aplicar el formato 
   // y desencriptar el contenido.
   for (const message of inputMessages) {
@@ -29,18 +28,19 @@ const messageFormatter = (messages) => {
     // esenciales y contenido desencriptado.
     const outputMessage = {
       userId:
-        plainMessage.user?.id ||
+        plainMessage?.user?.id ||
         plainMessage?.sender_id ||
         plainMessage?.company_sender_id,
+      name: plainMessage?.user?.name,
       username:
-        plainMessage.user?.username ||
+        plainMessage?.user?.username ||
         plainMessage.UserSender?.username ||
         plainMessage.CompanySender?.username,
       profile_image:
-        plainMessage.user?.profile_image ||
+        plainMessage?.user?.profile_image ||
         plainMessage.UserSender?.profile_image ||
         plainMessage.CompanySender?.image,
-      messageId: plainMessage.message_id,
+      messageId: plainMessage.message_id || plainMessage.id,
       createdAt: plainMessage.createdAt,
       content: decryptMessage(plainMessage.content),
       messageStatus: plainMessage.messageStatus,

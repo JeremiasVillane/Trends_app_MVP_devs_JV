@@ -34,7 +34,7 @@ module.exports = async (
         id: `group${group.id}`,
         name: group.name,
         image: group?.image || null,
-        lastMessage: last_message?.content,
+        lastMessage: { id: last_message?.messageId, content: last_message?.content },
         lastMessageDate: last_message?.createdAt,
         unreadCount: countNoRead,
         messages: group.messages,
@@ -63,7 +63,7 @@ module.exports = async (
         image: contactProfileImage,
         status: contactStatus,
         lastMessage: chat.messages.length
-          ? { id: last_message.messageId, content: last_message?.content }
+          ? { id: last_message?.messageId, content: last_message?.content }
           : "",
         lastMessageDate: last_message?.createdAt,
         unreadCount: countNoRead,

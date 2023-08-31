@@ -38,7 +38,7 @@ chatroomRoutes.patch("/groups/:groupId/users/:userId", validateGroupOwner, editU
 chatroomRoutes.delete("/groups/:groupId/users/:userId", validateGroupOwner, removeUserFromGroup);
 
 chatroomRoutes.get("/groups/:groupId/messages", allGroupMessages);
-chatroomRoutes.post("/groups/:groupId/messages", encryptMessage, newGroupMessage);
+chatroomRoutes.post("/groups/:groupId/messages", idCleaner, encryptMessage, newGroupMessage);
 chatroomRoutes.put("/groups/:groupId/messages/:messageId", idCleaner, encryptMessage, editGroupMessage);
 chatroomRoutes.delete("/groups/:groupId/messages/:messageId", removeGroupMessage);
 

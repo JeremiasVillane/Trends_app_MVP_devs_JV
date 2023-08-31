@@ -40,7 +40,7 @@ p {
   font-size: 14px;
   margin-left: 1rem;
   padding: 1rem;
-  width: 100%;
+  width: fit-content;
   box-shadow: rgb(0 0 0 / 25%) 0px 5px 5px 2px;
 }
 
@@ -54,11 +54,13 @@ p {
 /*::::::::: Mensajes enviados :::::::::*/
 
 .message_sent {
+  position: relative;
   display: inline-block;
   /* padding-right: 10px; */
   vertical-align: top;
   width: 92%;
   text-align: right;
+  /* margin-left: 30%; */
 }
 
 .message_sent_avatar {
@@ -83,7 +85,9 @@ p {
   font-size: 14px;
   margin-right: 1rem;
   padding: 1rem;
-  width: 100%;
+  margin-left: 19rem;
+  /* width: fit-content; */
+  width: 200px;
   box-shadow: rgb(0 0 0 / 25%) -2px 5px 5px 2px;
 }
 
@@ -99,7 +103,7 @@ p {
   color: #000;
 }
 :global(.dark-mode) .message_sent_content p {
-  background: #004080;
+  background: #383636;
   color: #d1d1d1;
 }
 

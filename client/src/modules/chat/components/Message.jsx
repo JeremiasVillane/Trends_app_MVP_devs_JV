@@ -4,6 +4,7 @@ import styles from "./Message.module.css";
 import Timestamp from "./Timestamp";
 import { useSelector } from "react-redux";
 import { selectUserProfile } from "../../../redux/UsersSlice";
+import MessageActions from "./MessageActions";
 
 const Message = ({
   author,
@@ -16,8 +17,17 @@ const Message = ({
 }) => {
   const user = useSelector(selectUserProfile);
   const [showThreadSidebar, setShowThreadSidebar] = useState(false);
+  const [showActions, setShowActions] = useState(false);
   const messageStyle =
     user.username === author ? "message_sent" : "message_received";
+
+  const handleMouseEnter = () => {
+    setShowActions(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowActions(false);
+  };
 
   const handleReplyInThreadClick = () => {
     setShowThreadSidebar(true);
@@ -29,7 +39,12 @@ const Message = ({
         <img src={avatar} />
       </div>
 
-      <div className={`${styles.message} ${styles[messageStyle]}`}>
+      <div
+        className={`${styles.message} ${styles[messageStyle]}`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {user.username === author && showActions && <MessageActions />}
         <div
           className={`${styles[`${messageStyle}`]} ${
             styles[`${messageStyle}_content`]

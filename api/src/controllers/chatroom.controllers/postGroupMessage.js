@@ -1,5 +1,6 @@
-const { UserChatGroup, MessageChatGroup } = require("../../db");
+const { User, UserChatGroup, MessageChatGroup } = require("../../db");
 const decryptMessage = require("../../helpers/decryptMessage");
+const messageFormatter = require("../../helpers/messageFormatter");
 
 module.exports = async (groupId, content, userId, userType) => {
   const userGroup = await UserChatGroup.findOne({
@@ -13,7 +14,17 @@ module.exports = async (groupId, content, userId, userType) => {
 
     message.content = decryptMessage(content);
 
-    return message;
+    const outputMessage = await MessageChatGroup.findOne({
+      where: { id: message.id },
+      include: [
+        {
+          model: User,
+          attributes: ["name", "username", "id", "profile_image"],
+        },
+      ],
+    });
+
+    return messageFormatter(outputMessage)[0];
   }
 
   return {

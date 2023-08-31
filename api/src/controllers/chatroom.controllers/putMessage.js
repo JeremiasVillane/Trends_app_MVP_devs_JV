@@ -15,11 +15,8 @@ module.exports = async (
   const user = await Chat.findOne({
     where: {
       chat_id: chatId,
-      [Op.or]: [
-        { user1_id: userId },
-        { user2_id: userId }
-      ]
-    }
+      [Op.or]: [{ user1_id: userId }, { user2_id: userId }],
+    },
   });
 
   if (!user) {
@@ -34,7 +31,11 @@ module.exports = async (
     return { error: "Message not found" };
   }
 
-  if (message.sender_id === userId || userType === "admin") {
+  if (
+    message.sender_id === userId ||
+    message.receiver_id === userId ||
+    userType === "admin"
+  ) {
     message.content = content;
 
     if (messageStatus && !["sent", "read", "deleted"].includes(messageStatus)) {
@@ -42,13 +43,13 @@ module.exports = async (
     }
 
     if (messageStatus === "sent") {
-      message.messageStatus === message.messageStatus;
+      message.messageStatus = message.messageStatus;
     } else {
       message.messageStatus = messageStatus || message.messageStatus;
     }
 
     if (messageStatus === "deleted") {
-      responseContent = "Este mensaje fue eliminado"
+      responseContent = "Este mensaje fue eliminado";
       content = CryptoJS.AES.encrypt(responseContent, CRYPTO_KEY).toString();
       message.content = content;
     }

@@ -16,6 +16,12 @@ module.exports = async (userId, userType, list) => {
       {
         model: MessageChatGroup,
         attributes: { exclude: ["chatGroupId"] },
+        include: [
+          {
+            model: User,
+            attributes: ["name", "username", "id", "profile_image"],
+          },
+        ]
       },
     ],
   });

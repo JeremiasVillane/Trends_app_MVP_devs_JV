@@ -1,10 +1,13 @@
+import { useSelector } from "react-redux";
 import Conversation from "./Conversation";
 import styles from "./ConversationList.module.css";
 
-const ConversationList = ({ conversations, setActiveConversation }) => {
+const ConversationList = () => {
+  const conversations = useSelector((state) => state.chat.conversations);
+
   return (
     <div className={styles.conversation_list}>
-      {conversations.map((conversation, index) => (
+      {conversations?.map((conversation, index) => (
         <Conversation
           key={index}
           isGroup={conversation.isGroup}
@@ -14,8 +17,7 @@ const ConversationList = ({ conversations, setActiveConversation }) => {
           contactStatus={conversation.status}
           messages={conversation.messages}
           lastMessage={conversation.lastMessage}
-          unreadCount={conversation.unreadCount}
-          setActiveConversation={setActiveConversation}
+          // unreadCount={conversation.unreadCount}
         />
       ))}
     </div>

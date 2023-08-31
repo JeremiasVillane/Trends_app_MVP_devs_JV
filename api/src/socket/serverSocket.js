@@ -1,7 +1,6 @@
-module.exports = serverSocket => {
-  const { Server } = require('socket.io');
-  const io = new Server(serverSocket, {cors:{origin:'*'}});
-
+module.exports = (serverSocket) => {
+  const { Server } = require("socket.io");
+  const io = new Server(serverSocket, { cors: { origin: "*" } });
 
   // Almacenar clientes que se vayan conectando
   let onLineUsers = [];
@@ -20,32 +19,52 @@ module.exports = serverSocket => {
   };
 
   // --------- Escuchando cuando se conecte un cliente ----------------
+  // io.on("connection", (socket) => {
+  //console.log('Cliente conectado: ', socket.id);
+
+  // socket.on("newUser", (username) => {
+  //   addNewUser(username, socket.id);
+  // console.log("onLineUsers: ", onLineUsers);
+  // });
+
+  // =============== Chat Individual v2 ================================
+  // socket.on("private-message",
+  // ({
+  //   flag, data, userNameReceptor, userNameEmisor
+  // }) => {
+
+  // console.log("LISTMESSAGES: ", data?.messages, "FLAG: ", flag);
+
+  //       const receiver = getUser(userNameReceptor);
+  //       const sender = getUser(userNameEmisor);
+  //       // console.log("receiver: ", receiver, "sender: ", sender)
+  //       io.to(receiver?.socketId).emit("mensaje-recibido", data);
+  //       io.to(sender?.socketId).emit("mensaje-recibido", data);
+
+  //     });
+
+  //     socket.on("disconnect", () => {
+  //       removeUser(socket.id)
+  //     })
+  //   });
+  // };
+
   io.on("connection", (socket) => {
-    //console.log('Cliente conectado: ', socket.id);
+    console.log(`Usuario conectado: ${socket.id}`);
 
     socket.on("newUser", (username) => {
       addNewUser(username, socket.id);
-      // console.log("onLineUsers: ", onLineUsers);
+      console.log("Usuarios en línea: ", onLineUsers);
     });
 
-    // =============== Chat Individual v2 ================================
-    socket.on("private-message",
-    ({
-      flag, data, userNameReceptor, userNameEmisor
-    }) => {
-
-      // console.log("LISTMESSAGES: ", data?.messages, "FLAG: ", flag);
-
-      const receiver = getUser(userNameReceptor);
-      const sender = getUser(userNameEmisor);
-      // console.log("receiver: ", receiver, "sender: ", sender)
-      io.to(receiver?.socketId).emit("mensaje-recibido", data);
-      io.to(sender?.socketId).emit("mensaje-recibido", data);
-
+    socket.on("sendMessage", (message) => {
+      io.emit("message", message);
+      console.log(`Mensaje recibido: ${message}`);
     });
 
     socket.on("disconnect", () => {
       removeUser(socket.id)
-    })
+      console.log(`Usuario desconectado: ${socket.id}`);
+    });
   });
 };

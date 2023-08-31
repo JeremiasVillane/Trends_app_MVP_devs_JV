@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { selectIsMinimized } from "../../../redux/chatSlice";
+// import { selectIsMinimized } from "../../../redux/chatSlice";
 import { persistor } from "../../../redux/store";
 import {
   logout,
@@ -27,7 +27,7 @@ export const MainNavBar = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector(selectDarkMode);
   const userData = useSelector(selectUserProfile);
-  const isMinimized = useSelector(selectIsMinimized);
+  // const isMinimized = useSelector(selectIsMinimized);
   const MySwal = withReactContent(Swal);
   const lightColor = "white";
   const darkColor = "white";
