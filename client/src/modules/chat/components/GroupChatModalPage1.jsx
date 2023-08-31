@@ -6,7 +6,6 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
   const [groupImage, setGroupImage] = useState("");
 
   const handleNext = () => {
-    // Realiza validaciones y procesamiento necesario
     onNext();
   };
 

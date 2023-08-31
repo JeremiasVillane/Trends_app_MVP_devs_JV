@@ -16,7 +16,6 @@ import {
   searchConversations,
   sendAndStoreMessage,
 } from "../../../redux/chatSlice";
-import CreateGroupModal from "./CreateGroupModal";
 import GroupChatModal from "./GroupChatModal";
 const { VITE_URL_BASE, VITE_URL } = import.meta.env;
 
