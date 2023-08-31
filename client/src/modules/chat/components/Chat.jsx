@@ -17,6 +17,7 @@ import {
   sendAndStoreMessage,
 } from "../../../redux/chatSlice";
 import CreateGroupModal from "./CreateGroupModal";
+import GroupChatModal from "./GroupChatModal";
 const { VITE_URL_BASE, VITE_URL } = import.meta.env;
 
 const Chat = () => {
@@ -33,7 +34,7 @@ const Chat = () => {
     (conversation) => conversation.id === activeConversation
   );
 
-  const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
+  const [showGroupChatModal, setShowGroupChatModal] = useState(false);
 
   // const [searchQuery, setSearchQuery] = useState("");
   const onSearch = (query) => {
@@ -87,7 +88,7 @@ const Chat = () => {
   };
 
   const onCreateGroup = () => {
-    setShowCreateGroupModal(true);
+    setShowGroupChatModal(true);
   };
 
   return (
@@ -110,8 +111,8 @@ const Chat = () => {
           </div>
         )}
       </div>
-      {showCreateGroupModal && (
-        <CreateGroupModal setShowCreateGroupModal={setShowCreateGroupModal} />
+      {showGroupChatModal && (
+        <GroupChatModal setShowGroupChatModal={setShowGroupChatModal} />
       )}
     </div>
   );

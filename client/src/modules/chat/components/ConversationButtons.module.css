@@ -8,17 +8,20 @@
 }
 
 .buttons_container button {
-  padding: 8px;
-  margin: .5rem;
-  background-color: #007bff;
-  color: white;
+  padding: 8px 9px;
+  margin: .5rem .3rem;
+  background-color: #3085d6;
   border: none;
+  color: white;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .buttons_container button:hover {
-  background-color: #58c9e5;
+  background-color: #2b77c0;
+}
+.buttons_container button:focus {
+  outline: 3px solid #b1cae3;;
 }
 
 :global(.dark-mode) .buttons_container {
