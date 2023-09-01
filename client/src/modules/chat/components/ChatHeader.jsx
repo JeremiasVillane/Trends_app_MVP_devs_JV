@@ -7,10 +7,16 @@ const ChatHeader = ({ chatTitle, contactId, participants }) => {
     navigate(`/user/profile/${contactId}`);
   };
 
+  const groupMembers = [];
+
+  for (const participant of participants) {
+    groupMembers.push(participant.name)
+  }
+
   return (
     <div className={styles.chat_header}>
       <h2 onClick={handleProfile}>{chatTitle}</h2>
-      {/* <p>{participants.join(", ")}</p> */}
+      <p>{groupMembers.join(", ")}</p>
     </div>
   );
 };

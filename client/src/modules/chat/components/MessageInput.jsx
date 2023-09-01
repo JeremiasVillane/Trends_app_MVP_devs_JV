@@ -33,6 +33,7 @@ const MessageInput = ({ userId, onSendMessage }) => {
     <div className={styles.message_input}>
       <input
         type="text"
+        name="message_input"
         value={message}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}

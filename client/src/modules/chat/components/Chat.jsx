@@ -44,6 +44,7 @@ const Chat = () => {
   useEffect(() => {
     dispatch(getUserInfo());
     dispatch(getMatchedUsers());
+    dispatch(loadConversations(user.id));
   }, []);
 
   // useEffect(() => {
@@ -99,7 +100,7 @@ const Chat = () => {
             <ChatHeader
               chatTitle={activeConversationData.name}
               contactId={activeConversationData.userId}
-              // participants={[activeConversationData.contactName]}
+              participants={activeConversationData.members}
             />
             <MessageList messages={activeConversationData.messages} />
             <MessageInput userId={user.id} onSendMessage={onSendMessage} />

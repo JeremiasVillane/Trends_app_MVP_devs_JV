@@ -11,7 +11,7 @@ module.exports = async (userId, userType, list) => {
             exclude: ["chatGroupId", "userId", "createdAt", "updatedAt"],
           },
         },
-        attributes: ["id", "username", "type", "profile_image"],
+        attributes: ["id", "name", "username", "type", "profile_image"],
       },
       {
         model: MessageChatGroup,

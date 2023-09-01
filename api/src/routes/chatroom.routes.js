@@ -33,7 +33,7 @@ chatroomRoutes.post("/groups", createGroup);
 chatroomRoutes.put("/groups/:groupId", validateGroupOwner, editGroup) 
 chatroomRoutes.delete("/groups/:groupId", validateGroupOwner, removeGroup);
 
-chatroomRoutes.post("/groups/:groupId/users", validateGroupOwner, addUserToGroup);
+chatroomRoutes.post("/groups/:groupId/users", idCleaner, validateGroupOwner, addUserToGroup);
 chatroomRoutes.patch("/groups/:groupId/users/:userId", validateGroupOwner, editUserRole);
 chatroomRoutes.delete("/groups/:groupId/users/:userId", validateGroupOwner, removeUserFromGroup);
 

@@ -28,7 +28,7 @@ module.exports = async (
     for (const group of userGroups) {
       const [last_message] = [...group.messages].reverse();
       const countNoRead = noReadCounter(group.messages);
-
+      
       const conversation = {
         isGroup: true,
         id: `group${group.id}`,
@@ -38,6 +38,7 @@ module.exports = async (
         lastMessageDate: last_message?.createdAt,
         unreadCount: countNoRead,
         messages: group.messages,
+        members: group.users,
       };
 
       conversations.push(conversation);

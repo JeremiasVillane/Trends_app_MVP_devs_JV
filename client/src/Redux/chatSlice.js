@@ -39,7 +39,7 @@ export const {
 
 // Thunk para obtener las conversaciones del backend
 // y cargarlas al estado global
-export const loadConversations = (userId, searchQuery) => async (dispatch) => {
+export const loadConversations = (userId) => async (dispatch) => {
   try {
     const { data } = await axios.get(
       `${VITE_URL}/chatroom/conversations/${userId}`,
@@ -88,13 +88,46 @@ export const sendAndStoreMessage =
     }
   };
 
-export const createNewChatGroup = (name, image) => async (dispatch) => {
+// Thunk para crear un nuevo grupo de chat
+export const createNewChatGroup = (userId, groupName, groupImage) => async (dispatch) => {
   try {
-    await axios.post(`${VITE_URL}/chatroom/groups`, { name, image });
-
-    dispatch(setConversations(data));
+    const { data } = await axios.post(
+      `${VITE_URL}/chatroom/groups`,
+      { name: groupName, image: groupImage },
+      { withCredentials: "include" }
+    );
+    dispatch(loadConversations(userId));
+    dispatch(setActiveConversation(`group${data.id}`));
   } catch (error) {
     console.error("Error al crear el grupo:", error);
+  }
+};
+
+export const addGroupMember = (data) => async (dispatch) => {
+  try {
+    const { ownerId, groupId, users } = data;
+    for (const user of users) {
+      await axios.post(
+        `${VITE_URL}/chatroom/groups/${groupId}/users`,
+        { userId: user, role: "member" },
+        { withCredentials: "include" }
+      );
+    }
+    dispatch(loadConversations(ownerId));
+  } catch (error) {
+    console.error("Error añadiendo integrante al grupo:", error);
+  }
+};
+
+export const addGroupImage = (formData) => async () => {
+  try {
+    const { data } = await axios.post(`${VITE_URL}/images/upload`, formData, {
+      withCredentials: "include",
+    });
+    const urlImage = `/api/v1${data.imageUrl}`
+    return urlImage;
+  } catch (error) {
+    console.error("Error añadiendo imagen al grupo:", error);
   }
 };
 

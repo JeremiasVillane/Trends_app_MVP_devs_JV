@@ -11,6 +11,7 @@ const ConversationSearchBar = ({ onSearch }) => {
     <div className={styles.search_bar}>
       <input
         type="text"
+        name="search_bar"
         placeholder="Buscar..."
         onChange={handleSearchChange}
       />

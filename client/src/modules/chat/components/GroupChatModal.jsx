@@ -25,9 +25,9 @@ const GroupChatModal = ({ setShowGroupChatModal }) => {
     setCurrentPage(currentPage + 1);
   };
 
-  const prevPage = () => {
-    setCurrentPage(currentPage - 1);
-  };
+  // const prevPage = () => {
+  //   setCurrentPage(currentPage - 1);
+  // };
 
   return (
     <div
@@ -44,7 +44,6 @@ const GroupChatModal = ({ setShowGroupChatModal }) => {
         )}
         {currentPage === 2 && (
           <GroupChatModalPage2
-            onPrev={prevPage}
             setShowGroupChatModal={setShowGroupChatModal}
           />
         )}
