@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { chatLogout } from "../../../redux/chatSlice";
 // import { selectIsMinimized } from "../../../redux/chatSlice";
 import { persistor } from "../../../redux/store";
 import {
-  logout,
   selectDarkMode,
   selectUserProfile,
   setDarkMode,
+  userLogout,
 } from "../../../redux/UsersSlice";
 import styles from "./MainNavBar.module.css";
 const { VITE_URL } = import.meta.env;
@@ -65,7 +66,8 @@ export const MainNavBar = () => {
       });
 
       // Borra el estado global de Redux
-      dispatch(logout());
+      dispatch(userLogout());
+      dispatch(chatLogout());
 
       const URL = `${VITE_URL}/auth/logout`;
       await axios.post(URL, { withCredentials: "include" });

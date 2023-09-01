@@ -16,6 +16,9 @@ users.js
 pnpm-lock.yaml
 package-lock.json
 
+#IMG IGNORE
+/api/src/uploads
+
 #API IGNORE
 /api/node_modules
 /api/.env

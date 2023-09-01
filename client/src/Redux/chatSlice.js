@@ -27,6 +27,9 @@ const chatSlice = createSlice({
         conversation.messages.push(newMessage);
       }
     },
+    chatLogout: () => {
+      return initialState;
+    },
   },
 });
 
@@ -35,6 +38,7 @@ export const {
   setConversations,
   setMessages,
   addNewMessage,
+  chatLogout,
 } = chatSlice.actions;
 
 // Thunk para obtener las conversaciones del backend

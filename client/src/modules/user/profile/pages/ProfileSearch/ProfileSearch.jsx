@@ -28,28 +28,29 @@ const ProfileSearch = () => {
 
   useEffect(() => {
     if (userData.profile_image) {
-      loadImage();
+      setImage(userData.profile_image);
+      // loadImage();
     }
   }, [userData]);
 
-  const loadImage = async () => {
-    const URLImage = `${VITE_URL}${userData.profile_image}`;
-    if (!userData.profile_image.startsWith("http")) {
-      await axios
-        .get(URLImage, { responseType: "blob", withCredentials: "include" })
-        .then((response) => {
-          const blob = new Blob([response.data], {
-            type: response.headers["content-type"],
-          });
-          setImage(blob);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      setImage(userData.profile_image);
-    }
-  };
+  // const loadImage = async () => {
+  //   const URLImage = `${VITE_URL}${userData.profile_image}`;
+  //   if (!userData.profile_image.startsWith("http")) {
+  //     await axios
+  //       .get(URLImage, { responseType: "blob", withCredentials: "include" })
+  //       .then((response) => {
+  //         const blob = new Blob([response.data], {
+  //           type: response.headers["content-type"],
+  //         });
+  //         setImage(blob);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   } else {
+  //     setImage(userData.profile_image);
+  //   }
+  // };
 
   function getImageSrc(image) {
     if (typeof image === "string") {

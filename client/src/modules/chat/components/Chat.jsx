@@ -98,6 +98,8 @@ const Chat = () => {
         {activeConversationData ? (
           <>
             <ChatHeader
+              isGroup={activeConversationData.isGroup}
+              chatImage={activeConversationData.image}
               chatTitle={activeConversationData.name}
               contactId={activeConversationData.userId}
               participants={activeConversationData.members}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import { addGroupImage, createNewChatGroup } from "../../../redux/chatSlice";
 import { selectDarkMode, selectUserProfile } from "../../../redux/UsersSlice";
 import styles from "./GroupChatModal.module.css";
@@ -11,6 +12,7 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
   const [groupName, setGroupName] = useState("");
   const [groupImage, setGroupImage] = useState(null);
   const [showPreviewImage, setShowPreviewImage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleNext = async () => {
     if (groupImage) {
@@ -34,8 +36,15 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
   };
 
   const handleFileChange = (file) => {
-    setGroupImage(file);
-    setShowPreviewImage(true);
+    if (file) {
+      if (file.type.startsWith("image/")) {
+        setGroupImage(file);
+        setShowPreviewImage(true);
+        setErrorMessage("");
+      } else {
+        setErrorMessage("El archivo seleccionado no es una imagen.");
+      }
+    }
   };
 
   const handleFileDrop = (e) => {
@@ -45,6 +54,21 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
       handleFileChange(files[0]);
     }
   };
+
+  if (errorMessage) {
+    Swal.fire({
+      icon: "error",
+      position: "top-end",
+      toast: true,
+      title: "Formato incorrecto",
+      text: "Solo se permiten imágenes: jpg, jpeg, png, gif, svg",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: darkMode ? "#383636" : "#FFF",
+      color: darkMode ? "#FFF" : "#545454",
+    });
+  }
 
   // const handleUpload = async () => {
   //   if (groupImage) {
@@ -82,12 +106,18 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
 
         {showPreviewImage ? (
           <div className={styles.preview}>
-            <button onClick={() => setShowPreviewImage(false)} title="Cerrar">
+            <button
+              onClick={() => {
+                setShowPreviewImage(false);
+                setGroupImage(null);
+              }}
+              title="Eliminar"
+            >
               &#128473;
             </button>
             <img
               src={groupImage ? URL.createObjectURL(groupImage) : null}
-              alt="Preview"
+              alt="Vista previa"
               className={styles.preview_image}
             />
           </div>
@@ -116,9 +146,8 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
               <input
                 id="img_up"
                 type="file"
-                accept="image/*"
+                accept="image/jpeg, image/jpg, image/png, image/gif, image/svg+xml"
                 name="groupImage"
-                placeholder="Imagen del grupo"
                 onChange={(e) => handleFileChange(e.target.files[0])}
                 style={{ display: "none" }}
               />
@@ -130,7 +159,7 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
           <button
             className={styles.page_button}
             onClick={handleNext}
-            disabled={!groupName}
+            disabled={!groupName || errorMessage}
             autoFocus
           >
             Siguiente

@@ -115,7 +115,7 @@ const usersSlice = createSlice({
     setDarkMode: (state) => {
       state.darkMode = !state.darkMode;
     },
-    logout: () => {
+    userLogout: () => {
       return initialState;
     },
     matchUsers: (state) => {
@@ -180,7 +180,7 @@ export const {
   matchUsers,
   currentpage,
   setStatus,
-  logout,
+  userLogout,
 } = usersSlice.actions;
 
 export const selectAllUsers = (state) => state.users?.allUsers;

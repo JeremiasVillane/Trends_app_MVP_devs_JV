@@ -21,35 +21,35 @@ const Conversation = ({
       onClick={async () => {
         dispatch(setActiveConversation(conversationId));
 
-        if (isGroup) {
-          for (const message of messages) {
-            if (message.messageStatus === "sent") {
-              await axios.put(
-                `http://localhost:3001/api/v1/chatroom/groups/${conversationId}/messages/${message.messageId}`,
-                { content: message.content, messageStatus: "read" },
-                {
-                  withCredentials: "include",
-                }
-              );
-            }
-          }
-        } else {
-          for (const message of messages) {
-            if (message.messageStatus === "sent") {
-              try {
-                await axios.put(
-                  `http://localhost:3001/api/v1/chatroom/chat/${conversationId}/message/${message.messageId}`,
-                  { content: message.content, messageStatus: "read" },
-                  {
-                    withCredentials: "include",
-                  }
-                );
-              } catch (error) {
-                console.error(error)
-              }
-            }
-          }
-        }
+        // if (isGroup) {
+        //   for (const message of messages) {
+        //     if (message.messageStatus === "sent") {
+        //       await axios.put(
+        //         `http://localhost:3001/api/v1/chatroom/groups/${conversationId}/messages/${message.messageId}`,
+        //         { content: message.content, messageStatus: "read" },
+        //         {
+        //           withCredentials: "include",
+        //         }
+        //       );
+        //     }
+        //   }
+        // } else {
+        //   for (const message of messages) {
+        //     if (message.messageStatus === "sent") {
+        //       try {
+        //         await axios.put(
+        //           `http://localhost:3001/api/v1/chatroom/chat/${conversationId}/message/${message.messageId}`,
+        //           { content: message.content, messageStatus: "read" },
+        //           {
+        //             withCredentials: "include",
+        //           }
+        //         );
+        //       } catch (error) {
+        //         console.error(error)
+        //       }
+        //     }
+        //   }
+        // }
       }}
     >
       <Avatar

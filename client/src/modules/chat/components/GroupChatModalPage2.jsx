@@ -1,27 +1,41 @@
-import React, { useState } from "react";
-import { HiAcademicCap, HiBriefcase } from "react-icons/hi";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import { addGroupMember } from "../../../redux/chatSlice";
-import {
-  selectAllUsers,
-  selectDarkMode,
-  selectUserProfile,
-} from "../../../redux/UsersSlice";
+import { selectAllUsers, selectDarkMode, selectUserProfile } from "../../../redux/UsersSlice";
 import Avatar from "./Avatar";
 import styles from "./GroupChatModal.module.css";
 
 const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUserProfile);
+  const darkMode = useSelector(selectDarkMode);
   const allUsers = useSelector(selectAllUsers);
   const activeConversation = useSelector(
     (state) => state.chat.activeConversation
   );
-  const darkMode = useSelector(selectDarkMode);
-  const lightColor = "#232323";
-  const darkColor = "#FFF";
 
   const [selectedMembers, setSelectedMembers] = useState([]);
+
+  useEffect(() => {
+    if (selectedMembers && selectedMembers.length === 11) {
+      const updatedMembers = selectedMembers.slice(0, -1);
+      setSelectedMembers(updatedMembers);
+
+      Swal.fire({
+        icon: "error",
+        position: "top-end",
+        toast: true,
+        title: "Límite de integrantes",
+        text: "Solo se permiten hasta diez integrantes por grupo",
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: false,
+        background: darkMode ? "#383636" : "#FFF",
+        color: darkMode ? "#FFF" : "#545454",
+      });
+    }
+  }, [selectedMembers]);
 
   const handleSelectMember = (event) => {
     const memberId = event.target.value;
@@ -54,44 +68,35 @@ const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
       <div className={styles.modal_content}>
         <div className={styles.chatgroup_userlist}>
           {allUsers.map((user) => (
-            <label key={user.user.id}>
-              <input
-                type="checkbox"
-                // className={styles.ui_checkbox}
-                value={user.user.id}
-                checked={selectedMembers.includes(user.user.id)}
-                onChange={handleSelectMember}
-              />
-              <Avatar
-                imageUrl={user.user.profile_image}
-                altText={user.user.name}
-                size={"50px"}
-                status={user.user.status}
-                type={"list"}
-              />
-              <h4>{user.user.name}</h4>
-              <div className={styles.tooltip}>
-                {user.user.type === "student" ? (
-                  <HiAcademicCap
-                    className={styles.icon}
-                    color={darkMode ? darkColor : lightColor}
+            <div className={styles.user_card}>
+              <label key={user.user.id}>
+                <input
+                  type="checkbox"
+                  // className={styles.ui_checkbox}
+                  value={user.user.id}
+                  checked={selectedMembers.includes(user.user.id)}
+                  onChange={handleSelectMember}
+                />
+                <div className={styles.avatar}>
+                  <Avatar
+                    imageUrl={user.user.profile_image}
+                    altText={user.user.name}
+                    size={"50px"}
+                    status={user.user.status}
+                    type={"list"}
                   />
-                ) : (
-                  <HiBriefcase
-                    className={styles.icon}
-                    color={darkMode ? darkColor : lightColor}
-                  />
-                )}
-                <span className={styles.tooltiptext}>
+                </div>
+                <h4>{user.user.name}</h4>
+                <div className={styles.user_type}>
                   {user.user.type === "student" ? "Estudiante" : "Profesional"}
-                </span>
-              </div>
-              <section>
-                {user.user.info_skills
-                  ? user.user.info_skills.join(" | ")
-                  : user.user.info_interests[0]}
-              </section>
-            </label>
+                </div>
+                {/* <section>
+                  {user.user.info_skills
+                    ? user.user.info_skills.join(" | ")
+                    : user.user.info_interests[0]}
+                </section> */}
+              </label>
+            </div>
           ))}
         </div>
         <div className={styles.buttons_container}>

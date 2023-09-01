@@ -190,10 +190,108 @@
 /*::::: Lista de contactos :::::*/
 
 .chatgroup_userlist {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   height: 12rem;
-  width: 333px;
+  width: 400px;
   overflow-y: scroll;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
+
+/* Estilos para el contenedor principal de la tarjeta de usuario */
+.user_card label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: .3rem 0;
+}
+.user_card label input {
+  align-self: center;
+  margin: .5rem;
+}
+
+/* Estilos para el avatar */
+.user_card .avatar {
+  width: 50px;
+  height: 50px;
+  margin-right: 12px;
+  flex: none;
+}
+
+/* Estilos para el nombre del usuario */
+.user_card h4 {
+  margin: 0 1rem;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.user_type {
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Estilos para la información del usuario */
+.user_card section {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Estilos para el icono (estudiante o profesional) */
+.user_card .icon {
+  margin-right: 4px;
+  font-size: 16px;
+}
+
+/*:::::::::::TOOLTIP:::::::::::*/
+
+/* Contenedor */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Texto del popup */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #324a59;
+  color: #fff;
+  text-align: center;
+  padding: 2px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 90%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Forma del popup */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #324a59 transparent transparent transparent;
+}
+
+/* Muestra el tooltip al posar el mouse */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/*:::::::::::::::::::::::::::::*/
 
 :global(.dark-mode) .modal_container {
   background-color: #383636;
