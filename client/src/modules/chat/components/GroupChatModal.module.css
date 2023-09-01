@@ -134,6 +134,61 @@
   background-color: #58c9e5;
 }
 
+/*::: Contenedor de la imagen :::*/
+
+.image_input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  padding: 3%;
+  border: 2px dotted #999;
+}
+
+.preview {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  border: 2px dotted #999;
+  padding: 0.3rem;
+}
+
+.preview button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  color: #545454;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.preview_image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.drop_zone {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 2px dashed #999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/*::::: Lista de contactos :::::*/
+
 .chatgroup_userlist {
   height: 12rem;
   width: 333px;

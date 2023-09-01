@@ -13,7 +13,7 @@ module.exports = async (userId, userType, filename, filepath) => {
     typeOfId = "companyId";
   } else typeOfId = "adminId";
 
-  const imageUrl = `/images/files/${filename}`;
+  const imageUrl = `/api/v1/images/files/${filename}`;
 
   const savedImage = await Image.create({
     [typeOfId]: userId,

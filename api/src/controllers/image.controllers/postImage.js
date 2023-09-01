@@ -9,7 +9,7 @@ module.exports = async (id, type, filename, path) => {
     typeOfId = "companyId";
   } else typeOfId = "adminId";
 
-  const imageUrl = `/images/files/${filename}`;
+  const imageUrl = `/api/v1/images/files/${filename}`;
 
   const savedImage = await Image.create({
     [typeOfId]: id,

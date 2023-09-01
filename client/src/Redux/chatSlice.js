@@ -89,19 +89,20 @@ export const sendAndStoreMessage =
   };
 
 // Thunk para crear un nuevo grupo de chat
-export const createNewChatGroup = (userId, groupName, groupImage) => async (dispatch) => {
-  try {
-    const { data } = await axios.post(
-      `${VITE_URL}/chatroom/groups`,
-      { name: groupName, image: groupImage },
-      { withCredentials: "include" }
-    );
-    dispatch(loadConversations(userId));
-    dispatch(setActiveConversation(`group${data.id}`));
-  } catch (error) {
-    console.error("Error al crear el grupo:", error);
-  }
-};
+export const createNewChatGroup =
+  (userId, groupName, groupImage) => async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        `${VITE_URL}/chatroom/groups`,
+        { name: groupName, image: groupImage },
+        { withCredentials: "include" }
+      );
+      dispatch(loadConversations(userId));
+      dispatch(setActiveConversation(`group${data.id}`));
+    } catch (error) {
+      console.error("Error al crear el grupo:", error);
+    }
+  };
 
 export const addGroupMember = (data) => async (dispatch) => {
   try {
@@ -124,7 +125,7 @@ export const addGroupImage = (formData) => async () => {
     const { data } = await axios.post(`${VITE_URL}/images/upload`, formData, {
       withCredentials: "include",
     });
-    const urlImage = `/api/v1${data.imageUrl}`
+    const urlImage = data.imageUrl;
     return urlImage;
   } catch (error) {
     console.error("Error añadiendo imagen al grupo:", error);

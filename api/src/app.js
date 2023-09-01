@@ -31,7 +31,6 @@ const chatroomRoutes = require("./routes/chatroom.routes");
 const app = express();
 app.use(morgan("dev"));
 //app.use(setCache);    // Desactivado durante la fase de desarrollo
-// app.use("/api/v1/images", express.static(__dirname + "/uploads"));
 app.use(
   cors({
     origin: CL_URL,
