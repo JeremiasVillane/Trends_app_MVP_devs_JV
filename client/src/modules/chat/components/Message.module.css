@@ -9,6 +9,13 @@ p {
   cursor: default;
 }
 
+.message_autor {
+  margin: 0 1.2rem;
+  color: #646464;
+  font-size: 13px;
+  font-weight: bold;
+}
+
 /*::::::::: Mensajes recibidos :::::::::*/
 
 .message_received {
@@ -25,7 +32,6 @@ p {
   float: left;
   /* border: 2px solid #777; */
   border-radius: 50%;
-  overflow: hidden;
 }
 
 .message_received_content {
@@ -69,7 +75,6 @@ p {
   float: right;
   /* border: 2px solid #007bff; */
   border-radius: 50%;
-  overflow: hidden;
   margin-right: 1rem;
 }
 

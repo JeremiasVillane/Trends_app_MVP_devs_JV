@@ -67,8 +67,8 @@ const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
       </div>
       <div className={styles.modal_content}>
         <div className={styles.chatgroup_userlist}>
-          {allUsers.map((user) => (
-            <div className={styles.user_card}>
+          {allUsers.map((user, index) => (
+            <div key={index} className={styles.user_card}>
               <label key={user.user.id}>
                 <input
                   type="checkbox"
@@ -90,11 +90,6 @@ const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
                 <div className={styles.user_type}>
                   {user.user.type === "student" ? "Estudiante" : "Profesional"}
                 </div>
-                {/* <section>
-                  {user.user.info_skills
-                    ? user.user.info_skills.join(" | ")
-                    : user.user.info_interests[0]}
-                </section> */}
               </label>
             </div>
           ))}

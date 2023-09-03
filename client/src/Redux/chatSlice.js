@@ -158,6 +158,21 @@ export const createNewChatGroup =
     }
   };
 
+export const editChatGroup = (userId, groupId, groupName, groupImage) => async (dispatch) => {
+  try {
+    await axios.put(
+      `${VITE_URL}/chatroom/groups/${groupId}`,
+      { name: groupName, image: groupImage },
+      { withCredentials: "include" }
+    );
+
+    dispatch(loadConversations(userId));
+    // dispatch(setActiveConversation(`group${data.id}`));
+  } catch (error) {
+    console.error("Error al editar el grupo:", error);
+  }
+}
+
 // Thunk para agregar integrantes a un grupo de chat
 export const addGroupMember = (data) => async (dispatch) => {
   try {
@@ -187,6 +202,21 @@ export const addGroupImage = (formData) => async () => {
     return urlImage;
   } catch (error) {
     console.error("Error subiendo imagen:", error);
+  }
+};
+
+// Thunk para crear un nuevo grupo de chat
+export const createNewPrivateChat = (userId, contactId) => async (dispatch) => {
+  try {
+    const { data } = await axios.post(
+      `${VITE_URL}/chatroom/chat`, { contactId },
+      { withCredentials: "include" }
+    );
+
+    dispatch(loadConversations(userId));
+    dispatch(setActiveConversation(`chat${data.chat_id}`));
+  } catch (error) {
+    console.error("Error al iniciar chat privado:", error);
   }
 };
 

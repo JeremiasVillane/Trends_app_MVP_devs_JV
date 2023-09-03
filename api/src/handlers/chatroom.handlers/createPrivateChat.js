@@ -2,7 +2,7 @@ const { postPrivateChat } = require("../../controllers/chatroom.controllers");
 
 module.exports = async (req, res) => {
   try {
-    const { contactId } = req.params;
+    const { contactId } = req.body;
     const { id: userId, type: userType } = req.user;
 
     if (!contactId) {

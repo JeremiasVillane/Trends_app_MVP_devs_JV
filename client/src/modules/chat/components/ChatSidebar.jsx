@@ -3,11 +3,14 @@ import ConversationSearchBar from "./ConversationSearchBar";
 import styles from "./ChatSidebar.module.css";
 import ConversationButtons from "./ConversationButtons";
 
-const ChatSidebar = ({ onSearch, onCreateGroup }) => {
+const ChatSidebar = ({ onSearch, onCreatePrivateChat, onCreateGroup }) => {
   return (
     <div className={styles.chat_sidebar}>
       <ConversationSearchBar onSearch={onSearch} />
-      <ConversationButtons onCreateGroup={onCreateGroup} />
+      <ConversationButtons
+        onCreatePrivateChat={onCreatePrivateChat}
+        onCreateGroup={onCreateGroup}
+      />
       <ConversationList />
     </div>
   );

@@ -1,12 +1,15 @@
 import { HiAcademicCap, HiBriefcase, HiChat, HiUser } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectDarkMode } from "../../../../../redux/UsersSlice";
+import { createNewPrivateChat } from "../../../../../redux/chatSlice";
+import { selectDarkMode, selectUserProfile } from "../../../../../redux/UsersSlice";
 import Avatar from "../../../../chat/components/Avatar";
 import styles from "./FeedCard.module.css";
 
 export const FeedCard = ({ user }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentUser = useSelector(selectUserProfile);
   const darkMode = useSelector(selectDarkMode);
   const lightColor = "#232323";
   const darkColor = "#FFF";
@@ -15,7 +18,8 @@ export const FeedCard = ({ user }) => {
     navigate(`/user/profile/${user.user.id}`);
   };
   const handleChats = () => {
-    navigate("/chat");
+    dispatch(createNewPrivateChat(currentUser.id, user.user.id))
+    navigate("/chatroom/chat");
   };
 
   return (

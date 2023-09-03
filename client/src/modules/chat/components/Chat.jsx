@@ -15,8 +15,10 @@ import styles from "./Chat.module.css";
 import ChatHeader from "./ChatHeader";
 import ChatSidebar from "./ChatSideBar";
 import GroupChatModal from "./GroupChatModal";
+import InfoSideBar from "./InfoSideBar";
 import MessageInput from "./MessageInput";
 import MessageList from "./MessageList";
+import PrivateChatModal from "./PrivateChatModal";
 const { VITE_URL_BASE } = import.meta.env;
 
 const Chat = () => {
@@ -35,6 +37,8 @@ const Chat = () => {
 
   const [showGroupChatModal, setShowGroupChatModal] = useState(false);
   const [showPrivateChatModal, setShowPrivateChatModal] = useState(false);
+
+  const [showInfo, setShowInfo] = useState(false);
 
   // const [searchQuery, setSearchQuery] = useState("");
   const onSearch = (query) => {
@@ -90,13 +94,21 @@ const Chat = () => {
     }
   };
 
+  const onCreatePrivateChat = () => {
+    setShowPrivateChatModal(true);
+  };
+
   const onCreateGroup = () => {
     setShowGroupChatModal(true);
   };
 
   return (
     <div className={styles.chat_container}>
-      <ChatSidebar onSearch={onSearch} onCreateGroup={onCreateGroup} />
+      <ChatSidebar
+        onSearch={onSearch}
+        onCreatePrivateChat={onCreatePrivateChat}
+        onCreateGroup={onCreateGroup}
+      />
       <div className={styles.chat_content}>
         {activeConversationData ? (
           <>
@@ -106,6 +118,7 @@ const Chat = () => {
               chatTitle={activeConversationData.name}
               contactId={activeConversationData.userId}
               participants={activeConversationData.members}
+              setShowInfo={setShowInfo}
             />
             <MessageList
               socket={socket}
@@ -119,12 +132,23 @@ const Chat = () => {
           </div>
         )}
       </div>
+      {showInfo && (
+        <InfoSideBar
+          infoType={
+            activeConversationData.isGroup ? "infoGroup" : "infoProfile"
+          }
+          image={activeConversationData.image}
+          name={activeConversationData.name}
+          contactId={activeConversationData.id}
+          participants={activeConversationData.members}
+        />
+      )}
       {showGroupChatModal && (
         <GroupChatModal setShowGroupChatModal={setShowGroupChatModal} />
       )}
-      {/* {showPrivateChatModal && (
+      {showPrivateChatModal && (
         <PrivateChatModal setShowPrivateChatModal={setShowPrivateChatModal} />
-      )} */}
+      )}
     </div>
   );
 };

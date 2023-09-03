@@ -39,8 +39,8 @@
   border-bottom: 1px solid #383836;
 }
 :global(.dark-mode) .chat_header h2 {
-  color: #d9d9d9;
+  color: #fff;
 }
 :global(.dark-mode) .chat_header h2:hover {
-  color: #fff;
+  color: #d9d9d9;
 }

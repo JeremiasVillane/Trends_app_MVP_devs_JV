@@ -58,12 +58,12 @@ module.exports = async (id, userId, userType) => {
           include: [
             {
               model: User,
-              attributes: ["name", "username", "id", "profile_image"],
+              attributes: ["name", "username", "id", "profile_image", "status"],
               as: "UserSender",
             },
             {
               model: User,
-              attributes: ["name", "username", "id", "profile_image"],
+              attributes: ["name", "username", "id", "profile_image", "status"],
               as: "UserReceiver",
             },
             {

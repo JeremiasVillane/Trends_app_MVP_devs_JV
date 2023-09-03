@@ -1,11 +1,11 @@
 const decryptMessage = require("./decryptMessage");
 
 /**
- * Este helper toma un array de mensajes como entrada, 
- * aplica un formato específico a cada mensaje y desencripta 
+ * Este helper toma un array de mensajes como entrada,
+ * aplica un formato específico a cada mensaje y desencripta
  * el contenido de cada mensaje utilizando el helper decryptMessage.
- * 
- * Luego, devuelve un nuevo array de mensajes con solo los 
+ *
+ * Luego, devuelve un nuevo array de mensajes con solo los
  * campos esenciales y el contenido desencriptado.
  *
  * @param {array} messages - Array de mensajes a formatear y desencriptar.
@@ -13,18 +13,18 @@ const decryptMessage = require("./decryptMessage");
  */
 
 const messageFormatter = (messages) => {
-  // Si el parámetro messages es un array, lo dejamos como está; 
+  // Si el parámetro messages es un array, lo dejamos como está;
   // de lo contrario, lo convertimos en un array.
   let inputMessages = Array.isArray(messages) ? messages : [messages];
   let outputMessages = [];
-  
-  // Iteramos a través de cada mensaje para aplicar el formato 
+
+  // Iteramos a través de cada mensaje para aplicar el formato
   // y desencriptar el contenido.
   for (const message of inputMessages) {
     // Convertimos el objeto de mensaje en su representación JSON.
     const plainMessage = message.toJSON();
-
-    // Creamos un nuevo objeto de mensaje con los campos 
+    console.log(plainMessage);
+    // Creamos un nuevo objeto de mensaje con los campos
     // esenciales y contenido desencriptado.
     const outputMessage = {
       userId:
@@ -40,6 +40,9 @@ const messageFormatter = (messages) => {
         plainMessage?.user?.profile_image ||
         plainMessage.UserSender?.profile_image ||
         plainMessage.CompanySender?.image,
+      user_status:
+        plainMessage?.user?.status ||
+        plainMessage.UserSender?.status,
       messageId: plainMessage.message_id || plainMessage.id,
       createdAt: plainMessage.createdAt,
       content: decryptMessage(plainMessage.content),
@@ -53,7 +56,7 @@ const messageFormatter = (messages) => {
       }
     }
 
-    // Agregamos el mensaje formateado al array 
+    // Agregamos el mensaje formateado al array
     // de mensajes formateados y desencriptados.
     outputMessages.push(outputMessage);
   }

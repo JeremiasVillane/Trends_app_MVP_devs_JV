@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const {
-  createMessage,
-  removeMessage,
   getListChatsByUser,
+  createPrivateChat,
   messagesByChat,
+  newPrivateMessage,
+  removeMessage,
   createGroup,
   editGroup,
   removeGroup,
@@ -17,21 +18,17 @@ const {
   removeGroupMessage,
   editGroupMessage,
   userConversations,
-  createPrivateChat,
-  newPrivateMessage,
 } = require("../handlers/chatroom.handlers");
 const {validateGroupOwner, validateId, validateProfileOwner, encryptMessage, idCleaner} = require("../middlewares");
 
 const chatroomRoutes = Router();
 
 chatroomRoutes.get("/chat/:id", validateId, getListChatsByUser);
-chatroomRoutes.post("/chat/:contactId", createPrivateChat);
+chatroomRoutes.post("/chat", createPrivateChat);
 chatroomRoutes.get("/chat/:chatId/messages", idCleaner, messagesByChat);
 chatroomRoutes.post("/chat/:chatId/messages", idCleaner, encryptMessage, newPrivateMessage);
 chatroomRoutes.put("/chat/:chatId/messages/:messageId", idCleaner, encryptMessage, editMessage);
 chatroomRoutes.delete("/chat/:chatId/messages/:messageId", idCleaner, removeMessage);
-
-// chatroomRoutes.post("/message", encryptMessage, createMessage);
 
 chatroomRoutes.get("/groups", allGroups);
 chatroomRoutes.post("/groups", createGroup);

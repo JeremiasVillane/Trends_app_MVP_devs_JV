@@ -1,0 +1,128 @@
+.info_sidebar {
+  /* position: absolute; */
+  width: 300px;
+  background-color: #f0f0f0;
+  border-left: 1px solid #ccc;
+  overflow-y: auto;
+  cursor: default;
+}
+
+.info_sidebar header {
+  background-color: #f0f0f0;
+  height: 3.6rem;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1rem 0 1rem;
+  font-size: 20px;
+}
+
+.info_sidebar main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image_container {
+  position: relative;
+  width: 12rem;
+  height: 12rem;
+  /* flex: none; */
+  margin: 1rem;
+  background-color: #fff;
+  border: 3px solid #999;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image_container:hover {
+  opacity: 0.5;
+  background-color: #344c5a;
+}
+
+.image_container:hover .icon_container {
+  visibility: visible;
+}
+
+.icon_container {
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  height: fit-content;
+  width: fit-content;
+  display: block;
+  z-index: 3;
+  visibility: hidden;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  height: 3.6rem;
+  padding: 0 10px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 1rem 0 1rem;
+  font-size: 20px;
+  font-weight: medium;
+}
+
+.info_sidebar section {
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 15rem;
+  overflow-y: scroll;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.user_card {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 0.3rem 0;
+}
+
+.user_card .avatar {
+  width: 50px;
+  height: 50px;
+  margin-right: 12px;
+  flex: none;
+}
+
+@media screen and (max-width: 650px) {
+  .info_sidebar {
+    display: none;
+  }
+}
+
+:global(.dark-mode) .info_sidebar {
+  background-color: #202020;
+  border-left: 1px solid #383836;
+}
+:global(.dark-mode) .info_sidebar header {
+  background-color: #202020;
+  color: #fff;
+  border-bottom: 1px solid #383836;
+}
+:global(.dark-mode) .name,
+:global(.dark-mode) .user_card {
+  color: #d9d9d9;
+}
+:global(.dark-mode) .subtitle {
+  color: #fff;
+  border-top: 1px solid #383836;
+}

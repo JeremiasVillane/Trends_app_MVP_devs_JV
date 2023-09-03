@@ -18,7 +18,10 @@ const MessageList = ({ socket, messages }) => {
           key={index}
           socket={socket}
           author={message.username}
+          authorName={message.name}
+          authorId={message.userId}
           avatar={message.profile_image}
+          userStatus={message.user_status}
           messageId={message.messageId}
           timestamp={message.createdAt}
           content={message.content}

@@ -42,7 +42,7 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
         setShowPreviewImage(true);
         setErrorMessage("");
       } else {
-        setErrorMessage("El archivo seleccionado no es una imagen.");
+        setErrorMessage("Solo se permiten imágenes: jpg, jpeg, png, gif, svg");
       }
     }
   };
@@ -61,7 +61,7 @@ const GroupChatModalPage1 = ({ onNext, setShowGroupChatModal }) => {
       position: "top-end",
       toast: true,
       title: "Formato incorrecto",
-      text: "Solo se permiten imágenes: jpg, jpeg, png, gif, svg",
+      text: errorMessage,
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,

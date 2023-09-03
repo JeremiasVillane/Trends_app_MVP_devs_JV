@@ -26,10 +26,9 @@ module.exports = async (contactId, userId, userType) => {
     receiverIdType = "user2_id";
   }
 
-  const chat = await Chat.create({
-    [senderIdType]: userId,
-    [receiverIdType]: contactId,
+  const chat = await Chat.findOrCreate({
+    where: { [senderIdType]: userId, [receiverIdType]: contactId },
   });
 
-  return chat;
+  return chat[0];
 };

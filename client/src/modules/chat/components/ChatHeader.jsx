@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { BsFillInfoCircleFill } from "react-icons/bs";
 import Avatar from "./Avatar";
 import styles from "./ChatHeader.module.css";
+import { useSelector } from "react-redux";
+import { selectDarkMode } from "../../../redux/UsersSlice";
 
 const ChatHeader = ({
   isGroup,
@@ -8,8 +11,11 @@ const ChatHeader = ({
   chatTitle,
   contactId,
   participants,
+  setShowInfo,
 }) => {
   const navigate = useNavigate();
+  const darkMode = useSelector(selectDarkMode);
+
   const handleProfile = () => {
     navigate(`/user/profile/${contactId}`);
   };
@@ -26,16 +32,14 @@ const ChatHeader = ({
     <div className={styles.chat_header}>
       <Avatar imageUrl={chatImage} altText={chatTitle} size={"50px"} />
       <h2 onClick={isGroup ? null : handleProfile}>{chatTitle}</h2>
-      {/* {isGroup && <p>{groupMembers.join(", ")}</p>} */}
       {isGroup && (
-        <details>
-          <summary>Integrantes</summary>
-          <div>
-            {groupMembers.map((member, index) => (
-              <p key={index}>{member}</p>
-            ))}
-          </div>
-        </details>
+        <BsFillInfoCircleFill
+          size={20}
+          color={ darkMode ? "#f5f5f5" : "#383836" }
+          onClick={() => setShowInfo((curr) => !curr)}
+          style={{ cursor: "pointer" }}
+          title="Más información"
+        />
       )}
     </div>
   );

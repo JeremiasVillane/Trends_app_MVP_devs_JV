@@ -6,11 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserProfile } from "../../../redux/UsersSlice";
 import MessageActions from "./MessageActions";
 import { deleteMessage, loadConversations } from "../../../redux/chatSlice";
+import Avatar from "./Avatar";
+import { useNavigate } from "react-router-dom";
 
 const Message = ({
   socket,
   author,
+  authorName,
+  authorId,
   avatar,
+  userStatus,
   messageId,
   timestamp,
   content,
@@ -18,6 +23,7 @@ const Message = ({
   messages,
 }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(selectUserProfile);
   const activeConversation = useSelector(
     (state) => state.chat.activeConversation
@@ -26,6 +32,10 @@ const Message = ({
   const [showActions, setShowActions] = useState(false);
   const messageStyle =
     user.username === author ? "message_sent" : "message_received";
+
+  const handleProfile = () => {
+    navigate(`/user/profile/${authorId}`);
+  };
 
   const handleMouseEnter = () => {
     setShowActions(true);
@@ -49,8 +59,17 @@ const Message = ({
 
   return (
     <div className={styles.message}>
-      <div className={`${styles[`${messageStyle}_avatar`]} ${styles.avatar}`}>
-        <img src={avatar} />
+      <div
+        className={`${styles[`${messageStyle}_avatar`]} ${styles.avatar}`}
+        onClick={user.id !== authorId ? handleProfile : null}
+        style={{ cursor: user.id !== authorId ? "pointer" : "default" }}
+      >
+        <Avatar
+          imageUrl={avatar}
+          altText={author}
+          size={"50px"}
+          status={userStatus}
+        />
       </div>
 
       <div
@@ -58,10 +77,9 @@ const Message = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
+        <p className={styles.message_autor}>{authorName}</p>
         {user.username === author && showActions && (
-          <MessageActions
-            onDeleteMessage={() => handleDelete(messageId)}
-          />
+          <MessageActions onDeleteMessage={() => handleDelete(messageId)} />
         )}
         <div
           className={`${styles[`${messageStyle}`]} ${

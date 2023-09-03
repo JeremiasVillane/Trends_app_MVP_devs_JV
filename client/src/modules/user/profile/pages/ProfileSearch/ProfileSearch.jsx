@@ -1,17 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { HiChat } from "react-icons/hi";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { Animate } from "react-simple-animate";
+import { createNewPrivateChat } from "../../../../../redux/chatSlice";
+import { selectUserProfile } from "../../../../../redux/UsersSlice";
 import Avatar from "../../../../chat/components/Avatar";
 import styles from "./ProfileSearch.module.css";
 const { VITE_URL } = import.meta.env;
 
 const ProfileSearch = () => {
   const { id } = useParams();
+  const currentUser = useSelector(selectUserProfile);
   const [userData, setUserData] = useState({});
   const URL = `${VITE_URL}/search/user/${id}`;
   const [image, setImage] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,30 +35,10 @@ const ProfileSearch = () => {
   useEffect(() => {
     if (userData.profile_image) {
       setImage(userData.profile_image);
-      // loadImage();
     }
   }, [userData]);
 
-  // const loadImage = async () => {
-  //   const URLImage = `${VITE_URL}${userData.profile_image}`;
-  //   if (!userData.profile_image.startsWith("http")) {
-  //     await axios
-  //       .get(URLImage, { responseType: "blob", withCredentials: "include" })
-  //       .then((response) => {
-  //         const blob = new Blob([response.data], {
-  //           type: response.headers["content-type"],
-  //         });
-  //         setImage(blob);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     setImage(userData.profile_image);
-  //   }
-  // };
-
-  function getImageSrc(image) {
+  const getImageSrc = (image) => {
     if (typeof image === "string") {
       return image;
     } else if (typeof image === "object") {
@@ -67,6 +53,11 @@ const ProfileSearch = () => {
       return "";
     }
   }
+
+  const handleChats = () => {
+    dispatch(createNewPrivateChat(currentUser.id, id))
+    navigate("/chatroom/chat");
+  };
 
   return (
     <div className={styles.BGContainer}>
@@ -83,7 +74,7 @@ const ProfileSearch = () => {
 
         <h1>{userData?.type === "student" ? "Estudiante" : "Profesional"}</h1>
 
-        <button className={styles.ChatButton}>
+        <button className={styles.ChatButton} onClick={handleChats}>
           <HiChat size="2rem" color="#344C5A" />
         </button>
       </header>
