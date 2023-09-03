@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 const { VITE_URL } = import.meta.env;
 
@@ -58,6 +58,8 @@ export const loadConversations = (userId) => async (dispatch) => {
   }
 };
 
+// Thunk para filtrar las conversaciones del backend
+// y cargarlas al estado global
 export const searchConversations =
   (userId, searchQuery) => async (dispatch) => {
     try {
@@ -77,20 +79,67 @@ export const searchConversations =
 // Thunk para enviar el mensaje y obtener la respuesta del backend
 export const sendAndStoreMessage =
   (conversationId, messageData) => async (dispatch) => {
-    // console.log("sendAndStoreMessage: ", messageData);
+    let conversationType;
+
+    conversationId.includes("group")
+      ? (conversationType = "groups")
+      : (conversationType = "chat");
+
     try {
-      const response = await axios.post(
-        `${VITE_URL}/chatroom/groups/${conversationId}/messages`,
+      const { data } = await axios.post(
+        `${VITE_URL}/chatroom/${conversationType}/${conversationId}/messages`,
         messageData,
         { withCredentials: "include" }
       );
 
-      // Despachar la acción para agregar el mensaje del backend al estado
-      dispatch(addNewMessage({ conversationId, newMessage: response.data }));
+      dispatch(addNewMessage({ conversationId, newMessage: data }));
     } catch (error) {
       console.error("Error al guardar el mensaje:", error);
     }
   };
+
+// Thunk para editar el mensaje
+export const editMessage =
+  (conversationId, messageId, content) => async (dispatch) => {
+    let conversationType;
+
+    conversationId.includes("group")
+      ? (conversationType = "groups")
+      : (conversationType = "chat");
+
+    try {
+      await axios.put(
+        `${VITE_URL}/chatroom/${conversationType}/${conversationId}/messages/${messageId}`,
+        { content },
+        { withCredentials: "include" }
+      );
+
+      dispatch(loadConversations(userId));
+    } catch (error) {
+      console.error("Error al eliminar el mensaje:", error);
+    }
+  };
+
+// Thunk para eliminar el mensaje
+export const deleteMessage = (conversationId, messageId) => async () => {
+  let conversationType;
+
+  conversationId.includes("group")
+    ? (conversationType = "groups")
+    : (conversationType = "chat");
+
+  try {
+    const { data } = await axios.put(
+      `${VITE_URL}/chatroom/${conversationType}/${conversationId}/messages/${messageId}`,
+      { messageStatus: "deleted" },
+      { withCredentials: "include" }
+    );
+
+    return data;
+  } catch (error) {
+    console.error("Error al eliminar el mensaje:", error);
+  }
+};
 
 // Thunk para crear un nuevo grupo de chat
 export const createNewChatGroup =
@@ -101,6 +150,7 @@ export const createNewChatGroup =
         { name: groupName, image: groupImage },
         { withCredentials: "include" }
       );
+
       dispatch(loadConversations(userId));
       dispatch(setActiveConversation(`group${data.id}`));
     } catch (error) {
@@ -108,9 +158,11 @@ export const createNewChatGroup =
     }
   };
 
+// Thunk para agregar integrantes a un grupo de chat
 export const addGroupMember = (data) => async (dispatch) => {
   try {
     const { ownerId, groupId, users } = data;
+
     for (const user of users) {
       await axios.post(
         `${VITE_URL}/chatroom/groups/${groupId}/users`,
@@ -118,12 +170,14 @@ export const addGroupMember = (data) => async (dispatch) => {
         { withCredentials: "include" }
       );
     }
+
     dispatch(loadConversations(ownerId));
   } catch (error) {
-    console.error("Error añadiendo integrante al grupo:", error);
+    console.error("Error agregando integrante/s al grupo:", error);
   }
 };
 
+// Thunk para subir una imagen
 export const addGroupImage = (formData) => async () => {
   try {
     const { data } = await axios.post(`${VITE_URL}/images/upload`, formData, {
@@ -132,7 +186,7 @@ export const addGroupImage = (formData) => async () => {
     const urlImage = data.imageUrl;
     return urlImage;
   } catch (error) {
-    console.error("Error añadiendo imagen al grupo:", error);
+    console.error("Error subiendo imagen:", error);
   }
 };
 

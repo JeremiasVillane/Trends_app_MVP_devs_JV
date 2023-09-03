@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import ChatHeader from "./ChatHeader";
-import MessageList from "./MessageList";
-import MessageInput from "./MessageInput";
-import styles from "./Chat.module.css";
-import ChatSidebar from "./ChatSideBar";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getMatchedUsers,
-  getUserInfo,
-  selectUserProfile,
-} from "../../../redux/UsersSlice";
 import { io } from "socket.io-client";
 import {
   loadConversations,
   searchConversations,
   sendAndStoreMessage,
 } from "../../../redux/chatSlice";
+import {
+  getMatchedUsers,
+  getUserInfo,
+  selectUserProfile,
+} from "../../../redux/UsersSlice";
+import styles from "./Chat.module.css";
+import ChatHeader from "./ChatHeader";
+import ChatSidebar from "./ChatSideBar";
 import GroupChatModal from "./GroupChatModal";
-const { VITE_URL_BASE, VITE_URL } = import.meta.env;
+import MessageInput from "./MessageInput";
+import MessageList from "./MessageList";
+const { VITE_URL_BASE } = import.meta.env;
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -34,6 +34,7 @@ const Chat = () => {
   );
 
   const [showGroupChatModal, setShowGroupChatModal] = useState(false);
+  const [showPrivateChatModal, setShowPrivateChatModal] = useState(false);
 
   // const [searchQuery, setSearchQuery] = useState("");
   const onSearch = (query) => {
@@ -69,7 +70,10 @@ const Chat = () => {
 
   useEffect(() => {
     if (socket) {
-      socket.on("message", (message) => {
+      socket.on("message", () => {
+        dispatch(loadConversations(user.id));
+      });
+      socket.on("messageUpdated", () => {
         dispatch(loadConversations(user.id));
       });
     }
@@ -83,7 +87,6 @@ const Chat = () => {
       socket.emit("sendMessage", messageData);
 
       dispatch(sendAndStoreMessage(activeConversationData.id, messageData));
-      // .then(() => dispatch(loadConversations(user.id)));
     }
   };
 
@@ -104,7 +107,10 @@ const Chat = () => {
               contactId={activeConversationData.userId}
               participants={activeConversationData.members}
             />
-            <MessageList messages={activeConversationData.messages} />
+            <MessageList
+              socket={socket}
+              messages={activeConversationData.messages}
+            />
             <MessageInput userId={user.id} onSendMessage={onSendMessage} />
           </>
         ) : (
@@ -116,6 +122,9 @@ const Chat = () => {
       {showGroupChatModal && (
         <GroupChatModal setShowGroupChatModal={setShowGroupChatModal} />
       )}
+      {/* {showPrivateChatModal && (
+        <PrivateChatModal setShowPrivateChatModal={setShowPrivateChatModal} />
+      )} */}
     </div>
   );
 };

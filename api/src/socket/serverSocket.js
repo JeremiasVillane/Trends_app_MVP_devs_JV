@@ -62,6 +62,11 @@ module.exports = (serverSocket) => {
       console.log(`Mensaje recibido: ${message}`);
     });
 
+    socket.on("updateMessage", (messageId) => {
+      io.emit("messageUpdated", messageId);
+      console.log(`Mensaje editado: ${messageId}`);
+    });
+
     socket.on("disconnect", () => {
       removeUser(socket.id)
       console.log(`Usuario desconectado: ${socket.id}`);

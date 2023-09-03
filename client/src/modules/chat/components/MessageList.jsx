@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Message from "./Message";
 import styles from "./MessageList.module.css";
 
-const MessageList = ({ messages }) => {
+const MessageList = ({ socket, messages }) => {
   const messageListRef = useRef(null);
 
   useEffect(() => {
@@ -16,6 +16,7 @@ const MessageList = ({ messages }) => {
       {messages?.map((message, index) => (
         <Message
           key={index}
+          socket={socket}
           author={message.username}
           avatar={message.profile_image}
           messageId={message.messageId}

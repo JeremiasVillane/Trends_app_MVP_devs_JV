@@ -11,12 +11,16 @@ const patchUserRole = require("./patchUserRole");
 const postGroup = require("./postGroup");
 const postGroupMessage = require("./postGroupMessage");
 const postMessage = require("./postMessage");
+const postPrivateChat = require("./postPrivateChat");
+const postPrivateMessage = require("./postPrivateMessage");
 const postUserInGroup = require("./postUserInGroup");
 const putGroup = require("./putGroup");
 const putGroupMessage = require("./putGroupMessage");
 const putMessage = require("./putMessage");
 
 module.exports = {
+  postPrivateChat,
+  postPrivateMessage,
   postMessage,
   putMessage,
   deleteMessage,

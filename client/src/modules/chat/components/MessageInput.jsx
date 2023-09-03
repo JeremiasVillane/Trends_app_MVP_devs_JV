@@ -38,6 +38,7 @@ const MessageInput = ({ userId, onSendMessage }) => {
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
         placeholder="Escribe tu mensaje..."
+        autoComplete="off"
       />
       <button className={styles.send_button}>
         <BsSendFill onClick={handleSendClick} title="Enviar" />
