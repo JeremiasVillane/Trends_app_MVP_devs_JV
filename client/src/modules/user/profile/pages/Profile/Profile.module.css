@@ -114,12 +114,6 @@
   visibility: hidden;
 }
 
-.ImageContainer:hover .Extra {
-  opacity: 0.5;
-  background-color: #344c5a;
-  border-radius: 90%;
-}
-
 .FirstInfo h1,
 .FirstInfo h3 {
   width: fit-content;
@@ -152,8 +146,7 @@
   margin-top: 0.5rem;
 }
 
-.user_location {
-  /* aplicado */
+.user_location {           /* aplicado */
   font-style: italic;
   margin: 0 1rem;
 }
@@ -163,6 +156,10 @@
 }
 .user_bio h3 {
   line-height: 1.9;
+}
+
+.user_status {
+  padding: 0 1rem;
 }
 /* ------------------*/
 

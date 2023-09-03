@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,16 +11,17 @@ import {
   getUserInfo,
   selectDarkMode,
   selectUserProfile,
+  updateUserProfile,
 } from "../../../../../redux/UsersSlice";
-import styles from "./Profile.module.css";
 import Avatar from "../../../../chat/components/Avatar";
-const { VITE_URL } = import.meta.env;
+import styles from "./Profile.module.css";
 
 const Profile = () => {
   const MySwal = withReactContent(Swal);
   const dispatch = useDispatch();
   const userData = useSelector(selectUserProfile);
   const darkMode = useSelector(selectDarkMode);
+  const [userStatus, setUserStatus] = useState(userData?.status || "online");
   const [image, setImage] = useState(null);
   const [isEditing, setIsEditing] = useState({
     image: false,
@@ -37,7 +37,6 @@ const Profile = () => {
   useEffect(() => {
     if (userData.profile_image) {
       setImage(userData.profile_image);
-      // loadImage();
     }
   }, [userData]);
 
@@ -51,9 +50,9 @@ const Profile = () => {
         title: "Completa tu perfil",
         text:
           userData?.kind === "incomplete"
-            ? "Completa tu datos en 1 minuto para poder mejorar nuestras recomendaciones"
+            ? "Completa tu datos en 1 minuto para poder mejorar nuestras recomendaciones."
             : userData?.kind === "ongoing"
-            ? `Tu perfil está incompleto. Termina de completarlo para poder mejorar nuestras recomendaciones.`
+            ? "Tu perfil está incompleto. Termina de completarlo para poder mejorar nuestras recomendaciones."
             : `Tu perfil está un ${userData?.kind}% completo. Termina de completarlo para poder mejorar nuestras recomendaciones.`,
         confirmButtonText: "Completar",
         confirmButtonColor: "#3085d6",
@@ -74,26 +73,6 @@ const Profile = () => {
       });
   }, []);
 
-  // const loadImage = async () => {
-  //   const URLImage = `${VITE_URL}${userData.profile_image}`;
-
-  //   if (!userData.profile_image.startsWith("http")) {
-  //     await axios
-  //       .get(URLImage, { responseType: "blob", withCredentials: "include" })
-  //       .then((response) => {
-  //         const blob = new Blob([response.data], {
-  //           type: response.headers["content-type"],
-  //         });
-  //         setImage(blob);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     setImage(userData.profile_image);
-  //   }
-  // };
-
   const handleGeneralChangeButton = () => {
     setIsEditing((prevState) => ({ ...prevState, general: false }));
   };
@@ -109,7 +88,7 @@ const Profile = () => {
     ImageUploadModal(darkMode, () => dispatch(getUserInfo()));
   };
 
-  function getImageSrc(image) {
+  const getImageSrc = (image) => {
     if (typeof image === "string") {
       return image;
     } else if (typeof image === "object") {
@@ -123,7 +102,14 @@ const Profile = () => {
     } else {
       return "";
     }
-  }
+  };
+
+  const handleStatusSelect = (event) => {
+    const { value } = event.target;
+    setUserStatus(value);
+    dispatch(updateUserProfile({ id: userData.id, status: value }));
+    dispatch(getUserInfo());
+  };
 
   return (
     <div className={styles.BGContainer}>
@@ -184,6 +170,22 @@ const Profile = () => {
             <section>
               <div className={styles.FirstInfo}>
                 <h1>{userData?.name}</h1>
+                <div className={styles.user_status}>
+                  <label htmlFor="user_status">
+                    <strong>Estado: </strong>
+                  </label>
+                  <select
+                    name="user_status"
+                    id="user_status"
+                    onChange={handleStatusSelect}
+                    value={userStatus}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <option>online</option>
+                    <option>offline</option>
+                    <option>invisible</option>
+                  </select>
+                </div>
                 {userData?.info_skills ? (
                   <h3>
                     <strong>{userData?.info_skills?.join(" | ")}</strong>

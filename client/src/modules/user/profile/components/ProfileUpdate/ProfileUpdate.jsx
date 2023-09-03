@@ -81,7 +81,6 @@ export const ProfileUpdate = ({ handleCancelButton }) => {
       <div className={`${styles.whiteContainer} ${styles.GeneralContainer}`}>
         <div className={styles.TopContainer}>
           <h2 className={styles.Title}>Editar información de perfil</h2>
-          {/* <button onClick={handleCancelButton}>X</button> */}
         </div>
 
         <form onSubmit={handleSubmit}>

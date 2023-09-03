@@ -47,7 +47,7 @@ module.exports = (sequelize) => {
         },
       },
       status: {
-        type: DataTypes.STRING, // online, offline, busy, invisible
+        type: DataTypes.STRING, // online, offline, invisible
         defaultValue: "online",
       },
       kind: {
