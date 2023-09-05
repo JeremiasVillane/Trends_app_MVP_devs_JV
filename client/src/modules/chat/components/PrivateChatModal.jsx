@@ -1,31 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewPrivateChat } from "../../../redux/chatSlice";
-import { selectAllUsers, selectUserProfile } from "../../../redux/UsersSlice";
+import { searchUsers, selectUserProfile } from "../../../redux/UsersSlice";
 import Avatar from "./Avatar";
 import styles from "./GroupChatModal.module.css";
 
 const PrivateChatModal = ({ setShowPrivateChatModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUserProfile);
-  const allUsers = useSelector(selectAllUsers);
-
+  const chatUserListRef = useRef(null);
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [typeSearched, setTypeSearched] = useState("professional");
+  const [querySearched, setQuerySearched] = useState("");
+  const [page, setPage] = useState(1);
   const [selectedContact, setSelectedContact] = useState("");
 
-  const handleSelectMember = (event) => {
+  //********** Lógica para elegir contacto **********//
+  const handleSelectContact = (event) => {
     const contactId = event.target.value;
-    const newSelectedContact = allUsers.find(
-      (user) => user.user.id === contactId
+    const newSelectedContact = searchedUsers.find(
+      (user) => user.id === contactId
     );
 
-    if (selectedContact.includes(newSelectedContact.user.id)) {
+    if (selectedContact.includes(newSelectedContact.id)) {
       setSelectedContact(
-        selectedContact.filter(
-          (contact) => contact !== newSelectedContact.user.id
-        )
+        selectedContact.filter((contact) => contact !== newSelectedContact.id)
       );
     } else {
-      setSelectedContact(newSelectedContact.user.id);
+      setSelectedContact(newSelectedContact.id);
     }
   };
 
@@ -34,7 +36,9 @@ const PrivateChatModal = ({ setShowPrivateChatModal }) => {
       setShowPrivateChatModal(false)
     );
   };
+  //****************************************************//
 
+  //*********** Lógica para cerrar el modal **********+//
   const ref = useRef();
 
   useEffect(() => {
@@ -50,6 +54,63 @@ const PrivateChatModal = ({ setShowPrivateChatModal }) => {
       setShowPrivateChatModal(false);
     }
   };
+  //****************************************************//
+
+  //***** Lógica para filtrar contactos por nombre *****//
+  const loadUsers = () => {
+    dispatch(searchUsers(typeSearched, page, querySearched)).then((result) => {
+      if (page === 1) {
+        // Si estamos en la primera página,
+        // reemplazamos los resultados
+        setSearchedUsers(result.data);
+      } else {
+        // Si estamos en páginas siguientes,
+        // agregamos los resultados a la lista existente
+        setSearchedUsers([...searchedUsers, ...result.data]);
+      }
+    });
+  };
+
+  const handleSearch = (event) => {
+    const { value } = event.target;
+    setTypeSearched(value);
+    setSearchedUsers([]);
+    setPage(1);
+  };
+
+  const handleQuery = (event) => {
+    const { value } = event.target;
+    setQuerySearched(value);
+    setPage(1);
+  };
+  //****************************************************//
+
+  //********** Lógica del infinite scrolling **********//
+  const checkScrollAndLoadMore = () => {
+    const chatUserList = chatUserListRef.current;
+    if (
+      chatUserList &&
+      chatUserList.scrollHeight - chatUserList.scrollTop ===
+        chatUserList.clientHeight
+    ) {
+      setPage(page + 1);
+    }
+  };
+
+  useEffect(() => {
+    const chatUserList = chatUserListRef.current;
+    chatUserList.addEventListener("scroll", checkScrollAndLoadMore);
+
+    return () => {
+      chatUserList.removeEventListener("scroll", checkScrollAndLoadMore);
+    };
+  }, []);
+
+  //****************************************************//
+
+  useEffect(() => {
+    loadUsers();
+  }, [typeSearched, querySearched, page]);
 
   return (
     <div
@@ -62,29 +123,41 @@ const PrivateChatModal = ({ setShowPrivateChatModal }) => {
           <h2>Iniciar chat privado</h2>
         </div>
         <div className={styles.modal_content}>
-          <div className={styles.chatgroup_userlist}>
-            {allUsers.map((user, index) => (
+          <div className={styles.searchbar}>
+            <select name="user_type" onChange={handleSearch}>
+              <option value="professional" selected>Profesionales</option>
+              <option value="student">Estudiantes</option>
+            </select>
+            <input
+              type="text"
+              name="search_bar"
+              placeholder="Buscar usuarios..."
+              onChange={handleQuery}
+            />
+          </div>
+          <div className={styles.chatgroup_userlist} ref={chatUserListRef}>
+            {searchedUsers.map((user, index) => (
               <div key={index} className={styles.user_card}>
-                <label key={user.user.id} title="Seleccionar">
+                <label key={user.id} title="Seleccionar">
                   <input
                     type="radio"
-                    value={user.user.id}
-                    checked={selectedContact.includes(user.user.id)}
-                    onChange={handleSelectMember}
+                    value={user.id}
+                    checked={selectedContact.includes(user.id)}
+                    onChange={handleSelectContact}
                   />
                   <div className={styles.avatar}>
                     <Avatar
-                      imageUrl={user.user.profile_image}
-                      altText={user.user.name}
+                      imageUrl={user.profile_image}
+                      altText={user.name}
                       size={"50px"}
-                      status={user.user.status}
+                      status={user.status}
                     />
                   </div>
-                  <h4>{user.user.name}</h4>
-                  <div className={styles.user_type}>
-                    {user.user.type === "student"
-                      ? "Estudiante"
-                      : "Profesional"}
+                  <div className={styles.user_name}>
+                  <h4>{user.name}</h4>
+                  <div className={styles.user_username}>
+                    ({user.username})
+                  </div>
                   </div>
                 </label>
               </div>

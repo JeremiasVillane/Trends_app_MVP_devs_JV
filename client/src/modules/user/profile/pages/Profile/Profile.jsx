@@ -24,6 +24,7 @@ const Profile = () => {
   const darkMode = useSelector(selectDarkMode);
   const [userStatus, setUserStatus] = useState(userData?.status || "online");
   const [image, setImage] = useState(null);
+  const [showImageUploadModal, setShowImageUploadModal] = useState(false);
   const [isEditing, setIsEditing] = useState({
     image: false,
     general: false,
@@ -86,7 +87,7 @@ const Profile = () => {
   };
 
   const handleImageEdit = () => {
-    ImageUploadModal(darkMode, () => dispatch(getUserInfo()));
+    setShowImageUploadModal(true);
   };
 
   const getImageSrc = (image) => {
@@ -113,36 +114,45 @@ const Profile = () => {
   };
 
   return (
-    <div className={styles.BGContainer}>
-      {isEditing.general && (
-        <div className={styles.EditPhoto}>
-          <ProfileUpdate handleCancelButton={handleGeneralChangeButton} />
-        </div>
-      )}
-      <header>
-        <div className={styles.ImageContainer} onClick={handleImageEdit} title="Editar imagen de perfil" >
-          <Avatar
-            imageUrl={getImageSrc(image)}
-            altText={userData.name}
-            size={"14rem"}
-            status={userData.status}
-            type={"profile"}
-          />
-          <div className={styles.IconContainer}>
-            <AiFillEdit size="6rem" color="white" />
+    <>
+      <div className={styles.BGContainer}>
+        {isEditing.general && (
+          <div className={styles.EditPhoto}>
+            <ProfileUpdate handleCancelButton={handleGeneralChangeButton} />
           </div>
-        </div>
-        <h1>{translateUserType(userData?.type)}</h1>
+        )}
+        <header>
+          <div
+            className={styles.ImageContainer}
+            onClick={handleImageEdit}
+            title="Editar imagen de perfil"
+          >
+            <Avatar
+              imageUrl={getImageSrc(image)}
+              altText={userData.name}
+              size={"14rem"}
+              status={userData.status}
+              type={"profile"}
+            />
+            <div className={styles.IconContainer}>
+              <AiFillEdit size="6rem" color="white" />
+            </div>
+          </div>
+          <h1>{translateUserType(userData?.type)}</h1>
 
-        <button onClick={handleGeneralEdit} className={styles.EditButton} title="Editar perfil">
-          <AiFillEdit size="2rem" color={darkMode ? darkColor : lightColor} />
-        </button>
-      </header>
+          <button
+            onClick={handleGeneralEdit}
+            className={styles.EditButton}
+            title="Editar perfil"
+          >
+            <AiFillEdit size="2rem" color={darkMode ? darkColor : lightColor} />
+          </button>
+        </header>
 
-      <Animate play start={{ opacity: 0.3 }} end={{ opacity: 1 }}>
-        <main>
-          <div className={styles.Profile}>
-            {/* <div className={styles.container_infouser}>
+        <Animate play start={{ opacity: 0.3 }} end={{ opacity: 1 }}>
+          <main>
+            <div className={styles.Profile}>
+              {/* <div className={styles.container_infouser}>
             <div className={styles.username}>
               <h1>{userData.name}</h1>
             </div>
@@ -161,122 +171,129 @@ const Profile = () => {
               <p>{userData.profile_bio}</p>
             </div>
           </div> */}
-            <section>
-              <div className={styles.FirstInfo}>
-                <h1>{userData?.name}</h1>
-                <div className={styles.user_status}>
-                  <label htmlFor="user_status">
-                    <strong>Estado: </strong>
-                  </label>
-                  <select
-                    name="user_status"
-                    id="user_status"
-                    onChange={handleStatusSelect}
-                    value={userStatus}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <option>online</option>
-                    <option>offline</option>
-                    <option>invisible</option>
-                  </select>
-                </div>
-                {userData?.info_skills ? (
-                  <h3>
-                    <strong>{userData?.info_skills?.join(" | ")}</strong>
-                  </h3>
-                ) : null}
-                {userData?.profile_city || userData?.profile_country ? (
-                  <h3 className={styles.user_location}>
-                    {`${userData?.profile_city}, ${userData?.profile_country}`}
-                  </h3>
-                ) : null}
-              </div>
-            </section>
-            <hr />
-            {userData?.profile_bio ? (
               <section>
-                <h2>Biografía</h2>
-                <div className={styles.user_bio}>
-                  <h3>{userData?.profile_bio}</h3>
+                <div className={styles.FirstInfo}>
+                  <h1>{userData?.name}</h1>
+                  <div className={styles.user_status}>
+                    <label htmlFor="user_status">
+                      <strong>Estado: </strong>
+                    </label>
+                    <select
+                      name="user_status"
+                      id="user_status"
+                      onChange={handleStatusSelect}
+                      value={userStatus}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <option>online</option>
+                      <option>offline</option>
+                      <option>invisible</option>
+                    </select>
+                  </div>
+                  {userData?.info_skills ? (
+                    <h3>
+                      <strong>{userData?.info_skills?.join(" | ")}</strong>
+                    </h3>
+                  ) : null}
+                  {userData?.profile_city || userData?.profile_country ? (
+                    <h3 className={styles.user_location}>
+                      {`${userData?.profile_city}, ${userData?.profile_country}`}
+                    </h3>
+                  ) : null}
                 </div>
               </section>
-            ) : null}
-            <hr />
-            <section>
-              {(userData.academic_area ||
-                userData.info_career ||
-                userData.academic_graduation ||
-                userData.academic_institution) && (
-                <h2>Información académica</h2>
-              )}
-              <div className={styles.user_bio}>
-                <h3>
-                  <span>
-                    <strong>Área de estudios:</strong>{" "}
-                    {userData?.academic_area?.join(", ")}
-                  </span>
-                  <br />
-                  <span>
-                    <strong>Estudios:</strong>{" "}
-                    {userData?.info_career?.join(", ")}
-                  </span>
-                  <br />
-                  <span>
-                    <strong>Año de graduación / previsto:</strong>{" "}
-                    {userData?.academic_graduation}
-                  </span>
-                  <br />
-                  <span>
-                    <strong>Institución:</strong>{" "}
-                    {userData.academic_institution}
-                  </span>
-                  <br />
-                </h3>
-              </div>
-            </section>
-            <hr />
-            <section>
-              {(userData.info_interests ||
-                userData.info_languages ||
-                userData.info_goals ||
-                userData.info_skills) && <h2>Información Adicional</h2>}
-              <div className={styles.user_bio}>
-                <h3>
-                  {userData.info_interests && (
+              <hr />
+              {userData?.profile_bio ? (
+                <section>
+                  <h2>Biografía</h2>
+                  <div className={styles.user_bio}>
+                    <h3>{userData?.profile_bio}</h3>
+                  </div>
+                </section>
+              ) : null}
+              <hr />
+              <section>
+                {(userData.academic_area ||
+                  userData.info_career ||
+                  userData.academic_graduation ||
+                  userData.academic_institution) && (
+                  <h2>Información académica</h2>
+                )}
+                <div className={styles.user_bio}>
+                  <h3>
                     <span>
-                      <strong>Intereses:</strong>{" "}
-                      {userData.info_interests.join(", ")}
+                      <strong>Área de estudios:</strong>{" "}
+                      {userData?.academic_area?.join(", ")}
                     </span>
-                  )}
-                  <br />
-                  {userData.info_languages && (
+                    <br />
                     <span>
-                      <strong>Idiomas:</strong>{" "}
-                      {userData.info_languages.join(", ")}
+                      <strong>Estudios:</strong>{" "}
+                      {userData?.info_career?.join(", ")}
                     </span>
-                  )}
-                  <br />
-                  {userData.info_goals && (
+                    <br />
                     <span>
-                      <strong>Objetivos:</strong>{" "}
-                      {userData.info_goals.join(", ")}
+                      <strong>Año de graduación / previsto:</strong>{" "}
+                      {userData?.academic_graduation}
                     </span>
-                  )}
-                  <br />
-                  {userData.info_skills && (
+                    <br />
                     <span>
-                      <strong>Habilidades:</strong>{" "}
-                      {userData.info_skills.join(", ")}
+                      <strong>Institución:</strong>{" "}
+                      {userData.academic_institution}
                     </span>
-                  )}
-                  <br />
-                </h3>
-              </div>
-            </section>
-          </div>
-        </main>
-      </Animate>
-    </div>
+                    <br />
+                  </h3>
+                </div>
+              </section>
+              <hr />
+              <section>
+                {(userData.info_interests ||
+                  userData.info_languages ||
+                  userData.info_goals ||
+                  userData.info_skills) && <h2>Información Adicional</h2>}
+                <div className={styles.user_bio}>
+                  <h3>
+                    {userData.info_interests && (
+                      <span>
+                        <strong>Intereses:</strong>{" "}
+                        {userData.info_interests.join(", ")}
+                      </span>
+                    )}
+                    <br />
+                    {userData.info_languages && (
+                      <span>
+                        <strong>Idiomas:</strong>{" "}
+                        {userData.info_languages.join(", ")}
+                      </span>
+                    )}
+                    <br />
+                    {userData.info_goals && (
+                      <span>
+                        <strong>Objetivos:</strong>{" "}
+                        {userData.info_goals.join(", ")}
+                      </span>
+                    )}
+                    <br />
+                    {userData.info_skills && (
+                      <span>
+                        <strong>Habilidades:</strong>{" "}
+                        {userData.info_skills.join(", ")}
+                      </span>
+                    )}
+                    <br />
+                  </h3>
+                </div>
+              </section>
+            </div>
+          </main>
+        </Animate>
+      </div>
+      {showImageUploadModal && (
+        <ImageUploadModal
+          currentProfileImage={image}
+          setShowImageUploadModal={setShowImageUploadModal}
+        />
+      )}
+    </>
   );
 };
 

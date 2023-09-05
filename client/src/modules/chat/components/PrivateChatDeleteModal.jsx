@@ -1,11 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import {
-  deleteChatGroup,
-  deletePrivateChat,
-  setActiveConversation,
-} from "../../../redux/chatSlice";
+import { deletePrivateChat } from "../../../redux/chatSlice";
 import { selectDarkMode, selectUserProfile } from "../../../redux/UsersSlice";
 import styles from "./GroupChatModal.module.css";
 
@@ -42,7 +38,7 @@ const PrivateChatDeleteModal = ({
       icon: "success",
       position: "top-end",
       toast: true,
-      title: "Grupo eliminado",
+      title: "Chat eliminado",
       text: `Se eliminó correctamente el chat con "${contactName}"`,
       showConfirmButton: false,
       timer: 2000,

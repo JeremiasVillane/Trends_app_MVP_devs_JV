@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectDarkMode } from "../../../redux/UsersSlice";
+import AddUserToGroupModal from "./AddUserToGroupModal";
 import GroupChatDeleteModal from "./GroupChatDeleteModal";
 import GroupChatEditModal from "./GroupChatEditModal";
 import InfoGroup from "./InfoGroup";
@@ -23,6 +24,7 @@ const InfoSideBar = ({
   const [showGroupChatEditModal, setShowGroupChatEditModal] = useState(false);
   const [showDeleteGroupModal, setShowDeleteGroupModal] = useState(false);
   const [showDeleteChatModal, setShowDeleteChatModal] = useState(false);
+  const [showAddUserToGroupModal, setShowAddUserToGroupModal] = useState(false);
 
   // Para que aparezca primero el creador del grupo
   const reversedParticipants = participants && [...participants].reverse();
@@ -39,6 +41,10 @@ const InfoSideBar = ({
     setShowDeleteChatModal(true);
   };
 
+  const handleAddUserToGroup = () => {
+    setShowAddUserToGroupModal(true);
+  }
+
   return (
     <>
       <div className={styles.info_sidebar}>
@@ -46,6 +52,7 @@ const InfoSideBar = ({
           <InfoGroup
             handleEditInfo={handleEditInfo}
             handleDeleteGroup={handleDeleteGroup}
+            handleAddUserToGroup={handleAddUserToGroup}
             ownerId={ownerId}
             image={image}
             name={name}
@@ -79,6 +86,15 @@ const InfoSideBar = ({
           groupId={conversationId}
           groupName={name}
           setShowDeleteGroupModal={setShowDeleteGroupModal}
+          setShowInfo={setShowInfo}
+        />
+      )}
+      {showAddUserToGroupModal && (
+        <AddUserToGroupModal
+          groupId={conversationId}
+          ownerId={ownerId}
+          participants={reversedParticipants}
+          setShowAddUserToGroupModal={setShowAddUserToGroupModal}
           setShowInfo={setShowInfo}
         />
       )}

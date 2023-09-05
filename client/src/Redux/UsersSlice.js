@@ -102,6 +102,20 @@ const updateUserProfile = createAsyncThunk(
   }
 );
 
+// Thunk para subir una imagen
+export const uploadImage = (formData) => async () => {
+  try {
+    const { data } = await axios.post(`${VITE_URL}/images/profile`, formData, {
+      withCredentials: "include",
+    });
+    const urlImage = data.imageUrl;
+    return urlImage;
+  } catch (error) {
+    console.error("Error subiendo imagen:", error);
+  }
+};
+
+// Thunk para traer los datos de un usuario
 export const getSomeUserInfo = (userId) => async () => {
   try {
     const {data} = await axios.get(`${VITE_URL}/search/user/${userId}`, {
@@ -112,6 +126,18 @@ export const getSomeUserInfo = (userId) => async () => {
     console.error(error);
   }
 };
+
+// Thunk para buscar usuarios por nombre y tipo
+export const searchUsers = (type, page, query) =>
+  async () => {
+    try {
+      const URL = `${VITE_URL}/search/users?type=${type}&page=${page}&name=${query}`;
+      const {data} = await axios.get(URL, { withCredentials: "include" });
+      return data;
+    } catch (error) {
+      return error.response.data.error;
+    }
+  };
 
 const usersSlice = createSlice({
   name: "users",

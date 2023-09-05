@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { addGroupMember } from "../../../redux/chatSlice";
-import { selectAllUsers, selectDarkMode, selectUserProfile } from "../../../redux/UsersSlice";
+import {
+  searchUsers,
+  selectDarkMode,
+  selectUserProfile,
+} from "../../../redux/UsersSlice";
+import { translateUserType } from "../../../utils/helpers";
 import Avatar from "./Avatar";
 import styles from "./GroupChatModal.module.css";
 
@@ -10,13 +15,17 @@ const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUserProfile);
   const darkMode = useSelector(selectDarkMode);
-  const allUsers = useSelector(selectAllUsers);
+  const chatGroupUserListRef = useRef(null);
   const activeConversation = useSelector(
     (state) => state.chat.activeConversation
   );
-
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [typeSearched, setTypeSearched] = useState("professional");
+  const [querySearched, setQuerySearched] = useState("");
+  const [page, setPage] = useState(1);
   const [selectedMembers, setSelectedMembers] = useState([]);
 
+  // Límite de integrantes: 10 (contando al creador)
   useEffect(() => {
     if (selectedMembers && selectedMembers.length === 10) {
       const updatedMembers = selectedMembers.slice(0, -1);
@@ -37,16 +46,17 @@ const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
     }
   }, [selectedMembers]);
 
+  //********** Lógica para añadir integrantes **********//
   const handleSelectMember = (event) => {
     const memberId = event.target.value;
-    const selectedMember = allUsers.find((user) => user.user.id === memberId);
+    const selectedMember = searchedUsers.find((user) => user.id === memberId);
 
-    if (selectedMembers.includes(selectedMember.user.id)) {
+    if (selectedMembers.includes(selectedMember.id)) {
       setSelectedMembers(
-        selectedMembers.filter((member) => member !== selectedMember.user.id)
+        selectedMembers.filter((member) => member !== selectedMember.id)
       );
     } else {
-      setSelectedMembers([...selectedMembers, selectedMember.user.id]);
+      setSelectedMembers([...selectedMembers, selectedMember.id]);
     }
   };
 
@@ -59,6 +69,63 @@ const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
       })
     ).then(() => setShowGroupChatModal(false));
   };
+  //****************************************************//
+
+  //** Lógica para filtrar los usuarios por su nombre **//
+  const loadUsers = () => {
+    dispatch(searchUsers(typeSearched, page, querySearched)).then((result) => {
+      if (page === 1) {
+        // Si estamos en la primera página,
+        // reemplazamos los resultados
+        setSearchedUsers(result.data);
+      } else {
+        // Si estamos en páginas siguientes,
+        // agregamos los resultados a la lista existente
+        setSearchedUsers([...searchedUsers, ...result.data]);
+      }
+    });
+  };
+
+  const handleSearch = (event) => {
+    const { value } = event.target;
+    setTypeSearched(value);
+    setSearchedUsers([]);
+    setPage(1);
+  };
+
+  const handleQuery = (event) => {
+    const { value } = event.target;
+    setQuerySearched(value);
+    setPage(1);
+  };
+  //****************************************************//
+
+  //********** Lógica del infinite scrolling **********//
+  const checkScrollAndLoadMore = () => {
+    const chatGroupUserList = chatGroupUserListRef.current;
+    if (
+      chatGroupUserList &&
+      chatGroupUserList.scrollHeight - chatGroupUserList.scrollTop ===
+        chatGroupUserList.clientHeight
+    ) {
+      setPage(page + 1);
+    }
+  };
+
+  useEffect(() => {
+    const chatGroupUserList = chatGroupUserListRef.current;
+    chatGroupUserList.addEventListener("scroll", checkScrollAndLoadMore);
+
+    return () => {
+      chatGroupUserList.removeEventListener("scroll", checkScrollAndLoadMore);
+    };
+  }, []);
+
+  //****************************************************//
+
+  useEffect(() => {
+    loadUsers();
+  }, [typeSearched, querySearched, page]);
 
   return (
     <div className={styles.modal_page}>
@@ -66,29 +133,43 @@ const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
         <h2>Añadir integrantes al grupo</h2>
       </div>
       <div className={styles.modal_content}>
-        <div className={styles.chatgroup_userlist}>
-          {allUsers.map((user, index) => (
+        <div className={styles.searchbar}>
+          <select name="user_type" onChange={handleSearch}>
+            <option value="professional" selected>
+              Profesionales
+            </option>
+            <option value="student">Estudiantes</option>
+          </select>
+          <input
+            type="text"
+            name="search_bar"
+            placeholder="Buscar usuarios..."
+            onChange={handleQuery}
+          />
+        </div>
+        <div className={styles.chatgroup_userlist} ref={chatGroupUserListRef}>
+          {searchedUsers?.map((user, index) => (
             <div key={index} className={styles.user_card}>
-              <label key={user.user.id}>
+              <label key={user.id}>
                 <input
                   type="checkbox"
                   // className={styles.ui_checkbox}
-                  value={user.user.id}
-                  checked={selectedMembers.includes(user.user.id)}
+                  value={user.id}
+                  checked={selectedMembers.includes(user.id)}
                   onChange={handleSelectMember}
                 />
                 <div className={styles.avatar}>
                   <Avatar
-                    imageUrl={user.user.profile_image}
-                    altText={user.user.name}
+                    imageUrl={user.profile_image}
+                    altText={user.name}
                     size={"50px"}
-                    status={user.user.status}
+                    status={user.status}
                     type={"list"}
                   />
                 </div>
-                <h4>{user.user.name}</h4>
-                <div className={styles.user_type}>
-                  {user.user.type === "student" ? "Estudiante" : "Profesional"}
+                <div className={styles.user_name}>
+                  <h4>{user.name}</h4>
+                  <div className={styles.user_username}>({user.username})</div>
                 </div>
               </label>
             </div>

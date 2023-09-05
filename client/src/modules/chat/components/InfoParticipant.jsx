@@ -185,7 +185,11 @@ const InfoParticipant = ({
           </>
         ) : (
           <>
-            <strong>Rol actual:</strong> {participantRole}
+            {participantId === ownerId ? (
+              <strong>Creador del grupo</strong>
+            ) : (
+              <strong>Rol actual: {participantRole}</strong>
+            )}
           </>
         )}
       </div>

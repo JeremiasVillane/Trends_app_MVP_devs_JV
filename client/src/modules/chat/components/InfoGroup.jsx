@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { MdGroupAdd } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { selectUserProfile } from "../../../redux/UsersSlice";
@@ -9,6 +10,7 @@ import styles from "./InfoSideBar.module.css";
 const InfoGroup = ({
   handleEditInfo,
   handleDeleteGroup,
+  handleAddUserToGroup,
   ownerId,
   image,
   name,
@@ -20,7 +22,10 @@ const InfoGroup = ({
   const [showOptions, setShowOptions] = useState(false);
   const [showParticipantInfo, setShowParticipantInfo] = useState(false);
   const [participantId, setParticipantId] = useState(null);
+  const lightColor = "#232323";
+  const darkColor = "#FFF";
 
+  //************ Variables a usar ************//
   const currentUserRole = participants.filter(
     (participant) => participant.id === user.id
   )[0].userChatGroup.role;
@@ -41,13 +46,16 @@ const InfoGroup = ({
   const onlineParticipants = participants.filter(
     (participant) => participant.status === "online"
   );
+  //******************************************//
 
+  // Cierra el modal con Esc
   useEffect(() => {
     const handleKeydown = (e) => e.key === "Escape" && setShowOptions(false);
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
   }, []);
 
+  // Carga info del usuario en la Info Sidebar
   const handleUserCardClic = (event) => {
     setShowParticipantInfo(true);
     setParticipantId(event.currentTarget.id);
@@ -95,7 +103,22 @@ const InfoGroup = ({
               <strong>Moderadores:</strong> {moderators.join(", ")}
             </p>
           </div>
-          <div className={styles.subtitle}>Integrantes:</div>
+          <div className={styles.subtitle}>
+            Integrantes
+            {currentUserRole === "Moderador" && (
+              <>
+                {" "}
+                <button onClick={handleAddUserToGroup}>
+                  <MdGroupAdd
+                    size={21}
+                    color={darkMode ? darkColor : lightColor}
+                    style={{ margin: "0 .5rem" }}
+                    title="Agregar integrante"
+                  />
+                </button>
+              </>
+            )}
+          </div>
           <p className={styles.online_participants}>
             {participants.length} integrante{participants.length > 1 && "s"}
             {participants.length > 1 && `, ${onlineParticipants.length}`}
