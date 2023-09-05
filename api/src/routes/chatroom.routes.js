@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {
   getListChatsByUser,
   createPrivateChat,
+  removePrivateChat,
   messagesByChat,
   newPrivateMessage,
   removeMessage,
@@ -25,6 +26,7 @@ const chatroomRoutes = Router();
 
 chatroomRoutes.get("/chat/:id", validateId, getListChatsByUser);
 chatroomRoutes.post("/chat", createPrivateChat);
+chatroomRoutes.delete("/chat/:chatId", idCleaner, removePrivateChat);
 chatroomRoutes.get("/chat/:chatId/messages", idCleaner, messagesByChat);
 chatroomRoutes.post("/chat/:chatId/messages", idCleaner, encryptMessage, newPrivateMessage);
 chatroomRoutes.put("/chat/:chatId/messages/:messageId", idCleaner, encryptMessage, editMessage);

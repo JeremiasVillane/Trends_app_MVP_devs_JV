@@ -68,7 +68,7 @@ module.exports = async (userId, userType, list) => {
 
       const userIsOwner = group.ownerId === userId;
       const userIsModerator = group.users.some(
-        (user) => user.id === userId && user.userChatGroup.role === "moderator"
+        (user) => user.id === userId && user.userChatGroup.role === "Moderador"
       );
 
       if (userIsOwner || userIsModerator) {

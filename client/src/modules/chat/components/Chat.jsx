@@ -96,10 +96,12 @@ const Chat = () => {
 
   const onCreatePrivateChat = () => {
     setShowPrivateChatModal(true);
+    setShowInfo(false);
   };
 
   const onCreateGroup = () => {
     setShowGroupChatModal(true);
+    setShowInfo(false);
   };
 
   return (
@@ -139,8 +141,12 @@ const Chat = () => {
           }
           image={activeConversationData.image}
           name={activeConversationData.name}
-          contactId={activeConversationData.id}
-          participants={activeConversationData.members}
+          username={activeConversationData?.username}
+          contactId={activeConversationData?.userId}
+          conversationId={activeConversation}
+          ownerId={activeConversationData?.ownerId}
+          participants={activeConversationData?.members}
+          setShowInfo={setShowInfo}
         />
       )}
       {showGroupChatModal && (

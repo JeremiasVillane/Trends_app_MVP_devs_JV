@@ -23,7 +23,7 @@ const messageFormatter = (messages) => {
   for (const message of inputMessages) {
     // Convertimos el objeto de mensaje en su representación JSON.
     const plainMessage = message.toJSON();
-    console.log(plainMessage);
+    
     // Creamos un nuevo objeto de mensaje con los campos
     // esenciales y contenido desencriptado.
     const outputMessage = {

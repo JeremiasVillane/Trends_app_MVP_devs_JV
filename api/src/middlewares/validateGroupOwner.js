@@ -65,7 +65,7 @@ const validateGroupOwner = async (req, res, next) => {
       // le permitimos continuar con la acción.
       if (
         plainGroup.ownerId === userId ||
-        currentUserRole === "moderator"
+        currentUserRole === "Moderador"
       ) {
         next();
       } else {

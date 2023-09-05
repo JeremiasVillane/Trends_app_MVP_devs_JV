@@ -15,6 +15,7 @@ import {
 } from "../../../../../redux/UsersSlice";
 import Avatar from "../../../../chat/components/Avatar";
 import styles from "./Profile.module.css";
+import { translateUserType } from "../../../../../utils/helpers";
 
 const Profile = () => {
   const MySwal = withReactContent(Swal);
@@ -119,7 +120,7 @@ const Profile = () => {
         </div>
       )}
       <header>
-        <div className={styles.ImageContainer} onClick={handleImageEdit}>
+        <div className={styles.ImageContainer} onClick={handleImageEdit} title="Editar imagen de perfil" >
           <Avatar
             imageUrl={getImageSrc(image)}
             altText={userData.name}
@@ -131,16 +132,9 @@ const Profile = () => {
             <AiFillEdit size="6rem" color="white" />
           </div>
         </div>
-        {/* <div className={styles.ImageContainer} onClick={handleImageEdit}>
-          <img src={getImageSrc(image)} alt="" />
-          <div className={styles.IconContainer}>
-            <AiFillEdit size="6rem" color="white" />
-          </div>
-        </div> */}
+        <h1>{translateUserType(userData?.type)}</h1>
 
-        <h1>{userData?.type === "student" ? "Estudiante" : "Profesional"}</h1>
-
-        <button onClick={handleGeneralEdit} className={styles.EditButton}>
+        <button onClick={handleGeneralEdit} className={styles.EditButton} title="Editar perfil">
           <AiFillEdit size="2rem" color={darkMode ? darkColor : lightColor} />
         </button>
       </header>

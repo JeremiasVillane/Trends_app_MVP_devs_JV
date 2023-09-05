@@ -19,6 +19,7 @@
   align-items: center;
   background-color: #344c5a;
   cursor: pointer;
+  user-select: none;
 }
 .cardImage img {
   border-radius: 90%;

@@ -1,5 +1,14 @@
 module.exports = async (group, userId, userType) => {
-  if (group.ownerId === userId || userType === "admin") {
+  const plainGroup = group.toJSON();
+  const currentUserRole = plainGroup.users.filter(
+    (user) => user.id === userId
+  )[0].userChatGroup.role;
+
+  if (
+    group.ownerId === userId ||
+    // currentUserRole === "Moderador" ||
+    userType === "admin"
+  ) {
     await group.destroy();
 
     return { message: "Group deleted successfully" };

@@ -25,6 +25,7 @@ const MessageList = ({ socket, messages }) => {
           messageId={message.messageId}
           timestamp={message.createdAt}
           content={message.content}
+          messageStatus={message.messageStatus}
           parentMessage={message.parentMessage}
         />
       ))}

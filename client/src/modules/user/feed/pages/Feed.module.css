@@ -22,6 +22,7 @@
   animation: adjust-header linear both;
   animation-timeline: scroll();
   animation-range: 0 200px;
+  user-select: none;
 }
 
 .BGContainer header img {

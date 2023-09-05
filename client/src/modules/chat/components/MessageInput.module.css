@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 .message_input {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 10px;
@@ -15,6 +16,7 @@
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 12px;
+  user-select: none;
 }
 .message_input input:hover {
   border: 1px solid #999;
@@ -26,7 +28,7 @@
 
 .message_input .send_button {
   position: absolute;
-  right: 39px;
+  right: 19px;
   padding: 2px 4px;
   margin-left: 10px;
   background-color: transparent;
@@ -40,7 +42,7 @@
 
 .message_input .emoji_button {
   position: absolute;
-  right: 77px;
+  right: 57px;
   padding: 2px 4px;
   margin-left: 10px;
   background-color: transparent;

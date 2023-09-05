@@ -97,10 +97,21 @@ const updateUserProfile = createAsyncThunk(
       const data = fetch.data;
       return data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );
+
+export const getSomeUserInfo = (userId) => async () => {
+  try {
+    const {data} = await axios.get(`${VITE_URL}/search/user/${userId}`, {
+      withCredentials: "include",
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const usersSlice = createSlice({
   name: "users",

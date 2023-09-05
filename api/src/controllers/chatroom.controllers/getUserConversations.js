@@ -27,11 +27,12 @@ module.exports = async (
   if (userGroups && !userGroups.error) {
     for (const group of userGroups) {
       const [last_message] = [...group.messages].reverse();
-      const countNoRead = noReadCounter(group.messages);
+      const countNoRead = noReadCounter(userId, group.messages);
       
       const conversation = {
         isGroup: true,
         id: `group${group.id}`,
+        ownerId: group.ownerId,
         name: group.name,
         image: group?.image || null,
         lastMessage: { id: last_message?.messageId, content: last_message?.content },
@@ -48,7 +49,7 @@ module.exports = async (
   if (userChats && !userChats.error) {
     for (const chat of userChats) {
       const [last_message] = [...chat.messages].reverse();
-      const countNoRead = noReadCounter(chat.messages);
+      const countNoRead = noReadCounter(userId, chat.messages);
       const contactName = getContactData(name, "name", chat);
       const contactUsername = getContactData(username, "username", chat);
       const contactProfileImage = getContactData(profile_image, "profile_image", chat);

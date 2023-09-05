@@ -18,7 +18,7 @@ const GroupChatModalPage2 = ({ setShowGroupChatModal }) => {
   const [selectedMembers, setSelectedMembers] = useState([]);
 
   useEffect(() => {
-    if (selectedMembers && selectedMembers.length === 11) {
+    if (selectedMembers && selectedMembers.length === 10) {
       const updatedMembers = selectedMembers.slice(0, -1);
       setSelectedMembers(updatedMembers);
 

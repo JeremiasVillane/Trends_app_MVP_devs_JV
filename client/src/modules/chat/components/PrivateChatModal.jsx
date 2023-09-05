@@ -65,7 +65,7 @@ const PrivateChatModal = ({ setShowPrivateChatModal }) => {
           <div className={styles.chatgroup_userlist}>
             {allUsers.map((user, index) => (
               <div key={index} className={styles.user_card}>
-                <label key={user.user.id}>
+                <label key={user.user.id} title="Seleccionar">
                   <input
                     type="radio"
                     value={user.user.id}
@@ -78,7 +78,6 @@ const PrivateChatModal = ({ setShowPrivateChatModal }) => {
                       altText={user.user.name}
                       size={"50px"}
                       status={user.user.status}
-                      type={"list"}
                     />
                   </div>
                   <h4>{user.user.name}</h4>

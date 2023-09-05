@@ -7,7 +7,7 @@ module.exports = async (chatId, content, userId, userType) => {
   const chat = await Chat.findOne({
     where: { chat_id: chatId },
   });
-
+console.log("chat: ", chat)
   if (!chat) {
     return { error: "Private chat not found" };
   }

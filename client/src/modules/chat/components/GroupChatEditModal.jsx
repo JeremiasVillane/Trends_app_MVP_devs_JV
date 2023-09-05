@@ -5,11 +5,11 @@ import { addGroupImage, editChatGroup } from "../../../redux/chatSlice";
 import { selectDarkMode, selectUserProfile } from "../../../redux/UsersSlice";
 import styles from "./GroupChatModal.module.css";
 
-const GroupChatImageModal = ({
+const GroupChatEditModal = ({
   currentGroupId,
   currentGroupName,
   currentGroupImage,
-  setShowGroupChatImageModal,
+  setShowGroupChatEditModal,
 }) => {
   const dispatch = useDispatch();
   const ref = useRef();
@@ -24,7 +24,7 @@ const GroupChatImageModal = ({
 
   useEffect(() => {
     const handleKeydown = (e) =>
-      e.key === "Escape" && setShowGroupChatImageModal(false);
+      e.key === "Escape" && setShowGroupChatEditModal(false);
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
   }, []);
@@ -32,7 +32,7 @@ const GroupChatImageModal = ({
   const handleOverlayClick = (e) => {
     const { current } = ref;
     if (current === e.target) {
-      setShowGroupChatImageModal(false);
+      setShowGroupChatEditModal(false);
     }
   };
 
@@ -53,10 +53,10 @@ const GroupChatImageModal = ({
     } else if (groupName && isNameEdited) {
       dispatch(editChatGroup(user.id, currentGroupId, groupName));
     } else {
-      setShowGroupChatImageModal(false);
+      setShowGroupChatEditModal(false);
     }
 
-    setShowGroupChatImageModal(false);
+    setShowGroupChatEditModal(false);
   };
 
   const handleFileChange = (file) => {
@@ -118,7 +118,7 @@ const GroupChatImageModal = ({
       ref={ref}
       onClick={handleOverlayClick}
     >
-      <div className={styles.modal_container}>
+      <div className={styles.modal_container} style={{ width: "350px" }}>
         <div className={styles.modal_page}>
           <div className={styles.modal_header}>
             <h2>Editar grupo</h2>
@@ -203,7 +203,7 @@ const GroupChatImageModal = ({
               </button>
               <button
                 className={styles.cancel_button}
-                onClick={() => setShowGroupChatImageModal(false)}
+                onClick={() => setShowGroupChatEditModal(false)}
               >
                 Cancelar
               </button>
@@ -215,4 +215,4 @@ const GroupChatImageModal = ({
   );
 };
 
-export default GroupChatImageModal;
+export default GroupChatEditModal;

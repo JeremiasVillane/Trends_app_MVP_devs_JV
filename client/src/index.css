@@ -37,7 +37,7 @@ body .dark-mode {
 
 /*:::::: Barra de desplazamiento ::::::*/
 
-/* width */
+/* Ancho */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -47,12 +47,17 @@ body .dark-mode {
   background: #f1f1f1;
 }
 
+/* Color del track en modo oscuro */
+.dark-mode ::-webkit-scrollbar-track {
+  background: #202020;
+}
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-/* Handle on hover */
+/* Handle al posar el mouse */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

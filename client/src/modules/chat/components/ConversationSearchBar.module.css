@@ -12,6 +12,7 @@
   border: 1px solid #ccc;
   border-radius: 12px;
   font-size: 14px;
+  user-select: none;
 }
 
 .search_bar input:hover {

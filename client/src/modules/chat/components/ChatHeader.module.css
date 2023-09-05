@@ -8,16 +8,13 @@
   justify-content: space-between;
   margin: 0 1rem 0 1rem;
   cursor: default;
+  user-select: none;
 }
 
 .chat_header h2 {
   margin: 0;
   font-size: 20px;
   font-weight: medium;
-  cursor: pointer;
-}
-.chat_header h2:hover {
-  color: #383836;
 }
 
 .chat_header p {
@@ -27,7 +24,7 @@
 }
 
 .chat_header details div {
-  padding: .3rem;
+  padding: 0.3rem;
   background-color: #f5f5f5;
   position: absolute;
   border-radius: 0 0 6px 6px;

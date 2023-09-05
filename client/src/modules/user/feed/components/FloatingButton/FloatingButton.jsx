@@ -26,7 +26,11 @@ export const FloatingButton = () => {
   return (
     <div className={styles.ButtonContainer}>
       {showButton && (
-        <button className={styles.UpButton} onClick={scrollToTop}>
+        <button
+          className={styles.UpButton}
+          onClick={scrollToTop}
+          title="Volver arriba"
+        >
           ↑
         </button>
       )}

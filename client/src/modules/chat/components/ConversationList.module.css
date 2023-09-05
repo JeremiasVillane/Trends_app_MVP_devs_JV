@@ -3,17 +3,13 @@
   background-color: #f0f0f0;
   border-right: 1px solid #ccc;
   overflow-y: auto;
+  user-select: none;
 }
 
 .conversation_item {
   padding: 10px;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.conversation_item:hover {
-  background-color: #e0e0e0;
 }
 
 :global(.dark-mode) .conversation_list {

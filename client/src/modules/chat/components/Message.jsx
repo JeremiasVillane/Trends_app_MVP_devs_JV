@@ -3,7 +3,7 @@ import ThreadSidebar from "./ThreadSidebar";
 import styles from "./Message.module.css";
 import Timestamp from "./Timestamp";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserProfile } from "../../../redux/UsersSlice";
+import { selectDarkMode, selectUserProfile } from "../../../redux/UsersSlice";
 import MessageActions from "./MessageActions";
 import { deleteMessage, loadConversations } from "../../../redux/chatSlice";
 import Avatar from "./Avatar";
@@ -19,12 +19,14 @@ const Message = ({
   messageId,
   timestamp,
   content,
+  messageStatus,
   parentMessage,
   messages,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUserProfile);
+  const darkMode = useSelector(selectDarkMode);
   const activeConversation = useSelector(
     (state) => state.chat.activeConversation
   );
@@ -77,16 +79,34 @@ const Message = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <p className={styles.message_autor}>{authorName}</p>
-        {user.username === author && showActions && (
-          <MessageActions onDeleteMessage={() => handleDelete(messageId)} />
-        )}
+        <p className={styles.message_author}>{authorName}</p>
+
         <div
           className={`${styles[`${messageStyle}`]} ${
             styles[`${messageStyle}_content`]
           }`}
         >
-          <p>{content}</p>
+          {user.username === author &&
+            messageStatus !== "deleted" &&
+            showActions && (
+              <MessageActions onDeleteMessage={() => handleDelete(messageId)} />
+            )}
+          <p
+            style={
+              messageStatus === "deleted"
+                ? {
+                    fontStyle: "italic",
+                    backgroundColor: "transparent",
+                    boxShadow: "none",
+                    color: darkMode ? "#999" : "#646464",
+                    userSelect: "none",
+                    padding: ".3rem 0",
+                  }
+                : null
+            }
+          >
+            {content}
+          </p>
         </div>
         <span className={`${styles[`${messageStyle}_timestamp`]}`}>
           <Timestamp timestamp={timestamp} />

@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Animate } from "react-simple-animate";
 import { createNewPrivateChat } from "../../../../../redux/chatSlice";
-import { selectUserProfile } from "../../../../../redux/UsersSlice";
+import { selectDarkMode, selectUserProfile } from "../../../../../redux/UsersSlice";
+import { translateUserType } from "../../../../../utils/helpers";
 import Avatar from "../../../../chat/components/Avatar";
 import styles from "./ProfileSearch.module.css";
 const { VITE_URL } = import.meta.env;
@@ -14,10 +15,13 @@ const ProfileSearch = () => {
   const { id } = useParams();
   const currentUser = useSelector(selectUserProfile);
   const [userData, setUserData] = useState({});
+  const darkMode = useSelector(selectDarkMode);
   const URL = `${VITE_URL}/search/user/${id}`;
   const [image, setImage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const lightColor = "#232323";
+  const darkColor = "#FFF";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,10 +76,10 @@ const ProfileSearch = () => {
           />
         </div>
 
-        <h1>{userData?.type === "student" ? "Estudiante" : "Profesional"}</h1>
+        <h1>{translateUserType(userData?.type)}</h1>
 
-        <button className={styles.ChatButton} onClick={handleChats}>
-          <HiChat size="2rem" color="#344C5A" />
+        <button className={styles.ChatButton} onClick={handleChats} title="Iniciar chat">
+          <HiChat size="2rem" color={darkMode ? darkColor : lightColor} />
         </button>
       </header>
 

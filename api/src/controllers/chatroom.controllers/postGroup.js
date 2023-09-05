@@ -6,7 +6,7 @@ module.exports = async (name, image, userId, userType) => {
 
   if (userType !== "admin") {
     try {
-      await postUserInGroup(group, userId, "moderator");
+      await postUserInGroup(group, userId, "Moderador");
     } catch (error) {
       return { error: "Error including user in new group" };
     }

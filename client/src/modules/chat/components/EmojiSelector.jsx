@@ -11,7 +11,7 @@ const EmojiSelector = ({ onSelect }) => {
             data={data}
             emojiSize={20}
             emojiButtonSize={28}
-            maxFrequentRows={2}
+            maxFrequentRows={1}
             onEmojiSelect={onSelect}
           />
         </div>

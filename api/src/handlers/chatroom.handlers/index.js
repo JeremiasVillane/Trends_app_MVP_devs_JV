@@ -14,13 +14,15 @@ const newGroupMessage = require("./newGroupMessage");
 const newPrivateMessage = require("./newPrivateMessage");
 const removeGroup = require("./removeGroup");
 const removeGroupMessage = require("./removeGroupMessage");
-const removeMessage = require("./removeMessage")
+const removeMessage = require("./removeMessage");
+const removePrivateChat = require("./removePrivateChat");
 const removeUserFromGroup = require("./removeUserFromGroup");
 const userConversations = require("./userConversations");
 
 module.exports = {
   createPrivateChat,
   newPrivateMessage,
+  removePrivateChat,
   createMessage,
   removeMessage,
   getListChatsByUser,

@@ -1,60 +1,93 @@
 import React, { useState } from "react";
-import Avatar from "./Avatar";
-import { AiFillEdit } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { selectDarkMode } from "../../../redux/UsersSlice";
+import GroupChatDeleteModal from "./GroupChatDeleteModal";
+import GroupChatEditModal from "./GroupChatEditModal";
+import InfoGroup from "./InfoGroup";
+import InfoProfile from "./InfoProfile";
 import styles from "./InfoSideBar.module.css";
-import GroupChatImageModal from "./GroupChatImageModal";
+import PrivateChatDeleteModal from "./PrivateChatDeleteModal";
 
-const InfoSideBar = ({ infoType, image, name, contactId, participants }) => {
-  const [showGroupChatImageModal, setShowGroupChatImageModal] = useState(false);
+const InfoSideBar = ({
+  infoType,
+  image,
+  name,
+  username,
+  contactId,
+  conversationId,
+  ownerId,
+  participants,
+  setShowInfo,
+}) => {
+  const darkMode = useSelector(selectDarkMode);
+  const [showGroupChatEditModal, setShowGroupChatEditModal] = useState(false);
+  const [showDeleteGroupModal, setShowDeleteGroupModal] = useState(false);
+  const [showDeleteChatModal, setShowDeleteChatModal] = useState(false);
 
-  const handleEditImage = () => {
-    setShowGroupChatImageModal(true);
+  // Para que aparezca primero el creador del grupo
+  const reversedParticipants = participants && [...participants].reverse();
+
+  const handleEditInfo = () => {
+    setShowGroupChatEditModal(true);
+  };
+
+  const handleDeleteGroup = () => {
+    setShowDeleteGroupModal(true);
+  };
+
+  const handleDeleteChat = () => {
+    setShowDeleteChatModal(true);
   };
 
   return (
     <>
       <div className={styles.info_sidebar}>
-        {infoType === "infoGroup" ? (
-          <>
-            <header>Información del grupo</header>
-            <main>
-              <div className={styles.image_container} onClick={handleEditImage}>
-                <Avatar imageUrl={image} altText={name} size={"12rem"} />
-                <div className={styles.icon_container}>
-                  <AiFillEdit size="6rem" color="white" />
-                </div>
-              </div>
-              <p className={styles.name}>{name}</p>
-            </main>
-
-            <div className={styles.subtitle}>Integrantes:</div>
-            <section>
-              {participants.map((user, index) => (
-                <div key={index} className={styles.user_card}>
-                  <div className={styles.avatar}>
-                    <Avatar
-                      imageUrl={user.profile_image}
-                      altText={user.name}
-                      size={"50px"}
-                      status={user.status}
-                      type={"list"}
-                    />
-                  </div>
-                  <h4>{user.name}</h4>
-                </div>
-              ))}
-            </section>
-          </>
-        ) : (
-          "InfoProfile"
+        {infoType === "infoGroup" && (
+          <InfoGroup
+            handleEditInfo={handleEditInfo}
+            handleDeleteGroup={handleDeleteGroup}
+            ownerId={ownerId}
+            image={image}
+            name={name}
+            participants={reversedParticipants}
+            darkMode={darkMode}
+            setShowInfo={setShowInfo}
+          />
+        )}
+        {infoType === "infoProfile" && (
+          <InfoProfile
+            handleDeleteChat={handleDeleteChat}
+            image={image}
+            name={name}
+            username={username}
+            contactId={contactId}
+            darkMode={darkMode}
+            setShowInfo={setShowInfo}
+          />
         )}
       </div>
-      {showGroupChatImageModal && (
-        <GroupChatImageModal
-          currentGroupId={contactId}
+      {showGroupChatEditModal && (
+        <GroupChatEditModal
+          currentGroupId={conversationId}
           currentGroupName={name}
           currentGroupImage={image}
-          setShowGroupChatImageModal={setShowGroupChatImageModal}
+          setShowGroupChatEditModal={setShowGroupChatEditModal}
+        />
+      )}
+      {showDeleteGroupModal && (
+        <GroupChatDeleteModal
+          groupId={conversationId}
+          groupName={name}
+          setShowDeleteGroupModal={setShowDeleteGroupModal}
+          setShowInfo={setShowInfo}
+        />
+      )}
+      {showDeleteChatModal && (
+        <PrivateChatDeleteModal
+          chatId={conversationId}
+          contactName={name}
+          setShowDeleteChatModal={setShowDeleteChatModal}
+          setShowInfo={setShowInfo}
         />
       )}
     </>

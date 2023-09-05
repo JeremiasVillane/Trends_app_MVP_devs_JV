@@ -31,16 +31,21 @@ const ChatHeader = ({
   return (
     <div className={styles.chat_header}>
       <Avatar imageUrl={chatImage} altText={chatTitle} size={"50px"} />
-      <h2 onClick={isGroup ? null : handleProfile}>{chatTitle}</h2>
-      {isGroup && (
+      <h2
+        onClick={isGroup ? null : handleProfile}
+        style={{ cursor: isGroup ? "default" : "pointer" }}
+      >
+        {chatTitle}
+      </h2>
+      {/* {isGroup && ( */}
         <BsFillInfoCircleFill
           size={20}
-          color={ darkMode ? "#f5f5f5" : "#383836" }
+          color={darkMode ? "#f5f5f5" : "#383836"}
           onClick={() => setShowInfo((curr) => !curr)}
           style={{ cursor: "pointer" }}
           title="Más información"
         />
-      )}
+      {/* )} */}
     </div>
   );
 };

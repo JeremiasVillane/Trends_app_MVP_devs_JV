@@ -5,15 +5,14 @@ export const getStatusColor = (status) => {
     case "offline":
       return "red";
     case "invisible":
-      return "gray";
+      return "transparent";
     default:
       return "transparent";
   }
 };
 
 export const getStatusBorderColor = (status, darkMode) => {
-  if (["online", "offline", "invisible"].includes(status)) {
+  if (["online", "offline"].includes(status)) {
     return darkMode ? "#383836" : "#fff";
-  }
-  return "invisible";
+  } else return "transparent";
 };

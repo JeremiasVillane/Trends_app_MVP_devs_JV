@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setActiveConversation } from "../../../redux/chatSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { editMessage, setActiveConversation } from "../../../redux/chatSlice";
+import { selectUserProfile } from "../../../redux/UsersSlice";
 import Avatar from "./Avatar";
 import styles from "./Conversation.module.css";
 
@@ -15,43 +16,28 @@ const Conversation = ({
   unreadCount,
 }) => {
   const dispatch = useDispatch();
-  return (
-    <div
-      className={styles.conversation_item}
-      onClick={async () => {
-        dispatch(setActiveConversation(conversationId));
+  const user = useSelector(selectUserProfile);
 
-        // if (isGroup) {
-        //   for (const message of messages) {
-        //     if (message.messageStatus === "sent") {
-        //       await axios.put(
-        //         `http://localhost:3001/api/v1/chatroom/groups/${conversationId}/messages/${message.messageId}`,
-        //         { content: message.content, messageStatus: "read" },
-        //         {
-        //           withCredentials: "include",
-        //         }
-        //       );
-        //     }
-        //   }
-        // } else {
-        //   for (const message of messages) {
-        //     if (message.messageStatus === "sent") {
-        //       try {
-        //         await axios.put(
-        //           `http://localhost:3001/api/v1/chatroom/chat/${conversationId}/message/${message.messageId}`,
-        //           { content: message.content, messageStatus: "read" },
-        //           {
-        //             withCredentials: "include",
-        //           }
-        //         );
-        //       } catch (error) {
-        //         console.error(error)
-        //       }
-        //     }
-        //   }
-        // }
-      }}
-    >
+  const loadMessagesAndMarkAsRead = () => {
+    dispatch(setActiveConversation(conversationId));
+
+    // if (!isGroup) {
+    //   for (const message of messages) {
+    //     if (message.messageStatus === "sent" && message.userId !== user.id) {
+    //       dispatch(
+    //         editMessage(user.id, conversationId, message.messageId, {
+    //           content: message.content,
+    //           messageStatus: "read",
+    //         })
+    //       );
+    //     }
+    //   }
+    // }
+  };
+
+  return (
+    <div className={styles.conversation_item} 
+      onClick={loadMessagesAndMarkAsRead}>
       <Avatar
         imageUrl={contactAvatar}
         altText={contactName}
@@ -60,9 +46,9 @@ const Conversation = ({
       />
       <div className={styles.conversation_details}>
         <h3>{contactName}</h3>
-        <p>{lastMessage?.content || "No messages"}</p>
+        <p>{lastMessage?.content || <em>Sin mensajes</em>}</p>
       </div>
-      {unreadCount > 0 && (
+      {!isGroup && unreadCount > 0 && (
         <div className={styles.unread_count}>{unreadCount}</div>
       )}
     </div>

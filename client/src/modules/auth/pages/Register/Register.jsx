@@ -9,6 +9,7 @@ import { validateRegister } from "../../utils";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import styles from "./Register.module.css";
 import { checkboxInterests } from "../../data";
+import { translateUserType } from "../../../../utils/helpers";
 const { VITE_URL } = import.meta.env;
 
 /**
@@ -150,28 +151,12 @@ const Register = ({ type }) => {
 
   };
 
-  /**
-   * Traduce el 'tipo' de usuario.
-   *
-   * @param {string} str - Cadena de entrada.
-   * @returns {string} Cadena traducida.
-   */
-  const translate = (str) => {
-    let type;
-
-    str === "student" && (type = "estudiante");
-    str === "professional" && (type = "profesional");
-    str === "company" && (type = "empresa");
-
-    return type;
-  };
-
   return (
     <div className={styles.BGContainer}>
       <div className={styles.Card}>
         <div className={styles.RightContainer}>
           <form onSubmit={handleSubmit}>
-            <h2>Crea tu cuenta de {translate(type)}</h2>
+            <h2>Crea tu cuenta de {translateUserType(type)}</h2>
             <div className={styles.Input}>
               <input
                 name="name"

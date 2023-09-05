@@ -55,6 +55,8 @@
   align-items: center; */
   margin-top: 28px;
   text-align: center;
+  cursor: default;
+  user-select: none;
 }
 
 .modal_header h2 {
@@ -71,6 +73,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.modal_content p {
+  text-align: center;
+  font-size: 1.2rem;
 }
 
 .modal_content input {
@@ -98,6 +105,7 @@
   border: none;
   border-radius: 4.5px;
   cursor: pointer;
+  user-select: none;
 }
 
 .modal_content .buttons_container {
@@ -196,19 +204,33 @@
   height: 12rem;
   width: 400px;
   overflow-y: scroll;
+  overflow-x:hidden;
   justify-content: flex-start;
   align-items: flex-start;
+  user-select: none;
 }
 
 /* Estilos para el contenedor principal de la tarjeta de usuario */
+.user_card {
+  padding-right: 100%;
+  transition: background-color 0.3s ease-out;
+}
+
 .user_card label {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  /* justify-content: flex-start; */
+  /* align-items: center; */
   flex-direction: row;
   flex-wrap: nowrap;
   margin: .3rem 0;
+  width: 100%;
+  cursor: pointer;
 }
+
+.user_card:hover {
+  background-color: #e0e0e0;
+}
+
 .user_card label input {
   align-self: center;
   margin: .5rem;
@@ -310,3 +332,19 @@
 :global(.dark-mode) .modal_content input:focus {
   border: 1px solid #b8b8b8;
 }
+:global(.dark-mode) .user_card:hover {
+  background-color: #242424;
+}
+:global(.dark-mode) .user_card h4 {
+  color: #fff;
+}
+:global(.dark-mode) .user_type {
+  color: #b8b8b8;
+}
+:global(.dark-mode) .modal_content .page_button:disabled {
+  color: #666;
+}
+:global(.dark-mode) .modal_content p {
+  color: #d9d9d9;
+}
+

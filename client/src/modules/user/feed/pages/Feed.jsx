@@ -83,11 +83,11 @@ const Feed = () => {
   };
 
   // Carga los datos del usuario si no están ya en el estado global.
-  useEffect(() => {
-    if (!profile || Object.keys(profile).length === 0) {
-      dispatch(getUserInfo());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!profile || Object.keys(profile).length === 0) {
+  //     dispatch(getUserInfo());
+  //   }
+  // }, []);
 
   // Si el perfil de usuario existe, se cargan los "matches"
   useEffect(() => {
