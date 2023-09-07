@@ -200,6 +200,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 
 .searchbar select {
@@ -209,6 +210,7 @@
   border-radius: 12px;
   font-size: 14px;
   outline: none;
+  cursor: pointer;
 }
 
 /*::::: Lista de contactos :::::*/
@@ -219,7 +221,7 @@
   flex-wrap: nowrap;
   height: 12rem;
   width: 333px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x:hidden;
   justify-content: flex-start;
   align-items: flex-start;
@@ -235,7 +237,7 @@
 .user_card label {
   display: flex;
   /* justify-content: flex-start; */
-  /* align-items: center; */
+  align-items: center;    /************************/
   flex-direction: row;
   flex-wrap: nowrap;
   margin: .3rem 0;
@@ -277,6 +279,7 @@
   font-size: 14px;
   color: #666;
   font-style: italic;
+  width: max-content;
 }
 
 /* Estilos para la información del usuario */

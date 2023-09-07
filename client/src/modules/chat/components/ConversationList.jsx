@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import Conversation from "./Conversation";
 import styles from "./ConversationList.module.css";
 
-const ConversationList = () => {
+const ConversationList = ({ setShowMessagesInSmallScreens, isSmallerThan590 }) => {
   const conversations = useSelector((state) => state.chat.conversations);
 
   return (
@@ -17,6 +17,8 @@ const ConversationList = () => {
           contactStatus={conversation.status}
           messages={conversation.messages}
           lastMessage={conversation.lastMessage}
+          setShowMessagesInSmallScreens={setShowMessagesInSmallScreens}
+          isSmallerThan590={isSmallerThan590}
           // unreadCount={conversation.unreadCount}
         />
       ))}

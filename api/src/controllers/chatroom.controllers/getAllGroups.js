@@ -64,6 +64,8 @@ module.exports = async (userId, userType, list) => {
       const groupToAdd = {
         groupId: group.id,
         groupName: group.name,
+        groupImage: group.image,
+        participants: group.users,
       };
 
       const userIsOwner = group.ownerId === userId;

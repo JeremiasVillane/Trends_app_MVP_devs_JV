@@ -10,39 +10,48 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.cardImage {
+.card_avatar_container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.card_image {
   margin: 1.2rem;
-  border-radius: 90%;
+  border-radius: 100%;
   height: 8rem;
-  width: 8rem;
-  /* overflow: hidden; */
+  /* width:100%; */
+  max-width: 8rem;
+  /* aspect-ratio: 1 / 1; */
+  /* flex: none; */
   align-items: center;
   background-color: #344c5a;
   cursor: pointer;
   user-select: none;
 }
-.cardImage img {
-  border-radius: 90%;
+.card_image img {
+  /* border-radius: 90%; */
+  height: 8rem;
+  width: 8rem;
   max-width: 100%;
   max-height: 100%;
   transition: all 0.5s ease-in-out;
   /* display: block; */
 }
-.cardImage img:hover {
+.card_image img:hover {
   filter: saturate(140%);
-  scale: 102%;
+  scale: 101%;
 }
 
-.cardProfile {
+.card_profile {
   width: 85%;
   text-align: left;
   margin-left: 1vw;
   padding-bottom: 1.2rem;
 }
-.cardProfile p {
+.card_profile p {
   font-size: medium;
 }
-.cardProfile h1 {
+.card_profile h1 {
   font-family: "Rubik", sans-serif;
   font-weight: 500;
   font-size: 1.5rem;
@@ -53,10 +62,10 @@
   color: #9ac2ef;
   cursor: pointer;
 }
-.cardProfile h1:hover {
+.card_profile h1:hover {
   color: #58c9e5;
 }
-.cardProfile h3 {
+.card_profile h3 {
   font-family: "Rubik", sans-serif;
   font-weight: 400;
   text-align: left;
@@ -66,6 +75,51 @@
   margin-bottom: 0.5rem;
   color: #232323;
 }
+
+.name_icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1vw;
+  margin-top: 0.5rem;
+}
+.name_icons p {
+  font-weight: bold;
+}
+.name_icons h1 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.name_type {
+  display: flex;
+  align-items: center;
+}
+
+.user_type {
+  font-style: italic;
+  color: #777;
+  display: none;
+}
+
+.icon {
+  size: 60px;
+  color: #232323;
+  margin: 1rem;
+  flex: none;
+}
+
+.card_buttons {
+  margin-left: auto;
+  padding-left: 2rem;
+}
+
+.info_container {
+  display: flex;
+  flex-direction: column;
+}
+
 .subtitle {
   font-weight: bold;
 }
@@ -75,186 +129,89 @@
   color: #777;
 }
 
-.nameIcon {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1vw;
-  margin-top: 0.5rem;
-}
-.nameIcon p {
-  font-weight: bold;
-}
-.nameIcon h1 {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-}
-
-.cardButtons {
-  margin-left: auto;
-  padding-left: 2rem;
-}
-.icon {
-  size: 60px;
-  color: #232323;
-  margin: 1rem;
-}
-
-.textContainer {
+.bio_container {
   max-height: 2.58em;
   line-height: 1.2em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/*:::::::::::TOOLTIP:::::::::::*/
+@media screen and (max-width: 650px) {
+  .card_avatar_container {
+    margin: 0 .7rem;
+  }
 
-/* Contenedor */
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
+  .card_image {
+    border-radius: 100%;
+    height: 8rem;
+    width:100%;
+    flex: none;
+    align-items: flex-start;
+  }
 
-/* Texto del popup */
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #324a59;
-  color: #fff;
-  text-align: center;
-  padding: 2px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
-  bottom: 90%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+  .card_profile h1 {
+    padding: 1rem 0 .5rem 0;
+  }
 
-/* Forma del popup */
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #324a59 transparent transparent transparent;
-}
+  .name_type {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-/* Muestra el tooltip al posar el mouse */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
+  .name_icons {
+    display: block;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 1rem 0;
+  }
 
-/*:::::::::::::::::::::::::::::*/
+  .icon {
+    margin: .5rem 2rem .5rem -0.3rem;
+  }
 
-.MainContainer {
-  display: flex;
-  justify-content: space-between;
-}
+  .name_type h1 {
+    font-size: 1.5rem;
+  }
 
-.ConfigContainer {
-  display: flex;
-}
+  .name_type .icon {
+    display: none;
+  }
 
-.MainContainer button {
-  display: block;
-  margin: auto auto;
-}
+  .user_type {
+    margin-bottom: .5rem;
+    display: block;
+  }
 
-.PhotoContainer {
-  height: 6.5rem;
-  width: 6.5rem;
-  box-shadow: 0.3px 0.3px 1px #8f9395;
-}
-.IconsContainer {
-  display: flex;
-  gap: 10%;
-  justify-content: space-between;
-  align-items: center;
-}
+  .card_buttons {
+    padding: 0;
+    margin: 0;
+  }
 
-.PhotoContainer img {
-  height: 100%;
-  width: 100%;
-}
+  .info_container {
+    margin-top: 1rem;
+    margin-left: -9rem;
+  }
+  /* .info_container h3 {
+    text-align: center;
+  } */
 
-.AttributesContainer {
-  margin-left: 0.6rem;
-}
-
-.AttributesContainer h1 {
-  font-family: "Montserrat-SemiBold";
-  text-align: left;
-  color: #0a66c2;
-  font-size: 1.2rem;
-  margin: 0;
-  width: 15rem;
-}
-
-.Card:hover .AttributesContainer h1 {
-  text-decoration: none;
-  /* text-decoration-thickness: 2px; */
-}
-
-.AttributesContainer h2 {
-  text-align: left;
-  font-family: "Montserrat-Medium";
-  color: #324a59;
-  font-size: 0.7rem;
-  margin: 0;
-  width: 15rem;
-  margin-bottom: 0.3rem;
-}
-
-.AttributesContainer h3 {
-  text-align: left;
-  font-size: 0.7rem;
-  color: #324a59;
-  width: 15rem;
-  font-family: "Montserrat-Regular";
-  margin: 0;
-  margin-top: 0.8rem;
-}
-.LastContainer {
-  height: 100%;
-  min-height: 6.8rem;
-  color: #324a59;
-  font-size: 0.7rem;
-  font-family: "Montserrat-Regular";
-  margin-left: 2rem;
-}
-.LastContainer img {
-  margin-top: 1.5rem;
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-.LastContainer h3 {
-  display: block;
-  margin: 0;
-  width: 5rem;
-  line-height: 1.8rem;
+  .bio_container {
+    display: none;
+  }
 }
 
 :global(.dark-mode) .card {
   background-color: #383636;
 }
 
-:global(.dark-mode) .cardProfile h1 {
+:global(.dark-mode) .card_profile h1 {
   color: #fff;
 }
 
-:global(.dark-mode) .cardProfile p {
+:global(.dark-mode) .card_profile p {
   color: #999;
 }
-:global(.dark-mode) .cardProfile h3 {
+:global(.dark-mode) .card_profile h3 {
   color: #d9d9d9;
 }
 

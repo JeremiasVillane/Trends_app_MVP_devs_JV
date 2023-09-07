@@ -1,7 +1,7 @@
 .message_actions {
   position: absolute;
-  right:10px;
-  top: -1rem;
+  right: 0%;
+  bottom: -25%;
   z-index: 222;
   padding: 3px 3px 0 3px;
   background-color: lightgrey;

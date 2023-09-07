@@ -1,17 +1,20 @@
-import { useNavigate } from "react-router-dom";
 import { BsFillInfoCircleFill } from "react-icons/bs";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { selectDarkMode } from "../../../redux/UsersSlice";
 import Avatar from "./Avatar";
 import styles from "./ChatHeader.module.css";
-import { useSelector } from "react-redux";
-import { selectDarkMode } from "../../../redux/UsersSlice";
 
 const ChatHeader = ({
   isGroup,
   chatImage,
   chatTitle,
   contactId,
-  participants,
   setShowInfo,
+  setShowMessagesInSmallScreens,
+  setShowConversationListInSmallScreens,
+  isSmallerThan590,
 }) => {
   const navigate = useNavigate();
   const darkMode = useSelector(selectDarkMode);
@@ -20,32 +23,45 @@ const ChatHeader = ({
     navigate(`/user/profile/${contactId}`);
   };
 
-  const groupMembers = [];
+  const handleGoBack = () => {
+    setShowMessagesInSmallScreens(false);
+  };
 
-  if (isGroup) {
-    for (const participant of participants) {
-      groupMembers.push(participant.name);
+  const handleShowInfo = () => {
+    setShowInfo((curr) => !curr);
+    if (isSmallerThan590) {
+      setShowMessagesInSmallScreens(false);
+      setShowConversationListInSmallScreens(false);
     }
-  }
+  };
 
   return (
     <div className={styles.chat_header}>
-      <Avatar imageUrl={chatImage} altText={chatTitle} size={"50px"} />
+      {isSmallerThan590 && (
+        <section>
+          <IoMdArrowRoundBack
+            size={30}
+            color={darkMode ? "#f5f5f5" : "#383836"}
+            onClick={handleGoBack}
+            style={{ cursor: "pointer", marginRight: "0.7rem" }}
+            title="Volver"
+          />
+          <Avatar imageUrl={chatImage} altText={chatTitle} size={"50px"} />
+        </section>
+      )}
       <h2
         onClick={isGroup ? null : handleProfile}
         style={{ cursor: isGroup ? "default" : "pointer" }}
       >
         {chatTitle}
       </h2>
-      {/* {isGroup && ( */}
-        <BsFillInfoCircleFill
-          size={20}
-          color={darkMode ? "#f5f5f5" : "#383836"}
-          onClick={() => setShowInfo((curr) => !curr)}
-          style={{ cursor: "pointer" }}
-          title="Más información"
-        />
-      {/* )} */}
+      <BsFillInfoCircleFill
+        size={isSmallerThan590 ? 25 : 20}
+        color={darkMode ? "#f5f5f5" : "#383836"}
+        onClick={handleShowInfo}
+        style={{ cursor: "pointer" }}
+        title="Más información"
+      />
     </div>
   );
 };

@@ -125,7 +125,7 @@ const PrivateChatModal = ({ setShowPrivateChatModal }) => {
         <div className={styles.modal_content}>
           <div className={styles.searchbar}>
             <select name="user_type" onChange={handleSearch}>
-              <option value="professional" selected>Profesionales</option>
+              <option value="professional" defaultValue={"Profesionales"}>Profesionales</option>
               <option value="student">Estudiantes</option>
             </select>
             <input

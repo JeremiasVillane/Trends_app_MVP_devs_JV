@@ -1,17 +1,27 @@
+import styles from "./ChatSidebar.module.css";
+import ConversationHeader from "./ConversationHeader";
 import ConversationList from "./ConversationList";
 import ConversationSearchBar from "./ConversationSearchBar";
-import styles from "./ChatSidebar.module.css";
-import ConversationButtons from "./ConversationButtons";
 
-const ChatSidebar = ({ onSearch, onCreatePrivateChat, onCreateGroup }) => {
+const ChatSidebar = ({
+  onSearch,
+  onCreatePrivateChat,
+  onCreateGroup,
+  setShowMessagesInSmallScreens,
+  isSmallerThan590,
+}) => {
   return (
     <div className={styles.chat_sidebar}>
-      <ConversationSearchBar onSearch={onSearch} />
-      <ConversationButtons
+      <ConversationHeader
         onCreatePrivateChat={onCreatePrivateChat}
         onCreateGroup={onCreateGroup}
+        isSmallerThan590={isSmallerThan590}
       />
-      <ConversationList />
+      <ConversationSearchBar onSearch={onSearch} />
+      <ConversationList
+        setShowMessagesInSmallScreens={setShowMessagesInSmallScreens}
+        isSmallerThan590={isSmallerThan590}
+      />
     </div>
   );
 };

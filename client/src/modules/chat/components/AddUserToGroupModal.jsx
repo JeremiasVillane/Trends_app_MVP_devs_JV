@@ -171,12 +171,12 @@ const AddUserToGroupModal = ({
     >
       <div className={styles.modal_container}>
         <div className={styles.modal_header}>
-          <h2>Agregar integrantes al grupo</h2>
+          <h2>Agregar integrantes</h2>
         </div>
         <div className={styles.modal_content}>
           <div className={styles.searchbar}>
             <select name="user_type" onChange={handleSearch}>
-              <option value="professional" selected>
+              <option value="professional" defaultValue={"Profesionales"}>
                 Profesionales
               </option>
               <option value="student">Estudiantes</option>

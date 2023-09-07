@@ -16,6 +16,7 @@ import {
   selectUserProfile,
   updateUserProfile,
 } from "../../../../redux/UsersSlice";
+import GroupChatListModal from "../../../chat/components/GroupChatListModal";
 import { ProfileUpdate } from "../../profile";
 import { FeedCard, FloatingButton } from "../components";
 import style from "./Feed.module.css";
@@ -28,6 +29,7 @@ import style from "./Feed.module.css";
  */
 const Feed = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(selectUserProfile);
   const users = useSelector(selectAllUsers);
   const profile = useSelector(selectUserProfile);
   const students = useSelector(selectStudents);
@@ -35,6 +37,7 @@ const Feed = () => {
   const darkMode = useSelector(selectDarkMode);
   const [page, setPage] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
+  const [userToAddToGroup, setUserToAddToGroup] = useState(null);
   const MySwal = withReactContent(Swal);
 
   // Mensaje de aviso para completar el perfil
@@ -120,47 +123,64 @@ const Feed = () => {
     setIsEditing(false);
   };
 
+  const handleAddToGroup = (userId) => {
+    setUserToAddToGroup(userId);
+  };
+
   return (
-    <section className={style.BGContainer}>
-      {isEditing && (
-        <div className={style.EditPhoto}>
-          <ProfileUpdate handleCancelButton={handleCancelButton} />
-        </div>
-      )}
+    <>
+      <section className={style.BGContainer}>
+        {isEditing && (
+          <div className={style.EditPhoto}>
+            <ProfileUpdate handleCancelButton={handleCancelButton} />
+          </div>
+        )}
 
-      <div className={style.Container}>
-        <header>
-          <img src={logoBlancoBig} />
-        </header>
-        <div className={style.FeedContainer}>
-          <div className={style.Feed}>
-            <AnimateGroup play>
-              {users &&
-                users.length > 0 &&
-                users.map((user, userIndex) => (
-                  <Animate
-                    key={userIndex}
-                    play
-                    start={{ transform: "translate(0, -3px)", opacity: "0" }}
-                    end={{ transform: "translate(0, 0)", opacity: "1" }}
-                    duration={0.2}
-                    sequenceIndex={userIndex}
-                  >
-                    <div key={userIndex}>
-                      {/* Tarjeta de usuario */}
-                      <FeedCard user={user} />
+        <div className={style.Container}>
+          <header>
+            <img src={logoBlancoBig} />
+          </header>
+          <div className={style.FeedContainer}>
+            <div className={style.Feed}>
+              <AnimateGroup play>
+                {users &&
+                  users.length > 0 &&
+                  users.map((user, userIndex) => (
+                    <Animate
+                      key={userIndex}
+                      play
+                      start={{ transform: "translate(0, -3px)", opacity: "0" }}
+                      end={{ transform: "translate(0, 0)", opacity: "1" }}
+                      duration={0.2}
+                      sequenceIndex={userIndex}
+                    >
+                      <div key={userIndex}>
+                        {/* Tarjeta de usuario */}
+                        <FeedCard
+                          user={user}
+                          handleAddToGroup={handleAddToGroup}
+                        />
 
-                      {/* Línea divisora si no es el último usuario */}
-                      {userIndex < users.length - 1 && <hr />}
-                    </div>
-                  </Animate>
-                ))}
-            </AnimateGroup>
+                        {/* Línea divisora si no es el último usuario */}
+                        {userIndex < users.length - 1 && <hr />}
+                      </div>
+                    </Animate>
+                  ))}
+              </AnimateGroup>
+            </div>
           </div>
         </div>
-      </div>
-      <FloatingButton />
-    </section>
+        <FloatingButton />
+      </section>
+      {userToAddToGroup !== null && (
+        <GroupChatListModal
+          key={userToAddToGroup}
+          ownerId={currentUser.id}
+          userToAdd={userToAddToGroup}
+          setShowGroupChatListModal={() => setUserToAddToGroup(null)}
+        />
+      )}
+    </>
   );
 };
 

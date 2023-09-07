@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { editMessage, setActiveConversation } from "../../../redux/chatSlice";
+import { setActiveConversation } from "../../../redux/chatSlice";
 import { selectUserProfile } from "../../../redux/UsersSlice";
 import Avatar from "./Avatar";
 import styles from "./Conversation.module.css";
@@ -11,33 +10,21 @@ const Conversation = ({
   contactName,
   contactAvatar,
   contactStatus,
-  messages,
   lastMessage,
+  setShowMessagesInSmallScreens,
+  isSmallerThan590,
   unreadCount,
 }) => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUserProfile);
 
-  const loadMessagesAndMarkAsRead = () => {
+  const loadMessages = () => {
     dispatch(setActiveConversation(conversationId));
-
-    // if (!isGroup) {
-    //   for (const message of messages) {
-    //     if (message.messageStatus === "sent" && message.userId !== user.id) {
-    //       dispatch(
-    //         editMessage(user.id, conversationId, message.messageId, {
-    //           content: message.content,
-    //           messageStatus: "read",
-    //         })
-    //       );
-    //     }
-    //   }
-    // }
+    isSmallerThan590 && setShowMessagesInSmallScreens(true);
   };
 
   return (
     <div className={styles.conversation_item} 
-      onClick={loadMessagesAndMarkAsRead}>
+      onClick={loadMessages}>
       <Avatar
         imageUrl={contactAvatar}
         altText={contactName}

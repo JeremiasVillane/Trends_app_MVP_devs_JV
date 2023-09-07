@@ -56,5 +56,3 @@ const MessageInput = ({ userId, onSendMessage }) => {
 };
 
 export default MessageInput;
-
-// <MessageInput onSendMessage={(message) => handleSendMessage(message)} />

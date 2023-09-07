@@ -54,11 +54,16 @@
   .BGContainer {
     width: 100vw;
   }
+
+  .Feed {
+    padding: 0 .5rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .Container {
     margin-left: 0;
+    
   }
   .Container header {
     display: none;

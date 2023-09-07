@@ -6,6 +6,12 @@ import React from "react";
  * @returns {Object} Objeto con funciones `lockScroll` y `unlockScroll`.
  */
 export const useScrollLock = () => {
+  // Almacenamos el valor original de overflow
+  const originalOverflow = React.useRef("");
+
+  // Almacenamos el valor original de paddingRight
+  const originalPaddingRight = React.useRef("");
+
   /**
    * Bloquea el desplazamiento de la página.
    */
@@ -19,7 +25,9 @@ export const useScrollLock = () => {
    * Desbloquea el desplazamiento de la página.
    */
   const unlockScroll = React.useCallback(() => {
-    document.body.style.overflow = "";
+    document.body.style.overflow = originalOverflow.current;
+    document.body.style.paddingRight = originalPaddingRight.current;
+
     delete document.body.dataset.scrollLock;
   }, []);
 

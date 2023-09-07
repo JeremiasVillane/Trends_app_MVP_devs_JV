@@ -3,10 +3,11 @@ import { BiSolidUser } from "react-icons/bi";
 import { HiAcademicCap, HiBriefcase } from "react-icons/hi";
 import { MdGroupAdd } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getSomeUserInfo } from "../../../redux/UsersSlice";
+import { getSomeUserInfo, selectUserProfile } from "../../../redux/UsersSlice";
 import Avatar from "./Avatar";
+import GroupChatListModal from "./GroupChatListModal";
 import styles from "./InfoSideBar.module.css";
 
 const InfoProfile = ({
@@ -20,8 +21,10 @@ const InfoProfile = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector(selectUserProfile);
   const [profileData, setProfileData] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
+  const [showGroupChatListModal, setShowGroupChatListModal] = useState(false);
   const lightColor = "#232323";
   const darkColor = "#FFF";
 
@@ -43,13 +46,24 @@ const InfoProfile = ({
     <>
       <header>
         Información de perfil
-        <SlOptionsVertical
-          size={20}
-          color={darkMode ? "#f5f5f5" : "#383836"}
-          onClick={() => setShowOptions((curr) => !curr)}
-          style={{ cursor: "pointer" }}
-          title="Opciones"
-        />
+        <div className={styles.options_button}>
+          <SlOptionsVertical
+            size={20}
+            color={darkMode ? "#f5f5f5" : "#383836"}
+            onClick={() => setShowOptions((curr) => !curr)}
+            style={{ cursor: "pointer" }}
+            title="Opciones"
+          />
+          {showOptions && (
+            <div className={styles.options_menu}>
+              <ul onClick={() => setShowOptions((curr) => !curr)}>
+                <li onClick={handleDeleteChat} style={{ color: "tomato" }}>
+                  Eliminar chat
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
       </header>
       <main>
         <div className={styles.image_container}>
@@ -88,7 +102,7 @@ const InfoProfile = ({
             title="Ver perfil"
           />
         </button>
-        <button>
+        <button onClick={() => setShowGroupChatListModal(true)}>
           <MdGroupAdd
             size={40}
             className={styles.option_button}
@@ -97,14 +111,13 @@ const InfoProfile = ({
           />
         </button>
       </div>
-      {showOptions && (
-        <div className={styles.options_menu}>
-          <ul onClick={() => setShowOptions((curr) => !curr)}>
-            <li onClick={handleDeleteChat} style={{ color: "tomato" }}>
-              Eliminar chat
-            </li>
-          </ul>
-        </div>
+      {showGroupChatListModal && (
+        <GroupChatListModal
+          ownerId={user.id}
+          userToAdd={contactId}
+          setShowGroupChatListModal={setShowGroupChatListModal}
+          setShowInfo={setShowInfo}
+        />
       )}
     </>
   );

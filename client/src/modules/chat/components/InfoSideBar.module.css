@@ -1,6 +1,7 @@
 .info_sidebar {
   /* position: absolute; */
   width: 300px;
+  height: auto;
   background-color: #f0f0f0;
   border-left: 1px solid #ccc;
   overflow-y: auto;
@@ -13,12 +14,14 @@
   padding: 10px;
   border-bottom: 1px solid #ccc;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   margin: 0 1rem 0 1rem;
   font-size: 20px;
   user-select: none;
   position: relative;
+  white-space: nowrap;
 }
 
 .info_sidebar main {
@@ -65,6 +68,7 @@
   text-align: center;
   color: #383836;
   margin: 1rem;
+  user-select: none;
 }
 
 .participant_role {
@@ -109,13 +113,17 @@
 
 .participants_options_menu {
   position: absolute;
-  translate: -3.3rem 3rem;
+  translate: -86% -5%;
   /* right: 8.3%;
   top: 62%; */
   border-radius: 5px 0 5px 5px;
   background-color: #f5f5f5;
   box-shadow: rgb(0 0 0 / 25%) -2px 5px 5px 2px;
-  overflow: hidden;
+  text-align: right;
+  padding: 0.25rem;
+  white-space: nowrap;
+  z-index: 3;
+  user-select: none;
 }
 
 .participants_options_menu li {
@@ -176,13 +184,16 @@
 
 .options_menu {
   position: absolute;
-  text-align: right;
-  top: 2.5rem;
-  right: 2.3rem;
+  font-size: 16px;
   border-radius: 5px 0 5px 5px;
   background-color: #f5f5f5;
   box-shadow: rgb(0 0 0 / 25%) -2px 5px 5px 2px;
-  overflow: hidden;
+  text-align: right;
+  padding: 0.25rem;
+  translate: -95%;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 3;
 }
 
 .options_menu li {
@@ -194,11 +205,18 @@
   background-color: #e0e0e0;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 590px) {
+  .info_sidebar {
+    width: 100vh;
+    overflow-y: auto;
+  }
+}
+
+/* @media screen and (max-width: 650px) {
   .info_sidebar {
     display: none;
   }
-}
+} */
 
 :global(.dark-mode) .info_sidebar {
   background-color: #202020;
@@ -208,6 +226,10 @@
   background-color: #202020;
   color: #fff;
   border-bottom: 1px solid #383836;
+}
+:global(.dark-mode) .image_container {
+  background-color: #202020;
+  border: 3px solid #121212;
 }
 :global(.dark-mode) .name {
   color: #fff;

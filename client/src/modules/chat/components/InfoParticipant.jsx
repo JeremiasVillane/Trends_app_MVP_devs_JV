@@ -10,6 +10,7 @@ import {
 } from "../../../redux/chatSlice";
 import { getSomeUserInfo } from "../../../redux/UsersSlice";
 import Avatar from "./Avatar";
+import GroupChatListModal from "./GroupChatListModal";
 import styles from "./InfoSideBar.module.css";
 import RemoveParticipantModal from "./RemoveParticipantModal";
 
@@ -23,6 +24,7 @@ const InfoParticipant = ({
   darkMode,
   setShowParticipantInfo,
   setShowInfo,
+  isSmallerThan590,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const InfoParticipant = ({
   const [showRemoveParticipantModal, setShowRemoveParticipantModal] =
     useState(false);
   const [editingRole, setEditingRole] = useState(false);
+  const [showGroupChatListModal, setShowGroupChatListModal] = useState(false);
   const lightColor = "#232323";
   const darkColor = "#FFF";
 
@@ -86,13 +89,14 @@ const InfoParticipant = ({
     <>
       <header>
         <IoMdArrowRoundBack
-          size={20}
+          size={isSmallerThan590 ? 30 : 23}
           color={darkMode ? "#f5f5f5" : "#383836"}
           onClick={() => setShowParticipantInfo(false)}
           style={{ cursor: "pointer" }}
           title="Volver"
         />
         Datos del integrante
+        <span />
       </header>
       <main>
         <div className={styles.image_container}>
@@ -146,27 +150,36 @@ const InfoParticipant = ({
             </button>
           </>
         )}
-        {participantId === ownerId || participantId === currentUserId
-          ? null
-          : currentUserRole === "Moderador" && (
-              <button onClick={handleOptions}>
-                <BiSolidUserDetail
-                  size={40}
-                  className={styles.option_button}
-                  color={darkMode ? darkColor : lightColor}
-                  title="Opciones"
-                />
-              </button>
-            )}
-        {showParticipantOptions && (
-          <div className={styles.participants_options_menu}>
-            <ul onClick={() => setShowParticipantOptions((curr) => !curr)}>
-              <li onClick={handleRolEdit}>Editar rol en el grupo</li>
-              <li onClick={handleRemoveParticipant}>Quitar del grupo</li>
-              <li>Agregar a grupo</li>
-            </ul>
-          </div>
-        )}
+        <div className={styles.options_button}>
+          {participantId === ownerId || participantId === currentUserId
+            ? null
+            : currentUserRole === "Moderador" && (
+                <button onClick={handleOptions}>
+                  <BiSolidUserDetail
+                    size={40}
+                    className={styles.option_button}
+                    color={darkMode ? darkColor : lightColor}
+                    title="Opciones"
+                  />
+                </button>
+              )}
+          {showParticipantOptions && (
+            <div className={styles.participants_options_menu}>
+              <ul onClick={() => setShowParticipantOptions((curr) => !curr)}>
+                <li onClick={handleRolEdit}>Editar rol</li>
+                <li
+                  onClick={handleRemoveParticipant}
+                  style={{ color: "tomato" }}
+                >
+                  Quitar del grupo
+                </li>
+                <li onClick={() => setShowGroupChatListModal((curr) => !curr)}>
+                  Agregar a otro grupo
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
       <div className={styles.participant_role}>
         {editingRole ? (
@@ -202,6 +215,14 @@ const InfoParticipant = ({
           ownerId={ownerId}
           setShowRemoveParticipantModal={setShowRemoveParticipantModal}
           setShowParticipantInfo={setShowParticipantInfo}
+        />
+      )}
+      {showGroupChatListModal && (
+        <GroupChatListModal
+          ownerId={ownerId}
+          userToAdd={participantId}
+          setShowGroupChatListModal={setShowGroupChatListModal}
+          setShowInfo={setShowInfo}
         />
       )}
     </>

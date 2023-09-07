@@ -19,6 +19,9 @@ const InfoSideBar = ({
   ownerId,
   participants,
   setShowInfo,
+  isSmallerThan590,
+  setShowMessagesInSmallScreens,
+  setShowConversationListInSmallScreens,
 }) => {
   const darkMode = useSelector(selectDarkMode);
   const [showGroupChatEditModal, setShowGroupChatEditModal] = useState(false);
@@ -43,7 +46,7 @@ const InfoSideBar = ({
 
   const handleAddUserToGroup = () => {
     setShowAddUserToGroupModal(true);
-  }
+  };
 
   return (
     <>
@@ -59,6 +62,11 @@ const InfoSideBar = ({
             participants={reversedParticipants}
             darkMode={darkMode}
             setShowInfo={setShowInfo}
+            isSmallerThan590={isSmallerThan590}
+            setShowMessagesInSmallScreens={setShowMessagesInSmallScreens}
+            setShowConversationListInSmallScreens={
+              setShowConversationListInSmallScreens
+            }
           />
         )}
         {infoType === "infoProfile" && (

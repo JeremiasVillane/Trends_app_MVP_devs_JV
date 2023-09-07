@@ -129,159 +129,83 @@ export const ImageUploadModal = ({
       onClick={handleOverlayClick}
     >
       <div className={styles.modal_container} style={{ width: "350px" }}>
-          <div className={styles.modal_header}>
-            <h2 className={styles.modal_title}>Cambiar<br/>foto de perfil</h2>
-          </div>
-          <div className={styles.modal_content}>
-            {showPreviewImage ? (
-              <div className={styles.preview}>
-                <button
-                  onClick={() => {
-                    setShowPreviewImage(false);
-                    setProfileImage(null);
+        <div className={styles.modal_header}>
+          <h2 className={styles.modal_title}>
+            Cambiar
+            <br />
+            foto de perfil
+          </h2>
+        </div>
+        <div className={styles.modal_content}>
+          {showPreviewImage ? (
+            <div className={styles.preview}>
+              <button
+                onClick={() => {
+                  setShowPreviewImage(false);
+                  setProfileImage(null);
+                }}
+                title="Eliminar"
+              >
+                &#128473;
+              </button>
+              <img
+                src={getImageSrc(profileImage)}
+                alt="Vista previa"
+                className={styles.preview_image}
+              />
+            </div>
+          ) : (
+            <div className={styles.image_input}>
+              <div
+                className={styles.drop_zone}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleFileDrop}
+              >
+                <label
+                  htmlFor="img_up"
+                  style={{
+                    cursor: "pointer",
+                    color: darkMode ? "#d9d9d9" : "#383836",
                   }}
-                  title="Eliminar"
                 >
-                  &#128473;
-                </button>
-                <img
-                  src={getImageSrc(profileImage)}
-                  alt="Vista previa"
-                  className={styles.preview_image}
+                  Suelta una imagen o haz clic aquí
+                  <br />
+                  <br />
+                  <i
+                    className="fa fa-2x fa-camera"
+                    style={{ color: darkMode ? "#fff" : "#383836" }}
+                  ></i>
+                </label>
+                <input
+                  id="img_up"
+                  type="file"
+                  accept="image/jpeg, image/jpg, image/png, image/gif, image/svg+xml"
+                  name="profileImage"
+                  onChange={(e) => handleFileChange(e.target.files[0])}
+                  style={{ display: "none" }}
                 />
               </div>
-            ) : (
-              <div className={styles.image_input}>
-                <div
-                  className={styles.drop_zone}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={handleFileDrop}
-                >
-                  <label
-                    htmlFor="img_up"
-                    style={{
-                      cursor: "pointer",
-                      color: darkMode ? "#d9d9d9" : "#383836",
-                    }}
-                  >
-                    Suelta una imagen o haz clic aquí
-                    <br />
-                    <br />
-                    <i
-                      className="fa fa-2x fa-camera"
-                      style={{ color: darkMode ? "#fff" : "#383836" }}
-                    ></i>
-                  </label>
-                  <input
-                    id="img_up"
-                    type="file"
-                    accept="image/jpeg, image/jpg, image/png, image/gif, image/svg+xml"
-                    name="profileImage"
-                    onChange={(e) => handleFileChange(e.target.files[0])}
-                    style={{ display: "none" }}
-                  />
-                </div>
-              </div>
-            )}
-
-            <div className={styles.buttons_container}>
-              <button
-                className={styles.page_button}
-                onClick={handleAccept}
-                disabled={!profileImage || !isImageEdited || errorMessage}
-                autoFocus
-              >
-                Aceptar
-              </button>
-              <button
-                className={styles.cancel_button}
-                onClick={() => setShowImageUploadModal(false)}
-              >
-                Cancelar
-              </button>
             </div>
+          )}
+
+          <div className={styles.buttons_container}>
+            <button
+              className={styles.page_button}
+              onClick={handleAccept}
+              disabled={!profileImage || !isImageEdited || errorMessage}
+              autoFocus
+            >
+              Aceptar
+            </button>
+            <button
+              className={styles.cancel_button}
+              onClick={() => setShowImageUploadModal(false)}
+            >
+              Cancelar
+            </button>
           </div>
         </div>
+      </div>
     </div>
   );
 };
-
-// import axios from "axios";
-// import Swal from "sweetalert2";
-// const { VITE_URL } = import.meta.env;
-// const URLImage = `${VITE_URL}/images/profile`;
-
-// export const ImageUploadModal = (darkMode, updater) => {
-//   Swal.fire({
-//     title: "Cambiar foto de perfil",
-//     html: `
-//       <div>
-//         <em>
-//           <p>Arrastra y suelta una imagen aquí</p>
-//           <p>O busca en tu dispositivo</p>
-//         </em>
-//         <br /><br />
-//         <input type="file" accept="image/*">
-//       </div>
-//     `,
-//     showCancelButton: true,
-//     showConfirmButton: false,
-//     allowOutsideClick: true,
-//     showCloseButton: true,
-//     background: darkMode ? "#383636" : "#FFF",
-//     color: darkMode ? "#FFF" : "#545454",
-//     willOpen: (modal) => {
-//       const input = modal.querySelector("input");
-
-//       input.addEventListener("change", async (event) => {
-//         const file = event.target.files[0];
-//         if (file) {
-//           const formData = new FormData();
-//           formData.append("image", file);
-//           const reader = new FileReader();
-
-//           reader.onload = async (e) => {
-//             const response = await Swal.fire({
-//               imageUrl: e.target.result,
-//               showCancelButton: true,
-//               confirmButtonText: "Aceptar",
-//               showLoaderOnConfirm: true,
-//               allowOutsideClick: false,
-//               width: 333,
-//               background: darkMode ? "#383636" : "#FFF",
-//               color: darkMode ? "#FFF" : "#545454",
-//               preConfirm: async () => {
-//                 try {
-//                   await axios.post(URLImage, formData, {
-//                     withCredentials: "include",
-//                   });
-//                   return true;
-//                 } catch (error) {
-//                   Swal.showValidationMessage(`Error: ${error.message}`);
-//                   return false;
-//                 }
-//               },
-//             });
-
-//             if (response.isConfirmed) {
-//               updater();
-//               Swal.fire({
-//                 icon: "success",
-//                 position: "top-end",
-//                 toast: true,
-//                 title: "Operación Exitosa",
-//                 text: "La imagen se ha subido correctamente.",
-//                 showConfirmButton: false,
-//                 timer: 2000,
-//                 timerProgressBar: false,
-//                 background: darkMode ? "#383636" : "#FFF",
-//                 color: darkMode ? "#FFF" : "#545454",
-//               });
-//             }
-//           };
-//           reader.readAsDataURL(file);
-//         }
-//       });
-//     },
-//   });
-// };

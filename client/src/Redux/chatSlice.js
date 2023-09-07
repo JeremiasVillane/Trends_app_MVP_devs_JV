@@ -78,23 +78,23 @@ export const searchConversations =
 
 // Thunk para enviar el mensaje y obtener la respuesta del backend
 export const sendAndStoreMessage =
-  (conversationId, messageData) => async (dispatch) => {
+  (userId, conversationId, message) => async (dispatch) => {
     let conversationType;
 
     conversationId.includes("group")
       ? (conversationType = "groups")
       : (conversationType = "chat");
-
     try {
       const { data } = await axios.post(
         `${VITE_URL}/chatroom/${conversationType}/${conversationId}/messages`,
-        messageData,
+        { content: message },
         { withCredentials: "include" }
       );
 
-      dispatch(addNewMessage({ conversationId, newMessage: data }));
+      // dispatch(addNewMessage({ conversationId, newMessage: data }));
+      dispatch(loadConversations(userId));
     } catch (error) {
-      console.error("Error al guardar el mensaje:", error);
+      console.error("Error al guardar el mensaje:", error.message);
     }
   };
 
@@ -237,6 +237,18 @@ export const editGroupMemberRole =
       console.error("Error editando rol de usuario en el grupo:", error);
     }
   };
+
+// Thunk para obtener los grupos en los que el usuario es creador o moderador
+export const getUserChatGroups = () => async () => {
+  try {
+    const { data } = await axios.get(`${VITE_URL}/chatroom/groups?list=true`, {
+      withCredentials: "include",
+    });
+    return data;
+  } catch (error) {
+    console.error("Error obteniendo grupos:", error);
+  }
+};
 
 // Thunk para subir una imagen
 export const addGroupImage = (formData) => async () => {

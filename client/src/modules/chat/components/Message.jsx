@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import ThreadSidebar from "./ThreadSidebar";
-import styles from "./Message.module.css";
-import Timestamp from "./Timestamp";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDarkMode, selectUserProfile } from "../../../redux/UsersSlice";
-import MessageActions from "./MessageActions";
-import { deleteMessage, loadConversations } from "../../../redux/chatSlice";
-import Avatar from "./Avatar";
 import { useNavigate } from "react-router-dom";
+import { deleteMessage } from "../../../redux/chatSlice";
+import { selectDarkMode, selectUserProfile } from "../../../redux/UsersSlice";
+import Avatar from "./Avatar";
+import styles from "./Message.module.css";
+import MessageActions from "./MessageActions";
+import Timestamp from "./Timestamp";
 
 const Message = ({
   socket,
@@ -20,8 +19,6 @@ const Message = ({
   timestamp,
   content,
   messageStatus,
-  parentMessage,
-  messages,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,10 +27,18 @@ const Message = ({
   const activeConversation = useSelector(
     (state) => state.chat.activeConversation
   );
-  const [showThreadSidebar, setShowThreadSidebar] = useState(false);
   const [showActions, setShowActions] = useState(false);
-  const messageStyle =
-    user.username === author ? "message_sent" : "message_received";
+  const messageStyle = {
+    flexDirection: user.id === authorId ? "row-reverse" : "row",
+    alignItems: user.id === authorId ? "flex-end" : "flex-start",
+    messageColor:
+      user.id === authorId
+        ? {
+            background: darkMode ? "#9d9d9d" : "#3085d6",
+            color: darkMode ? "#242424" : "#f5f5f5",
+          }
+        : { background: darkMode ? "#383636" : "#777", color: "#d1d1d1" },
+  };
 
   const handleProfile = () => {
     navigate(`/user/profile/${authorId}`);
@@ -47,22 +52,21 @@ const Message = ({
     setShowActions(false);
   };
 
-  const handleReplyInThreadClick = () => {
-    setShowThreadSidebar(true);
-  };
-
   const handleDelete = (messageId) => {
     if (socket && activeConversation) {
-      socket.emit("updateMessage", messageId);
+      socket.emit("updateMessage");
 
       dispatch(deleteMessage(activeConversation, messageId));
     }
   };
 
   return (
-    <div className={styles.message}>
+    <div
+      className={styles.message_container}
+      style={{ flexDirection: messageStyle.flexDirection }}
+    >
       <div
-        className={`${styles[`${messageStyle}_avatar`]} ${styles.avatar}`}
+        className={styles.message_avatar}
         onClick={user.id !== authorId ? handleProfile : null}
         style={{ cursor: user.id !== authorId ? "pointer" : "default" }}
       >
@@ -75,17 +79,14 @@ const Message = ({
       </div>
 
       <div
-        className={`${styles.message} ${styles[messageStyle]}`}
+        className={styles.message}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        style={{ alignItems: messageStyle.alignItems }}
       >
         <p className={styles.message_author}>{authorName}</p>
 
-        <div
-          className={`${styles[`${messageStyle}`]} ${
-            styles[`${messageStyle}_content`]
-          }`}
-        >
+        <div className={styles.message_content}>
           {user.username === author &&
             messageStatus !== "deleted" &&
             showActions && (
@@ -101,44 +102,20 @@ const Message = ({
                     color: darkMode ? "#999" : "#646464",
                     userSelect: "none",
                     padding: ".3rem 0",
+                    marginBottom: "-0.7rem",
                   }
-                : null
+                : messageStyle.messageColor
             }
           >
             {content}
           </p>
         </div>
-        <span className={`${styles[`${messageStyle}_timestamp`]}`}>
+        <span className={styles.message_timestamp}>
           <Timestamp timestamp={timestamp} />
         </span>
-        {parentMessage && (
-          <button
-            className={styles.reply_button}
-            onClick={handleReplyInThreadClick}
-          >
-            Responder en hilo
-          </button>
-        )}
       </div>
-      {showThreadSidebar && (
-        <ThreadSidebar
-          messages={messages}
-          setShowThreadSidebar={setShowThreadSidebar}
-        />
-      )}
     </div>
   );
 };
 
 export default Message;
-
-/**
- *
- * <Message
- * message={message}
- * onSelectThread={() => setSelectedParentMessage(message)}
- *  // Set selectedParentMessage
- * />
- *
- *
- */

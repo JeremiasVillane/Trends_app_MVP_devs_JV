@@ -1,5 +1,5 @@
 const { Chat, Message } = require("../../db");
-const decryptMessage = require("../../helpers/decryptMessage");
+const messageFormatter = require("../../helpers/messageFormatter");
 const { getUserById } = require("../search.controllers");
 
 module.exports = async (chatId, content, userId, userType) => {
@@ -7,7 +7,7 @@ module.exports = async (chatId, content, userId, userType) => {
   const chat = await Chat.findOne({
     where: { chat_id: chatId },
   });
-console.log("chat: ", chat)
+
   if (!chat) {
     return { error: "Private chat not found" };
   }
@@ -55,7 +55,5 @@ console.log("chat: ", chat)
   chat.updated_at = new Date();
   await chat.save();
 
-  message.content = decryptMessage(content);
-
-  return message;
+  return messageFormatter(message)[0];
 };

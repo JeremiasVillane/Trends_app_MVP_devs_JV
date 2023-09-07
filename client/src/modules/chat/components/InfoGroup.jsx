@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdGroupAdd } from "react-icons/md";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { SlOptionsVertical } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { selectUserProfile } from "../../../redux/UsersSlice";
@@ -17,6 +18,9 @@ const InfoGroup = ({
   participants,
   darkMode,
   setShowInfo,
+  isSmallerThan590,
+  setShowMessagesInSmallScreens,
+  setShowConversationListInSmallScreens,
 }) => {
   const user = useSelector(selectUserProfile);
   const [showOptions, setShowOptions] = useState(false);
@@ -61,6 +65,12 @@ const InfoGroup = ({
     setParticipantId(event.currentTarget.id);
   };
 
+  const handleBackToMessages = () => {
+    setShowInfo(false);
+    setShowMessagesInSmallScreens(true);
+    setShowConversationListInSmallScreens(true);
+  };
+
   return (
     <>
       {showParticipantInfo ? (
@@ -74,19 +84,46 @@ const InfoGroup = ({
           darkMode={darkMode}
           setShowParticipantInfo={setShowParticipantInfo}
           setShowInfo={setShowInfo}
+          isSmallerThan590={isSmallerThan590}
         />
       ) : (
         <>
           <header>
+            {isSmallerThan590 && (
+              <IoMdArrowRoundBack
+                size={30}
+                color={darkMode ? "#f5f5f5" : "#383836"}
+                onClick={handleBackToMessages}
+                style={{ cursor: "pointer" }}
+                title="Volver"
+              />
+            )}
             Información del grupo
             {currentUserRole === "Moderador" && (
-              <SlOptionsVertical
-                size={20}
-                color={darkMode ? "#f5f5f5" : "#383836"}
-                onClick={() => setShowOptions((curr) => !curr)}
-                style={{ cursor: "pointer" }}
-                title="Opciones"
-              />
+              <div className={styles.options_button}>
+                <SlOptionsVertical
+                  size={20}
+                  color={darkMode ? "#f5f5f5" : "#383836"}
+                  onClick={() => setShowOptions((curr) => !curr)}
+                  style={{ cursor: "pointer" }}
+                  title="Opciones"
+                />
+                {showOptions && (
+                  <div className={styles.options_menu}>
+                    <ul onClick={() => setShowOptions((curr) => !curr)}>
+                      <li onClick={handleEditInfo}>Editar grupo</li>
+                      {ownerId === user.id && (
+                        <li
+                          onClick={handleDeleteGroup}
+                          style={{ color: "tomato" }}
+                        >
+                          Eliminar grupo
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                )}
+              </div>
             )}
           </header>
           <main>
@@ -149,18 +186,6 @@ const InfoGroup = ({
               </div>
             ))}
           </section>
-          {showOptions && (
-            <div className={styles.options_menu}>
-              <ul onClick={() => setShowOptions((curr) => !curr)}>
-                <li onClick={handleEditInfo}>Editar grupo</li>
-                {ownerId === user.id && (
-                  <li onClick={handleDeleteGroup} style={{ color: "tomato" }}>
-                    Eliminar grupo
-                  </li>
-                )}
-              </ul>
-            </div>
-          )}
         </>
       )}
     </>
