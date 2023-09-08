@@ -83,7 +83,7 @@ module.exports = async (queryParams, userType, page, perPage) => {
     },
   });
 
-  if (!users.length) return { error: "No users found" };
+  if (!users.length) return [];
 
   return pagination(users, page, perPage);
 };

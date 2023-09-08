@@ -1,4 +1,4 @@
-import CompanyProfile from "./pages/CompanyProfile";
+import CompanyProfile from "./views/CompanyProfile";
 
 export { CompanyProfile };
-export * from "./pages";
+export * from "./views";

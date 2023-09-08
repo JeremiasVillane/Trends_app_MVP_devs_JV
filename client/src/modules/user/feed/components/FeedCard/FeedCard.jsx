@@ -4,11 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "../../../../../hooks/useMediaQuery";
 import { createNewPrivateChat } from "../../../../../redux/chatSlice";
-import {
-  selectDarkMode,
-  selectUserProfile,
-} from "../../../../../redux/UsersSlice";
-import Avatar from "../../../../chat/components/Avatar";
+import { selectDarkMode } from "../../../../../redux/uiSlice";
+import { selectUserProfile } from "../../../../../redux/usersSlice";
+import { Avatar } from "../../../../chat/components/main";
 import styles from "./FeedCard.module.css";
 
 export const FeedCard = ({ user, handleAddToGroup }) => {

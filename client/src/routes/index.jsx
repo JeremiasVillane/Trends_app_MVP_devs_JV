@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useRoutes } from "react-router-dom";
 import { Spinner } from "../components/loaders";
-import { selectUserProfile } from "../redux/UsersSlice";
+import { selectUserProfile } from "../redux/usersSlice";
 import { protectedRoutes } from "../utils";
 
 /**
@@ -80,8 +80,8 @@ export default function Router() {
     {
       path: "chat",
       element: <Chat />,
-    }
-  ]
+    },
+  ];
 
   // Definición de rutas para administradores
   const adminRoutes = [
@@ -115,59 +115,56 @@ export default function Router() {
     {
       path: "/chatroom",
       element: null,
-      children: protectedRoutes(chatRoutes, user, ["student", "professional", "company"])
+      children: protectedRoutes(chatRoutes, user, [
+        "student",
+        "professional",
+        "company",
+      ]),
     },
     {
       path: "/admin",
       element: null,
       children: protectedRoutes(adminRoutes, user, ["admin"]),
     },
-    { 
-      path: "/forbidden", 
-      element: <ForbiddenModal /> 
+    {
+      path: "/forbidden",
+      element: <ForbiddenModal />,
     },
-    { 
-      path: "/404", 
-      element: <NotFoundModal /> 
+    {
+      path: "/404",
+      element: <NotFoundModal />,
     },
-    { 
-      path: "*", 
-      element: <Navigate to="/404" replace />
+    {
+      path: "*",
+      element: <Navigate to="/404" replace />,
     },
   ]);
 }
 
 // Carga diferida de componentes
-const Landing = Loadable(
-  lazy(() => import("../modules/landing/Landing"))
-);
-const Login = Loadable(
-  lazy(() => import("../modules/auth/pages/Login/Login"))
-);
+const Landing = Loadable(lazy(() => import("../modules/landing/Landing")));
+const Login = Loadable(lazy(() => import("../modules/auth/views/Login/Login")));
 const Register = Loadable(
-  lazy(() => import("../modules/auth/pages/Register/Register"))
+  lazy(() => import("../modules/auth/views/Register/Register"))
 );
 const Profile = Loadable(
-  lazy(() => import("../modules/user/profile/pages/Profile/Profile"))
+  lazy(() => import("../modules/user/profile/views/Profile/Profile"))
 );
 const ProfileSearch = Loadable(
   lazy(() =>
-    import("../modules/user/profile/pages/ProfileSearch/ProfileSearch"))
+    import("../modules/user/profile/views/ProfileSearch/ProfileSearch")
+  )
 );
-const Feed = Loadable(
-  lazy(() => import("../modules/user/feed/pages/Feed"))
-);
+const Feed = Loadable(lazy(() => import("../modules/user/feed/views/Feed")));
 const CompanyProfile = Loadable(
-  lazy(() => import("../modules/company/profile/pages/CompanyProfile"))
+  lazy(() => import("../modules/company/profile/views/CompanyProfile"))
 );
 const CompanyFeed = Loadable(
-  lazy(() => import("../modules/company/feed/pages/CompanyFeed"))
+  lazy(() => import("../modules/company/feed/views/CompanyFeed"))
 );
-const Chat = Loadable(
-  lazy(() => import("../modules/chat/components/Chat"))
-);
+const Chat = Loadable(lazy(() => import("../modules/chat/views/Chat")));
 const AdminPage = Loadable(
-  lazy(() => import("../modules/admin/pages/AdminPage"))
+  lazy(() => import("../modules/admin/views/AdminPage"))
 );
 const NotFoundModal = Loadable(
   lazy(() => import("../components/modals/NotFoundModal"))

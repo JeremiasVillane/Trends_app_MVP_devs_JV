@@ -1,19 +1,16 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { HiChat, HiLogout, HiUser } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import useMediaQuery from "../../../hooks/useMediaQuery";
 import { chatLogout } from "../../../redux/chatSlice";
-// import { selectIsMinimized } from "../../../redux/chatSlice";
 import { persistor } from "../../../redux/store";
-import {
-  selectDarkMode,
-  selectUserProfile,
-  setDarkMode,
-  userLogout,
-} from "../../../redux/UsersSlice";
+import { selectDarkMode, setDarkMode } from "../../../redux/uiSlice";
+import { selectUserProfile, userLogout } from "../../../redux/usersSlice";
 import styles from "./MainNavBar.module.css";
 const { VITE_URL } = import.meta.env;
 
@@ -28,29 +25,50 @@ export const MainNavBar = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector(selectDarkMode);
   const userData = useSelector(selectUserProfile);
-  // const isMinimized = useSelector(selectIsMinimized);
   const MySwal = withReactContent(Swal);
-  const lightColor = "white";
-  const darkColor = "white";
+  const isSmallerThan768 = useMediaQuery("(max-width: 768px)");
+  const [activeButton, setActiveButton] = useState("Inicio");
+  const [activeColor, setActiveColor] = useState("lightgray");
+  const activeButtonStyle = {
+    [activeButton]: activeColor,
+  };
+  const activeButtonBorder = isSmallerThan768
+    ? "0px -3px 0px 0px"
+    : "-3px 0px 0px 0px";
+
+  useEffect(() => {
+    activeButtonStyle[activeButton] = activeColor;
+  }, [activeButton]);
 
   // Navega a la página de inicio.
-  const handleHome = () => {
+  const handleHome = (event) => {
+    const { title } = event.currentTarget;
+    setActiveButton(title);
+    setActiveColor("lightgray");
+
     userData.type === "company"
       ? navigate("/company/feed")
       : navigate("/user/feed");
   };
 
   // Navega a la página de perfil del usuario.
-  const handleProfile = () => {
+  const handleProfile = (event) => {
+    const { title } = event.currentTarget;
+    setActiveButton(title);
+    setActiveColor("lightgray");
+
     userData.type === "company"
       ? navigate("/company/profile")
       : navigate("/user/profile");
   };
 
   // Navega a la página de chats.
-  const handleChats = () => {
+  const handleChats = (event) => {
+    const { title } = event.currentTarget;
+    setActiveButton(title);
+    setActiveColor("lightgray");
+
     navigate("/chatroom/chat");
-    // dispatch(setIsMinimized(!isMinimized))
   };
 
   // Maneja el cierre de sesión del usuario.
@@ -78,7 +96,11 @@ export const MainNavBar = () => {
 
   // Renderiza el cuadro de diálogo de confirmación
   // de cierre de sesión del usuario.
-  const handleLogout = () => {
+  const handleLogout = (event) => {
+    const { title } = event.currentTarget;
+    setActiveButton(title);
+    setActiveColor("lightgray");
+
     MySwal.fire({
       icon: "warning",
       iconColor: "#f1ca67",
@@ -92,6 +114,8 @@ export const MainNavBar = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         handleConfirmLogout();
+      } else if (result.isDenied || result.isDismissed) {
+        setActiveColor("transparent");
       }
     });
   };
@@ -106,10 +130,19 @@ export const MainNavBar = () => {
 
   return (
     <>
-      <div className={styles.left}>
+      <div className={styles.navbar}>
         {/* Botón y texto de Inicio */}
-        <button onClick={handleHome} className={styles.button} title="Inicio">
-          <AiFillHome size={"2rem"} color={darkMode ? darkColor : lightColor} />
+        <button
+          onClick={handleHome}
+          className={styles.button}
+          style={{
+            boxShadow: `${activeButtonBorder} ${
+              activeButtonStyle["Inicio"] || "transparent"
+            }`,
+          }}
+          title="Inicio"
+        >
+          <AiFillHome size={"2rem"} color={"white"} />
         </button>
         {/* <p>Inicio</p> */}
 
@@ -117,21 +150,44 @@ export const MainNavBar = () => {
         <button
           onClick={handleProfile}
           className={styles.button}
-          title="Mi Perfil"
+          style={{
+            boxShadow: `${activeButtonBorder} ${
+              activeButtonStyle["Perfil"] || "transparent"
+            }`,
+          }}
+          title="Perfil"
         >
-          <HiUser size={"2rem"} color={darkMode ? darkColor : lightColor} />
+          <HiUser size={"2rem"} color={"white"} />
         </button>
         {/* <p>Perfil</p> */}
 
         {/* Botón y texto de Chats */}
-        <button onClick={handleChats} className={styles.button} title="Chats">
-          <HiChat size={"2rem"} color={darkMode ? darkColor : lightColor} />
+        <button
+          onClick={handleChats}
+          className={styles.button}
+          style={{
+            boxShadow: `${activeButtonBorder} ${
+              activeButtonStyle["Chats"] || "transparent"
+            }`,
+          }}
+          title="Chats"
+        >
+          <HiChat size={"2rem"} color={"white"} />
         </button>
         {/* <p>Chats</p> */}
 
         {/* Botón y texto de Salir */}
-        <button onClick={handleLogout} className={styles.button} title="Salir">
-          <HiLogout size={"2rem"} color={darkMode ? darkColor : lightColor} />
+        <button
+          onClick={handleLogout}
+          className={styles.button}
+          style={{
+            boxShadow: `${activeButtonBorder} ${
+              activeButtonStyle["Salir"] || "transparent"
+            }`,
+          }}
+          title="Salir"
+        >
+          <HiLogout size={"2rem"} color={"white"} />
         </button>
         {/* <p>Salir</p> */}
 
@@ -142,15 +198,9 @@ export const MainNavBar = () => {
           title="Modo Oscuro/Claro"
         >
           {darkMode ? (
-            <i
-              className="fas fa-sun text-3xl"
-              style={{ color: darkMode ? darkColor : lightColor }}
-            />
+            <i className="fas fa-sun text-3xl" style={{ color: "white" }} />
           ) : (
-            <i
-              className="fas fa-moon text-3xl"
-              style={{ color: darkMode ? darkColor : lightColor }}
-            />
+            <i className="fas fa-moon text-3xl" style={{ color: "white" }} />
           )}
         </button>
       </div>

@@ -2,10 +2,10 @@ const { Image } = require("../../db");
 const path = require("path");
 const fs = require("fs");
 
-module.exports = async (imageId, currentUserId, currentUserType) => {
+module.exports = async (imageUrl, currentUserId, currentUserType) => {
   const foundImage = await Image.findOne({
     where: {
-      id: imageId,
+      imageUrl,
     },
   });
 
@@ -28,7 +28,7 @@ module.exports = async (imageId, currentUserId, currentUserType) => {
 
       await Image.destroy({
         where: {
-          id: imageId,
+          imageUrl,
         },
       });
 

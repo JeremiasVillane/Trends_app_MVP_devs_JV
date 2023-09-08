@@ -15,10 +15,10 @@ module.exports = async (req, res) => {
   try {
     const users = await getUsers(queryParams, userType, page, perPage);
 
-    if (!users) {
-      return res.status(400).json({ error: "No users found" });
-    }
-    if (users.error)
+    // if (!users) {
+    //   return res.status(400).json({ error: "No users found" });
+    // }
+    if (users?.error)
       return res.status(500).json({
         error: users.error,
       });

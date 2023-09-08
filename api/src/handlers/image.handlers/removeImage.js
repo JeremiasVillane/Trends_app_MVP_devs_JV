@@ -2,11 +2,11 @@ const { deleteImage } = require("../../controllers/image.controllers");
 
 module.exports = async (req, res) => {
   try {
-    const { imageId } = req.params;
+    const { imageUrl } = req.params;
     const { id: currentUserId, type: currentUserType } = req.user;
 
     const removedImage = await deleteImage(
-      imageId,
+      imageUrl,
       currentUserId,
       currentUserType
     );

@@ -19,7 +19,7 @@ export const profileCompletionPercentage = (obj) => {
   ];
 
   // Total de propiedades en el objeto
-  const totalKeys = Object.keys(obj).length;
+  const totalKeys = Object.keys(obj).length - excludedProperties.length;
 
   // Contador de propiedades no nulas
   let notNullKeys = 0;

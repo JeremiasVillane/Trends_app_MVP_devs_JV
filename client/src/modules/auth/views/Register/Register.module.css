@@ -1,0 +1,424 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+
+.BGContainer {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 5rem;
+  margin: 0 auto;
+}
+
+.Card {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  width: 30rem;
+  min-height: 34rem;
+  margin: auto auto;
+  padding: 2rem;
+  padding-top: 0;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.BGContainer select {
+  display: block;
+  margin: 0 auto;
+}
+
+.Options {
+  display: flex;
+  /* justify-content: space-between; */
+  margin-bottom: 0rem;
+}
+
+.Options > div {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+}
+
+/* .Options > div input {
+  width: 1.2rem;
+  margin: 0;
+  margin-right: 0.5rem;
+} */
+
+.support {
+  font-style: italic;
+  color: #454545;
+}
+
+.LeftContainer {
+  width: 50%;
+  padding: 0 1rem;
+}
+
+.LeftContainer > div {
+  background-color: white;
+}
+
+.LeftContainer h1 {
+  font-size: 1.5rem;
+  text-align: left;
+  margin-bottom: 1.2rem;
+  padding-left: 1rem;
+}
+.LeftContainer h3 {
+  color: #4b5965;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.LeftContainer img {
+  display: block;
+  margin: 0 auto;
+  height: 15rem;
+}
+
+.RightContainer {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.RightContainer h2 {
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+  color: #4d4d4d;
+  text-align: center;
+}
+
+.RightContainer .field {
+  font-family: "Rubik", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  font-style: italic;
+  border: 0;
+  color: #4d4d4d;
+  padding-left: 1rem;
+  height: 3rem;
+  width: 95%;
+  background-color: #e4e4e4;
+  border-radius: 0.5rem;
+}
+
+.RightContainer .Input {
+  margin-bottom: 2rem;
+}
+
+.RightContainer .field::placeholder {
+  color: #4d4d4d;
+}
+
+.RightContainer button {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  background-color: #56ccf2;
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.4rem;
+  font-size: 1.1rem;
+  color: white;
+  font-style: italic;
+  border: 0;
+  cursor: pointer;
+}
+
+.RightContainer button:disabled {
+  background-color: #777;
+  cursor: not-allowed;
+}
+.RightContainer hr {
+  border: #c7c7c7 solid 0.1px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.RightContainer form {
+  margin-top: 13%;
+  background-color: white;
+}
+
+.RightContainer form span {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.RightContainer .Bold {
+  color: black;
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+.RightContainer .Account {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.RightContainer form .error {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  /* display: initial; */
+  margin-top: 0.5rem;
+  line-height: 1rem;
+  font-style: italic;
+  color: #d93025;
+  font-size: 0.9rem;
+}
+
+.Account a {
+  text-decoration: none;
+  display: inline-block;
+  padding-left: 0.5rem;
+}
+
+.passwordIcon {
+  position: absolute;
+  cursor: pointer;
+}
+
+/*:::::: DESPLEGABLE DE CHECKBOXES ::::::*/
+
+.checkboxes_list {
+  position: absolute;
+  z-index: 111;
+  width: 23rem;
+  overflow-y: scroll;
+  height: 120px;
+  margin-bottom: 2rem;
+  background-color: #e4e4e4;
+  border-radius: 3px;
+  user-select: none;
+}
+
+:global(.dark-mode) {
+  background-color: #777;
+}
+:global(.dark-mode) .Card,
+:global(.dark-mode) .RightContainer form,
+:global(.dark-mode) .LeftContainer > div,
+:global(.dark-mode) .RightContainer h2,
+:global(.dark-mode) .RightContainer .Bold {
+  background-color: #383636;
+  color: white;
+}
+
+:global(.dark-mode) .RightContainer h2 {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+:global(.dark-mode) .RightContainer .field,
+:global(.dark-mode) .RightContainer .field::placeholder {
+  color: white;
+  background-color: #272727;
+}
+
+:global(.dark-mode) .LeftContainer h1 {
+  color: white;
+}
+
+:global(.dark-mode) .LeftContainer h3 {
+  color: #ccb5a5;
+}
+
+:global(.dark-mode) .RightContainer button {
+  color: white;
+  background-color: #fab180;
+}
+
+:global(.dark-mode) .RightContainer button:disabled {
+  background-color: #777;
+}
+
+@media screen and (max-width: 700px) {
+  .Card {
+    width: 100vw;
+    height: 120vh;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .LeftContainer,
+  .RightContainer {
+    margin: 0 auto;
+  }
+
+  .LeftContainer > div {
+    border-radius: 0.4rem;
+    margin: 0 auto;
+    width: 100%;
+    padding: 1rem;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .LeftContainer h1 {
+    text-align: center;
+    font-size: 1.7rem;
+    padding: 0;
+  }
+
+  .LeftContainer img,
+  .LeftContainer h3 {
+    display: none;
+  }
+
+  .LeftContainer .MainText {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .RightContainer {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+
+  .RightContainer form {
+    margin: 0;
+    margin-top: 1rem;
+    padding: 2rem;
+    width: 100%;
+    border-radius: 0.4rem;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .RightContainer .Account span {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .Account a {
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .checkboxes_list {
+    width: 15rem;
+  }
+}
+
+/*:::::::::::::: CHECKBOX ::::::::::::::*/
+
+.ui_checkbox {
+  margin: 0;
+  margin-right: 0.5rem;
+  --primary-color: #58c9e5;
+  --secondary-color: #fff;
+  --primary-hover-color: #1677ff;
+  /* checkbox */
+  --checkbox-diameter: 20px;
+  --checkbox-border-radius: 5px;
+  --checkbox-border-color: #d9d9d9;
+  --checkbox-border-width: 1px;
+  --checkbox-border-style: solid;
+  /* checkmark */
+  --checkmark-size: 1.2;
+}
+
+.ui_checkbox,
+.ui_checkbox *,
+.ui_checkbox *::before,
+.ui_checkbox *::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.ui_checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: var(--checkbox-diameter);
+  height: var(--checkbox-diameter);
+  border-radius: var(--checkbox-border-radius);
+  background: var(--secondary-color);
+  border: var(--checkbox-border-width) var(--checkbox-border-style)
+    var(--checkbox-border-color);
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+
+.ui_checkbox::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-box-shadow: 0 0 0 calc(var(--checkbox-diameter) / 2.5)
+    var(--primary-color);
+  box-shadow: 0 0 0 calc(var(--checkbox-diameter) / 2.5) var(--primary-color);
+  border-radius: inherit;
+  opacity: 0;
+  -webkit-transition: all 0.5s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  -o-transition: all 0.5s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  transition: all 0.5s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+}
+
+.ui_checkbox::before {
+  top: 40%;
+  left: 50%;
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 7px;
+  border-right: 2px solid var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
+  -webkit-transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  -ms-transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  opacity: 0;
+  -webkit-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6),
+    opacity 0.1s;
+  -o-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+  transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+}
+
+/* Acciones */
+
+.ui_checkbox:hover {
+  border-color: var(--primary-color);
+}
+
+.ui_checkbox:checked {
+  background: var(--primary-color);
+  border-color: transparent;
+}
+
+.ui_checkbox:checked::before {
+  opacity: 1;
+  -webkit-transform: translate(-50%, -50%) rotate(45deg)
+    scale(var(--checkmark-size));
+  -ms-transform: translate(-50%, -50%) rotate(45deg)
+    scale(var(--checkmark-size));
+  transform: translate(-50%, -50%) rotate(45deg) scale(var(--checkmark-size));
+  -webkit-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+  -o-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+  transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+}
+
+.ui_checkbox:active:not(:checked)::after {
+  -webkit-transition: none;
+  -o-transition: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  transition: none;
+  opacity: 1;
+}

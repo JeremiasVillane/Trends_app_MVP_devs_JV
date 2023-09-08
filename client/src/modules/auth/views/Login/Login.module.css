@@ -1,0 +1,279 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+
+.BGContainer {
+  margin: auto;
+  padding-top: 5rem;
+  display: block;
+}
+
+.BGContainer input {
+  border: 0;
+}
+
+.Card {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  display: flex;
+  width: 51rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 70%;
+  margin: auto auto;
+  padding: 2rem;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.Options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.Options > div {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+}
+
+.Options > div input {
+  width: 1.5rem;
+  margin: 0;
+  margin-right: 0.5rem;
+}
+
+.LeftContainer {
+  width: 50%;
+  padding: 0 1rem;
+}
+
+.LeftContainer > div {
+  background-color: transparent;
+}
+
+.LeftContainer h1 {
+  font-size: 1.5rem;
+  text-align: left;
+  margin-bottom: 1.2rem;
+  padding-left: 1rem;
+  color: black;
+}
+.LeftContainer h3 {
+  color: #4b5965;
+  font-size: 0.9rem;
+  font-weight: 200;
+  width: 95%;
+  margin-bottom: 1rem;
+}
+
+.LeftContainer img {
+  display: block;
+  margin: 0 auto;
+  height: 15rem;
+}
+
+.RightContainer {
+  width: 50%;
+  padding: 0 1rem;
+  padding-top: 2rem;
+}
+
+.RightContainer h2 {
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+  color: #4d4d4d;
+  text-align: center;
+}
+
+.RightContainer input {
+  font-family: "Rubik", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  font-style: italic;
+  color: #4d4d4d;
+  padding-left: 1rem;
+  height: 3rem;
+  width: 100%;
+  background-color: #e4e4e4;
+  border-radius: 0.5rem;
+}
+
+.RightContainer .Input {
+  margin-bottom: 2rem;
+}
+
+.RightContainer input::placeholder {
+  color: #4d4d4d;
+}
+
+.RightContainer button {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  background-color: #9ac2ef;
+  border: 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.4rem;
+  color: #fff;
+  font-style: italic;
+}
+.RightContainer button:hover {
+  background-color: #58c9e5;
+}
+
+.RightContainer button:disabled {
+  /* background-color: #4b5965; */
+  background-color: #777;
+  cursor: not-allowed;
+}
+.RightContainer hr {
+  border: #c7c7c7 solid 0.1px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.RightContainer form {
+  margin-top: 13%;
+  background-color: transparent;
+}
+
+.RightContainer form span {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+.RightContainer .Bold {
+  color: black;
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+.RightContainer .Account {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.RightContainer form .error {
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  display: initial;
+  color: #d93025;
+  font-size: 0.9rem;
+}
+
+:global(.dark-mode) {
+  background-color: #777;
+}
+:global(.dark-mode) .Card,
+:global(.dark-mode) .RightContainer form,
+:global(.dark-mode) .LeftContainer > div,
+:global(.dark-mode) .RightContainer h2,
+:global(.dark-mode) .RightContainer .Bold {
+  color: white;
+  background-color: #383636;
+}
+
+:global(.dark-mode) .RightContainer input,
+:global(.dark-mode) .RightContainer input::placeholder {
+  color: white;
+  background-color: #272727;
+}
+
+:global(.dark-mode) .LeftContainer h1 {
+  color: white;
+}
+
+:global(.dark-mode) .LeftContainer h3 {
+  color: #d9d9d9;
+}
+
+/* :global(.dark-mode) .RightContainer button {
+    background-color: #FAB180 ;
+    color: white;
+} */
+/* 
+:global(.dark-mode) .RightContainer button:disabled {
+    background-color: rgba(236, 189, 158, 0.348) ;
+} */
+
+@media screen and (max-width: 700px) {
+  :global(.dark-mode) .Card {
+    background-color: transparent;
+  }
+  .Card {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    justify-content: center;
+  }
+
+  .LeftContainer,
+  .RightContainer {
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+  }
+
+  .LeftContainer > div {
+    border-radius: 0.4rem;
+    margin: 0 auto;
+    /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
+    padding: 0 2%;
+  }
+
+  .LeftContainer h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 0;
+  }
+
+  .MainText {
+    text-align: center;
+  }
+
+  .ExtraText {
+    text-align: center;
+  }
+
+  /* .LeftContainer img,
+  .LeftContainer h3 {
+    display: none;
+  } */
+
+  .LeftContainer .MainText {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .RightContainer form {
+    margin: 0 auto;
+    margin-top: 1rem;
+    border-radius: 0.4rem;
+    /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
+    padding: 0 2%;
+    padding-bottom: 1rem;
+  }
+
+  .RightContainer input {
+    margin-right: 2rem;
+  }
+
+  .RightContainer .Input {
+    width: 100%;
+  }
+
+  .RightContainer .Account span {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+  }
+}

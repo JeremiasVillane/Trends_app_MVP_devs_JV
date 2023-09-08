@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import logoClaro from "../../../assets/logos/logoClaro.png";
-import { selectDarkMode, setDarkMode } from "../../../redux/UsersSlice";
+import useMediaQuery from "../../../hooks/useMediaQuery";
+import { selectDarkMode, setDarkMode } from "../../../redux/uiSlice";
 import styles from "./LandingNavBar.module.css";
 
 /**
@@ -16,6 +17,7 @@ export const LandingNavBar = () => {
   const location = useLocation();
   const darkMode = useSelector(selectDarkMode);
   const [showMenu, setShowMenu] = useState(false);
+  const isSmallerThan590 = useMediaQuery("(max-width: 590px)");
 
   useEffect(() => {
     /**
@@ -53,7 +55,10 @@ export const LandingNavBar = () => {
   }
 
   return (
-    <nav className={`${styles.navigation} ${darkMode ? "dark-mode" : ""}`}>
+    <nav
+      className={`${styles.navigation} ${darkMode ? "dark-mode" : ""}`}
+      style={{ userSelect: "none" }}
+    >
       {/* Logo */}
       <Link to="/">
         <div className={styles.logo}>
@@ -72,10 +77,21 @@ export const LandingNavBar = () => {
             className="custom-link"
             onClick={() => setShowMenu(false)}
           >
-            Iniciar sesión
+            {isSmallerThan590 ? "Ingresar" : "Iniciar sesión"}
           </Link>
         )}
-        <button className="toggle-button" onClick={toggleMenu}>
+        <button
+          className="toggle-button"
+          onClick={toggleMenu}
+          style={{
+            display:
+              location.pathname === "/auth/login"
+                ? "block"
+                : isSmallerThan590
+                ? "none"
+                : "block",
+          }}
+        >
           Crear cuenta
         </button>
         <div className={styles["register-options"]}>

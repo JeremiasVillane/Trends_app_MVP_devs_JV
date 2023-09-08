@@ -85,13 +85,12 @@ export const sendAndStoreMessage =
       ? (conversationType = "groups")
       : (conversationType = "chat");
     try {
-      const { data } = await axios.post(
+      await axios.post(
         `${VITE_URL}/chatroom/${conversationType}/${conversationId}/messages`,
         { content: message },
         { withCredentials: "include" }
       );
 
-      // dispatch(addNewMessage({ conversationId, newMessage: data }));
       dispatch(loadConversations(userId));
     } catch (error) {
       console.error("Error al guardar el mensaje:", error.message);
@@ -102,7 +101,7 @@ export const sendAndStoreMessage =
 export const editMessage =
   (userId, conversationId, messageId, content) => async (dispatch) => {
     let conversationType;
-
+    
     conversationId.includes("group")
       ? (conversationType = "groups")
       : (conversationType = "chat");
@@ -110,7 +109,7 @@ export const editMessage =
     try {
       await axios.put(
         `${VITE_URL}/chatroom/${conversationType}/${conversationId}/messages/${messageId}`,
-        content,
+        { content },
         { withCredentials: "include" }
       );
 
@@ -292,5 +291,8 @@ export const deletePrivateChat = (userId, chatId) => async (dispatch) => {
     console.error("Error al eliminar chat privado:", error);
   }
 };
+
+export const selectActiveConversation = (state) => state.chat.activeConversation;
+export const selectConversations = (state) => state.chat.conversations;
 
 export default chatSlice.reducer;

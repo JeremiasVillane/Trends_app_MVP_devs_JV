@@ -16,6 +16,6 @@ imageRouter.get("/user/:id", validateId, imagesByUser);
 imageRouter.post("/upload", generalUpload.single("image"), uploadImage);
 imageRouter.post("/profile", profileUpload.single("image"), uploadProfileImage);
 imageRouter.post("/group/:groupId", validateGroupOwner, groupUpload.single("image"), uploadGroupImage);
-imageRouter.delete("/delete/:imageId", removeImage);
+imageRouter.delete("/delete/:imageUrl", removeImage);
 
 module.exports = imageRouter;

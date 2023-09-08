@@ -14,7 +14,6 @@ const passport = require("./auth/passport-config");
 const {
   authenticateAdmin,
   authenticateUser,
-  setCache,
 } = require("./middlewares");
 
 //<---------------------------Routes-------------------------->//
@@ -30,7 +29,6 @@ const chatroomRoutes = require("./routes/chatroom.routes");
 //<---------------------------Config-------------------------->//
 const app = express();
 app.use(morgan("dev"));
-// app.use(setCache);    // Desactivado durante la fase de desarrollo
 app.use(
   cors({
     origin: CL_URL,

@@ -117,9 +117,9 @@
     align-items: center;
   }
 
-  .auth-buttons button {
-    display: none; /* Ocultar el botón "Crea tu cuenta" en versión responsive */
-  }
+  /* .auth-buttons button {
+    display: none; 
+  } */
 
   .responsive-icon-button {
     display: block; /* Mostrar el icono en versión responsive */
@@ -135,7 +135,7 @@
     display: block;
   }
 
-  .register-options {
+  /* .register-options {
     position: relative;
     left: auto;
     transform: none;
@@ -144,7 +144,7 @@
     opacity: 1;
     visibility: visible;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
+  } */
 
   .auth-buttons.show-menu .register-options {
     display: flex;
