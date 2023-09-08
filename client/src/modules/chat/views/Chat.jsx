@@ -141,7 +141,7 @@ const Chat = () => {
                 socket={socket}
                 messages={activeConversationData.messages}
               />
-              <MessageInput userId={user.id} onSendMessage={onSendMessage} />
+              <MessageInput onSendMessage={onSendMessage} />
             </>
           ) : (
             <div className={styles.empty_chat}>

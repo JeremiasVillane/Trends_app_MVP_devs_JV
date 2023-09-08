@@ -24,6 +24,8 @@ export const InfoParticipant = ({
   darkMode,
   setShowParticipantInfo,
   setShowInfo,
+  setShowConversationListInSmallScreens,
+  setShowMessagesInSmallScreens,
   isSmallerThan590,
 }) => {
   const dispatch = useDispatch();
@@ -56,8 +58,11 @@ export const InfoParticipant = ({
 
   const handleChats = () => {
     setShowInfo(false);
+    if (isSmallerThan590) {
+      setShowMessagesInSmallScreens(true);
+      setShowConversationListInSmallScreens(true);
+    }
     dispatch(createNewPrivateChat(currentUserId, participantId));
-    navigate("/chatroom/chat");
   };
 
   const handleOptions = () => {

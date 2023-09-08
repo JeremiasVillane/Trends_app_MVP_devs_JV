@@ -46,6 +46,16 @@ export const Message = ({
             color: darkMode ? "#242424" : "#f5f5f5",
           }
         : { background: darkMode ? "#383636" : "#777", color: "#d1d1d1" },
+    deletedMessage: {
+      fontStyle: "italic",
+      backgroundColor: "transparent",
+      boxShadow: "none",
+      color: darkMode ? "#999" : "#646464",
+      userSelect: "none",
+      padding: ".3rem 0",
+      marginBottom: "-0.7rem",
+      whiteSpace: "nowrap",
+    },
   };
 
   const handleProfile = () => {
@@ -173,16 +183,7 @@ export const Message = ({
             <p
               style={
                 messageStatus === "deleted"
-                  ? {
-                      fontStyle: "italic",
-                      backgroundColor: "transparent",
-                      boxShadow: "none",
-                      color: darkMode ? "#999" : "#646464",
-                      userSelect: "none",
-                      padding: ".3rem 0",
-                      marginBottom: "-0.7rem",
-                      whiteSpace: "nowrap",
-                    }
+                  ? messageStyle.deletedMessage
                   : messageStyle.messageColor
               }
             >

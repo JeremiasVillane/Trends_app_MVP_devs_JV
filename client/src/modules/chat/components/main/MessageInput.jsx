@@ -3,7 +3,7 @@ import { BsEmojiSmile, BsSendFill } from "react-icons/bs";
 import { EmojiSelector } from ".";
 import styles from "./MessageInput.module.css";
 
-export const MessageInput = ({ userId, onSendMessage }) => {
+export const MessageInput = ({ onSendMessage }) => {
   const [message, setMessage] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
 

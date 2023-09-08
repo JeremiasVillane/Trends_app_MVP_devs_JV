@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { HiChat, HiLogout, HiUser } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,47 +26,27 @@ export const MainNavBar = () => {
   const userData = useSelector(selectUserProfile);
   const MySwal = withReactContent(Swal);
   const isSmallerThan768 = useMediaQuery("(max-width: 768px)");
-  const [activeButton, setActiveButton] = useState("Inicio");
-  const [activeColor, setActiveColor] = useState("lightgray");
-  const activeButtonStyle = {
-    [activeButton]: activeColor,
-  };
+ 
   const activeButtonBorder = isSmallerThan768
     ? "0px -3px 0px 0px"
     : "-3px 0px 0px 0px";
 
-  useEffect(() => {
-    activeButtonStyle[activeButton] = activeColor;
-  }, [activeButton]);
-
   // Navega a la página de inicio.
-  const handleHome = (event) => {
-    const { title } = event.currentTarget;
-    setActiveButton(title);
-    setActiveColor("lightgray");
-
+  const handleHome = () => {
     userData.type === "company"
       ? navigate("/company/feed")
       : navigate("/user/feed");
   };
 
   // Navega a la página de perfil del usuario.
-  const handleProfile = (event) => {
-    const { title } = event.currentTarget;
-    setActiveButton(title);
-    setActiveColor("lightgray");
-
+  const handleProfile = () => {
     userData.type === "company"
       ? navigate("/company/profile")
       : navigate("/user/profile");
   };
 
   // Navega a la página de chats.
-  const handleChats = (event) => {
-    const { title } = event.currentTarget;
-    setActiveButton(title);
-    setActiveColor("lightgray");
-
+  const handleChats = () => {
     navigate("/chatroom/chat");
   };
 
@@ -96,11 +75,7 @@ export const MainNavBar = () => {
 
   // Renderiza el cuadro de diálogo de confirmación
   // de cierre de sesión del usuario.
-  const handleLogout = (event) => {
-    const { title } = event.currentTarget;
-    setActiveButton(title);
-    setActiveColor("lightgray");
-
+  const handleLogout = () => {
     MySwal.fire({
       icon: "warning",
       iconColor: "#f1ca67",
@@ -131,67 +106,56 @@ export const MainNavBar = () => {
   return (
     <>
       <div className={styles.navbar}>
-        {/* Botón y texto de Inicio */}
         <button
           onClick={handleHome}
           className={styles.button}
           style={{
-            boxShadow: `${activeButtonBorder} ${
-              activeButtonStyle["Inicio"] || "transparent"
-            }`,
+            boxShadow: ["/user/feed", "/company/feed"].includes(
+              location.pathname
+            )
+              ? activeButtonBorder
+              : "",
           }}
           title="Inicio"
         >
           <AiFillHome size={"2rem"} color={"white"} />
         </button>
-        {/* <p>Inicio</p> */}
 
-        {/* Botón y texto de Perfil */}
         <button
           onClick={handleProfile}
           className={styles.button}
           style={{
-            boxShadow: `${activeButtonBorder} ${
-              activeButtonStyle["Perfil"] || "transparent"
-            }`,
+            boxShadow: ["/user/profile", "/company/profile"].includes(
+              location.pathname
+            )
+              ? activeButtonBorder
+              : "",
           }}
           title="Perfil"
         >
           <HiUser size={"2rem"} color={"white"} />
         </button>
-        {/* <p>Perfil</p> */}
 
-        {/* Botón y texto de Chats */}
         <button
           onClick={handleChats}
           className={styles.button}
           style={{
-            boxShadow: `${activeButtonBorder} ${
-              activeButtonStyle["Chats"] || "transparent"
-            }`,
+            boxShadow:
+              location.pathname === "/chatroom/chat" ? activeButtonBorder : "",
           }}
           title="Chats"
         >
           <HiChat size={"2rem"} color={"white"} />
         </button>
-        {/* <p>Chats</p> */}
 
-        {/* Botón y texto de Salir */}
         <button
           onClick={handleLogout}
           className={styles.button}
-          style={{
-            boxShadow: `${activeButtonBorder} ${
-              activeButtonStyle["Salir"] || "transparent"
-            }`,
-          }}
           title="Salir"
         >
           <HiLogout size={"2rem"} color={"white"} />
         </button>
-        {/* <p>Salir</p> */}
 
-        {/* Botón para alternar el modo oscuro */}
         <button
           className={styles.button}
           onClick={toggleDarkMode}

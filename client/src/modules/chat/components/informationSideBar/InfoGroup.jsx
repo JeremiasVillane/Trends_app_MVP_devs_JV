@@ -84,6 +84,8 @@ export const InfoGroup = ({
           darkMode={darkMode}
           setShowParticipantInfo={setShowParticipantInfo}
           setShowInfo={setShowInfo}
+          setShowConversationListInSmallScreens={setShowConversationListInSmallScreens}
+          setShowMessagesInSmallScreens={setShowMessagesInSmallScreens}
           isSmallerThan590={isSmallerThan590}
         />
       ) : (
