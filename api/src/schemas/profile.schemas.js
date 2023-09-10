@@ -27,7 +27,7 @@ module.exports = (z) => {
       })
       .trim()
       .min(3, { message: "prop: 'username' must be at least 3 characters" })
-      .max(20, { message: "prop: 'username' must be at most 20 characters" }),
+      .max(33, { message: "prop: 'username' must be at most 33 characters" }),
     password: z.string({
       required_error: "prop: 'password' is required",
     }),
@@ -36,7 +36,7 @@ module.exports = (z) => {
         required_error: "prop: 'name' is required.",
       })
       .trim()
-      .min(6)
+      .min(2)
       .max(30)
       .regex(REGEX_LETTERS_SPACES, { message: "Invalid name format." }),
     profile_support: z
@@ -111,50 +111,5 @@ module.exports = (z) => {
       .regex(REGEX_SENTENCE, { message: "prop 'country': invalid sentence." })
       .optional()
   });
-
-  // const companyProfileSchema = z.object({
-  //   type: z.enum(["company"], {
-  //     required_error: "prop: 'type' is required.",
-  //     invalid_type_error: "'type' must be a: company.",
-  //   }),
-  //   email: z
-  //     .string({
-  //       required_error: "prop: 'email' is required.",
-  //     })
-  //     .trim()
-  //     .email({
-  //       message: "Invalid email address.",
-  //     }),
-  //   username: z
-  //     .string({
-  //       required_error: "prop: 'username' is required.",
-  //     })
-  //     .trim()
-  //     .min(3, { message: "prop: 'username' must be at least 3 characters" })
-  //     .max(20, { message: "prop: 'username' must be at most 20 characters" })
-  //     .trim(),
-  //   password: z.string({
-  //     required_error: "prop: 'password' is required",
-  //   }),
-  //   name: z
-  //     .string({
-  //       required_error: "prop: 'name' is required.",
-  //     })
-  //     .trim()
-  //     .regex(REGEX_LETTERS_SPACES, { message: "Invalid name format." }),
-  //   cuit: z
-  //     .string()
-  //     .regex(REGEX_NUMBERS, { message: "prop: 'cuit' must be a number" }),
-  //   bio: z.string().trim(),
-  //   image: z.string().url({
-  //     message: "Invalid url format.",
-  //   }),
-  //   country: z
-  //     .string()
-  //     .trim()
-  //     .regex(REGEX_SENTENCE, { message: "prop 'contry': invalid sentence." }),
-  // });
-
-  // return { companyProfileSchema, userProfileSchema };
   return { userProfileSchema };
 };

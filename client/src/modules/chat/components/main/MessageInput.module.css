@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+.message_input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f5f5f5;
+  margin: 0 1rem 0 1rem;
+}
+
+.message_input input {
+  flex: 1;
+  min-height: 40px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  user-select: none;
+}
+.message_input input:hover {
+  border: 1px solid #999;
+}
+.message_input input:focus {
+  outline: none;
+  border: 1px solid #555f69;
+}
+
+.message_input .send_button {
+  position: absolute;
+  right: 19px;
+  padding: 2px 4px;
+  margin-left: 10px;
+  background-color: transparent;
+  /* background-color: #007bff; */
+  color: #383836;
+  font-size: x-large;
+  border: none;
+  /* border-radius: 4px; */
+  cursor: pointer;
+}
+
+.message_input .emoji_button {
+  position: absolute;
+  right: 57px;
+  padding: 2px 4px;
+  margin-left: 10px;
+  background-color: transparent;
+  /* background-color: #007bff; */
+  color: #383836;
+  font-size: x-large;
+  border: none;
+  /* border-radius: 4px; */
+  cursor: pointer;
+}
+
+:global(.dark-mode) .message_input {
+  background-color: #242424;
+  border-top: 1px solid #383836;
+}
+:global(.dark-mode) .message_input input {
+  background-color: #383836;
+  color: #d9d9d9;
+  border: 1px solid #202020;
+}
+:global(.dark-mode) .message_input input:hover {
+  border: 1px solid #7a7a7a;
+}
+:global(.dark-mode) .message_input input:focus {
+  border: 1px solid #b8b8b8;
+}
+:global(.dark-mode) .message_input button {
+  color: #9d9d9d;
+}

@@ -1,0 +1,32 @@
+.chat_sidebar {
+  width: 300px;
+  background-color: #f0f0f0;
+  border-right: 1px solid #ccc;
+  /* padding: 10px; */
+  display: flex;
+  flex-direction: column;
+  margin-left: 3.6rem;
+}
+
+/* @media screen and (max-width: 650px) {
+  .chat_sidebar {
+    display: none;
+  }
+} */
+
+@media screen and (max-width: 590px) {
+  .chat_sidebar {
+    width: 100vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chat_sidebar {
+    margin-left: 0;
+  }
+}
+
+:global(.dark-mode) .chat_sidebar {
+  background-color: #202020;
+  border-right: 1px solid #383836;
+}

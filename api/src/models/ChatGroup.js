@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const { DEFAULT_IMG } = require("../../config");
+const { DEFAULT_IMG_GROUP } = require("../../config");
 const isImageUrlOrLocalPath = require("../helpers/isImageUrlOrLocalPath");
 
 module.exports = (sequelize) => {
@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
     image: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: DEFAULT_IMG,
+      defaultValue: DEFAULT_IMG_GROUP,
       validate: {
         isImageUrlOrLocalPath: (value) => {
           if (!isImageUrlOrLocalPath(value)) {
@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         },
       },
       set(value) {
-        this.setDataValue("image", value || DEFAULT_IMG);
+        this.setDataValue("image", value || DEFAULT_IMG_GROUP);
       },
     },
   });

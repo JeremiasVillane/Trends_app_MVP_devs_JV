@@ -1,0 +1,31 @@
+.ButtonContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  user-select: none;
+}
+
+.UpButton {
+  background-color: #58c9e5;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.UpButton:hover {
+  background-color: #66d8f5;
+}
+
+:global(.dark-mode) .UpButton {
+  background-color: #ccc; /* #3085d6 */
+  color: #1e242a;
+}
+:global(.dark-mode) .UpButton:hover {
+  background-color: #fff;
+  color: #1e242a;
+}

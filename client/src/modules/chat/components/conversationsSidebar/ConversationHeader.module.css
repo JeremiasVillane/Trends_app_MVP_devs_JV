@@ -1,0 +1,64 @@
+.header_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  margin: 0 1rem 0 1rem;
+  height: 3.6rem;
+  position: relative;
+  user-select: none;
+}
+
+.header_container p {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #242424;
+  margin: 0 1rem;
+}
+
+.message_options {
+  position: absolute;
+  text-align: left;
+  font-size: 16px;
+  background-color: #f5f5f5;
+  padding: 0.25rem;
+  text-align: left;
+  translate: 10% 0;
+  border-radius: 0 5px 5px 5px;
+  box-shadow: rgb(0 0 0 / 25%) 2px 5px 5px 2px;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.message_options li {
+  padding: 0.2rem 0.57rem;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.message_options li:hover {
+  background-color: #e0e0e0;
+}
+
+@media screen and (max-width: 590px) {
+  .message_options {
+    border-radius: 5px 0 5px 5px;
+    text-align: right;
+    translate: -100% 0;
+    box-shadow: rgb(0 0 0 / 25%) -2px 5px 5px 2px;
+  }
+}
+
+:global(.dark-mode) .header_container {
+  border-bottom: 1px solid #383636;
+}
+:global(.dark-mode) .message_options li,
+:global(.dark-mode) .header_container p {
+  color: #d9d9d9;
+}
+:global(.dark-mode) .message_options li:hover {
+  background-color: #242424;
+}
+:global(.dark-mode) .message_options {
+  background-color: #383836;
+}

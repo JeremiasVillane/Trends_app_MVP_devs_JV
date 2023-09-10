@@ -1,202 +1,203 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const {VITE_URL} = import.meta.env;
+const { VITE_URL } = import.meta.env;
 
 const initialState = {
+  user: {},
   allUsers: [],
   searchedUsers: [],
   students: {},
   professionals: {},
   companies: [],
-  currentPage: 1,
-  status: true,
-  darkMode: false,
-  user: {},
-  totalPages: 0,
 };
-
-// const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async (page) => {
-    
-   //     const URL = `${VITE_URL}/api/v1/search/users?type=student&page=${page}`;
-
-//console.log(state.allUsers)
-const getMatchedUsers = createAsyncThunk("users/getMatchedUsers", async () => {
-    try {
-//        const URL = `${VITE_URL}/search/users?type=student`;
-        const URL = `${VITE_URL}/search/users?type=student&page=${page}`;
-
-
-      
-        const fetch = await axios.get(URL, {withCredentials: "include"});
-        const data = fetch.data;
-        return data;
-    } catch (error) {
-        return error.response.data.error
-    }
-})
-
-const getStudents = createAsyncThunk("users/getStudents", async ({id, page}) => {
-  console.log(page)
-  try {
-    const URL = `${VITE_URL}/user/feed/${id}/student?page=${page}`;
-    const fetch = await axios.get(URL, {withCredentials: "include"});
-    const data = fetch.data;
-    return data;
-  } catch (error) {
-    return error.response.data.error; 
-  }
-})
-
-const getProfessionals = createAsyncThunk("users/getProfessionals", async ({id, page}) => {
-  try {
-    const URL = `${VITE_URL}/user/feed/${id}/professional?page=${page}`;
-    const fetch = await axios.get(URL, {withCredentials: "include"});
-    const data = fetch.data;
-    return data;
-  } catch (error) {
-    return error.response.data.error; 
-  }
-})
-const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
-
-
-  
-  
-  
-  try {
-    const URL = `${VITE_URL}/user/profile`;
-    const fetch = await axios.get(URL, {withCredentials: "include"});
-    const data = fetch.data;
-    return data;
-  } catch (error) {
-    return error.response.data.error;
-  }
-} )
-
-const getSearchedUsers = createAsyncThunk("users/getSearchedUsers", async({name, academic_formation, academic_institution}) =>{
-  try {
-    let query = `http://localhost:3001/api/v1/search/users?name=${name}`;
-    if (academic_formation) query += `&academic_formation=${academic_formation}`;
-    if (academic_institution) query += `&academic_institution=${academic_institution}`;
-    const searchedUsers = (await axios.get(query)).data;
-
-  /*
-
-
-    try {
-        const URL = `${VITE_URL}/user/profile`;
-        const fetch = await axios.get(URL, {withCredentials: "include"});
-        const data = fetch.data;
-        return data;
-    } catch (error) {
-        return error.response.data.error;
-    }
-} )
-
-const getSearchedUsers = createAsyncThunk("users/getSearchedUsers", async({name, academic_formation, academic_institution}) =>{
-    try {
-    // console.log("ACTION OK")
-    let query = `${VITE_URL}/search/users?name=${name}`
-
-    if (academic_formation) query += `&academic_formation=${academic_formation}`
-    if (academic_institution) query += `&academic_institution=${academic_institution}`
-    // console.log("Query: " + query)
-    const searchedUsers = (await axios.get(query)).data
-    // console.log(searchedUsers);
-
-    return searchedUsers;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-})
 
 const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    currentpage: (state) => {
-      state.currentPage++;
-    },
-    setStatus: (state) => {
-      state.status = !state.status
-    },
-    setDarkMode: (state) => {
-      state.darkMode = !state.darkMode
-    },
-    logout: (state) => {
-      state.allUsers = [];
-      state.searchedUsers = [];
-      state.students = {};
-      state.professionals = {};
-      state.companies = [];
-      state.currentPage = 0;
-      state.status = false;
-      state.user = {};
-      state.totalPages = 0;
+    userLogout: () => {
+      return initialState;
     },
     matchUsers: (state) => {
-      const studentUsers = state.students.data || []; 
-      const professionalUsers = state.professionals.data || []; 
+      const studentUsers = state.students.data || [];
+      const professionalUsers = state.professionals.data || [];
       const combinedUsers = [...studentUsers, ...professionalUsers];
-      const sortedUsers = combinedUsers.sort((userA, userB) => userB.matchscore - userA.matchscore);
-      const newUsers = sortedUsers.filter(newuser => (
-        !state.allUsers.some(existingUser => existingUser.user.id === newuser.user.id )
-      ));
+      const sortedUsers = combinedUsers.sort(
+        (userA, userB) => userB.matchscore - userA.matchscore
+      );
+      const newUsers = sortedUsers.filter(
+        (newuser) =>
+          !state.allUsers.some(
+            (existingUser) => existingUser.user.id === newuser.user.id
+          )
+      );
       state.allUsers = state.allUsers.concat(newUsers);
     },
-    //?SE AGREGA ACCION PARA CARGAR LA COMPAÑIA Y SUS TRABAJOS EN EL STORE GLOBAL
-    addCompany:(state,action)=>{
-      state.companies=action.payload;
+    addCompany: (state, action) => {
+      state.companies = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getSearchedUsers.pending, (state)=>{
+      .addCase(updateUserProfile.pending, () => {})
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(getSearchedUsers.pending, (state) => {
         state.searchedUsers = []; //Esto queda vacío porque despues podemos poner que si searchedUsers.length === 0 muestre un símbolo de carga
       })
-      .addCase(getSearchedUsers.fulfilled, (state, action)=>{
+      .addCase(getSearchedUsers.fulfilled, (state, action) => {
         state.searchedUsers = action.payload;
       })
-      .addCase(getUserInfo.pending, () => {
-        //console.log("cargando");
-      })
+      .addCase(getUserInfo.pending, () => {})
       .addCase(getUserInfo.fulfilled, (state, action) => {
         state.user = action.payload;
       })
       .addCase(getStudents.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.students = action.payload;
       })
-      .addCase(getStudents.pending, (state) => {
-        
-      })
-      .addCase(getStudents.rejected, (state, action) => {
-      })
+      .addCase(getStudents.pending, (state) => {})
+      .addCase(getStudents.rejected, (state, action) => {})
       .addCase(getProfessionals.fulfilled, (state, action) => {
         state.professionals = action.payload;
       })
-      .addCase(getProfessionals.rejected, (state, action) => {
-      })
+      .addCase(getProfessionals.rejected, (state, action) => {});
+  },
+});
+
+export const { userLogout, matchUsers, addCompany } = usersSlice.actions;
+
+export const getMatchedUsers = createAsyncThunk(
+  "users/getMatchedUsers",
+  async (page) => {
+    try {
+      const URL = `${VITE_URL}/search/users?type=student&page=${page}`;
+      const { data } = await axios.get(URL, { withCredentials: "include" });
+
+      return data;
+    } catch (error) {
+      return error.response.data.error;
+    }
   }
-})
+);
 
-export default usersSlice.reducer;
+export const getStudents = createAsyncThunk(
+  "users/getStudents",
+  async ({ id, page }) => {
+    try {
+      const URL = `${VITE_URL}/user/feed/${id}/student?page=${page}`;
+      const { data } = await axios.get(URL, { withCredentials: "include" });
 
-// export of the selectors of the global state
+      return data;
+    } catch (error) {
+      return error.response.data.error;
+    }
+  }
+);
 
-export { getProfessionals, getStudents};
-//export const {addCompany, matchUsers, currentpage, setStatus, logout, setDarkMode} = usersSlice.actions;
-// export const selectAllUsers = (state) => state.users.allUsers;
+export const getProfessionals = createAsyncThunk(
+  "users/getProfessionals",
+  async ({ id, page }) => {
+    try {
+      const URL = `${VITE_URL}/user/feed/${id}/professional?page=${page}`;
+      const { data } = await axios.get(URL, { withCredentials: "include" });
 
-export {getSearchedUsers, getUserInfo, getMatchedUsers};
-export const {test, addCompany, setDarkMode, matchUsers, currentpage, setStatus, logout} = usersSlice.actions;
+      return data;
+    } catch (error) {
+      return error.response.data.error;
+    }
+  }
+);
+export const getUserInfo = createAsyncThunk("users/getUserInfo", async () => {
+  try {
+    const URL = `${VITE_URL}/user/profile`;
+    const { data } = await axios.get(URL, { withCredentials: "include" });
+
+    return data;
+  } catch (error) {
+    return error.response.data.error;
+  }
+});
+
+export const getSearchedUsers = createAsyncThunk(
+  "users/getSearchedUsers",
+  async ({ name, academic_formation, academic_institution }) => {
+    try {
+      let query = `${VITE_URL}/search/users?name=${name}`;
+
+      if (academic_formation)
+        query += `&academic_formation=${academic_formation}`;
+      if (academic_institution)
+        query += `&academic_institution=${academic_institution}`;
+      const { data } = await axios.get(query);
+
+      return data;
+    } catch (error) {
+      return error.response.data.error;
+    }
+  }
+);
+
+export const updateUserProfile = createAsyncThunk(
+  "users/updateUserProfile",
+  async (editData) => {
+    try {
+      const URL = `${VITE_URL}/user/${editData.id}`;
+      const { data } = await axios.put(URL, editData, {
+        withCredentials: "include",
+      });
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+// Thunk para subir una imagen
+export const uploadImage = (formData) => async () => {
+  try {
+    const { data } = await axios.post(`${VITE_URL}/images/profile`, formData, {
+      withCredentials: "include",
+    });
+    const urlImage = data.imageUrl;
+
+    return urlImage;
+  } catch (error) {
+    console.error("Error subiendo imagen:", error);
+  }
+};
+
+// Thunk para traer los datos de un usuario
+export const getSomeUserInfo = (userId) => async () => {
+  try {
+    const { data } = await axios.get(`${VITE_URL}/search/user/${userId}`, {
+      withCredentials: "include",
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Thunk para buscar usuarios por nombre y tipo
+export const searchUsers = (type, page, query) => async () => {
+  try {
+    const URL = `${VITE_URL}/search/users?type=${type}&page=${page}&name=${query}`;
+    const { data } = await axios.get(URL, { withCredentials: "include" });
+
+    return data;
+  } catch (error) {
+    return error.response.data.error;
+  }
+};
+
 export const selectAllUsers = (state) => state.users?.allUsers;
 export const selectSearchedUsers = (state) => state.users.searchedUsers;
 export const selectStudents = (state) => state.users.students;
 export const selectProfessionals = (state) => state.users.professionals;
 export const selectCompanies = (state) => state.users.companies;
 export const selectUserProfile = (state) => state.users.user;
-export const selectTotalPages = (state) => state.users.totalPages;
-export const selectCurrentPage = (state) => state.users.currentpage;
-export const selectStatus = (state) => state.users.status;
-export const selectDarkMode = (state) => state.users.darkMode;
+
+export default usersSlice.reducer;

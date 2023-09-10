@@ -1,0 +1,61 @@
+.conversation_item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease-out;
+  margin: 0 1rem 0 1rem;
+}
+
+.avatar_container {
+  flex: none;
+}
+
+.conversation_item:hover {
+  background-color: #e0e0e0;
+}
+
+.conversation_details {
+  margin-left: 10px;
+  overflow: hidden;
+}
+
+.conversation_details h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: medium;
+}
+
+.conversation_details p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unread_count {
+  background-color: #007bff;
+  color: #fff;
+  width: 27px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 50%;
+  margin-left: auto;
+}
+
+:global(.dark-mode) .conversation_item {
+  border-bottom: 1px solid #383836;
+}
+:global(.dark-mode) .conversation_item:hover {
+  background-color: #242424;
+}
+:global(.dark-mode) .conversation_details p {
+  color: #777;
+}

@@ -24,10 +24,7 @@ module.exports = async (group, groupId, userId, ownerId, currentUserType) => {
 
   const userToRemoveRole = userToRemove[0].userChatGroup.role;
 
-  if (
-    (userId === ownerId || userToRemoveRole === "moderator") &&
-    currentUserType !== "admin"
-  ) {
+  if (userId === ownerId && currentUserType !== "admin") {
     return { error: "Not authorized" };
   }
 

@@ -1,18 +1,25 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/Trends_app_MVP",
+  base: "/",
   plugins: [react()],
   css: {
     modules: true,
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001", // URL del backend
+        changeOrigin: true,
+      },
+    },
+  },
   build: {
     rollupOptions: {
       output: {
-        assetFileNames: "./src/assets/Logo.svg",
+        assetFileNames: "./src/assets/logos/logoClaro.png",
       },
     },
   },

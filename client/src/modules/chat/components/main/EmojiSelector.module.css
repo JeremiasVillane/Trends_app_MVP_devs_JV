@@ -1,0 +1,30 @@
+em-emoji-picker {
+  --background-rgb: 85, 170, 255;
+  --border-radius: 10px;
+  /* --category-icon-size: 24px; */
+  --color-border-over: rgba(0, 0, 0, 0.1);
+  --color-border: rgba(0, 0, 0, 0.05);
+  --font-family: "Poppins", sans-serif;
+  --font-size: 14px;
+  /* --rgb-accent: 88, 201, 229; */
+  --rgb-background: 240, 240, 240;
+  --rgb-color: 24, 24, 24;
+  --rgb-input: 240, 240, 240;
+  --shadow: 5px 5px 15px -8px #000;
+
+  height: 50vh;
+  min-height: 400px;
+  max-height: 800px;
+}
+
+.emoji_picker {
+  position: absolute;
+  bottom: 51px;
+  right: 40px;
+}
+
+:global(.dark-mode) em-emoji-picker {
+  --rgb-background: 56, 56, 54; 
+  --rgb-color: 255, 255, 255;
+  --rgb-input: 56, 56, 54;
+}

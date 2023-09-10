@@ -1,6 +1,6 @@
 require("dotenv").config();
-const DEFAULT_IMG =
-  "https://images.unsplash.com/photo-1595433707802-6b2626ef1c91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80";
+const DEFAULT_IMG = "https://i.postimg.cc/J4QGQWmr/user-default.png";
+const DEFAULT_IMG_GROUP = "https://i.postimg.cc/NG6tFfyr/group-default.jpg";
 
 const {
   ADMIN_USERNAME,
@@ -8,6 +8,7 @@ const {
   NODE_ENV,
   SV_HOST,
   SV_PORT,
+  CL_URL,
   JWT_KEY,
   CRYPTO_KEY,
   DB_USER,
@@ -21,9 +22,11 @@ module.exports = {
   ADMIN_USERNAME,
   ADMIN_PASSWORD,
   DEFAULT_IMG,
+  DEFAULT_IMG_GROUP,
   NODE_ENV,
   SV_HOST,
   SV_PORT,
+  CL_URL,
   JWT_KEY,
   CRYPTO_KEY,
   DB_USER,

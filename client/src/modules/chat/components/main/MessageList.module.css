@@ -1,0 +1,18 @@
+.message_list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f5f5f5;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.typing_indicator {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #999;
+}
+
+:global(.dark-mode) .message_list {
+  background-color: #242424;
+}

@@ -1,0 +1,37 @@
+.conversation_list {
+  /* width: 300px; */
+  width: 100%;
+  background-color: #f0f0f0;
+  /* border-right: 1px solid #ccc; */
+  overflow-y: auto;
+  user-select: none;
+}
+
+.conversation_item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+:global(.dark-mode) .conversation_list {
+  color: #fff;
+  background-color: #202020;
+  border-right: 1px solid #383836;
+}
+
+/* .conversation_list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.conversation_item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.conversation_item:hover {
+  background-color: #f5f5f5;
+} */
+

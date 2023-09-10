@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+/* Estilo para el contenedor principal */
+.LandingContainer {
+  width: -webkit-fill-available;
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  align-items: center;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../../assets/imagenes/Land.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* Estilos para el logo */
+.logo img {
+  height: 9rem;
+  margin: 1rem;
+  padding: 3px;
+}
+/* Estilos para el mensaje de bienvenida */
+.point {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.point img {
+  min-width: 80%;
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Estilo para la tarjeta */
+.card {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 51rem;
+  height: 100%;
+  max-height: 33rem;
+  margin: auto;
+  padding: 2rem;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #4d4d4d; /* Letras gris oscuro */
+  cursor: default;
+}
+
+.card h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #58c9e5; /* Celeste */
+}
+
+.card h2 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 1.2rem;
+  color: #4b5965; /* Letras gris claro */
+}
+
+.card p {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Estilo para el enlace */
+.Link {
+  font-size: 1.2rem;
+  color: #007bff; /* Azul */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.Link:hover {
+  color: #0056b3;
+}
+
+:global(.dark-mode) .LandingContainer {
+  background-color: #383636;
+  background-image: url("../../assets/imagenes/LandMo.png");
+}
+
+/* Estilos para el modo oscuro */
+:global(.dark-mode) .card {
+  background-color: #232323;
+  color: #ffffff;
+}
+
+/* :global(.dark-mode) .card h1 {
+  color: #fab180;
+} */
+
+:global(.dark-mode) .card h2 {
+  color: #fff;
+}
+
+:global(.dark-mode) .card p {
+  color: #d9d9d9;
+}
+
+/* :global(.dark-mode) .Link {
+  color: #fab180;
+} */
+
+/* Estilos responsivos para pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+  .card {
+    width: 90%;
+    max-width: none;
+    height: auto;
+    max-height: none;
+  }
+
+  .card h1 {
+    font-size: 2rem;
+  }
+
+  .card h2 {
+    font-size: 1.1rem;
+  }
+
+  .card p {
+    font-size: 1rem;
+  }
+}

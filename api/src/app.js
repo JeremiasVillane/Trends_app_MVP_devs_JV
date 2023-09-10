@@ -1,7 +1,7 @@
-const { JWT_KEY } = require("../config");
+const { JWT_KEY, CL_URL } = require("../config");
 const express = require("express");
 
-//<----------------------------Middlewares libraries---------------------------->//
+//<--------------------Middlewares libraries------------------->//
 const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -9,33 +9,29 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const passport = require("./auth/passport-config");
-//<----------------------------------------------------------------------------->//
 
-//<-----------------------------Custom Middlewares----------------------------->//
+//<---------------------Custom Middlewares--------------------->//
 const {
   authenticateAdmin,
   authenticateUser,
-  setCache,
 } = require("./middlewares");
-//<---------------------------------------------------------------------------->//
 
-//<-----------------------------------Routes----------------------------------->//
+//<---------------------------Routes-------------------------->//
 const authRoutes = require("./routes/auth.routes");
 const searchRoutes = require("./routes/search.routes");
 const userRoutes = require("./routes/user.routes");
 const jobRoutes = require("./routes/job.routes");
 const imageRoutes = require("./routes/image.routes");
-const userTestRoutes = require("./routes/userTest.routes");
 const adminRoutes = require("./routes/admin.routes");
 const chatroomRoutes = require("./routes/chatroom.routes");
-//<---------------------------------------------------------------------------->//
+// const userTestRoutes = require("./routes/userTest.routes");  <--- Desactivada en producción
 
+//<---------------------------Config-------------------------->//
 const app = express();
 app.use(morgan("dev"));
-//app.use(setCache);    // Desactivado durante la fase de desarrollo
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: CL_URL,
     credentials: true,
   })
 );
@@ -63,12 +59,12 @@ app.use("/api/v1/images", authenticateUser, imageRoutes);
 app.use("/api/v1/chatroom", authenticateUser, chatroomRoutes);
 
 // --- solo para pruebas --- //
-app.use("/userTest", userTestRoutes);
+// app.use("/userTest", userTestRoutes);   <--- Desactivada en producción
 
-//<---------------------------Servidor Socket.io------------------------------->//
+//<-------------------Servidor Socket.io---------------------->//
 const { createServer } = require("http");
 appSocket = createServer(app);
-const serverSocket = require("./sockets/serverSokect");
+const serverSocket = require("./socket/serverSocket");
 serverSocket(appSocket);
 
 module.exports = appSocket;

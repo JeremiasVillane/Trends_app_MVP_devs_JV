@@ -9,8 +9,16 @@ module.exports = async (req, res) => {
       res.cookie("token", "", {
         expires: new Date(0),
       });
-      throw new Error("Incorrect credentials.");
+      return res
+        .status(400)
+        .json({ error: "Usuario o contraseña incorrectos" });
     }
+
+    // // Cabeceras para evitar el almacenamiento en caché de la cookie
+    // res.header("Cache-Control", "no-store");
+    // res.header("Expires", "Mon, 01 Jan 2000 00:00:00 GMT");
+    // res.header("Pragma", "no-cache");
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: NODE_ENV === "production",
